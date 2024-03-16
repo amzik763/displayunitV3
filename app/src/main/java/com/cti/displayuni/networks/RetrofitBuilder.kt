@@ -9,14 +9,11 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitBuilder {
 
-    private const val BASE_URL = "http://10.0.3.101:5000"
-
+    private const val BASE_URL = "http://192.168.1.11:5000"
 
     val instance: Retrofit by lazy {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
-
-//  .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
 
         val okHttpClient = OkHttpClient.Builder()
             .connectionPool(ConnectionPool(5, 30, TimeUnit.SECONDS))

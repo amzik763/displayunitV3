@@ -55,6 +55,8 @@ import com.cti.displayuni.utility.mFont.nk
 import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
+import com.cti.displayuni.utility.myComponents.mainViewModel
+import com.cti.displayuni.utility.myComponents.navController
 
 @Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -65,13 +67,12 @@ fun Login(){
     var name by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-//    val currentDateTime = uiviewModel.currentDateTime.observeAsState("")
 
     val conf = LocalConfiguration.current
     val widthDP = conf.screenWidthDp.dp
     val dnsty = conf.densityDpi
 
-    Log.d("mdpi densityyyyyyyyyyyyyyyyyyyyy: ", dnsty.toString())
+    Log.d("mdpi density: ", dnsty.toString())
 
     val wd = mParameters.mWidthinPx
     //myUI variables
@@ -219,7 +220,7 @@ fun Login(){
                             .padding(top = 16.dp)
                             .size(width = width, height = height)
                             .clickable {
-//                                mainViewModel.loginUser(name, password, navController)
+                                mainViewModel.loginUser(name, password)
                             },
                         color = darkBlue,
                         shape = RoundedCornerShape(corner = CornerSize(24.dp)),

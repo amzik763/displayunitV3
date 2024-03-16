@@ -73,12 +73,12 @@ class MainActivity : ComponentActivity() {
 
         setContent {
                 Navigate()
-              mDialogNetwork(mUiViewModel , applicationContext )
+              NetworkDialog(mUiViewModel , applicationContext )
         }
     }
 
 @Composable
-fun mDialogNetwork(mUiViewModel: UiViewModel, applicationContext: Context) {
+fun NetworkDialog(mUiViewModel: UiViewModel, applicationContext: Context) {
         if (mUiViewModel.isNetworkDialogShown) {
             NetworkErrorDialog(onDismiss = {
             },
