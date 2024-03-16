@@ -47,11 +47,13 @@ import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
+import com.cti.displayuni.utility.LOGIN
 import com.cti.displayuni.utility.mFont.nk
 import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents.mainViewModel
+import com.cti.displayuni.utility.myComponents.navController
 
 @Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
 @Composable
@@ -102,12 +104,12 @@ fun Configure(){
 
     if (existingTextValue.isNotEmpty()) {
 
-//        navController.popBackStack()
-//        navController.navigate(SIGNING_SCREEN)
+        navController.popBackStack()
+        navController.navigate(LOGIN)
+
     } else{
         val conf = LocalConfiguration.current
         val widthDP = conf.screenWidthDp.dp
-        val heigthDP = conf.screenHeightDp.dp
         Row {
             Box(modifier = Modifier.width(widthDP/3f)){
                 Image(painter = painterResource(id = R.drawable.bg_background),
@@ -122,7 +124,6 @@ fun Configure(){
                     Column {
                         Text(text = "INTERFACE",
                             style = TextStyle(
-//                                fontSize = if(mParameters.dnsty == 320) {48.sp} else { 36.sp},
                                 fontSize = mainHeaderFont,
                                 fontWeight = FontWeight.Bold,
                                 color = pureWhite,
@@ -248,7 +249,7 @@ fun Configure(){
                             onClick = {
                                 mainViewModel.saveStationValue(G0F0L0S0Value)
                                 Log.d("Shared Value", G0F0L0S0Value)
-//                                navController.navigate(SIGNING_SCREEN)
+                                navController.navigate(LOGIN)
                             }
                         )
                     }

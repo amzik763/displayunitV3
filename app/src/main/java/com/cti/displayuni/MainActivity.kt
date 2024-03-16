@@ -3,12 +3,15 @@ package com.cti.displayuni
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import com.cti.displayuni.dialogBox.NetworkErrorDialog
+import com.cti.displayuni.navigation.Navigate
 import com.cti.displayuni.networks.AuthAPIs
 import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.repository.Repository
@@ -36,6 +39,7 @@ class MainActivity : ComponentActivity() {
         networkMonitor.unregisterNetworkCallback(networkCallback)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -62,14 +66,13 @@ class MainActivity : ComponentActivity() {
         mainViewModel = mainViewModelFactory.create(MainViewModel::class.java)
         networkMonitor = NetworkMonitor(applicationContext)
         Log.d("temp", networkMonitor.isNetworkAvailable(applicationContext).toString())
-//        networkMonitor.registerNetworkCallback(networkCallback)
         mUiViewModelFactory = UiViewModelFactory(context)
         mUiViewModel = mUiViewModelFactory.create(UiViewModel::class.java)
         networkMonitor.registerNetworkCallback(networkCallback)
 
 
         setContent {
-                Configure()
+                Navigate()
               mDialogNetwork(mUiViewModel , applicationContext )
         }
     }

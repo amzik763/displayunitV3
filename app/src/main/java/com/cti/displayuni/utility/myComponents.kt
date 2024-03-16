@@ -24,7 +24,7 @@ object myComponents {
     lateinit var mainViewModelFactory: MainViewModelFactory
     lateinit var mainViewModel: MainViewModel
     lateinit var networkMonitor: NetworkMonitor
-//    lateinit var navController:NavHostController
+    lateinit var navController:NavHostController
 
 }
 
