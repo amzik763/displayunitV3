@@ -90,10 +90,11 @@ fun Configure(){
         Log.d("Desktop: ", wd.toString())
     }
 
+    var location by remember { mutableStateOf("") }
     var floorValue by remember { mutableStateOf("") }
     var lineValue by remember { mutableStateOf("") }
     var stationValue by remember { mutableStateOf("") }
-    var F0L0S0Value by remember { mutableStateOf("F0 L0 S0") }
+    var G0F0L0S0Value by remember { mutableStateOf("G0 F0 L0 S0") }
 
 
 //    val existingTextValue = mainViewModel.getStationValue()
@@ -153,16 +154,17 @@ fun Configure(){
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                LaunchedEffect(floorValue, lineValue, stationValue) {
+                LaunchedEffect(location,floorValue, lineValue, stationValue) {
+                    val newG = location.takeIf { it.isNotBlank() } ?: "0"
                     val newF = floorValue.takeIf { it.isNotBlank() } ?: "0"
                     val newL = lineValue.takeIf { it.isNotBlank() } ?: "0"
                     val newS = stationValue.takeIf { it.isNotBlank() } ?: "0"
-                    val newValue = "F$newF L$newL S$newS"
-                    F0L0S0Value = newValue
+                    val newValue = "G$newG F$newF L$newL S$newS"
+                    G0F0L0S0Value = newValue
 
                 }
 
-                Text(text = F0L0S0Value,
+                Text(text = G0F0L0S0Value,
                     style = TextStyle(
                         fontSize = semiHeaderFont,
                         fontWeight = FontWeight.Bold,
@@ -174,6 +176,17 @@ fun Configure(){
                 Spacer(modifier = Modifier.height(30.dp))
 
                 Row {
+                    EnterHereTextField(
+                        text = location,
+                        label = "Enter Location",
+                        onTextChange = { newText ->
+                            location = newText.filter { it.isDigit() } } ,
+                        color = pureBlack ,
+                        maxLength = 3 ,
+                        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text ),
+                        shape = RoundedCornerShape(8.dp)
+                    )
+
                     EnterHereTextField(
                         text = floorValue,
                         label = "Enter Floor No.",
@@ -232,7 +245,7 @@ fun Configure(){
                                 .padding(9.dp)
                                 .align(Alignment.CenterHorizontally),
                             onClick = {
-//                                mainViewModel.saveStationValue(F0L0S0Value)
+//                                mainViewModel.saveStationValue(G0F0L0S0Value)
 //                                navController.navigate(SIGNING_SCREEN)
                             }
                         )
