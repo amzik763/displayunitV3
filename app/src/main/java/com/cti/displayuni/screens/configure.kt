@@ -51,6 +51,7 @@ import com.cti.displayuni.utility.mFont.nk
 import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
+import com.cti.displayuni.utility.myComponents.mainViewModel
 
 @Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
 @Composable
@@ -97,14 +98,14 @@ fun Configure(){
     var G0F0L0S0Value by remember { mutableStateOf("G0 F0 L0 S0") }
 
 
-//    val existingTextValue = mainViewModel.getStationValue()
+    val existingTextValue = mainViewModel.getStationValue()
 
-//    if (existingTextValue.isNotEmpty()) {
+    if (existingTextValue.isNotEmpty()) {
 
 //        navController.popBackStack()
 //        navController.navigate(SIGNING_SCREEN)
-//    } else{
-//        val conf = LocalConfiguration.current
+    } else{
+        val conf = LocalConfiguration.current
         val widthDP = conf.screenWidthDp.dp
         val heigthDP = conf.screenHeightDp.dp
         Row {
@@ -182,7 +183,7 @@ fun Configure(){
                         onTextChange = { newText ->
                             location = newText.filter { it.isDigit() } } ,
                         color = pureBlack ,
-                        maxLength = 3 ,
+                        maxLength = 2 ,
                         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text ),
                         shape = RoundedCornerShape(8.dp)
                     )
@@ -245,7 +246,8 @@ fun Configure(){
                                 .padding(9.dp)
                                 .align(Alignment.CenterHorizontally),
                             onClick = {
-//                                mainViewModel.saveStationValue(G0F0L0S0Value)
+                                mainViewModel.saveStationValue(G0F0L0S0Value)
+                                Log.d("Shared Value", G0F0L0S0Value)
 //                                navController.navigate(SIGNING_SCREEN)
                             }
                         )
@@ -253,5 +255,5 @@ fun Configure(){
                 }
             }
         }
-//    }
+    }
 }

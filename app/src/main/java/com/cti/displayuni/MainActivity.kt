@@ -44,18 +44,11 @@ class MainActivity : ComponentActivity() {
                 Log.d("Network: ", "Connected")
                 Log.d("Network: ", "Connected")
                 Log.d("Network: ", "Connected")
-                Log.d("Network: ", "Connected")
-                Log.d("Network: ", "Connected")
-                Log.d("Network: ", "Connected")
-                Log.d("Network: ", "Connected")
                 mUiViewModel.hideNetworkDialog()
 
             }
 
             override fun onLost(network: Network) {
-                Log.d("Network: ", "Disconnected")
-                Log.d("Network: ", "Disconnected")
-                Log.d("Network: ", "Disconnected")
                 Log.d("Network: ", "Disconnected")
                 Log.d("Network: ", "Disconnected")
                 Log.d("Network: ", "Disconnected")
