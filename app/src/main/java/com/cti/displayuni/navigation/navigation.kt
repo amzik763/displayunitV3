@@ -7,8 +7,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cti.displayuni.screens.Configure
+import com.cti.displayuni.screens.GetTask
 import com.cti.displayuni.screens.Login
 import com.cti.displayuni.utility.CONFIGURE
+import com.cti.displayuni.utility.GETTASK
 import com.cti.displayuni.utility.LOGIN
 import com.cti.displayuni.utility.myComponents.navController
 
@@ -31,6 +33,10 @@ fun Navigate() {
 
         composable(LOGIN){
             Login()
+        }
+
+        composable(GETTASK){
+            GetTask()
         }
     }
 }
