@@ -10,6 +10,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import com.cti.displayuni.dialogBox.MessageDialog
 import com.cti.displayuni.dialogBox.NetworkErrorDialog
 import com.cti.displayuni.navigation.Navigate
 import com.cti.displayuni.networks.AuthAPIs
@@ -74,6 +75,7 @@ class MainActivity : ComponentActivity() {
         setContent {
                 Navigate()
               NetworkDialog(mUiViewModel , applicationContext )
+                MessageDia(mUiViewModel )
         }
     }
 
@@ -95,6 +97,20 @@ fun NetworkDialog(mUiViewModel: UiViewModel, applicationContext: Context) {
                 uiviewModel = mUiViewModel
             )
         }
-    }
+}
+
+@Composable
+fun MessageDia(mUiViewModel: UiViewModel) {
+        if (mUiViewModel.isMessageDialogShown) {
+            MessageDialog(onDismiss = {
+            },
+                onConfirm = {
+
+                },
+                dialogModel = mUiViewModel.dialogModel,
+
+            )
+        }
+}
 
 }
