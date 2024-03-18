@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitBuilder {
 
-    private const val BASE_URL = "http://192.168.1.11:5000"
+    private const val BASE_URL = "http://192.168.1.6:5000"
 
     val instance: Retrofit by lazy {
         val loggingInterceptor = HttpLoggingInterceptor()

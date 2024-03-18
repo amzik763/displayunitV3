@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import com.cti.displayuni.utility.KEY_TEXT_VALUE
 import com.cti.displayuni.utility.PREFERNCES_NAME
 import com.cti.displayuni.utility.myComponents.repository
+import com.cti.displayuni.utility.showLogs
 import kotlinx.coroutines.launch
 
 class MainViewModel(context: Context) : ViewModel(){
@@ -29,9 +30,9 @@ class MainViewModel(context: Context) : ViewModel(){
 
     fun loginUser(username: String, password: String){
 
-        viewModelScope.launch {
-            repository.loginUser(username,password)
-        }
+            viewModelScope.launch {
+                repository.loginUser(username,password)
+            }
     }
 
 }

@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -42,12 +41,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.cti.displayuni.components.UserIdInputTextField
 import com.cti.displayuni.R
 import com.cti.displayuni.components.PasswordInputTextField
+import com.cti.displayuni.components.UserIdInputTextField
 import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.lightBlack
-import com.cti.displayuni.ui.theme.lightGrey
 import com.cti.displayuni.ui.theme.lightOrange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
@@ -56,7 +54,6 @@ import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents.mainViewModel
-import com.cti.displayuni.utility.myComponents.navController
 
 @Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -164,6 +161,7 @@ fun Login(){
                             fontWeight = FontWeight.Bold,
                             color = lightBlack,
                             fontFamily = nk
+
                         )
                     )
 
@@ -181,7 +179,6 @@ fun Login(){
                 Spacer(modifier = Modifier.height(48.dp))
                 Text(
                     modifier = Modifier.fillMaxWidth(0.4f),
-
                     text = "     Enter Your Password",
                     style = TextStyle(
                         fontSize = semiHeaderFont,
