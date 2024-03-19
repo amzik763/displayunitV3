@@ -25,6 +25,7 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -48,6 +49,7 @@ import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mFont.poppinsbold
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
+import com.cti.displayuni.utility.myComponents
 
 @Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -57,7 +59,7 @@ fun GetTask() {
     val widthDP = conf.screenWidthDp.dp
 
 
-//    val currentDateTime = uiViewModel.currentDateTime.observeAsState("")
+    val currentDateTime = myComponents.mUiViewModel.currentDateTime.observeAsState("")
 
     val dnsty = conf.densityDpi
 
@@ -162,7 +164,7 @@ fun GetTask() {
                       )
                   )
                   Text(
-                      text = "Vinay Kapoor",
+                      text = myComponents.mainViewModel.name,
                       style = TextStyle(
                           fontSize = textFont2,
                           color = pureBlack,
@@ -181,7 +183,7 @@ fun GetTask() {
                       )
                   )
                   Text(
-                      text = "903",
+                      text = myComponents.mainViewModel.deviceId,
                       style = TextStyle(
                           fontSize = textFont2,
                           color = pureBlack,
@@ -200,7 +202,7 @@ fun GetTask() {
                       )
                   )
                   Text(
-                      text = "E01",
+                      text = myComponents.mainViewModel.employeeId,
                       style = TextStyle(
                           fontSize = textFont2,
                           color = pureBlack,
@@ -210,7 +212,7 @@ fun GetTask() {
                   )
               }
               Text(
-                  text = "1:00",
+                  text = currentDateTime.value,
                   style = TextStyle(
                       fontSize = textFont2,
                       color = pureBlack,

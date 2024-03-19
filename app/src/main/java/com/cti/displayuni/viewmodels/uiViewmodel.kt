@@ -4,9 +4,19 @@ import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.cti.displayuni.R
 import com.cti.displayuni.utility.DialogModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class UiViewModel(context: Context) : ViewModel(){
 
@@ -19,9 +29,6 @@ class UiViewModel(context: Context) : ViewModel(){
     var dialogText by mutableStateOf("Network error...")
         private set
 
-    fun setMyDialogText(s: String) {
-        dialogText = s
-    }
 
     fun showNetworkDialog(){
         isNetworkDialogShown = true
@@ -44,6 +51,35 @@ class UiViewModel(context: Context) : ViewModel(){
 
     fun hideMessageDialog(){
         isMessageDialogShown = false
+    }
+
+
+    private var job: Job? = null
+
+    private val _currentDateTime = MutableLiveData<String>()
+    val currentDateTime: LiveData<String> get() = _currentDateTime
+    private fun updateDateTime() {
+        job?.cancel() // Cancel the previous job if any
+        job = viewModelScope.launch {
+            while (isActive) {
+                val currentDateTime = getCurrentDateTime()
+                _currentDateTime.postValue(currentDateTime)
+                delay(1000) // Update every second
+            }
+        }
+    }
+
+    private fun getCurrentDateTime(): String {
+        val dateFormat = SimpleDateFormat("dd MMM yyyy : HH:mm:ss", Locale.getDefault())
+        return dateFormat.format(Date())
+    }
+
+    init {
+        updateDateTime()
+    }
+    override fun onCleared() {
+        super.onCleared()
+        job?.cancel()
     }
 
 }

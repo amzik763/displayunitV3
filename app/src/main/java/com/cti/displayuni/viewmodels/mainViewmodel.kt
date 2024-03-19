@@ -2,6 +2,9 @@ package com.cti.displayuni.viewmodels
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -16,6 +19,12 @@ import kotlinx.coroutines.launch
 class MainViewModel(context: Context) : ViewModel(){
 
     var mContext = context
+
+    var token = ""
+    var name by mutableStateOf("")
+    var deviceId by mutableStateOf("")
+    var employeeId by mutableStateOf("")
+
     private val sharedPreferences: SharedPreferences
         get() = mContext.getSharedPreferences(PREFERNCES_NAME, Context.MODE_PRIVATE)
 
