@@ -5,10 +5,12 @@ import android.content.SharedPreferences
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.cti.displayuni.R
+import com.cti.displayuni.utility.ChecksheetData
 import com.cti.displayuni.utility.KEY_TEXT_VALUE
 import com.cti.displayuni.utility.PREFERNCES_NAME
 import com.cti.displayuni.utility.myComponents.mUiViewModel
@@ -24,6 +26,10 @@ class MainViewModel(context: Context) : ViewModel(){
     var name by mutableStateOf("")
     var deviceId by mutableStateOf("")
     var employeeId by mutableStateOf("")
+
+    val checkSheetList = mutableListOf<String>()
+    //VARIABLE FOR NEW CHECKSHEETDATA
+    val mChecksheetData = MutableLiveData<List<ChecksheetData>>()
 
     private val sharedPreferences: SharedPreferences
         get() = mContext.getSharedPreferences(PREFERNCES_NAME, Context.MODE_PRIVATE)

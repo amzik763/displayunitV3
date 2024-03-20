@@ -29,6 +29,7 @@ class UiViewModel(context: Context) : ViewModel(){
     var dialogText by mutableStateOf("Network error...")
         private set
 
+    var isHindi = mutableStateOf(false)
 
     fun showNetworkDialog(){
         isNetworkDialogShown = true
