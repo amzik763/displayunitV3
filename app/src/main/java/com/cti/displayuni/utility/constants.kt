@@ -11,7 +11,6 @@ package com.cti.displayuni.utility
 val CONFIGURE = "configure"
 val LOGIN = "Login"
 val GETTASK = "getTask"
-val HOME_SCREEN = "Home"
+val CHECKSHEET = "Checksheet"
 val INSTRUCTION_SCREEN = "Instruction"
-val ITEMLIST_SCREEN = "ItemList"
 val FILL_PARAMETERS_SCREEN = "FillParameters"

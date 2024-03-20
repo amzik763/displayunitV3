@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -142,6 +143,18 @@ fun ItemComponents(item: ChecksheetData) {
       )
 
       DropDown(item.param_id)
+
+      Text(modifier = Modifier
+         .fillMaxWidth(fillMaxWidth5)
+         .padding(start = startPadding2),
+         text ="Notify",
+         color = pureBlack,
+         fontWeight = FontWeight.Bold,
+         fontStyle = FontStyle.Italic,
+         fontFamily = nk,
+         fontSize = textFont,
+         textAlign = TextAlign.Center
+      )
    }
 }
 @Composable

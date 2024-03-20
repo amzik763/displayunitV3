@@ -62,7 +62,6 @@ class MainActivity : ComponentActivity() {
         }
 
         authAPI = RetrofitBuilder.instance.create(AuthAPIs::class.java)
-
         repository = Repository()
         mainViewModelFactory = MainViewModelFactory(context)
         mainViewModel = mainViewModelFactory.create(MainViewModel::class.java)

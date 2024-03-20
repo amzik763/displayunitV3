@@ -44,6 +44,7 @@ import com.cti.displayuni.ui.theme.lightGrey
 import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
+import com.cti.displayuni.utility.CHECKSHEET
 import com.cti.displayuni.utility.mFont
 import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mFont.poppinsbold
@@ -286,6 +287,8 @@ fun GetTask() {
                           .padding(9.dp)
                           .align(Alignment.CenterHorizontally),
                       onClick = {
+
+                          myComponents.navController.navigate(CHECKSHEET)
 //                          myComponents.mainViewModel.allData(myComponents.mainViewModel.getStationValue())
                       }
                   )

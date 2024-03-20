@@ -1,17 +1,13 @@
 package com.cti.displayuni.networks
 
-import android.content.Context
 import okhttp3.ConnectionPool
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-interface TokenProvider {
+/*interface TokenProvider {
     fun getToken(): String?
     fun setToken(token: String?)
 }
@@ -73,9 +69,8 @@ object RetrofitBuilder {
 
         return retrofit.create(AuthAPIs::class.java)
     }
-}
+}*/
 
-/*
 object RetrofitBuilder {
 
     private const val BASE_URL = "http://192.168.1.6:5000"
@@ -96,4 +91,4 @@ object RetrofitBuilder {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-}*/
+}
