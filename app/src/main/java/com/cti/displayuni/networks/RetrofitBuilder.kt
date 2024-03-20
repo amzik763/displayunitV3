@@ -1,5 +1,6 @@
-package com.cti.displayuni.networks
+package com.amzi.displayunit.networks
 
+import com.cti.displayuni.networks.AuthAPIs
 import okhttp3.ConnectionPool
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -43,52 +44,79 @@ class AuthInterceptor(private val tokenProvider: TokenProvider) : Interceptor {
     }
 }
 
-object RetrofitBuilder {
-
-    private const val BASE_URL = "http://192.168.1.6:5000"
-
-    fun createAuthService(context: Context): AuthAPIs {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
-
-        val tokenProvider = SharedPreferencesTokenProvider(context)
-        val authInterceptor = AuthInterceptor(tokenProvider)
-
-        val okHttpClient = OkHttpClient.Builder()
-            .connectionPool(ConnectionPool(5, 30, TimeUnit.SECONDS))
-            .addInterceptor(loggingInterceptor)
-            .addInterceptor(authInterceptor)
-            .readTimeout(10, TimeUnit.SECONDS)
-            .build()
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        return retrofit.create(AuthAPIs::class.java)
-    }
-}*/
+ */
 
 object RetrofitBuilder {
 
+    // OLD BASE URL FOR PRODUCTION
+//  private const val BASE_URL = "http://10.0.3.101:5000"
     private const val BASE_URL = "http://192.168.1.6:5000"
 
-    val instance: Retrofit by lazy {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
+    // Define your Retrofit instance
+    private val retrofit: Retrofit by lazy {
 
-        val okHttpClient = OkHttpClient.Builder()
-            .connectionPool(ConnectionPool(5, 30, TimeUnit.SECONDS))
-            .addInterceptor(loggingInterceptor)
-            .readTimeout(10, TimeUnit.SECONDS)
-            .build()
 
         Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .client(createOkHttpClient())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+
+    private val retrofit2:Retrofit = Retrofit.Builder().build()
+
+    // Define your logging interceptor
+    private val loggingInterceptor = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BASIC
+    }
+
+
+    // Function to create OkHttpClient with token interceptor
+    private fun createOkHttpClient(): OkHttpClient {
+        val builder = OkHttpClient.Builder()
+            .connectionPool(ConnectionPool(5, 30, TimeUnit.SECONDS))
+            .addInterceptor(loggingInterceptor)
+            .readTimeout(10, TimeUnit.SECONDS)
+
+        // Add interceptor to include token
+        builder.addInterceptor { chain ->
+            // Retrieve token from wherever you store it
+            val token = retrieveToken()
+            val request = chain.request().newBuilder()
+                .addHeader("Authorization", "Bearer $token")
+                .build()
+            chain.proceed(request)
+        }
+
+        return builder.build()
+    }
+
+    // Function to retrieve token (This is a placeholder, replace it with your actual token retrieval mechanism)
+    private fun retrieveToken(): String {
+        // This is just a placeholder, replace it with your actual token retrieval mechanism
+        return "YOUR_TOKEN_HERE"
+    }
+
+    // Function to create ApiService instance with bearer token interceptor
+    /*fun createApiServiceWithToken(): ApiService {
+        return retrofit.create(ApiService::class.java)
+    }*/
+
+    // Function to create ApiService instance without bearer token interceptor
+    fun createApiServiceWithoutToken(): AuthAPIs {
+        val okHttpClient = OkHttpClient.Builder()
+            .connectionPool(ConnectionPool(5, 30, TimeUnit.SECONDS))
+            .addInterceptor(loggingInterceptor)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .build()
+
+        val retrofitWithoutToken = Retrofit.Builder()
+            .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+
+        return retrofitWithoutToken.create(AuthAPIs::class.java)
     }
 }
