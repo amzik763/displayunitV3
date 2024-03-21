@@ -19,7 +19,7 @@ class Repository () {
         Log.d("Repository:", "Created")
     }
 
-    suspend fun loginUser(username: String, password: String) {
+suspend fun loginUser(username: String, password: String) {
         try {
             loginResponse = authAPI.login(username, password)
             if (loginResponse.isSuccessful) {
@@ -51,6 +51,12 @@ class Repository () {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+
+
+suspend fun getTask(station_id: String, shift: String){
+            otherAPIs.getTask(station_id, shift)
     }
 
 }

@@ -288,8 +288,8 @@ fun GetTask() {
                           .align(Alignment.CenterHorizontally),
                       onClick = {
 
-                          myComponents.navController.navigate(CHECKSHEET)
-//                          myComponents.mainViewModel.allData(myComponents.mainViewModel.getStationValue())
+//                          myComponents.navController.navigate(CHECKSHEET)
+                          myComponents.mainViewModel.getTask(myComponents.mainViewModel.getStationValue(), "B")
                       }
                   )
               }

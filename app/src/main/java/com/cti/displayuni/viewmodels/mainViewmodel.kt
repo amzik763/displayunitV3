@@ -74,4 +74,12 @@ class MainViewModel(context: Context) : ViewModel(){
             }
     }
 
+    fun getTask(station_id:String, shift : String){
+
+        viewModelScope.launch {
+            repository.getTask(station_id, shift)
+        }
+    }
+
+
 }
