@@ -10,20 +10,21 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import com.amzi.displayunit.networks.RetrofitBuilder
 import com.cti.displayuni.dialogBox.MessageDialog
 import com.cti.displayuni.dialogBox.NetworkErrorDialog
 import com.cti.displayuni.navigation.Navigate
-import com.cti.displayuni.networks.AuthAPIs
-import com.cti.displayuni.networks.RetrofitBuilder
+import com.cti.displayuni.networks.OtherAPIs
 import com.cti.displayuni.repository.Repository
-import com.cti.displayuni.screens.Configure
 import com.cti.displayuni.utility.NetworkMonitor
+import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.myComponents.authAPI
 import com.cti.displayuni.utility.myComponents.mUiViewModel
 import com.cti.displayuni.utility.myComponents.mUiViewModelFactory
 import com.cti.displayuni.utility.myComponents.mainViewModel
 import com.cti.displayuni.utility.myComponents.mainViewModelFactory
 import com.cti.displayuni.utility.myComponents.networkMonitor
+import com.cti.displayuni.utility.myComponents.otherAPIs
 import com.cti.displayuni.utility.myComponents.repository
 import com.cti.displayuni.viewmodels.MainViewModel
 import com.cti.displayuni.viewmodels.MainViewModelFactory
@@ -61,7 +62,7 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        authAPI = RetrofitBuilder.instance.create(AuthAPIs::class.java)
+        authAPI = RetrofitBuilder.createApiServiceWithoutToken()
         repository = Repository()
         mainViewModelFactory = MainViewModelFactory(context)
         mainViewModel = mainViewModelFactory.create(MainViewModel::class.java)

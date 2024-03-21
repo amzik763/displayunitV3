@@ -2,6 +2,7 @@ package com.cti.displayuni.utility
 
 import androidx.navigation.NavHostController
 import com.cti.displayuni.networks.AuthAPIs
+import com.cti.displayuni.networks.OtherAPIs
 import com.cti.displayuni.repository.Repository
 import com.cti.displayuni.response.login_response
 import com.cti.displayuni.viewmodels.MainViewModel
@@ -13,6 +14,7 @@ import retrofit2.Response
 object myComponents {
 
     lateinit var authAPI: AuthAPIs
+    lateinit var otherAPIs: OtherAPIs
     lateinit var repository: Repository
     lateinit var mUiViewModelFactory: UiViewModelFactory
     lateinit var mUiViewModel: UiViewModel

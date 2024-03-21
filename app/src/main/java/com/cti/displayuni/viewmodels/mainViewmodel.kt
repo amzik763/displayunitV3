@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import com.cti.displayuni.R
 import com.cti.displayuni.utility.ChecksheetData
 import com.cti.displayuni.utility.KEY_TEXT_VALUE
+import com.cti.displayuni.utility.KEY_TOKEN
 import com.cti.displayuni.utility.PREFERNCES_NAME
 import com.cti.displayuni.utility.myComponents.mUiViewModel
 import com.cti.displayuni.utility.myComponents.repository
@@ -22,7 +23,6 @@ class MainViewModel(context: Context) : ViewModel(){
 
     var mContext = context
 
-    var token = ""
     var name by mutableStateOf("")
     var deviceId by mutableStateOf("")
     var employeeId by mutableStateOf("")
@@ -43,6 +43,17 @@ class MainViewModel(context: Context) : ViewModel(){
     fun getStationValue(): String {
         return sharedPreferences.getString(KEY_TEXT_VALUE, "") ?: ""
     }
+
+    fun saveToken(token: String) {
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+        editor.putString(KEY_TOKEN, token)
+        editor.apply()
+    }
+
+    fun getToken(): String {
+        return sharedPreferences.getString(KEY_TOKEN, "") ?: ""
+    }
+
 
 
     fun loginUser(username: String, password: String){
