@@ -12,7 +12,7 @@ interface OtherAPIs {
     @FormUrlEncoded
     @POST("/operator/get_task")
     suspend fun getTask(
-    @Field("station_id") station_id : String,
-    @Field("shift") shift : String
+    @Field("station_id") station_id : String
+//    @Field("shift") shift : String
     ): Response<allDataV2>
 }

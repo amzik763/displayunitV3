@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.cti.displayuni.R
-import com.cti.displayuni.utility.ChecksheetData
+import com.cti.displayuni.response.*
 import com.cti.displayuni.utility.KEY_TEXT_VALUE
 import com.cti.displayuni.utility.KEY_TOKEN
 import com.cti.displayuni.utility.PREFERNCES_NAME
@@ -29,7 +29,7 @@ class MainViewModel(context: Context) : ViewModel(){
 
     val checkSheetList = mutableListOf<String>()
     //VARIABLE FOR NEW CHECKSHEETDATA
-    val mChecksheetData = MutableLiveData<List<ChecksheetData>>()
+    val mChecksheetData = MutableLiveData<List<CheckSheetData>>()
 
     private val sharedPreferences: SharedPreferences
         get() = mContext.getSharedPreferences(PREFERNCES_NAME, Context.MODE_PRIVATE)
@@ -74,11 +74,19 @@ class MainViewModel(context: Context) : ViewModel(){
             }
     }
 
-    fun getTask(station_id:String, shift : String){
+    fun getTask(station_id:String){
 
         viewModelScope.launch {
-            repository.getTask(station_id, shift)
+            repository.getTask(station_id)
         }
+    }
+
+    fun addChecksheetData(){
+
+        viewModelScope.launch {
+            repository.fillChecksheet()
+        }
+
     }
 
 

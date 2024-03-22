@@ -289,7 +289,7 @@ fun GetTask() {
                       onClick = {
 
 //                          myComponents.navController.navigate(CHECKSHEET)
-                          myComponents.mainViewModel.getTask(myComponents.mainViewModel.getStationValue(), "B")
+                          myComponents.mainViewModel.getTask(myComponents.mainViewModel.getStationValue())
                       }
                   )
               }

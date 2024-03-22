@@ -21,16 +21,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.cti.displayuni.response.CheckSheetData
 import com.cti.displayuni.ui.theme.lightGrey
 import com.cti.displayuni.ui.theme.pureBlack
-import com.cti.displayuni.utility.ChecksheetData
 import com.cti.displayuni.utility.mFont.nk
 import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
 
 @Composable
-fun ItemComponents(item: ChecksheetData) {
+fun ItemComponents(item: CheckSheetData) {
 
    val conf = LocalConfiguration.current
    val dnsty = conf.densityDpi
@@ -95,7 +95,7 @@ fun ItemComponents(item: ChecksheetData) {
       Text(modifier = Modifier
          .fillMaxWidth(fillMaxWidth)
          .padding(start = startPadding1),
-         text ="${item.param_id}",
+         text ="${item.csp_id}",
          color = pureBlack,
          fontFamily = nk,
          fontSize = textFont,
@@ -105,7 +105,7 @@ fun ItemComponents(item: ChecksheetData) {
       Text(modifier = Modifier
          .fillMaxWidth(fillMaxWidth2)
          .padding(start = startPadding2),
-         text = if(myComponents.mUiViewModel.isHindi.value) "${item.parav_value_hindi}" else "${item.param_value}" ,
+         text = if(myComponents.mUiViewModel.isHindi.value) "${item.csp_name_hindi}" else "${item.csp_name}" ,
          color = pureBlack,
          fontFamily = nk,
          fontSize = textFont,
@@ -135,14 +135,14 @@ fun ItemComponents(item: ChecksheetData) {
       Text(modifier = Modifier
          .fillMaxWidth(fillMaxWidth5)
          .padding(start = startPadding2),
-         text ="${item.frequency}",
+         text = item.frequency,
          color = pureBlack,
          fontFamily = nk,
          fontSize = textFont,
          textAlign = TextAlign.Center
       )
 
-      DropDown(item.param_id)
+      DropDown(item.csp_id)
 
       Text(modifier = Modifier
          .fillMaxWidth(fillMaxWidth5)
@@ -158,7 +158,7 @@ fun ItemComponents(item: ChecksheetData) {
    }
 }
 @Composable
-fun ItemListColumn(mChecksheetData: List<ChecksheetData>) {
+fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
 
    val conf = LocalConfiguration.current
    val dnsty = conf.densityDpi

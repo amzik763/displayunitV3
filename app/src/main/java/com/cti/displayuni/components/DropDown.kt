@@ -1,5 +1,6 @@
 package com.cti.displayuni.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentSize
@@ -25,6 +26,8 @@ import com.cti.displayuni.utility.myComponents
 
 @Composable
 fun DropDown(paramId: String) {
+    Log.d("abcccc",myComponents.mainViewModel.checkSheetList.size.toString())
+
     var expanded by remember { mutableStateOf(false) }
 //    val selectedItem by rememberUpdatedState("Status")
     var selectedItem by remember { mutableStateOf("Status") }

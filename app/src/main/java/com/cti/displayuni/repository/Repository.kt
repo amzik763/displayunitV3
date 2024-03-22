@@ -57,18 +57,41 @@ suspend fun loginUser(username: String, password: String) {
 
 
 //send employee id
-suspend fun getTask(station_id: String, shift: String){
-           taskResponse =  otherAPIs.getTask(station_id, shift)
+suspend fun getTask(station_id: String){
+        try {
 
-            if(taskResponse.code() == 200){
+            Log.d("abcbc: ", station_id)
+            taskResponse = otherAPIs.getTask(station_id)
+
+            if (taskResponse.code() == 200) {
                 //move to checksheet page
+                mainViewModel.mChecksheetData.value = taskResponse.let { it.body()?.check_sheet_datas }
+                mainViewModel.mChecksheetData.value?.forEach{
+                    mainViewModel.checkSheetList.add("status")
+                }
                 myComponents.navController.popBackStack()
                 myComponents.navController.navigate(CHECKSHEET)
             }
 
-            if (taskResponse.code() == 401){
-                myComponents.mUiViewModel.showTaskNotApprovedDialog()
+            if (taskResponse.code() == 401) {
+                mUiViewModel.showTaskNotApprovedDialog()
             }
+
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
+    }
+
+    suspend fun fillChecksheet(){
+
+        var checkSheetStatus = ""
+        mainViewModel.checkSheetList.forEach{
+            checkSheetStatus += "$it,"
+            println(checkSheetStatus)
+        }
+
+        val new_checkSheetStatus = checkSheetStatus.dropLast(1)
 
     }
 

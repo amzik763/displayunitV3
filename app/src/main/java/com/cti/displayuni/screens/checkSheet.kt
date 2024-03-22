@@ -55,7 +55,7 @@ fun Checksheet() {
 
     val dnsty = conf.densityDpi
 
-    Log.d("mdpi density: ", dnsty.toString())
+//    Log.d("mdpi density: ", dnsty.toString())
 
     val wd = mParameters.mWidthinPx
     //myUI variables
@@ -117,8 +117,6 @@ fun Checksheet() {
 
         showLogs("Desktop: ", wd.toString())
     }
-
-
 
     Column(modifier = Modifier.fillMaxSize(),
 //          verticalArrangement = Arrangement.SpaceBetween
@@ -291,7 +289,7 @@ fun Checksheet() {
                                 .fillMaxWidth()
                                 .padding(9.dp),
                             onClick = {
-//                                myComponents.mainViewModel.addProcessData()
+                                myComponents.mainViewModel.addChecksheetData()
                             }
                         )
                     }
