@@ -54,6 +54,16 @@ class UiViewModel(context: Context) : ViewModel(){
         isMessageDialogShown = false
     }
 
+    var isTaskNotApprovedShown by mutableStateOf(false)
+        private set
+    fun showTaskNotApprovedDialog() {
+        isTaskNotApprovedShown = true
+    }
+
+    fun hideTaskNotApprovedDialog() {
+        isTaskNotApprovedShown = false
+    }
+
 
     private var job: Job? = null
 

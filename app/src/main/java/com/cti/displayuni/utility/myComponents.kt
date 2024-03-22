@@ -4,6 +4,7 @@ import androidx.navigation.NavHostController
 import com.cti.displayuni.networks.AuthAPIs
 import com.cti.displayuni.networks.OtherAPIs
 import com.cti.displayuni.repository.Repository
+import com.cti.displayuni.response.allDataV2
 import com.cti.displayuni.response.login_response
 import com.cti.displayuni.viewmodels.MainViewModel
 import com.cti.displayuni.viewmodels.MainViewModelFactory
@@ -28,5 +29,6 @@ object myComponents {
 object responses{
 
     lateinit var loginResponse: Response<login_response>
+    lateinit var taskResponse: Response<allDataV2>
 
 }

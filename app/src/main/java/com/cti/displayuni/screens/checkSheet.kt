@@ -29,6 +29,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -43,8 +44,9 @@ import com.cti.displayuni.utility.mFont
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
+import com.cti.displayuni.utility.showLogs
 
-//@Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
+@Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
 @Composable
 fun Checksheet() {
     val conf = LocalConfiguration.current
@@ -70,10 +72,10 @@ fun Checksheet() {
     var startpadding2 = 52.dp
     var endpadding2 = 52.dp
     var textFont3 = 20.sp
-    Log.d("dwinsize: ", wd.toString())
+    showLogs("dwinsize: ", wd.toString())
 
     mParameters.dnsty = dnsty
-    Log.d("mparam density: ", mParameters.dnsty.toString())
+    showLogs("mparam density: ", mParameters.dnsty.toString())
 
     if (wd <= 2048 && mParameters.dnsty == 320) {
 
@@ -93,7 +95,7 @@ fun Checksheet() {
         startpadding2 = 40.dp
         endpadding2 = 30.dp
 
-        Log.d("lwinsize: ", wd.toString())
+        showLogs("lwinsize: ", wd.toString())
 
     } else if (wd <= 2048 && mParameters.dnsty == 160) {
 
@@ -113,7 +115,7 @@ fun Checksheet() {
         imgSize =50.dp
         toppadding2 = 52.dp
 
-        Log.d("Desktop: ", wd.toString())
+        showLogs("Desktop: ", wd.toString())
     }
 
 
@@ -246,7 +248,7 @@ fun Checksheet() {
         }
 
         Row(modifier = Modifier
-            .padding(start = startpadding2, end = endpadding2, top = toppadding2)
+            .padding(start = startpadding2, end = endpadding2, top = 16.dp)
             .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween) {
             Row(

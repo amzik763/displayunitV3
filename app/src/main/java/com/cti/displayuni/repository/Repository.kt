@@ -3,6 +3,7 @@ package com.cti.displayuni.repository
 import android.util.Log
 import com.amzi.displayunit.networks.RetrofitBuilder
 import com.cti.displayuni.R
+import com.cti.displayuni.utility.CHECKSHEET
 import com.cti.displayuni.utility.GETTASK
 import com.cti.displayuni.utility.LOGIN
 import com.cti.displayuni.utility.myComponents
@@ -11,6 +12,7 @@ import com.cti.displayuni.utility.myComponents.mUiViewModel
 import com.cti.displayuni.utility.myComponents.mainViewModel
 import com.cti.displayuni.utility.myComponents.otherAPIs
 import com.cti.displayuni.utility.responses.loginResponse
+import com.cti.displayuni.utility.responses.taskResponse
 import com.cti.displayuni.utility.showLogs
 
 class Repository () {
@@ -54,9 +56,20 @@ suspend fun loginUser(username: String, password: String) {
     }
 
 
-
+//send employee id
 suspend fun getTask(station_id: String, shift: String){
-            otherAPIs.getTask(station_id, shift)
+           taskResponse =  otherAPIs.getTask(station_id, shift)
+
+            if(taskResponse.code() == 200){
+                //move to checksheet page
+                myComponents.navController.popBackStack()
+                myComponents.navController.navigate(CHECKSHEET)
+            }
+
+            if (taskResponse.code() == 401){
+                myComponents.mUiViewModel.showTaskNotApprovedDialog()
+            }
+
     }
 
 }

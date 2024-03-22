@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import com.amzi.displayunit.networks.RetrofitBuilder
 import com.cti.displayuni.dialogBox.MessageDialog
 import com.cti.displayuni.dialogBox.NetworkErrorDialog
+import com.cti.displayuni.dialogBox.TaskNotApproved
 import com.cti.displayuni.navigation.Navigate
 import com.cti.displayuni.networks.OtherAPIs
 import com.cti.displayuni.repository.Repository
@@ -74,9 +75,10 @@ class MainActivity : ComponentActivity() {
 
 
         setContent {
-                Navigate()
+              Navigate()
               NetworkDialog(mUiViewModel , applicationContext )
-                MessageDia(mUiViewModel )
+              MessageDia(mUiViewModel)
+              NoTaskDia(mUiViewModel = mUiViewModel)
         }
     }
 
@@ -100,8 +102,8 @@ fun NetworkDialog(mUiViewModel: UiViewModel, applicationContext: Context) {
         }
 }
 
-@Composable
-fun MessageDia(mUiViewModel: UiViewModel) {
+    @Composable
+    fun MessageDia(mUiViewModel: UiViewModel) {
         if (mUiViewModel.isMessageDialogShown) {
             MessageDialog(onDismiss = {
             },
@@ -110,8 +112,23 @@ fun MessageDia(mUiViewModel: UiViewModel) {
                 },
                 dialogModel = mUiViewModel.dialogModel,
 
-            )
+                )
         }
-}
+    }
+
+    @Composable
+    fun NoTaskDia(mUiViewModel: UiViewModel) {
+        if (mUiViewModel.isTaskNotApprovedShown) {
+            TaskNotApproved(
+                onDismiss = {
+
+                },
+                onConfirm = {
+
+                },
+                uiviewModel = mUiViewModel
+                )
+        }
+    }
 
 }
