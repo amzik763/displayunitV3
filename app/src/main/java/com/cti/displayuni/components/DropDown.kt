@@ -26,12 +26,14 @@ import com.cti.displayuni.utility.myComponents
 
 @Composable
 fun DropDown(paramId: String) {
-    Log.d("abcccc",myComponents.mainViewModel.checkSheetList.size.toString())
+    Log.d("abc",myComponents.mainViewModel.checkSheetList.size.toString())
 
     var expanded by remember { mutableStateOf(false) }
 //    val selectedItem by rememberUpdatedState("Status")
     var selectedItem by remember { mutableStateOf("Status") }
-    val items = listOf("OK", "NG", "SUP OK")
+    val items = listOf("OK", "NG", "SUP_OK")
+
+
 
     LaunchedEffect(selectedItem) {
         // Use LaunchedEffect to update selectedItem after recomposition
@@ -63,6 +65,13 @@ fun DropDown(paramId: String) {
                         )
                     ) },
                     onClick = {
+
+                        if(item == "SUP_OK"){
+
+                        }
+
+
+
                     selectedItem = item
                     myComponents.mainViewModel.checkSheetList.set(Integer.parseInt(paramId) -1,item)
                         myComponents.mainViewModel.checkSheetList.forEach { println(it) }

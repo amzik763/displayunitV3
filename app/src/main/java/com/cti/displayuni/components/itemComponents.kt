@@ -142,8 +142,6 @@ fun ItemComponents(item: CheckSheetData) {
          textAlign = TextAlign.Center
       )
 
-      DropDown(item.csp_id)
-
       Text(modifier = Modifier
          .fillMaxWidth(fillMaxWidth5)
          .padding(start = startPadding2),
@@ -155,6 +153,10 @@ fun ItemComponents(item: CheckSheetData) {
          fontSize = textFont,
          textAlign = TextAlign.Center
       )
+
+      DropDown(item.csp_id)
+
+
    }
 }
 @Composable

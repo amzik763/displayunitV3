@@ -1,11 +1,10 @@
 package com.cti.displayuni.repository
 
 import android.util.Log
-import com.amzi.displayunit.networks.RetrofitBuilder
+import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.R
 import com.cti.displayuni.utility.CHECKSHEET
 import com.cti.displayuni.utility.GETTASK
-import com.cti.displayuni.utility.LOGIN
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.myComponents.authAPI
 import com.cti.displayuni.utility.myComponents.mUiViewModel
@@ -21,7 +20,7 @@ class Repository () {
         Log.d("Repository:", "Created")
     }
 
-suspend fun loginUser(username: String, password: String) {
+    suspend fun loginUser(username: String, password: String) {
         try {
             loginResponse = authAPI.login(username, password)
             if (loginResponse.isSuccessful) {
@@ -32,7 +31,8 @@ suspend fun loginUser(username: String, password: String) {
                 myComponents.navController.navigate(GETTASK)
 
                 mainViewModel.saveToken(loginResponse.body()?.token.toString())
-                mainViewModel.name = loginResponse.body()?.fName.toString() +" "+ loginResponse.body()?.lName.toString()
+                mainViewModel.name =
+                    loginResponse.body()?.fName.toString() + " " + loginResponse.body()?.lName.toString()
                 mainViewModel.employeeId = loginResponse.body()?.employee_id.toString()
                 mainViewModel.deviceId = mainViewModel.getStationValue()
                 otherAPIs = RetrofitBuilder.createApiServiceWithToken()
@@ -56,8 +56,8 @@ suspend fun loginUser(username: String, password: String) {
     }
 
 
-//send employee id
-suspend fun getTask(station_id: String){
+    //send employee id
+    suspend fun getTask(station_id: String) {
         try {
 
             Log.d("abcbc: ", station_id)
@@ -65,8 +65,9 @@ suspend fun getTask(station_id: String){
 
             if (taskResponse.code() == 200) {
                 //move to checksheet page
-                mainViewModel.mChecksheetData.value = taskResponse.let { it.body()?.check_sheet_datas }
-                mainViewModel.mChecksheetData.value?.forEach{
+                mainViewModel.mChecksheetData.value =
+                    taskResponse.let { it.body()?.check_sheet_datas }
+                mainViewModel.mChecksheetData.value?.forEach {
                     mainViewModel.checkSheetList.add("status")
                 }
                 myComponents.navController.popBackStack()
@@ -77,22 +78,30 @@ suspend fun getTask(station_id: String){
                 mUiViewModel.showTaskNotApprovedDialog()
             }
 
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
     }
 
-    suspend fun fillChecksheet(){
+    fun fillChecksheet() {
 
-        var checkSheetStatus = ""
-        mainViewModel.checkSheetList.forEach{
-            checkSheetStatus += "$it,"
-            println(checkSheetStatus)
+        try {
+
+            var checkSheetStatus = ""
+
+
+
+            for ((index,checksheet) in mainViewModel.mChecksheetData.value!!.withIndex()) {
+                checkSheetStatus += "${checksheet.csp_id} ${mainViewModel.checkSheetList[index]},"
+            }
+            val new_checkSheetStatus = checkSheetStatus.dropLast(1)
+
+            showLogs("CHECKSHEEEET",new_checkSheetStatus.toString())
+
+
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-
-        val new_checkSheetStatus = checkSheetStatus.dropLast(1)
-
     }
-
 }

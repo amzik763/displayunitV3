@@ -1,7 +1,5 @@
-package com.amzi.displayunit.networks
+package com.cti.displayuni.networks
 
-import com.cti.displayuni.networks.AuthAPIs
-import com.cti.displayuni.networks.OtherAPIs
 import com.cti.displayuni.utility.myComponents
 import okhttp3.ConnectionPool
 import okhttp3.OkHttpClient
