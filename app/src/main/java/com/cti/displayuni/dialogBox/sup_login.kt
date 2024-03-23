@@ -8,20 +8,27 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,6 +37,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,10 +45,16 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.cti.displayuni.R
+import com.cti.displayuni.components.PasswordInputTextField
+import com.cti.displayuni.components.SupPassword
+import com.cti.displayuni.components.SupUserId
+import com.cti.displayuni.components.UserIdInputTextField
 import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.lightOrange
+import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
+import com.cti.displayuni.utility.mFont.nk
 import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mFont.nkmedium
 import com.cti.displayuni.utility.mFont.poppinsregular
@@ -53,6 +67,10 @@ fun SupLoginDialog(){
     val conf = LocalConfiguration.current
     val dnsty = conf.densityDpi
 
+    var name by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
+
     Log.d("mdpi density: ", dnsty.toString())
 
     val wd = mParameters.mWidthinPx
@@ -60,7 +78,7 @@ fun SupLoginDialog(){
     var fillMaxWidth = 0.65f
     var fillMaxHeight = 0.45f
     var mainHeaderFont = 58.sp
-    var semiHeaderFont = 36.sp
+    var semiHeaderFont = 24.sp
     var textFont1 = 18.sp
     var maxWidth = 0.3f
     var width = 180.dp
@@ -87,7 +105,7 @@ fun SupLoginDialog(){
         maxWidth = 0.24f
         startPadding = 16.dp
         mainHeaderFont = 30.sp
-        semiHeaderFont = 20.sp
+        semiHeaderFont = 14.sp
         textFont1 = 15.sp
         topPadding = 20.dp
         width = 180.dp
@@ -130,8 +148,8 @@ fun SupLoginDialog(){
         ) {
             Row(modifier = Modifier
                 .fillMaxWidth(fillMaxWidth)
-              .fillMaxHeight(fillMaxHeight)
-              .background(pureWhite)) {
+                .fillMaxHeight(fillMaxHeight)
+                .background(pureWhite)) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(maxWidth)
@@ -162,7 +180,12 @@ fun SupLoginDialog(){
                 }
                 Column(
                     modifier = Modifier
-                        .padding(top = topPadding, start = startPadding, end = endPadding, bottom = bottomPadding)
+                        .padding(
+                            top = topPadding,
+                            start = startPadding,
+                            end = endPadding,
+                            bottom = bottomPadding
+                        )
                         .fillMaxSize(),
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -177,14 +200,40 @@ fun SupLoginDialog(){
                             )
                         )
 
-                        Text(modifier = Modifier.padding(
-                            top = 36.dp),
-                            text = "dialogModel.dialogSubHeaderText",
+                        Spacer(modifier = Modifier.height(12.dp))
+
+
+                        SupUserId(
+                            text = name,
+                            label = "Username",
+                            onTextChange = { name = it },
+                            color = pureBlack,
+                            iconResId = R.drawable.usericon,
+                            maxLength = 40,
+                            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text),
+                            shape = RoundedCornerShape(8.dp)
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        SupPassword(
+                            text = password,
+                            label = "Password",
+                            onTextChange = { password = it },
+                            color = pureBlack,
+                            iconResId = R.drawable.ic_lock,
+                            maxLength = 20,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                            shape = RoundedCornerShape(8.dp)
+                        )
+
+                        Text(modifier = Modifier.padding(top = 36.dp),
+                            text = "dialogModel.dialogSubHeader Text",
                             style = TextStyle(
-                                fontSize = semiHeaderFont,
+//                                fontSize = semiHeaderFont,
+                                fontSize = 24.sp,
                                 color = lightBlack,
                                 textAlign = TextAlign.Center,
-                                fontFamily = nkmedium
+                                fontFamily = nk
                             )
                         )
 
