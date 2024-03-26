@@ -65,8 +65,7 @@ import com.cti.displayuni.viewmodels.UiViewModel
 @Composable
 fun SupLoginDialog(
     onDismiss: () -> Unit,
-    onConfirm: () -> Unit,
-    uiviewModel: UiViewModel
+    onConfirm: () -> Unit
 ){
 
     val conf = LocalConfiguration.current

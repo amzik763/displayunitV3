@@ -141,8 +141,7 @@ fun supLoginDia(mUiViewModel: UiViewModel) {
             },
             onConfirm = {
 
-            },
-            uiviewModel = mUiViewModel
+            }
         )
     }
 }

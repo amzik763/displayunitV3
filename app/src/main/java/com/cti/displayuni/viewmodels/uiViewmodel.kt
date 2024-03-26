@@ -64,7 +64,6 @@ class UiViewModel(context: Context) : ViewModel(){
         isTaskNotApprovedShown = false
     }
 
-
     var isLoginSupShown by mutableStateOf(false)
         private set
     fun showLoginSupDialog() {

@@ -289,7 +289,7 @@ fun Checksheet() {
                                 .fillMaxWidth()
                                 .padding(9.dp),
                             onClick = {
-                                myComponents.mainViewModel.addChecksheetData()
+                                myComponents.mainViewModel. addChecksheetData()
                             }
                         )
                     }
