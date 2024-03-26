@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.dialogBox.MessageDialog
 import com.cti.displayuni.dialogBox.NetworkErrorDialog
+import com.cti.displayuni.dialogBox.SupLoginDialog
 import com.cti.displayuni.dialogBox.TaskNotApproved
 import com.cti.displayuni.navigation.Navigate
 import com.cti.displayuni.repository.Repository
@@ -76,6 +77,7 @@ class MainActivity : ComponentActivity() {
               NetworkDialog(mUiViewModel , applicationContext )
               MessageDia(mUiViewModel)
               NoTaskDia(mUiViewModel = mUiViewModel)
+              supLoginDia(mUiViewModel = mUiViewModel)
         }
     }
 
@@ -124,8 +126,24 @@ fun NetworkDialog(mUiViewModel: UiViewModel, applicationContext: Context) {
 
                 },
                 uiviewModel = mUiViewModel
-                )
+            )
         }
     }
 
 }
+
+@Composable
+fun supLoginDia(mUiViewModel: UiViewModel) {
+    if (mUiViewModel.isLoginSupShown) {
+        SupLoginDialog(
+            onDismiss = {
+
+            },
+            onConfirm = {
+
+            },
+            uiviewModel = mUiViewModel
+        )
+    }
+}
+

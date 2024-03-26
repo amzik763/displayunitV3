@@ -59,10 +59,15 @@ import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mFont.nkmedium
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
+import com.cti.displayuni.viewmodels.UiViewModel
 
-@Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
+//@Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
 @Composable
-fun SupLoginDialog(){
+fun SupLoginDialog(
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
+    uiviewModel: UiViewModel
+){
 
     val conf = LocalConfiguration.current
     val dnsty = conf.densityDpi

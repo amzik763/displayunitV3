@@ -33,8 +33,6 @@ fun DropDown(paramId: String) {
     var selectedItem by remember { mutableStateOf("Status") }
     val items = listOf("OK", "NG", "SUP_OK")
 
-
-
     LaunchedEffect(selectedItem) {
         // Use LaunchedEffect to update selectedItem after recomposition
         selectedItem = myComponents.mainViewModel.checkSheetList[Integer.parseInt(paramId) - 1]
@@ -47,7 +45,7 @@ fun DropDown(paramId: String) {
                 .fillMaxWidth(0.9f)
                 .wrapContentSize()
         ) {
-            Text(selectedItem) // Display the selected item
+            Text(selectedItem) //Display the selected item
             Icon(Icons.Default.ArrowDropDown, contentDescription = null)
         }
 
@@ -67,10 +65,8 @@ fun DropDown(paramId: String) {
                     onClick = {
 
                         if(item == "SUP_OK"){
-
+                             myComponents.mUiViewModel
                         }
-
-
 
                     selectedItem = item
                     myComponents.mainViewModel.checkSheetList.set(Integer.parseInt(paramId) -1,item)

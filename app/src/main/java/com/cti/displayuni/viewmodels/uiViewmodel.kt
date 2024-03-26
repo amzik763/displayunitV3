@@ -65,6 +65,17 @@ class UiViewModel(context: Context) : ViewModel(){
     }
 
 
+    var isLoginSupShown by mutableStateOf(false)
+        private set
+    fun showLoginSupDialog() {
+        isLoginSupShown = true
+    }
+
+    fun hideLoginSupDialog() {
+        isLoginSupShown = false
+    }
+
+
     private var job: Job? = null
 
     private val _currentDateTime = MutableLiveData<String>()
