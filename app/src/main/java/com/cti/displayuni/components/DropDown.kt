@@ -65,7 +65,7 @@ fun DropDown(paramId: String) {
                     onClick = {
 
                         if(item == "SUP_OK"){
-                             myComponents.mUiViewModel
+                             myComponents.mUiViewModel.showLoginSupDialog()
                         }
 
                     selectedItem = item
