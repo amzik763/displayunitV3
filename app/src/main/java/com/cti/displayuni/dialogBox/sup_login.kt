@@ -65,16 +65,15 @@ import com.cti.displayuni.viewmodels.UiViewModel
 @Composable
 fun SupLoginDialog(
     onDismiss: () -> Unit,
-    onConfirm: () -> Unit
+    onConfirm: () -> Unit,
+    myfunction:(username: String, password: String) -> Unit
 ){
 
     val conf = LocalConfiguration.current
     val dnsty = conf.densityDpi
 
     var name by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-
-
+    var password by remember { mutableStateOf("")}
     Log.d("mdpi density: ", dnsty.toString())
 
     val wd = mParameters.mWidthinPx
@@ -267,6 +266,9 @@ fun SupLoginDialog(
                                     .padding(9.dp)
                                     .align(Alignment.CenterHorizontally),
                                 onClick = {
+
+                                        myfunction(name,password)
+
                                 }
                             )
                         }
