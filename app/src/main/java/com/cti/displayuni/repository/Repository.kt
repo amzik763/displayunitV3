@@ -104,4 +104,25 @@ class Repository () {
             e.printStackTrace()
         }
     }
+
+
+    suspend fun supervisorLogin(username: String, password: String) {
+        try {
+            loginResponse = otherAPIs.supLogin(username, password)
+            if (loginResponse.isSuccessful) {
+
+                showLogs("AUTH: ", "Login Successful")
+
+            } else {
+
+                showLogs("AUTH: ", "Login Unsuccessful")
+            }
+            if (loginResponse.code() == 401) {
+
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
 }

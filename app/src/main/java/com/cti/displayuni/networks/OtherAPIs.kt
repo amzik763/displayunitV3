@@ -1,6 +1,7 @@
 package com.cti.displayuni.networks
 
 import com.cti.displayuni.response.allDataV2
+import com.cti.displayuni.response.login_response
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -16,5 +17,10 @@ interface OtherAPIs {
 //    @Field("shift") shift : String
     ): Response<allDataV2>
 
-
+    @FormUrlEncoded
+    @POST("/floorincharge/login")
+    suspend fun supLogin(
+        @Field("employee_id") employee_id : String,
+        @Field("password") password : String
+    ): Response<login_response>
 }

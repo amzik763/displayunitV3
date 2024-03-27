@@ -89,5 +89,8 @@ class MainViewModel(context: Context) : ViewModel(){
 
     }
 
+    fun supLogin(username: String, password: String){
 
+    }
+    
 }
