@@ -77,8 +77,9 @@ fun DropDown(paramId: String) {
     var selectedItem by remember { mutableStateOf("Status") }
     val items = listOf("OK", "NG", "SUP_OK")
 
-    LaunchedEffect(selectedItem) {
+    LaunchedEffect(selectedItem,expanded) {
         // Use LaunchedEffect to update selectedItem after recomposition
+        showLogs("UPDATED"," : UPDATED")
         selectedItem = myComponents.mainViewModel.checkSheetList[Integer.parseInt(paramId) - 1]
     }
 
@@ -109,6 +110,7 @@ fun DropDown(paramId: String) {
                     onClick = {
 
                         if (item == "SUP_OK") {
+                            expanded = false
                             myComponents.mainViewModel.tempParamID = paramId
                             // Show the custom dialog
                             CoroutineScope(Dispatchers.IO).launch {
@@ -122,10 +124,6 @@ fun DropDown(paramId: String) {
                             expanded = false
                         }
 
-//                    selectedItem = item
-//                    myComponents.mainViewModel.checkSheetList.set(Integer.parseInt(paramId) -1,item)
-//                        myComponents.mainViewModel.checkSheetList.forEach { println(it) }
-//                    expanded = false
                 })
             }
         }
@@ -133,17 +131,21 @@ fun DropDown(paramId: String) {
 
     if(myComponents.mUiViewModel.isLoginSupShown){
         SupLoginDialog(
-
+            selectedItem = selectedItem,
             onDismiss = { expanded = false },
-
+            updateSelectedItem = { newItem ->
+                selectedItem = newItem
+            },
             apiCall = { username, password ->
                 var mResponse =  myComponents.otherAPIs.supLogin(username, password)
                 if(mResponse.isSuccessful){
                     var a = "SUP_OK"
-                    selectedItem = "SUP_OK"
-                        myComponents.mainViewModel.checkSheetList.set(Integer.parseInt(myComponents.mainViewModel.tempParamID) - 1, a)
-                        showLogs("mParamID: ",myComponents.mainViewModel.tempParamID)
-                        myComponents.mainViewModel.checkSheetList.forEach { println(it) }
+                        selectedItem = "SUP_OK"
+                    myComponents.mainViewModel.checkSheetList.set(Integer.parseInt(myComponents.mainViewModel.tempParamID) - 1, a)
+                    showLogs("mParamID: ",myComponents.mainViewModel.tempParamID)
+                    myComponents.mainViewModel.checkSheetList.forEach { println(it) }
+                    expanded = false
+                    showLogs("EXPANDED",expanded.toString())
                     myComponents.mUiViewModel.hideLoginSupDialog()
 
                 }else{
@@ -157,7 +159,9 @@ fun DropDown(paramId: String) {
 //@Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
 @Composable
 fun SupLoginDialog(
+    selectedItem: String,
     onDismiss: () -> Unit,
+    updateSelectedItem: (String) -> Unit, // Callback to update selectedItem
     apiCall: suspend (username: String, password: String) -> Unit
 ) {
 
@@ -230,7 +234,7 @@ fun SupLoginDialog(
     }
 
     Dialog(
-        onDismissRequest = {
+        onDismissRequest = { myComponents.mUiViewModel.hideLoginSupDialog()
         },
         properties = DialogProperties(
             usePlatformDefaultWidth = false
