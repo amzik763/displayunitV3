@@ -63,6 +63,7 @@ import com.cti.displayuni.ui.theme.pureWhite
 import com.cti.displayuni.utility.mFont
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
+import com.cti.displayuni.utility.showLogs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -108,8 +109,11 @@ fun DropDown(paramId: String) {
                     onClick = {
 
                         if (item == "SUP_OK") {
+                            myComponents.mainViewModel.tempParamID = paramId
                             // Show the custom dialog
+                            CoroutineScope(Dispatchers.IO).launch {
                                 myComponents.mUiViewModel.showLoginSupDialog()
+                            }
 
                         } else {
                             selectedItem = item
@@ -118,10 +122,10 @@ fun DropDown(paramId: String) {
                             expanded = false
                         }
 
-                    selectedItem = item
-                    myComponents.mainViewModel.checkSheetList.set(Integer.parseInt(paramId) -1,item)
-                        myComponents.mainViewModel.checkSheetList.forEach { println(it) }
-                    expanded = false
+//                    selectedItem = item
+//                    myComponents.mainViewModel.checkSheetList.set(Integer.parseInt(paramId) -1,item)
+//                        myComponents.mainViewModel.checkSheetList.forEach { println(it) }
+//                    expanded = false
                 })
             }
         }
@@ -129,16 +133,19 @@ fun DropDown(paramId: String) {
 
     if(myComponents.mUiViewModel.isLoginSupShown){
         SupLoginDialog(
+
             onDismiss = { expanded = false },
 
             apiCall = { username, password ->
                 var mResponse =  myComponents.otherAPIs.supLogin(username, password)
                 if(mResponse.isSuccessful){
-                    selectedItem.let {
-                        selectedItem = it
-                        myComponents.mainViewModel.checkSheetList.set(Integer.parseInt(paramId) - 1, it)
+                    var a = "SUP_OK"
+                    selectedItem = "SUP_OK"
+                        myComponents.mainViewModel.checkSheetList.set(Integer.parseInt(myComponents.mainViewModel.tempParamID) - 1, a)
+                        showLogs("mParamID: ",myComponents.mainViewModel.tempParamID)
                         myComponents.mainViewModel.checkSheetList.forEach { println(it) }
-                    }
+                    myComponents.mUiViewModel.hideLoginSupDialog()
+
                 }else{
                     //error message or string
                 }
@@ -146,52 +153,6 @@ fun DropDown(paramId: String) {
         )
     }
 }
-
-@Composable
-fun CustomDialog(
-    onDismiss: () -> Unit,
-    apiCall: suspend (username: String, password: String) -> Unit
-) {
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-
-    Column(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        // Username text field
-        TextField(
-            value = username,
-            onValueChange = { username = it },
-            label = { Text("Username") }
-        )
-
-        // Password text field
-        TextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Password") },
-            visualTransformation = PasswordVisualTransformation(),
-        )
-
-        // Button to initiate API call
-        Button(
-            onClick = {
-                // Call the API with username and password
-                CoroutineScope(Dispatchers.IO).launch {
-                    try {
-                        apiCall(username, password)
-                    } catch (e: Exception) {
-                        // Handle API call failure
-                        Log.e("API Call", "Exception: ${e.message}")
-                    }
-                }
-            }
-        ) {
-            Text("Login")
-        }
-    }
-}
-
 
 //@Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
 @Composable
@@ -282,8 +243,8 @@ fun SupLoginDialog(
         ) {
             Row(
                 modifier = Modifier
-                    .fillMaxWidth(fillMaxWidth)
-                    .fillMaxHeight(fillMaxHeight)
+                    .fillMaxWidth(0.9f)
+                    .fillMaxHeight(0.9f)
                     .background(pureWhite)
             ) {
                 Row(

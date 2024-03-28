@@ -77,7 +77,7 @@ class MainActivity : ComponentActivity() {
               NetworkDialog(mUiViewModel , applicationContext )
               MessageDia(mUiViewModel)
               NoTaskDia(mUiViewModel = mUiViewModel)
-              supLoginDia(mUiViewModel = mUiViewModel)
+//              supLoginDia(mUiViewModel = mUiViewModel)
         }
     }
 
@@ -131,18 +131,18 @@ fun NetworkDialog(mUiViewModel: UiViewModel, applicationContext: Context) {
     }
 
 }
-
-@Composable
-fun supLoginDia(mUiViewModel: UiViewModel) {
-    if (mUiViewModel.isLoginSupShown) {
-        SupLoginDialog(
-            onDismiss = {
-
-            },
-            onConfirm = {
-
-            }
-        )
-    }
-}
-
+//
+//@Composable
+//fun supLoginDia(mUiViewModel: UiViewModel) {
+//    if (mUiViewModel.isLoginSupShown) {
+//        SupLoginDialog(
+//            onDismiss = {
+//
+//            },
+//            onConfirm = {
+//
+//            }
+//        )
+//    }
+//}
+//

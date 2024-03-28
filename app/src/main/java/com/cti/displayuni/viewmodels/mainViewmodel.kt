@@ -27,6 +27,8 @@ class MainViewModel(context: Context) : ViewModel(){
     var deviceId by mutableStateOf("")
     var employeeId by mutableStateOf("")
 
+    var tempParamID by mutableStateOf("")
+
     val checkSheetList = mutableListOf<String>()
     //VARIABLE FOR NEW CHECKSHEETDATA
     val mChecksheetData = MutableLiveData<List<CheckSheetData>>()
