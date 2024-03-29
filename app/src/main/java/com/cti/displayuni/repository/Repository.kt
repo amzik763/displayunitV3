@@ -19,7 +19,6 @@ class Repository () {
     init {
         Log.d("Repository:", "Created")
     }
-
     suspend fun loginUser(username: String, password: String) {
         try {
             loginResponse = authAPI.login(username, password)
@@ -31,8 +30,7 @@ class Repository () {
                 myComponents.navController.navigate(GETTASK)
 
                 mainViewModel.saveToken(loginResponse.body()?.token.toString())
-                mainViewModel.name =
-                    loginResponse.body()?.fName.toString() + " " + loginResponse.body()?.lName.toString()
+                mainViewModel.name = loginResponse.body()?.fName.toString() + " " + loginResponse.body()?.lName.toString()
                 mainViewModel.employeeId = loginResponse.body()?.employee_id.toString()
                 mainViewModel.deviceId = mainViewModel.getStationValue()
                 otherAPIs = RetrofitBuilder.createApiServiceWithToken()
