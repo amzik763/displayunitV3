@@ -72,18 +72,15 @@ import kotlinx.coroutines.launch
 fun DropDown(paramId: String) {
     Log.d("abc",myComponents.mainViewModel.checkSheetList.size.toString())
 
-
     var expanded by remember { mutableStateOf(false) }
-//    val selectedItem by rememberUpdatedState("Status")
+//  val selectedItem by rememberUpdatedState("Status")
     var selectedItem by remember { mutableStateOf("Status") }
     val items = listOf("OK", "NG", "SUP_OK")
 
     LaunchedEffect(selectedItem) {
         // Use LaunchedEffect to update selectedItem after recomposition
-//        showLogs("UPDATED"," : UPDATED")
         selectedItem = myComponents.mainViewModel.checkSheetList[Integer.parseInt(paramId) - 1]
     }
-
     Column {
         OutlinedButton(
             onClick = { expanded = true },
@@ -91,10 +88,10 @@ fun DropDown(paramId: String) {
                 .fillMaxWidth(0.9f)
                 .wrapContentSize()
         ) {
-            Text(selectedItem) //Display the selected item
+            Text(selectedItem)
+            //Display the selected item
             Icon(Icons.Default.ArrowDropDown, contentDescription = null)
         }
-
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
@@ -113,7 +110,8 @@ fun DropDown(paramId: String) {
                             myComponents.mainViewModel.checkSheetList.set(Integer.parseInt(paramId) - 1, item)
                             myComponents.mainViewModel.checkSheetList.forEach { println(it) }
                             expanded = false
-                })
+                    }
+                )
             }
         }
     }

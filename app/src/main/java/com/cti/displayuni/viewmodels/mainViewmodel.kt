@@ -15,6 +15,7 @@ import com.cti.displayuni.response.*
 import com.cti.displayuni.utility.KEY_TEXT_VALUE
 import com.cti.displayuni.utility.KEY_TOKEN
 import com.cti.displayuni.utility.PREFERNCES_NAME
+import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.myComponents.mUiViewModel
 import com.cti.displayuni.utility.myComponents.repository
 import com.cti.displayuni.utility.showLogs
@@ -99,8 +100,17 @@ class MainViewModel(context: Context) : ViewModel(){
 
     }
 
-    fun supLogin(username: String, password: String){
+fun checkItemsInList() {
+        val checkSheetList = myComponents.mainViewModel.checkSheetList
+        for (item in checkSheetList) {
+            if (item == "SUP_OK") {
+                showLogs("DIALOG","SHOW DIALOG")
+                mUiViewModel.showLoginSupDialog()
+                return
+            }
+        }
+        myComponents.mainViewModel.addChecksheetData()
+         showLogs("DIALOG","HIDE DIALOG")
 
-    }
-    
+     }
 }

@@ -61,6 +61,7 @@ import com.cti.displayuni.utility.mFont.nkmedium
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
+import com.cti.displayuni.utility.showLogs
 import com.cti.displayuni.viewmodels.UiViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -269,6 +270,10 @@ fun SupLoginDialog(
                                          val mRes =    myComponents.otherAPIs.supLogin(name,password)
                                             if (mRes.isSuccessful){
                                                 myComponents.mainViewModel.isSupLoginSuccessful = true
+
+                                                errorMsg = " "
+                                                showLogs("LOGIN","LOGIN SUCCESSFUL")
+
                                             }
                                         }
                                     }
@@ -329,11 +334,16 @@ fun SupLoginDialog(
                                     onClick = {
                                         if (myComponents.mainViewModel.isSupLoginSuccessful){
                                             errorMsg = ""
-
                                             myComponents.mainViewModel. addChecksheetData()
+
+                                            myComponents.mUiViewModel.hideLoginSupDialog()
+                                            showLogs("CHECKSHEET","Sheet Added")
+
 
                                         }else{
                                             errorMsg = "Please Login First"
+                                            showLogs("CHECKSHEET",errorMsg)
+
                                         }
 
                                 }
