@@ -292,13 +292,22 @@ fun Checksheet2() {
                                 .fillMaxWidth()
                                 .padding(9.dp),
                             onClick = {
+//                                myComponents.mainViewModel.checkSheetList.forEach{ item ->
 
+                                showLogs("LISTT",myComponents.mainViewModel.checkSheetList.size.toString())
+                                for(item in myComponents.mainViewModel.checkSheetList){
 
-                                myComponents.mainViewModel.checkSheetList.forEach{ item ->
+                                    showLogs("DIALOG","SHOW DIALOG")
+
                                     if (item == "SUP_OK"){
+
+                                        showLogs("DIALOG","SHOW DIALOG")
                                         myComponents.mUiViewModel.showLoginSupDialog()
+                                        break
                                     }else{
-                                        myComponents.mainViewModel. addChecksheetData()
+                                        showLogs("DIALOG","HIDE DIALOG")
+                                        myComponents.mainViewModel.addChecksheetData()
+                                        break
                                     }
                                 }
                             }

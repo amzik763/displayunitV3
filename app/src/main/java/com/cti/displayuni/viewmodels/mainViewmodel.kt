@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,9 +24,14 @@ class MainViewModel(context: Context) : ViewModel(){
 
     var mContext = context
 
+    var isSupLoginSuccessful = false
+
     var name by mutableStateOf("")
     var deviceId by mutableStateOf("")
     var employeeId by mutableStateOf("")
+
+    var errorMsg by mutableStateOf("")
+
 
     var tempParamID by mutableStateOf("")
 

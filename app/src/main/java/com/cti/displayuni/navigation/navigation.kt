@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cti.displayuni.screens.Checksheet
+import com.cti.displayuni.screens.Checksheet2
 import com.cti.displayuni.screens.Configure
 import com.cti.displayuni.screens.GetTask
 import com.cti.displayuni.screens.Login
@@ -40,9 +41,11 @@ fun Navigate() {
         composable(GETTASK){
             GetTask()
         }
-
         composable(CHECKSHEET){
-            Checksheet()
+            Checksheet2()
         }
+       /* composable(CHECKSHEET){
+            Checksheet()
+        }*/
     }
 }
