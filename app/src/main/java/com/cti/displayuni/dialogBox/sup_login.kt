@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.lifecycle.LifecycleCoroutineScope
 import com.cti.displayuni.R
 import com.cti.displayuni.components.PasswordInputTextField
 import com.cti.displayuni.components.SupPassword
@@ -59,22 +60,27 @@ import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mFont.nkmedium
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
+import com.cti.displayuni.utility.myComponents
+import com.cti.displayuni.utility.showLogs
 import com.cti.displayuni.viewmodels.UiViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 //@Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
 @Composable
 fun SupLoginDialog(
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
-    myfunction:(username: String, password: String) -> Unit
-){
+) {
 
     val conf = LocalConfiguration.current
     val dnsty = conf.densityDpi
 
     var name by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("")}
+    var password by remember { mutableStateOf("") }
     Log.d("mdpi density: ", dnsty.toString())
+    var errorMsg by remember { mutableStateOf("") }
 
     val wd = mParameters.mWidthinPx
     //myUI variables
@@ -104,13 +110,12 @@ fun SupLoginDialog(
         endPadding = 20.dp
         bottomPadding = 16.dp
         fillMaxWidth = 0.6f
-        fillMaxHeight = 0.45f
+        fillMaxHeight = 0.6f
         maxWidth = 0.24f
         startPadding = 16.dp
         mainHeaderFont = 30.sp
         semiHeaderFont = 14.sp
         textFont1 = 15.sp
-        topPadding = 20.dp
         width = 180.dp
         height = 40.dp
         imgSize = 80.dp
@@ -124,16 +129,15 @@ fun SupLoginDialog(
         endPadding = 48.dp
         bottomPadding = 48.dp
         fillMaxWidth = 0.65f
-        fillMaxHeight = 0.45f
+        fillMaxHeight = 0.6f
         maxWidth = 0.3f
         startPadding = 36.dp
         mainHeaderFont = 56.sp
-        semiHeaderFont = 36.sp
+        semiHeaderFont = 30.sp
         textFont1 = 24.sp
-        topPadding = 24.dp
         width = 210.dp
         height = 50.dp
-        imgSize =200.dp
+        imgSize = 200.dp
         Log.d("Desktop: ", wd.toString())
     }
 
@@ -149,10 +153,12 @@ fun SupLoginDialog(
             modifier = Modifier
                 .border(1.dp, color = Color.White, shape = RoundedCornerShape(8.dp))
         ) {
-            Row(modifier = Modifier
-                .fillMaxWidth(fillMaxWidth)
-                .fillMaxHeight(fillMaxHeight)
-                .background(pureWhite)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(fillMaxWidth)
+                    .fillMaxHeight(fillMaxHeight)
+                    .background(pureWhite)
+            ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(maxWidth)
@@ -161,21 +167,24 @@ fun SupLoginDialog(
                     verticalAlignment = Alignment.CenterVertically
 
                 ) {
-                    Image(painter = painterResource(id = R.drawable.ic_account),
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_account),
                         contentDescription = "Login",
 //                        contentScale = ContentScale.Crop,
                         modifier = Modifier.size(imgSize)
                     )
                 }
 
-                Column(modifier = Modifier
-                    .padding(8.dp)
-                    .width(8.dp)) {
+                Column(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .width(8.dp)
+                ) {
                     Divider(
                         Modifier
                             .fillMaxHeight()
                             .padding(
-                                top = 4.dp,
+                                top = 40.dp,
                                 bottom = 10.dp
                             ),
                         color = lightOrange
@@ -193,7 +202,8 @@ fun SupLoginDialog(
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column {
-                        Text(text = "Login Supervisor",
+                        Text(
+                            text = "Login Supervisor",
                             style = TextStyle(
                                 fontSize = mainHeaderFont,
                                 color = lightBlack,
@@ -229,45 +239,112 @@ fun SupLoginDialog(
                             shape = RoundedCornerShape(8.dp)
                         )
 
-                        Text(modifier = Modifier.padding(top = 36.dp),
-                            text = "dialogModel.dialogSubHeader Text",
-                            style = TextStyle(
-//                                fontSize = semiHeaderFont,
-                                fontSize = 24.sp,
-                                color = lightBlack,
-                                textAlign = TextAlign.Center,
-                                fontFamily = nk
-                            )
-                        )
+
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalAlignment = Alignment.End
+                        ) {
+                            Surface(
+                                modifier = Modifier
+                                    .padding(top = 24.dp)
+                                    .size(width = width, height = height),
+                                color = darkBlue,
+                                shape = RoundedCornerShape(corner = CornerSize(24.dp)),
+                                border = BorderStroke(width = 1.dp, color = darkBlue)
+                            ) {
+                                ClickableText(
+                                    text = AnnotatedString("LOGIN"),
+                                    style = TextStyle(
+                                        color = pureWhite,
+                                        fontSize = textFont1,
+                                        fontFamily = poppinsregular,
+                                        fontWeight = FontWeight.Bold,
+                                        textAlign = TextAlign.Center
+                                    ),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(9.dp)
+                                        .align(Alignment.CenterHorizontally),
+                                    onClick = {
+                                        CoroutineScope(Dispatchers.IO).launch {
+                                         val mRes =    myComponents.otherAPIs.supLogin(name,password)
+                                            if (mRes.isSuccessful){
+                                                myComponents.mainViewModel.isSupLoginSuccessful = true
+
+                                                errorMsg = " "
+                                                showLogs("LOGIN","LOGIN SUCCESSFUL")
+
+                                            }
+                                        }
+                                    }
+                                )
+                            }
+                        }
 
                     }
 
-                    Column(modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.End){
-                        Surface(
-                            modifier = Modifier
-                                .padding(top = 16.dp)
-                                .size(width = width, height = height),
-                            color = darkBlue,
-                            shape = RoundedCornerShape(corner = CornerSize(24.dp)),
-                            border = BorderStroke(width = 1.dp, color = darkBlue)
-                        ) {
-                            ClickableText(
-                                text = AnnotatedString("LOGIN"),
-                                style = TextStyle(
-                                    color = pureWhite,
-                                    fontSize = textFont1,
-                                    fontFamily = poppinsregular,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.Center
-                                ),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(9.dp)
-                                    .align(Alignment.CenterHorizontally),
-                                onClick = {
+                    Text(
+                        text = "Click submit to finally submit the checksheet",
+                        style = TextStyle(
+                            fontSize = semiHeaderFont,
+                            color = lightBlack,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center,
+                            fontFamily = nkbold
+                        )
+                    )
 
-                                        myfunction(name,password)
+                    Text(
+                        text = errorMsg,
+                        style = TextStyle(
+                            fontSize = semiHeaderFont,
+                            color = lightBlack,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center,
+                            fontFamily = nkbold
+                        )
+                    )
+
+
+                        Column(
+                            modifier = Modifier.fillMaxWidth()
+                                .padding(top = 24.dp),
+                            horizontalAlignment = Alignment.End
+                        ) {
+                            Surface(
+                                modifier = Modifier
+                                    .size(width = width, height = height),
+                                color = darkBlue,
+                                shape = RoundedCornerShape(corner = CornerSize(24.dp)),
+                                border = BorderStroke(width = 1.dp, color = darkBlue)
+                            ) {
+                                ClickableText(
+                                    text = AnnotatedString("SUBMIT"),
+                                    style = TextStyle(
+                                        color = pureWhite,
+                                        fontSize = textFont1,
+                                        fontFamily = poppinsregular,
+                                        fontWeight = FontWeight.Bold,
+                                        textAlign = TextAlign.Center
+                                    ),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(9.dp)
+                                        .align(Alignment.CenterHorizontally),
+                                    onClick = {
+                                        if (myComponents.mainViewModel.isSupLoginSuccessful){
+                                            errorMsg = ""
+                                            myComponents.mainViewModel. addChecksheetData()
+
+                                            myComponents.mUiViewModel.hideLoginSupDialog()
+                                            showLogs("CHECKSHEET","Sheet Added")
+
+
+                                        }else{
+                                            errorMsg = "Please Login First"
+                                            showLogs("CHECKSHEET",errorMsg)
+
+                                        }
 
                                 }
                             )

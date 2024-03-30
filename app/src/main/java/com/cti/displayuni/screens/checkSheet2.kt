@@ -115,19 +115,25 @@ fun Checksheet2() {
         endpadding2 = 52.dp
         width = 240.dp
         height = 52.dp
-        imgSize =50.dp
+        imgSize = 50.dp
         toppadding2 = 52.dp
 
         showLogs("Desktop: ", wd.toString())
     }
 
-    Column(modifier = Modifier.fillMaxSize(),
+    Column(
+        modifier = Modifier.fillMaxSize(),
 //          verticalArrangement = Arrangement.SpaceBetween
-      ) {
+    ) {
         Box(
             modifier = Modifier
                 .background(color = lightGrey)
-                .padding(top = topPadding, end = endPadding, start = startPadding, bottom = bottomPadding)
+                .padding(
+                    top = topPadding,
+                    end = endPadding,
+                    start = startPadding,
+                    bottom = bottomPadding
+                )
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -208,7 +214,8 @@ fun Checksheet2() {
                         painter = painterResource(id = R.drawable.ic_hindi),
                         contentDescription = "Hindi icon",
                         modifier = Modifier.size(imgSize).clickable {
-                            myComponents.mUiViewModel.isHindi.value = !myComponents.mUiViewModel.isHindi.value
+                            myComponents.mUiViewModel.isHindi.value =
+                                !myComponents.mUiViewModel.isHindi.value
                         }
                     )
                     Image(
@@ -248,10 +255,12 @@ fun Checksheet2() {
             }
         }
 
-        Row(modifier = Modifier
-            .padding(start = startpadding2, end = endpadding2, top = 16.dp)
-            .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween) {
+        Row(
+            modifier = Modifier
+                .padding(start = startpadding2, end = endpadding2, top = 16.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
             Row(
                 horizontalArrangement = Arrangement.Center
             ) {
@@ -292,15 +301,29 @@ fun Checksheet2() {
                                 .fillMaxWidth()
                                 .padding(9.dp),
                             onClick = {
+//                                myComponents.mainViewModel.checkSheetList.forEach{ item ->
 
+                                showLogs(
+                                    "LISTT",
+                                    myComponents.mainViewModel.checkSheetList.size.toString()
+                                )
 
-                                myComponents.mainViewModel.checkSheetList.forEach{ item ->
+                                myComponents.mainViewModel.checkItemsInList()
+
+                                /*    for(item in myComponents.mainViewModel.checkSheetList){
+
+                                    showLogs("DIALOG","SHOW DIALOG")
+
                                     if (item == "SUP_OK"){
+                                        showLogs("DIALOG","SHOW DIALOG")
                                         myComponents.mUiViewModel.showLoginSupDialog()
+                                        break
                                     }else{
-                                        myComponents.mainViewModel. addChecksheetData()
+                                        showLogs("DIALOG","HIDE DIALOG")
+                                        myComponents.mainViewModel.addChecksheetData()
+                                        break
                                     }
-                                }
+                                }*/
                             }
                         )
                     }
@@ -308,5 +331,5 @@ fun Checksheet2() {
             }
         }
     }
-}
 
+}

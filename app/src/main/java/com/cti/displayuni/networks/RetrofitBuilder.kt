@@ -50,14 +50,12 @@ object RetrofitBuilder {
 
     // OLD BASE URL FOR PRODUCTION
     // private const val BASE_URL = "http://10.0.3.101:5000"
-    private const val BASE_URL = "http://192.168.1.7:5000"
+    private const val BASE_URL = "http://192.168.1.6:5000"
 
     // Define your logging interceptor
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BASIC
     }
-
-
 
     // Function to create OkHttpClient with token interceptor
     private fun createOkHttpClient(): OkHttpClient {

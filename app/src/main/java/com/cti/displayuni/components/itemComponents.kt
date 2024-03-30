@@ -307,7 +307,5 @@ fun ItemListScreen() {
 //   val mChecksheetData by myComponents.mainViewModel.mChecksheet.observeAsState()
 
    val mChecksheetData by myComponents.mainViewModel.mChecksheetData.observeAsState()
-
-
    mChecksheetData?.let { ItemListColumn(it) }
 }
