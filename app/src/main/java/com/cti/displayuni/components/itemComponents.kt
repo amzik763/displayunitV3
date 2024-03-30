@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,7 +30,7 @@ import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
 
 @Composable
-fun ItemComponents(item: CheckSheetData) {
+fun ItemComponents(index:Int,item: CheckSheetData) {
 
    val conf = LocalConfiguration.current
    val dnsty = conf.densityDpi
@@ -154,7 +154,7 @@ fun ItemComponents(item: CheckSheetData) {
          textAlign = TextAlign.Center
       )
 
-      DropDown(item.csp_id)
+      DropDown(item.csp_id,index)
 
 
    }
@@ -295,8 +295,8 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
          }
       Spacer(modifier = Modifier.height(24.dp))
          LazyColumn {
-            items(mChecksheetData) { item ->
-               ItemComponents(item = item)
+            itemsIndexed(mChecksheetData){ index,item ->
+               ItemComponents(index = index,item = item)
             }
       }
    }
