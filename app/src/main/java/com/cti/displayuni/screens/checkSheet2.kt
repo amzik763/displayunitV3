@@ -1,6 +1,5 @@
 package com.cti.displayuni.screens
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,7 +31,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import com.cti.displayuni.R
 import com.cti.displayuni.components.ItemListScreen
 import com.cti.displayuni.ui.theme.darkBlue
@@ -107,7 +105,7 @@ fun Checksheet2() {
         endPadding = 48.dp
         bottomPadding = 24.dp
         startPadding = 36.dp
-        textFont1 = 36.sp
+        textFont1 = 30.sp
         textFont2 = 20.sp
         textFont3 = 22.sp
         toppadding2 = 14.dp
@@ -211,18 +209,9 @@ fun Checksheet2() {
                 )
                 {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_hindi),
-                        contentDescription = "Hindi icon",
-                        modifier = Modifier.size(imgSize).clickable {
-                            myComponents.mUiViewModel.isHindi.value =
-                                !myComponents.mUiViewModel.isHindi.value
-                        }
-                    )
-                    Image(
                         painter = painterResource(id = R.drawable.ic_account),
                         contentDescription = "Account",
                         modifier = Modifier.size(imgSize)
-
                     )
                     Image(
                         painter = painterResource(id = R.drawable.ic_logout),
@@ -242,7 +231,7 @@ fun Checksheet2() {
             modifier = Modifier
                 .padding(top = 0.dp)
                 .background(color = lightGrey)
-                .fillMaxHeight(0.83f)
+                .fillMaxHeight(0.9f)
         ) {
             Box(
                 modifier = Modifier
@@ -301,7 +290,6 @@ fun Checksheet2() {
                                 .fillMaxWidth()
                                 .padding(9.dp),
                             onClick = {
-//                                myComponents.mainViewModel.checkSheetList.forEach{ item ->
 
                                 showLogs(
                                     "LISTT",
@@ -310,20 +298,6 @@ fun Checksheet2() {
 
                                 myComponents.mainViewModel.checkItemsInList()
 
-                                /*    for(item in myComponents.mainViewModel.checkSheetList){
-
-                                    showLogs("DIALOG","SHOW DIALOG")
-
-                                    if (item == "SUP_OK"){
-                                        showLogs("DIALOG","SHOW DIALOG")
-                                        myComponents.mUiViewModel.showLoginSupDialog()
-                                        break
-                                    }else{
-                                        showLogs("DIALOG","HIDE DIALOG")
-                                        myComponents.mainViewModel.addChecksheetData()
-                                        break
-                                    }
-                                }*/
                             }
                         )
                     }

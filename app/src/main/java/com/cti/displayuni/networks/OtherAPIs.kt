@@ -33,4 +33,15 @@ interface OtherAPIs {
         @Field("csp_id") csp_id : String,
         @Field("floor_no") floor_no : String
     ): Response<notify_response>
+
+    @FormUrlEncoded
+    @POST("/operator/add_checksheet_data")
+    suspend fun checkSheetData(
+        @Field("oprtr_employee_id") oprtr_employee_id: String,
+        @Field("flrInchr_employee_id") flrInchr_employee_id : String,
+        @Field("status_datas") status_datas : String,
+        @Field("station_id") station_id : String
+    ): Response<notify_response>
+
+
 }

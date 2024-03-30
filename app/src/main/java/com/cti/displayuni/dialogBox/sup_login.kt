@@ -267,10 +267,9 @@ fun SupLoginDialog(
                                         .align(Alignment.CenterHorizontally),
                                     onClick = {
                                         CoroutineScope(Dispatchers.IO).launch {
-                                         val mRes =    myComponents.otherAPIs.supLogin(name,password)
+                                         val mRes = myComponents.otherAPIs.supLogin(name,password)
                                             if (mRes.isSuccessful){
                                                 myComponents.mainViewModel.isSupLoginSuccessful = true
-
                                                 errorMsg = " "
                                                 showLogs("LOGIN","LOGIN SUCCESSFUL")
 

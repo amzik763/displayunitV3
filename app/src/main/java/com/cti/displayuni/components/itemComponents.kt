@@ -1,6 +1,8 @@
 package com.cti.displayuni.components
 
 import android.util.Log
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,26 +10,41 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.cti.displayuni.R
 import com.cti.displayuni.response.CheckSheetData
+import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.lightGrey
+import com.cti.displayuni.ui.theme.lightOrange
+import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
+import com.cti.displayuni.ui.theme.pureWhite
+import com.cti.displayuni.utility.mFont
 import com.cti.displayuni.utility.mFont.nk
 import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
+import com.cti.displayuni.utility.showLogs
 
 @Composable
 fun ItemComponents(index:Int,item: CheckSheetData) {
@@ -48,7 +65,9 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
    var startPadding2 = 16.dp
    var textFont = 16.sp
    var maintextFont = 16.sp
-
+   var width = 180.dp
+   var height = 40.dp
+   var imgSize = 50.dp
 
    Log.d("dwinsize: ", wd.toString())
 
@@ -67,6 +86,11 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
       maintextFont = 16.sp
       startPadding1 = 6.dp
       startPadding2 = 12.dp
+      width = 185.dp
+      height = 40.dp
+      imgSize = 30.dp
+
+
 
       Log.d("lwinsize: ", wd.toString())
 
@@ -81,8 +105,9 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
       maintextFont = 20.sp
       startPadding1 = 8.dp
       startPadding2 = 16.dp
-
-
+      width = 240.dp
+      height = 52.dp
+      imgSize = 50.dp
 
       Log.d("Desktop: ", wd.toString())
    }
@@ -142,7 +167,23 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
          textAlign = TextAlign.Center
       )
 
-      Text(modifier = Modifier
+      Surface(
+         modifier = Modifier
+            .fillMaxWidth(fillMaxWidth5)
+            .padding(start = startPadding2)
+            .size(width = width, height = height),
+         color = lightOrange,
+         shape = RoundedCornerShape(corner = CornerSize(36.dp)),
+         border = BorderStroke(width = 1.dp, color = lightOrange),
+      ) {
+         Image(
+            painter = painterResource(id = R.drawable.ic_account),
+            contentDescription = "Account",
+            modifier = Modifier.size(imgSize)
+         )
+      }
+
+/*      Text(modifier = Modifier
          .fillMaxWidth(fillMaxWidth5)
          .padding(start = startPadding2),
          text ="Notify",
@@ -152,10 +193,9 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
          fontFamily = nk,
          fontSize = textFont,
          textAlign = TextAlign.Center
-      )
+      )*/
 
       DropDown(item.csp_id,index)
-
 
    }
 }
