@@ -34,8 +34,6 @@ fun DropDown(paramId: String, index: Int) {
     val items = listOf("OK", "NG", "SUP_OK")
 
     LaunchedEffect(selectedItem) {
-        // Use LaunchedEffect to update selectedItem after recomposition
-//        selectedItem = myComponents.mainViewModel.checkSheetList[Integer.parseInt(paramId) - 1]
         selectedItem = myComponents.mainViewModel.checkSheetList[index]
     }
     Column {
