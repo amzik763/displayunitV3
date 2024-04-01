@@ -53,8 +53,6 @@ class Repository () {
         }
     }
 
-
-    //send employee id
     suspend fun getTask(station_id: String) {
         try {
 
@@ -82,13 +80,36 @@ class Repository () {
 
     }
 
-    fun fillChecksheet() {
+    suspend fun checkSheetStatus(oprtr_employee_id: String,flrInchr_employee_id : String, status_datas: String, station_id : String) {
+        try {
 
+            taskResponse = otherAPIs.getTask(station_id)
+
+            if (taskResponse.code() == 200) {
+                //move to checksheet page
+                mainViewModel.mChecksheetData.value =
+                    taskResponse.let { it.body()?.check_sheet_datas }
+                mainViewModel.mChecksheetData.value?.forEach {
+                    mainViewModel.checkSheetList.add("status")
+                }
+                myComponents.navController.popBackStack()
+                myComponents.navController.navigate(CHECKSHEET)
+            }
+
+            if (taskResponse.code() == 401) {
+                mUiViewModel.showTaskNotApprovedDialog()
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    fun fillChecksheet() {
         try {
 
             var checkSheetStatus = ""
-
-
 
             for ((index,checksheet) in mainViewModel.mChecksheetData.value!!.withIndex()) {
                 checkSheetStatus += "${checksheet.csp_id} ${mainViewModel.checkSheetList[index]},"
@@ -102,6 +123,4 @@ class Repository () {
             e.printStackTrace()
         }
     }
-
-
 }

@@ -1,6 +1,7 @@
 package com.cti.displayuni.networks
 
 import com.cti.displayuni.response.allDataV2
+import com.cti.displayuni.response.checksheet_Status
 import com.cti.displayuni.response.login_response
 import com.cti.displayuni.response.notify_response
 import com.cti.displayuni.response.sup_response
@@ -41,7 +42,7 @@ interface OtherAPIs {
         @Field("flrInchr_employee_id") flrInchr_employee_id : String,
         @Field("status_datas") status_datas : String,
         @Field("station_id") station_id : String
-    ): Response<notify_response>
+    ): Response<checksheet_Status>
 
 
 }
