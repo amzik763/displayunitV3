@@ -93,6 +93,10 @@ class MainViewModel(context: Context) : ViewModel(){
 
     fun addChecksheetData(){
         viewModelScope.launch {
+            showLogs("CHECKSHEET API: ",employeeId)
+            showLogs("CHECKSHEET API: ",ficID)
+            showLogs("CHECKSHEET API: ",getStationValue())
+            showLogs("CHECKSHEET API: ",employeeId)
             repository.checkSheetStatus(employeeId,ficID,getStationValue(),repository.fillChecksheet())
         }
     }

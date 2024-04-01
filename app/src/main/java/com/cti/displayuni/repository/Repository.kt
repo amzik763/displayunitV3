@@ -97,13 +97,15 @@ class Repository () {
 
             if (checkSheetResponse.code() == 200) {
                 //move to last page page
-                myComponents.navController.popBackStack()
-                myComponents.navController.navigate(CHECKSHEET)
+                showLogs("CHECKSHEEEEEEt:","ADDED")
+//                myComponents.navController.popBackStack()
+//                myComponents.navController.navigate(CHECKSHEET)
+            }else{
+                showLogs("CHECKSHEEEEEEt:","NOT ADDED")
+
             }
 
-            if (checkSheetResponse.code() == 401) {
-                mUiViewModel.showTaskNotApprovedDialog()
-            }
+
 
         } catch (e: Exception) {
             e.printStackTrace()
