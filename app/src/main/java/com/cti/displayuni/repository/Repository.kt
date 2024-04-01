@@ -10,6 +10,7 @@ import com.cti.displayuni.utility.myComponents.authAPI
 import com.cti.displayuni.utility.myComponents.mUiViewModel
 import com.cti.displayuni.utility.myComponents.mainViewModel
 import com.cti.displayuni.utility.myComponents.otherAPIs
+import com.cti.displayuni.utility.responses.checkSheetResponse
 import com.cti.displayuni.utility.responses.loginResponse
 import com.cti.displayuni.utility.responses.taskResponse
 import com.cti.displayuni.utility.showLogs
@@ -19,6 +20,7 @@ class Repository () {
     init {
         Log.d("Repository:", "Created")
     }
+
     suspend fun loginUser(username: String, password: String) {
         try {
             loginResponse = authAPI.login(username, password)
@@ -30,7 +32,8 @@ class Repository () {
                 myComponents.navController.navigate(GETTASK)
 
                 mainViewModel.saveToken(loginResponse.body()?.token.toString())
-                mainViewModel.name = loginResponse.body()?.fName.toString() + " " + loginResponse.body()?.lName.toString()
+                mainViewModel.name =
+                    loginResponse.body()?.fName.toString() + " " + loginResponse.body()?.lName.toString()
                 mainViewModel.employeeId = loginResponse.body()?.employee_id.toString()
                 mainViewModel.deviceId = mainViewModel.getStationValue()
                 otherAPIs = RetrofitBuilder.createApiServiceWithToken()
@@ -66,6 +69,8 @@ class Repository () {
                 mainViewModel.mChecksheetData.value?.forEach {
                     mainViewModel.checkSheetList.add("status")
                 }
+
+                mainViewModel.ficID = taskResponse.body()?.emoloyee_id_floor_incharge.toString()
                 myComponents.navController.popBackStack()
                 myComponents.navController.navigate(CHECKSHEET)
             }
@@ -80,23 +85,23 @@ class Repository () {
 
     }
 
-    suspend fun checkSheetStatus(oprtr_employee_id: String,flrInchr_employee_id : String, status_datas: String, station_id : String) {
+    suspend fun checkSheetStatus(
+        employeeId: String,
+        ficID: String,
+        stationValue: String,
+        fillChecksheet: String
+    ) {
         try {
+            checkSheetResponse =
+                otherAPIs.checkSheetData(employeeId, ficID, fillChecksheet, stationValue)
 
-            taskResponse = otherAPIs.getTask(station_id)
-
-            if (taskResponse.code() == 200) {
-                //move to checksheet page
-                mainViewModel.mChecksheetData.value =
-                    taskResponse.let { it.body()?.check_sheet_datas }
-                mainViewModel.mChecksheetData.value?.forEach {
-                    mainViewModel.checkSheetList.add("status")
-                }
+            if (checkSheetResponse.code() == 200) {
+                //move to last page page
                 myComponents.navController.popBackStack()
                 myComponents.navController.navigate(CHECKSHEET)
             }
 
-            if (taskResponse.code() == 401) {
+            if (checkSheetResponse.code() == 401) {
                 mUiViewModel.showTaskNotApprovedDialog()
             }
 
@@ -106,21 +111,21 @@ class Repository () {
 
     }
 
-    fun fillChecksheet() {
+    fun fillChecksheet(): String {
+        var checkSheetStatus = ""
+
         try {
-
-            var checkSheetStatus = ""
-
-            for ((index,checksheet) in mainViewModel.mChecksheetData.value!!.withIndex()) {
+            for ((index, checksheet) in mainViewModel.mChecksheetData.value!!.withIndex()) {
                 checkSheetStatus += "${checksheet.csp_id} ${mainViewModel.checkSheetList[index]},"
             }
             val new_checkSheetStatus = checkSheetStatus.dropLast(1)
 
-            showLogs("CHECKSHEEEET",new_checkSheetStatus.toString())
-
+            showLogs("CHECKSHEEEET", new_checkSheetStatus.toString())
 
         } catch (e: Exception) {
             e.printStackTrace()
         }
+        return checkSheetStatus
+
     }
 }
