@@ -14,6 +14,7 @@ import com.cti.displayuni.utility.responses.checkSheetResponse
 import com.cti.displayuni.utility.responses.loginResponse
 import com.cti.displayuni.utility.responses.taskResponse
 import com.cti.displayuni.utility.showLogs
+import okhttp3.internal.notify
 
 class Repository () {
 
@@ -104,14 +105,29 @@ class Repository () {
                 showLogs("CHECKSHEEEEEEt:","NOT ADDED")
 
             }
-
-
-
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
     }
+
+suspend fun notify(stationValue: String, csp_id: String, floor_no: String) {
+
+
+        try {
+            val notifyResponse= otherAPIs.operatorNotify(stationValue,csp_id,floor_no)
+
+            if (notifyResponse.code() == 200) {
+
+                showLogs("NOTIFICATION:","Notification sent")
+            }else{
+                showLogs("NOTIFICATION:","Notification not sent")
+
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+}
 
     fun fillChecksheet(): String {
         var checkSheetStatus = ""

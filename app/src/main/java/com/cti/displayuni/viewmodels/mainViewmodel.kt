@@ -91,6 +91,13 @@ class MainViewModel(context: Context) : ViewModel(){
         }
     }
 
+    fun notify(stationValue: String, csp_id: String, floor_no: String){
+
+        viewModelScope.launch {
+            repository.notify(stationValue, csp_id, floor_no)
+        }
+    }
+
     fun addChecksheetData(){
         viewModelScope.launch {
             showLogs("CHECKSHEET API: ",employeeId)

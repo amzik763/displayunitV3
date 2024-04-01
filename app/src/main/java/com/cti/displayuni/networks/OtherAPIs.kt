@@ -43,6 +43,4 @@ interface OtherAPIs {
         @Field("status_datas") status_datas : String,
         @Field("station_id") station_id : String
     ): Response<checksheet_Status>
-
-
 }
