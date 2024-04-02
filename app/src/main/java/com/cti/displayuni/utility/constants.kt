@@ -8,6 +8,8 @@ package com.cti.displayuni.utility
  val KEY_TOKEN = "token"
  val KEY_TEXT_VALUE = "textValue"
 
+
+
 val CONFIGURE = "configure"
 val LOGIN = "Login"
 val GETTASK = "getTask"

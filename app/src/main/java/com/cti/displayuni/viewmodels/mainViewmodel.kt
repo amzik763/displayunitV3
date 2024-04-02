@@ -29,6 +29,8 @@ class MainViewModel(context: Context) : ViewModel(){
     var deviceId by mutableStateOf("")
     var employeeId by mutableStateOf("")
 
+    var floorNum by mutableStateOf("")
+
     var errorMsg by mutableStateOf("")
 
 
@@ -47,6 +49,7 @@ class MainViewModel(context: Context) : ViewModel(){
         editor.putString(KEY_TEXT_VALUE, textValue)
         editor.apply()
     }
+
 
     fun getStationValue(): String {
         return sharedPreferences.getString(KEY_TEXT_VALUE, "") ?: ""

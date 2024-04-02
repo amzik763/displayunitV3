@@ -87,9 +87,9 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
       maintextFont = 16.sp
       startPadding1 = 6.dp
       startPadding2 = 12.dp
-      width = 185.dp
-      height = 40.dp
-      imgSize = 30.dp
+      width = 90.dp
+      height = 36.dp
+      imgSize = 26.dp
 
 
 
@@ -106,9 +106,9 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
       maintextFont = 20.sp
       startPadding1 = 8.dp
       startPadding2 = 16.dp
-      width = 240.dp
-      height = 52.dp
-      imgSize = 50.dp
+      width = 120.dp
+      height = 48.dp
+      imgSize = 36.dp
 
       Log.d("Desktop: ", wd.toString())
    }
@@ -172,33 +172,21 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
          modifier = Modifier
             .fillMaxWidth(fillMaxWidth5)
             .padding(start = startPadding2)
-            .size(width = width, height = height),
+       /*     .size(width = width, height = height),
          color = lightOrange,
          shape = RoundedCornerShape(corner = CornerSize(36.dp)),
-         border = BorderStroke(width = 1.dp, color = lightOrange),
+         border = BorderStroke(width = 1.dp, color = lightOrange),*/
       ) {
          Image(
-            painter = painterResource(id = R.drawable.ic_account),
-            contentDescription = "Account",
-            modifier = Modifier.size(imgSize).clickable {
-
-
-
+            painter = painterResource(id = R.drawable.ic_notification),
+            contentDescription = "notification",
+            modifier = Modifier.size(imgSize).clickable
+            {
+//               myComponents.mainViewModel.notify(myComponents.mainViewModel.getStationValue(),item.csp_id,)
             }
          )
       }
 
-/*      Text(modifier = Modifier
-         .fillMaxWidth(fillMaxWidth5)
-         .padding(start = startPadding2),
-         text ="Notify",
-         color = pureBlack,
-         fontWeight = FontWeight.Bold,
-         fontStyle = FontStyle.Italic,
-         fontFamily = nk,
-         fontSize = textFont,
-         textAlign = TextAlign.Center
-      )*/
 
       DropDown(item.csp_id,index)
 

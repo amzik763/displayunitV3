@@ -52,6 +52,7 @@ import com.cti.displayuni.utility.mFont.nk
 import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
+import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.myComponents.mainViewModel
 import com.cti.displayuni.utility.myComponents.navController
 
@@ -72,8 +73,6 @@ fun Configure(){
 
     mParameters.dnsty = dnsty
     Log.d("mparam density: ", mParameters.dnsty.toString())
-
-
 
     if (wd <= 2048 && mParameters.dnsty == 320) {
         mainHeaderFont = 40.sp
@@ -102,13 +101,14 @@ fun Configure(){
 
     val existingTextValue = mainViewModel.getStationValue()
 
-    if (existingTextValue.isNotEmpty()) {
+  /*  if (existingTextValue.isNotEmpty()) {
 
         navController.popBackStack()
         navController.navigate(LOGIN)
 
-    } else{
-        val conf = LocalConfiguration.current
+//    }*/
+//    else{
+//        val conf = LocalConfiguration.current
         val widthDP = conf.screenWidthDp.dp
         Row {
             Box(modifier = Modifier.width(widthDP/3f)){
@@ -249,12 +249,16 @@ fun Configure(){
                             onClick = {
                                 mainViewModel.saveStationValue(G0F0L0S0Value)
                                 Log.d("Shared Value", G0F0L0S0Value)
+
+                               mainViewModel.floorNum = G0F0L0S0Value.split(" ").take(2).joinToString(" ")
+                                Log.d("FLOOR VALUE", mainViewModel.floorNum)
+
                                 navController.navigate(LOGIN)
                             }
                         )
                     }
                 }
-            }
+//            }
         }
     }
 }
