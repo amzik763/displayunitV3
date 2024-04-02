@@ -21,7 +21,8 @@ fun Header(){
         .fillMaxWidth()
         .fillMaxHeight()
             ) {
-        //First Column
+
+        //First Row
         Row(modifier = Modifier
             .background(color = extraLightGrey)
             .fillMaxWidth()
@@ -30,7 +31,7 @@ fun Header(){
         ) {
 
         }
-        //Second Column
+        //Second Row
         Row(modifier = Modifier
             .background(color = Color.Blue)
             .fillMaxWidth()
