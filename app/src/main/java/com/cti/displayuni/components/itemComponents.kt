@@ -1,7 +1,6 @@
 package com.cti.displayuni.components
 
 import android.util.Log
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,38 +13,27 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cti.displayuni.R
 import com.cti.displayuni.response.CheckSheetData
-import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.lightGrey
-import com.cti.displayuni.ui.theme.lightOrange
-import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
-import com.cti.displayuni.ui.theme.pureWhite
-import com.cti.displayuni.utility.mFont
 import com.cti.displayuni.utility.mFont.nk
 import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
-import com.cti.displayuni.utility.showLogs
 
 @Composable
 fun ItemComponents(index:Int,item: CheckSheetData) {
@@ -89,7 +77,7 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
       startPadding2 = 12.dp
       width = 90.dp
       height = 36.dp
-      imgSize = 26.dp
+      imgSize = 30.dp
 
 
 
@@ -108,14 +96,16 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
       startPadding2 = 16.dp
       width = 120.dp
       height = 48.dp
-      imgSize = 36.dp
+      imgSize = 40.dp
 
       Log.d("Desktop: ", wd.toString())
    }
 
    Row(
       modifier = Modifier
-         .fillMaxWidth()
+         .fillMaxWidth(),
+      verticalAlignment = Alignment.CenterVertically
+
 
    ) {
       Text(modifier = Modifier
@@ -125,7 +115,7 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
          color = pureBlack,
          fontFamily = nk,
          fontSize = textFont,
-         textAlign = TextAlign.Center
+//         textAlign = TextAlign.Center
       )
 
       Text(modifier = Modifier
@@ -135,7 +125,7 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
          color = pureBlack,
          fontFamily = nk,
          fontSize = textFont,
-         textAlign = TextAlign.Center
+//         textAlign = TextAlign.Center
       )
 
       Text(modifier = Modifier
@@ -145,7 +135,7 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
          color = pureBlack,
          fontFamily = nk,
          fontSize = textFont,
-         textAlign = TextAlign.Center
+//         textAlign = TextAlign.Center
       )
 
       Text(modifier = Modifier
@@ -155,7 +145,7 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
          color = pureBlack,
          fontFamily = nk,
          fontSize = textFont,
-         textAlign = TextAlign.Center
+//         textAlign = TextAlign.Center
       )
 
       Text(modifier = Modifier
@@ -165,30 +155,23 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
          color = pureBlack,
          fontFamily = nk,
          fontSize = textFont,
-         textAlign = TextAlign.Center
+//         textAlign = TextAlign.Center
       )
 
-      Surface(
-         modifier = Modifier
-            .fillMaxWidth(fillMaxWidth5)
-            .padding(start = startPadding2)
-       /*     .size(width = width, height = height),
-         color = lightOrange,
-         shape = RoundedCornerShape(corner = CornerSize(36.dp)),
-         border = BorderStroke(width = 1.dp, color = lightOrange),*/
-      ) {
+      DropDown(item.csp_id,index)
+
+
+      Surface {
          Image(
             painter = painterResource(id = R.drawable.ic_notification),
             contentDescription = "notification",
             modifier = Modifier.size(imgSize).clickable
             {
-//               myComponents.mainViewModel.notify(myComponents.mainViewModel.getStationValue(),item.csp_id,)
+               myComponents.mainViewModel.notify(myComponents.mainViewModel.getStationValue(),item.csp_id,myComponents.mainViewModel.floorNum)
             }
          )
       }
 
-
-      DropDown(item.csp_id,index)
 
    }
 }
@@ -209,6 +192,7 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
    var fillMaxWidth5 = 0.65f
    var startPadding1 = 8.dp
    var startPadding2 = 16.dp
+   var startPadding22 = 16.dp
    var textFont = 16.sp
    var maintextFont = 14.sp
 
@@ -229,9 +213,10 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
       fillMaxWidth5 = 0.3f
       textFont = 12.sp
       maintextFont = 14.sp
-
       startPadding1 = 6.dp
       startPadding2 = 12.dp
+      startPadding22 = 14.dp
+
 
 
       Log.d("lwinsize: ", wd.toString())
@@ -247,6 +232,8 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
       maintextFont = 20.sp
       startPadding1 = 8.dp
       startPadding2 = 16.dp
+      startPadding22 = 24.dp
+
 
 
       Log.d("Desktop: ", wd.toString())
@@ -268,7 +255,7 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
                color = pureBlack,
                fontFamily = nkbold,
                fontSize = maintextFont,
-               textAlign = TextAlign.Center
+//               textAlign = TextAlign.Center
             )
 
             Text(modifier = Modifier
@@ -279,7 +266,7 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
                color = pureBlack,
                fontFamily = nkbold,
                fontSize = maintextFont,
-               textAlign = TextAlign.Center
+//               textAlign = TextAlign.Center
             )
 
             Text(modifier = Modifier
@@ -290,7 +277,7 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
                color = pureBlack,
                fontFamily = nkbold,
                fontSize = maintextFont,
-               textAlign = TextAlign.Center
+//               textAlign = TextAlign.Center
             )
 
             Text(modifier = Modifier
@@ -301,7 +288,7 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
                color = pureBlack,
                fontFamily = nkbold,
                fontSize = maintextFont,
-               textAlign = TextAlign.Center
+//               textAlign = TextAlign.Center
             )
 
             Text(modifier = Modifier
@@ -312,12 +299,12 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
                color = pureBlack,
                fontFamily = nkbold,
                fontSize = maintextFont,
-               textAlign = TextAlign.Center
+//               textAlign = TextAlign.Center
             )
 
          Text(modifier = Modifier
-            .fillMaxWidth(0.9f)
-            .padding(start = startPadding2),
+            .fillMaxWidth(0.65f)
+            .padding(start = startPadding22),
             text = "Status",
             fontWeight = FontWeight.Bold,
             color = pureBlack,

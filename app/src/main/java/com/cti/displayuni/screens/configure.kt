@@ -101,14 +101,14 @@ fun Configure(){
 
     val existingTextValue = mainViewModel.getStationValue()
 
-  /*  if (existingTextValue.isNotEmpty()) {
+    if (existingTextValue.isNotEmpty()) {
 
         navController.popBackStack()
         navController.navigate(LOGIN)
 
-//    }*/
-//    else{
-//        val conf = LocalConfiguration.current
+    }
+    else{
+        val conf = LocalConfiguration.current
         val widthDP = conf.screenWidthDp.dp
         Row {
             Box(modifier = Modifier.width(widthDP/3f)){
@@ -258,7 +258,7 @@ fun Configure(){
                         )
                     }
                 }
-//            }
+            }
         }
     }
 }

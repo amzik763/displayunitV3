@@ -1,6 +1,7 @@
 package com.cti.displayuni.components
 
 import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentSize
@@ -36,11 +37,11 @@ fun DropDown(paramId: String, index: Int) {
     LaunchedEffect(selectedItem) {
         selectedItem = myComponents.mainViewModel.checkSheetList[index]
     }
-    Column {
+    Column (verticalArrangement = Arrangement.Center) {
         OutlinedButton(
             onClick = { expanded = true },
             modifier = Modifier
-                .fillMaxWidth(0.9f)
+                .fillMaxWidth(0.65f)
                 .wrapContentSize()
         ) {
             Text(selectedItem)
