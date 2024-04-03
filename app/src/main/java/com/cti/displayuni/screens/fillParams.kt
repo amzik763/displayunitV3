@@ -29,6 +29,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -45,17 +47,33 @@ import com.cti.displayuni.ui.theme.lightOrange
 import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureWhite
 import com.cti.displayuni.ui.theme.red
+import com.cti.displayuni.utility.mParameters
+import com.cti.displayuni.utility.showLogs
 
+
+
+var fontSmall = 12.sp
+var fontMedium = 18.sp
+var fontLarge = 22.sp
+var paddingSmall = 4.dp
+var paddingMedium = 8.dp
+var paddingLarge = 12.dp
+var heightSmall = 40.dp
+var heightMedium = 60.dp
+var heightLarge = 80.dp
+var heightinFSmall = 0.06f
+var heightinFMedium = 0.073f
+var heightinFLarge = 80.dp
 
 @Composable
 fun ReadingUI(){
 
         Row{
             Text(
-                text = "Readings   ",
+                text = "   Readings   ",
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
-                    fontSize = 28.sp
+                    fontSize = fontLarge
                 )
             )
             ReadingCircles("r1")
@@ -91,7 +109,7 @@ fun CheckingParts(checking:String,total:String,pass:String,fail:String){
             text = checking,
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
-                fontSize = 18.sp
+                fontSize = fontMedium
             )
         )
         Spacer(modifier = Modifier.width(24.dp))
@@ -99,7 +117,7 @@ fun CheckingParts(checking:String,total:String,pass:String,fail:String){
             text = total,
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
+                fontSize = fontMedium,
                 color = darkBlue
             )
         )
@@ -108,7 +126,7 @@ fun CheckingParts(checking:String,total:String,pass:String,fail:String){
             text = pass,
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
+                fontSize = fontMedium,
                 color = green
             )
         )
@@ -117,7 +135,7 @@ fun CheckingParts(checking:String,total:String,pass:String,fail:String){
             text = fail,
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
+                fontSize = fontMedium,
                 color = red
             )
         )
@@ -144,18 +162,19 @@ fun OrangeText(
         Row {
             Text( text = name,
                 style = TextStyle(
-                    fontSize = 18.sp
+                    fontSize = fontMedium
                 )
             )
             Text( text = value,
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
+                    fontSize = fontMedium
                 )
             )
         }
     }
 }
+
 
 @Composable
 fun Header(){
@@ -169,12 +188,15 @@ fun Header(){
             .background(color = extraLightGrey)
             .fillMaxWidth()
             .fillMaxHeight(0.06f)
-            .padding(12.dp),
+            .padding(paddingSmall),
+            verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
             //subRow
-            Row() {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 Column(
                     modifier = Modifier
                         .fillMaxHeight()
@@ -212,7 +234,7 @@ fun Header(){
                     text = "shiftValue 10:00 AM to 04:00 PM",
                     style = TextStyle(
                         fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp,
+                        fontSize = fontMedium,
                         color = orange
                     )
                 )
@@ -228,7 +250,7 @@ fun Header(){
                 ) {
                     Text(
                         text = "First Part Approval",
-                        fontSize = 17.sp,
+                        fontSize = fontMedium,
                         modifier = Modifier.padding(horizontal = 30.dp)
                     )
                 }
@@ -295,7 +317,7 @@ fun Header(){
                     ) {
                     Text(
                         text = "PASS",
-                        fontSize = 17.sp,
+                        fontSize = fontMedium,
                         modifier = Modifier.padding(horizontal = 30.dp)
                     )
                 }
@@ -312,7 +334,7 @@ fun Header(){
                     ) {
                     Text(
                         text = "FAIL",
-                        fontSize = 17.sp,
+                        fontSize = fontMedium,
                         modifier = Modifier.padding(horizontal = 30.dp)
                     )
                 }
@@ -326,8 +348,55 @@ fun Header(){
 }
 
 
+@Composable
+fun FillParam(){
+
+    val conf = LocalConfiguration.current
+    val dnsty = conf.densityDpi
+     mParameters.dnsty = dnsty
+
+
+
+    if (mParameters.dnsty == 320) {
+
+         fontSmall = 10.sp
+         fontMedium = 12.sp
+         fontLarge = 17.sp
+         paddingSmall = 2.dp
+         paddingMedium = 4.dp
+         paddingLarge = 8.dp
+         heightSmall = 34.dp
+         heightMedium = 50.dp
+         heightLarge = 70.dp
+         heightinFSmall = 0.06f
+         heightinFMedium = 0.073f
+         heightinFLarge = 80.dp
+        showLogs("DENSITY","320")
+
+    } else if (mParameters.dnsty == 160) {
+
+        fontSmall = 12.sp
+        fontMedium = 18.sp
+        fontLarge = 22.sp
+        paddingSmall = 4.dp
+        paddingMedium = 8.dp
+        paddingLarge = 12.dp
+        heightSmall = 40.dp
+        heightMedium = 60.dp
+        heightLarge = 80.dp
+        heightinFSmall = 0.06f
+        heightinFMedium = 0.073f
+        heightinFLarge = 80.dp
+        showLogs("DENSITY","160")
+
+
+    }
+
+    Header()
+}
+
 @Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewUi(){
-    Header()
+    FillParam()
 }

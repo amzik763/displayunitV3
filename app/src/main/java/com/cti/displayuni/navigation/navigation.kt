@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import com.cti.displayuni.screens.Checksheet
 import com.cti.displayuni.screens.Checksheet2
 import com.cti.displayuni.screens.Configure
+import com.cti.displayuni.screens.FillParam
 import com.cti.displayuni.screens.GetTask
 import com.cti.displayuni.screens.Header
 import com.cti.displayuni.screens.Login
@@ -37,7 +38,7 @@ fun Navigate() {
 
         composable(LOGIN){
 //            Login()
-            Header()
+            FillParam()
         }
 
         composable(GETTASK){
