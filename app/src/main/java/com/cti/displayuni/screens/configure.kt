@@ -96,7 +96,7 @@ fun Configure(){
     var floorValue by remember { mutableStateOf("") }
     var lineValue by remember { mutableStateOf("") }
     var stationValue by remember { mutableStateOf("") }
-    var G0F0L0S0Value by remember { mutableStateOf("G0 F0 L0 S0") }
+    var G0F0L0S0Value by remember { mutableStateOf("0 F0 L0 S0") }
 
 
     val existingTextValue = mainViewModel.getStationValue()
@@ -161,7 +161,7 @@ fun Configure(){
                     val newF = floorValue.takeIf { it.isNotBlank() } ?: "0"
                     val newL = lineValue.takeIf { it.isNotBlank() } ?: "0"
                     val newS = stationValue.takeIf { it.isNotBlank() } ?: "0"
-                    val newValue = "G$newG F$newF L$newL S$newS"
+                    val newValue = "$newG F$newF L$newL S$newS"
                     G0F0L0S0Value = newValue
 
                 }
@@ -181,10 +181,10 @@ fun Configure(){
                     EnterHereTextField(
                         text = location,
                         label = "Enter Location",
-                        onTextChange = { newText ->
-                            location = newText.filter { it.isDigit() } } ,
+                        onTextChange = {  newText ->
+                            location = newText } ,
                         color = pureBlack ,
-                        maxLength = 2 ,
+                        maxLength = 3,
                         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text ),
                         shape = RoundedCornerShape(8.dp)
                     )

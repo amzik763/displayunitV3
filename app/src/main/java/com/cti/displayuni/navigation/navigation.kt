@@ -12,6 +12,7 @@ import com.cti.displayuni.screens.Configure
 import com.cti.displayuni.screens.GetTask
 import com.cti.displayuni.screens.Header
 import com.cti.displayuni.screens.Login
+import com.cti.displayuni.screens.Profile
 import com.cti.displayuni.utility.CHECKSHEET
 import com.cti.displayuni.utility.CONFIGURE
 import com.cti.displayuni.utility.GETTASK
@@ -37,7 +38,7 @@ fun Navigate() {
 
         composable(LOGIN){
 //            Login()
-            Header()
+            Profile()
         }
 
         composable(GETTASK){
