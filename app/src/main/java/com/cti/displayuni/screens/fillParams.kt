@@ -86,6 +86,7 @@ fun ReadingCircles(r: String) {
 @Composable
 fun CheckingParts(checking:String,total:String,pass:String,fail:String){
     Row {
+        Spacer(modifier = Modifier.width(24.dp))
         Text(
             text = checking,
             style = TextStyle(
@@ -257,7 +258,9 @@ fun Header(){
             OutlinedTextField(
                 value = "value",
                 label = {
-                        Box(modifier = Modifier.background(Color.White).padding(start = 3.dp,end = 3.dp)){
+                        Box(modifier = Modifier
+                            .background(Color.White)
+                            .padding(start = 3.dp, end = 3.dp)){
                             Text(text = "Part ID")
 
                         }
@@ -278,18 +281,43 @@ fun Header(){
             )
 
             //Pass fail buttons
-            Button(
-                onClick = {},
-                shape = RoundedCornerShape(29.dp),
-                border = BorderStroke(3.dp, green),
-                colors = ButtonDefaults.buttonColors(contentColor = pureWhite, containerColor =  green),
+            Row {
 
-                ) {
-                Text(
-                    text = "PASS",
-                    fontSize = 17.sp,
-                    modifier = Modifier.padding(horizontal = 30.dp)
-                )
+                Button(
+                    onClick = {},
+                    shape = RoundedCornerShape(29.dp),
+                    border = BorderStroke(3.dp, green),
+                    colors = ButtonDefaults.buttonColors(
+                        contentColor = pureWhite,
+                        containerColor = green
+                    ),
+
+                    ) {
+                    Text(
+                        text = "PASS",
+                        fontSize = 17.sp,
+                        modifier = Modifier.padding(horizontal = 30.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.width(24.dp))
+                Button(
+                    onClick = {},
+                    shape = RoundedCornerShape(29.dp),
+                    border = BorderStroke(3.dp, red),
+                    colors = ButtonDefaults.buttonColors(
+                        contentColor = pureWhite,
+                        containerColor = red
+                    ),
+
+                    ) {
+                    Text(
+                        text = "FAIL",
+                        fontSize = 17.sp,
+                        modifier = Modifier.padding(horizontal = 30.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.width(24.dp))
+
             }
 
         }

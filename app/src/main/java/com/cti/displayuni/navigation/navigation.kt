@@ -10,6 +10,7 @@ import com.cti.displayuni.screens.Checksheet
 import com.cti.displayuni.screens.Checksheet2
 import com.cti.displayuni.screens.Configure
 import com.cti.displayuni.screens.GetTask
+import com.cti.displayuni.screens.Header
 import com.cti.displayuni.screens.Login
 import com.cti.displayuni.utility.CHECKSHEET
 import com.cti.displayuni.utility.CONFIGURE
@@ -35,7 +36,8 @@ fun Navigate() {
         }
 
         composable(LOGIN){
-            Login()
+//            Login()
+            Header()
         }
 
         composable(GETTASK){
