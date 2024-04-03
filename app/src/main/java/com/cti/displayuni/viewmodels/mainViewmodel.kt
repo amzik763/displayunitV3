@@ -28,6 +28,11 @@ class MainViewModel(context: Context) : ViewModel(){
     var name by mutableStateOf("")
     var deviceId by mutableStateOf("")
     var employeeId by mutableStateOf("")
+    var password by mutableStateOf("")
+    var email by mutableStateOf("")
+    var dob by mutableStateOf("")
+    var skill by mutableStateOf("")
+    var mobileNum by mutableStateOf("")
 
     var floorNum by mutableStateOf("")
 

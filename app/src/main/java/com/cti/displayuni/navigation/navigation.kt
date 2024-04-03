@@ -17,6 +17,7 @@ import com.cti.displayuni.utility.CHECKSHEET
 import com.cti.displayuni.utility.CONFIGURE
 import com.cti.displayuni.utility.GETTASK
 import com.cti.displayuni.utility.LOGIN
+import com.cti.displayuni.utility.PROFILE
 import com.cti.displayuni.utility.myComponents.navController
 
 
@@ -37,8 +38,7 @@ fun Navigate() {
         }
 
         composable(LOGIN){
-//            Login()
-            Profile()
+            Login()
         }
 
         composable(GETTASK){
@@ -50,5 +50,9 @@ fun Navigate() {
        /* composable(CHECKSHEET){
             Checksheet()
         }*/
+
+        composable(PROFILE){
+            Profile()
+        }
     }
 }

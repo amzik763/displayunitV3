@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -30,10 +31,12 @@ import com.cti.displayuni.R
 import com.cti.displayuni.ui.theme.lightGrey
 import com.cti.displayuni.ui.theme.lightOrange
 import com.cti.displayuni.utility.mFont
+import com.cti.displayuni.utility.myComponents
+
 @Composable
 fun ProfileText(name:String,value:String){
 
-        Spacer(modifier = Modifier.height(36.dp))
+    Spacer(modifier = Modifier.height(36.dp))
         Row {
             Text(text = name,
                 style = TextStyle(
@@ -49,12 +52,7 @@ fun ProfileText(name:String,value:String){
                 )
             )
         }
-       /* Spacer(modifier = Modifier.height(8.dp))
-        Divider(modifier = Modifier
-            .fillMaxHeight(0.01f)
-            .width(80.dp),
-            color = lightOrange)
-*/
+
 }
 
 @Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
@@ -68,17 +66,17 @@ fun Profile(){
             fontFamily = mFont.nkbold
         )
     )
-        ProfileText(name = "Employee Id:  ", value = "E01")
-        ProfileText(name = "Name:  ", value = "Josh")
-        ProfileText(name = "Date of Birth:  ", value = "23-12-2001")
-        ProfileText(name = "E-mail:  ", value = "ravi01@gmail.com")
-        ProfileText(name = "Skill:  ", value = "2")
-        ProfileText(name = "Mobile Number:  ", value = "736827289")
+        ProfileText(name = "Employee Id:  ", value = myComponents.mainViewModel.employeeId)
+        ProfileText(name = "Name:  ", value = myComponents.mainViewModel.name)
+        ProfileText(name = "Date of Birth:  ", value = myComponents.mainViewModel.dob)
+        ProfileText(name = "E-mail:  ", value = myComponents.mainViewModel.email)
+        ProfileText(name = "Skill:  ", value = myComponents.mainViewModel.skill)
+        ProfileText(name = "Mobile Number:  ", value = myComponents.mainViewModel.mobileNum)
 
         Spacer(modifier = Modifier.height(36.dp))
 
         var passwordVisible by remember { mutableStateOf(false) }
-        val password = "amitkumar"
+        val password = myComponents.mainViewModel.password
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(text = "Password:  ",
@@ -99,10 +97,10 @@ fun Profile(){
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = mFont.nkbold
-                )
-            )
+                ),
+                modifier = Modifier.fillMaxWidth(0.15f)
 
-            Spacer(modifier = Modifier.width(48.dp))
+            )
             Image(
                 painter = lockIcon,
                 contentDescription =if (passwordVisible) "Unlock" else "Lock",
