@@ -37,8 +37,8 @@ fun Navigate() {
         }
 
         composable(LOGIN){
-//            Login()
-            FillParam()
+            Login()
+//            FillParam()
         }
 
         composable(GETTASK){
@@ -47,6 +47,7 @@ fun Navigate() {
         composable(CHECKSHEET){
             Checksheet2()
         }
+
        /* composable(CHECKSHEET){
             Checksheet()
         }*/

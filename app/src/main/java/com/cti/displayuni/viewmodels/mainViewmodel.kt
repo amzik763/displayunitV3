@@ -3,6 +3,7 @@ package com.cti.displayuni.viewmodels
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
@@ -15,6 +16,7 @@ import com.cti.displayuni.utility.KEY_TOKEN
 import com.cti.displayuni.utility.PREFERNCES_NAME
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.myComponents.mUiViewModel
+import com.cti.displayuni.utility.myComponents.mainViewModel
 import com.cti.displayuni.utility.myComponents.repository
 import com.cti.displayuni.utility.showLogs
 import kotlinx.coroutines.launch
@@ -37,6 +39,9 @@ class MainViewModel(context: Context) : ViewModel(){
     var floorNum by mutableStateOf("")
 
     var errorMsg by mutableStateOf("")
+
+    var pass = 0
+    var fail = mutableIntStateOf(0)
 
 
     var tempParamID by mutableStateOf("")
@@ -93,6 +98,8 @@ class MainViewModel(context: Context) : ViewModel(){
     }
 
     fun getTask(station_id:String){
+
+
 
         viewModelScope.launch {
             repository.getTask(station_id)
