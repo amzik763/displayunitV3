@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -64,6 +65,34 @@ var heightLarge = 80.dp
 var heightinFSmall = 0.06f
 var heightinFMedium = 0.073f
 var heightinFLarge = 80.dp
+
+@Composable
+fun ActualParams() {
+    Column(modifier = Modifier.fillMaxWidth(0.5f)) {
+        Text(
+            text = "Actual Parameters",
+            style = TextStyle(
+                fontWeight = FontWeight.Bold,
+                fontSize = fontLarge
+            )
+        )
+    }
+}
+
+@Composable
+fun SettingParams() {
+    Column(modifier = Modifier.fillMaxWidth(1f)) {
+
+        Text(
+            text = "Process Setting Parameters",
+            style = TextStyle(
+                fontWeight = FontWeight.Bold,
+                fontSize = fontLarge
+            )
+        )
+    }
+}
+
 
 @Composable
 fun ReadingUI(){
@@ -341,6 +370,38 @@ fun Header(){
                 Spacer(modifier = Modifier.width(24.dp))
 
             }
+
+        }
+
+
+
+        //Third Element - Column
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = paddingMedium, bottom = paddingMedium)){
+
+            Text(
+                text = "First Part Approval",
+                textAlign = TextAlign.Center,
+                style = TextStyle(fontWeight = FontWeight.Bold,
+                    fontSize = fontLarge),
+                modifier = Modifier.fillMaxWidth(1f)
+            )
+
+
+            Row (modifier = Modifier.padding(24.dp)){
+                //1.actual param list
+                ActualParams()
+
+                //2.settings param list
+                SettingParams()
+
+
+
+            }
+
+
+
 
         }
     }
