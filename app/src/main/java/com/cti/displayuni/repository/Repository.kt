@@ -14,7 +14,6 @@ import com.cti.displayuni.utility.responses.checkSheetResponse
 import com.cti.displayuni.utility.responses.loginResponse
 import com.cti.displayuni.utility.responses.taskResponse
 import com.cti.displayuni.utility.showLogs
-import okhttp3.internal.notify
 
 class Repository () {
 
@@ -71,13 +70,20 @@ class Repository () {
 
             if (taskResponse.code() == 200) {
                 //move to checksheet page
-                mainViewModel.mChecksheetData.value =
-                    taskResponse.let { it.body()?.check_sheet_datas }
+                mainViewModel.mChecksheetData.value = taskResponse.let { it.body()?.check_sheet_datas }
                 mainViewModel.mChecksheetData.value?.forEach {
                     mainViewModel.checkSheetList.add("status")
                 }
+                showLogs("WORK OPERATOR Size", taskResponse.body()?.workOperatorData?.size.toString())
 
+                taskResponse.body()?.workOperatorData?.forEach{ workOperatorData ->
+                    showLogs("WORK OPERATOR", workOperatorData.toString())
+                }
                 mainViewModel.ficID = taskResponse.body()?.emoloyee_id_floor_incharge.toString()
+
+                mainViewModel.pass = taskResponse.body()?.workOperatorData?.get(2)?.passed ?: -1
+
+
                 myComponents.navController.popBackStack()
                 myComponents.navController.navigate(CHECKSHEET)
             }
@@ -89,7 +95,6 @@ class Repository () {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     suspend fun checkSheetStatus(
