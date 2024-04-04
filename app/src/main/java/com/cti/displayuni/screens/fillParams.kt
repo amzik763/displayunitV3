@@ -424,27 +424,30 @@ fun ZoomableImage(){
     val url = "https://imageio.forbes.com/specials-images/imageserve/5f962984fe3282ac81f68758/The-Aston-Martin-DBS-Superleggera---/960x0.jpg?format=jpg&width=1440"
     val painter = rememberAsyncImagePainter(url)
 // Create an Image composable with zooming and panning.
-    Image(
-        painter = painter, // Replace 'imagePainter' with your image
-        contentDescription = null,
-        modifier = Modifier
-            .pointerInput(Unit) {
-                detectTransformGestures { _, pan, zoom, _ ->
-                    // Update the scale based on zoom gestures.
-                    scale *= zoom
+    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
 
-                    // Limit the zoom levels within a certain range (optional).
-                    scale = scale.coerceIn(0.5f, 3f)
+        Image(
+            painter = painter, // Replace 'imagePainter' with your image
+            contentDescription = null,
+            modifier = Modifier.fillMaxWidth().fillMaxHeight()
+                .pointerInput(Unit) {
+                    detectTransformGestures { _, pan, zoom, _ ->
+                        // Update the scale based on zoom gestures.
+                        scale *= zoom
 
-                    // Update the offset to implement panning when zoomed.
-                    offset = if (scale == 1f) Offset(0f, 0f) else offset + pan
+                        // Limit the zoom levels within a certain range (optional).
+                        scale = scale.coerceIn(0.5f, 3f)
+
+                        // Update the offset to implement panning when zoomed.
+                        offset = if (scale == 1f) Offset(0f, 0f) else offset + pan
+                    }
                 }
-            }
-            .graphicsLayer(
-                scaleX = scale, scaleY = scale,
-                translationX = offset.x, translationY = offset.y
-            )
-    )
+                .graphicsLayer(
+                    scaleX = scale, scaleY = scale,
+                    translationX = offset.x, translationY = offset.y
+                )
+        )
+    }
 }
 
 @Composable
