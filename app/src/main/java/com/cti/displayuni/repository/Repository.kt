@@ -89,7 +89,8 @@ class Repository () {
             }
 
             if (taskResponse.code() == 401) {
-                mUiViewModel.showTaskNotApprovedDialog()
+                mUiViewModel.setDialogDetails("Task Not Found", "Ask floor-incharge to provide task", "", R.drawable.ic_notest)
+                mUiViewModel.showMessageDialog()
             }
 
         } catch (e: Exception) {
