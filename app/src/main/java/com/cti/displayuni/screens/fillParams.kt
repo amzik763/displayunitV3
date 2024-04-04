@@ -3,6 +3,7 @@ package com.cti.displayuni.screens
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,17 +24,27 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import com.cti.displayuni.R
 import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.extraLightGrey
@@ -382,7 +393,6 @@ fun Header(){
                 modifier = Modifier.fillMaxWidth(1f)
             )
 
-
             Row (modifier = Modifier.padding(24.dp)){
                 //1.actual param list
                 ActualParams()
@@ -398,10 +408,44 @@ fun Header(){
 
 
         }
+
+        //Fourth Element - Image
+        ZoomableImage()
+
     }
 
 }
 
+@Composable
+fun ZoomableImage(){
+// Define mutable state variables to keep track of the scale and offset.
+    var scale by remember { mutableStateOf(1f) }
+    var offset by remember { mutableStateOf(Offset(0f, 0f)) }
+    val url = "https://imageio.forbes.com/specials-images/imageserve/5f962984fe3282ac81f68758/The-Aston-Martin-DBS-Superleggera---/960x0.jpg?format=jpg&width=1440"
+    val painter = rememberAsyncImagePainter(url)
+// Create an Image composable with zooming and panning.
+    Image(
+        painter = painter, // Replace 'imagePainter' with your image
+        contentDescription = null,
+        modifier = Modifier
+            .pointerInput(Unit) {
+                detectTransformGestures { _, pan, zoom, _ ->
+                    // Update the scale based on zoom gestures.
+                    scale *= zoom
+
+                    // Limit the zoom levels within a certain range (optional).
+                    scale = scale.coerceIn(0.5f, 3f)
+
+                    // Update the offset to implement panning when zoomed.
+                    offset = if (scale == 1f) Offset(0f, 0f) else offset + pan
+                }
+            }
+            .graphicsLayer(
+                scaleX = scale, scaleY = scale,
+                translationX = offset.x, translationY = offset.y
+            )
+    )
+}
 
 @Composable
 fun FillParam(){

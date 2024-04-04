@@ -37,8 +37,8 @@ fun Navigate() {
         }
 
         composable(LOGIN){
-            Login()
-//            FillParam()
+//            Login()
+            FillParam()
         }
 
         composable(GETTASK){
