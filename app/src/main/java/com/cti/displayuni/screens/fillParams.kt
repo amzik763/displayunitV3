@@ -45,7 +45,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import com.cti.displayuni.R
 import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.extraLightGrey
@@ -87,7 +86,7 @@ fun ActualParams() {
 
 @Composable
 fun SettingParams() {
-    Column(modifier = Modifier.fillMaxWidth(1f)) {
+    Column(modifier = Modifier.fillMaxWidth()) {
 
         Text(
             text = "Process Setting Parameters",
@@ -229,7 +228,7 @@ fun Header(){
         ) {
 
             //subRow
-            Row(
+            Row(modifier = Modifier.fillMaxHeight(),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(
@@ -243,9 +242,7 @@ fun Header(){
                             .width(65.dp)
                             .height(4.dp)
                             .background(color = lightOrange)
-                    ) {
-
-                    }
+                    )
                 }
                 Spacer(modifier = Modifier.width(16.dp))
                 Column(
@@ -259,11 +256,9 @@ fun Header(){
                             .width(65.dp)
                             .height(4.dp)
                             .background(color = lightOrange)
-                    ) {
-
-                    }
+                    )
                 }
-                Spacer(modifier = Modifier.width(16.dp))
+//                Spacer(modifier = Modifier.width(16.dp))
                 //Shift Timings
                 Text(
                     text = "shiftValue 10:00 AM to 04:00 PM",
@@ -411,7 +406,7 @@ fun Header(){
         }
 
         //Fourth Element - Image
-        ZoomableImage()
+//        ZoomableImage()
 
     }
 
@@ -533,7 +528,6 @@ fun FillParam(){
         heightinFLarge = 80.dp
         showLogs("DENSITY","160")
     }
-
     Header()
 }
 
