@@ -422,7 +422,9 @@ fun ZoomableImage(){
     var scale by remember { mutableStateOf(1f) }
     var offset by remember { mutableStateOf(Offset(0f, 0f)) }
     val url = "https://imageio.forbes.com/specials-images/imageserve/5f962984fe3282ac81f68758/The-Aston-Martin-DBS-Superleggera---/960x0.jpg?format=jpg&width=1440"
+    val url2 = "https://wallpapers.com/images/featured/really-cool-cars-pictures-7gub7gjfes26vk0c.jpg"
     val painter = rememberAsyncImagePainter(url)
+    val painter2 = rememberAsyncImagePainter(url2)
 // Create an Image composable with zooming and panning.
     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
 
@@ -449,6 +451,8 @@ fun ZoomableImage(){
         )
     }
 }
+
+
 
 @Composable
 fun FillParam(){
