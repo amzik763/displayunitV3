@@ -3,6 +3,7 @@ package com.cti.displayuni.screens
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -421,34 +422,73 @@ fun ZoomableImage(){
 // Define mutable state variables to keep track of the scale and offset.
     var scale by remember { mutableStateOf(1f) }
     var offset by remember { mutableStateOf(Offset(0f, 0f)) }
-    val url = "https://imageio.forbes.com/specials-images/imageserve/5f962984fe3282ac81f68758/The-Aston-Martin-DBS-Superleggera---/960x0.jpg?format=jpg&width=1440"
-    val url2 = "https://wallpapers.com/images/featured/really-cool-cars-pictures-7gub7gjfes26vk0c.jpg"
-    val painter = rememberAsyncImagePainter(url)
-    val painter2 = rememberAsyncImagePainter(url2)
-// Create an Image composable with zooming and panning.
+
+    val imageUrls = listOf(
+        "https://imageio.forbes.com/specials-images/imageserve/5f962984fe3282ac81f68758/The-Aston-Martin-DBS-Superleggera---/960x0.jpg?format=jpg&width=1440",
+        "https://wallpapers.com/images/featured/really-cool-cars-pictures-7gub7gjfes26vk0c.jpg"
+    )
+
+//    val url = "https://imageio.forbes.com/specials-images/imageserve/5f962984fe3282ac81f68758/The-Aston-Martin-DBS-Superleggera---/960x0.jpg?format=jpg&width=1440"
+//    val url2 = "https://wallpapers.com/images/featured/really-cool-cars-pictures-7gub7gjfes26vk0c.jpg"
+//    val painter = rememberAsyncImagePainter(url)
+//    val painter2 = rememberAsyncImagePainter(url2)
+
+    var currentIndex by remember { mutableStateOf(0) }
+
+    val painter = rememberAsyncImagePainter(imageUrls[currentIndex])
+
+    fun previousImage() {
+        currentIndex = (currentIndex - 1 + imageUrls.size) % imageUrls.size
+    }
+
+    fun nextImage() {
+        currentIndex = (currentIndex + 1) % imageUrls.size
+    }
+
     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+        
+        Row (modifier = Modifier.fillMaxHeight(),
+            verticalAlignment = Alignment.CenterVertically){
 
-        Image(
-            painter = painter, // Replace 'imagePainter' with your image
-            contentDescription = null,
-            modifier = Modifier.fillMaxWidth().fillMaxHeight()
-                .pointerInput(Unit) {
-                    detectTransformGestures { _, pan, zoom, _ ->
-                        // Update the scale based on zoom gestures.
-                        scale *= zoom
+         Image(painter = painterResource(id = R.drawable.arrow_left),
+             contentDescription = "leftArrow",
+             modifier = Modifier.size(80.dp)
+                 .clickable { previousImage() })
 
-                        // Limit the zoom levels within a certain range (optional).
-                        scale = scale.coerceIn(0.5f, 3f)
+            Spacer(modifier = Modifier.width(36.dp))
 
-                        // Update the offset to implement panning when zoomed.
-                        offset = if (scale == 1f) Offset(0f, 0f) else offset + pan
+            Image(
+                painter = painter, // Replace 'imagePainter' with your image
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .fillMaxHeight()
+                    .pointerInput(Unit) {
+                        detectTransformGestures { _, pan, zoom, _ ->
+                            // Update the scale based on zoom gestures.
+                            scale *= zoom
+
+                            // Limit the zoom levels within a certain range (optional).
+                            scale = scale.coerceIn(0.5f, 3f)
+
+                            // Update the offset to implement panning when zoomed.
+                            offset = if (scale == 1f) Offset(0f, 0f) else offset + pan
+                        }
                     }
-                }
-                .graphicsLayer(
-                    scaleX = scale, scaleY = scale,
-                    translationX = offset.x, translationY = offset.y
-                )
-        )
+                    .graphicsLayer(
+                        scaleX = scale, scaleY = scale,
+                        translationX = offset.x, translationY = offset.y
+                    )
+            )
+
+            Spacer(modifier = Modifier.width(36.dp))
+
+            Image(painter = painterResource(id = R.drawable.arrow_right),
+                contentDescription = "RightArrow",
+                modifier = Modifier.size(80.dp)
+                    .clickable { nextImage() })
+        }
+
     }
 }
 
@@ -460,8 +500,6 @@ fun FillParam(){
     val conf = LocalConfiguration.current
     val dnsty = conf.densityDpi
      mParameters.dnsty = dnsty
-
-
 
     if (mParameters.dnsty == 320) {
 
@@ -494,8 +532,6 @@ fun FillParam(){
         heightinFMedium = 0.073f
         heightinFLarge = 80.dp
         showLogs("DENSITY","160")
-
-
     }
 
     Header()
