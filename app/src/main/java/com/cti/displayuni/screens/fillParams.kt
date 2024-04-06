@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -46,6 +47,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.cti.displayuni.R
+import com.cti.displayuni.components.ActualLazyList
+import com.cti.displayuni.components.ParametersLazyList
 import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.extraLightGrey
 import com.cti.displayuni.ui.theme.green
@@ -54,7 +57,9 @@ import com.cti.displayuni.ui.theme.lightOrange
 import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureWhite
 import com.cti.displayuni.ui.theme.red
+import com.cti.displayuni.utility.dataList
 import com.cti.displayuni.utility.mParameters
+import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.showLogs
 
 
@@ -81,8 +86,15 @@ fun ActualParams() {
                 fontSize = fontLarge
             )
         )
+
+        Spacer(modifier = Modifier.height(36.dp))
+        ActualLazyList(
+            myComponents.mainViewModel.dataListActual
+        )
+
     }
 }
+
 
 @Composable
 fun SettingParams() {
@@ -95,6 +107,11 @@ fun SettingParams() {
                 fontSize = fontLarge
             )
         )
+
+        Spacer(modifier = Modifier.height(36.dp))
+
+        ParametersLazyList(myComponents.mainViewModel.dataListSetting)
+
     }
 }
 
@@ -393,6 +410,7 @@ fun Header(){
                 //1.actual param list
                 ActualParams()
 
+                Spacer(modifier = Modifier.width(36.dp))
                 //2.settings param list
                 SettingParams()
 
@@ -407,7 +425,6 @@ fun Header(){
 
         //Fourth Element - Image
 //        ZoomableImage()
-
     }
 
 }
@@ -447,7 +464,8 @@ fun ZoomableImage(){
 
          Image(painter = painterResource(id = R.drawable.arrow_left),
              contentDescription = "leftArrow",
-             modifier = Modifier.size(80.dp)
+             modifier = Modifier
+                 .size(80.dp)
                  .clickable { previousImage() })
 
             Spacer(modifier = Modifier.width(36.dp))
@@ -480,7 +498,8 @@ fun ZoomableImage(){
 
             Image(painter = painterResource(id = R.drawable.arrow_right),
                 contentDescription = "RightArrow",
-                modifier = Modifier.size(80.dp)
+                modifier = Modifier
+                    .size(80.dp)
                     .clickable { nextImage() })
         }
 

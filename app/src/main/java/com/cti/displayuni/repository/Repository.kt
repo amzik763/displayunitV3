@@ -3,8 +3,10 @@ package com.cti.displayuni.repository
 import android.util.Log
 import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.R
+import com.cti.displayuni.utility.Actual_Param
 import com.cti.displayuni.utility.CHECKSHEET
 import com.cti.displayuni.utility.GETTASK
+import com.cti.displayuni.utility.Setting_Param
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.myComponents.authAPI
 import com.cti.displayuni.utility.myComponents.mUiViewModel
@@ -84,8 +86,32 @@ class Repository () {
                 mainViewModel.pass = taskResponse.body()?.workOperatorData?.get(2)?.passed ?: -1
 
 
+                val dataListtemp = mainViewModel.MASTERDATA.value?.process_params_info
+
+                dataListtemp?.forEach{
+                    if (it.FPA_status){
+                        mainViewModel.dataListSetting.add(Setting_Param(it.parameter_name, ""))
+                    }else{
+                        mainViewModel.dataListActual.add(Actual_Param(it.parameter_name, ""))
+                    }
+                }
+
+
+
                 myComponents.navController.popBackStack()
                 myComponents.navController.navigate(CHECKSHEET)
+
+
+                var p1 =  mainViewModel.dataListSetting.joinToString(separator = ",") { setting ->
+                    "${setting.param_name} ::: ${setting.param_value}"
+                }
+                showLogs("TASK P1: ",p1)
+                
+                var p2 =  mainViewModel.dataListActual.joinToString(separator = ",") { actual ->
+                    "${actual.param_name} ::: ${actual.param_value}"
+                }
+
+                showLogs("TASK P2: ",p2)
             }
 
             if (taskResponse.code() == 401) {

@@ -51,6 +51,7 @@ import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.lightOrange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
+import com.cti.displayuni.utility.FILL_PARAMETERS
 import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
@@ -330,6 +331,8 @@ fun SupLoginDialog(
 
                                             myComponents.mUiViewModel.hideLoginSupDialog()
                                             showLogs("CHECKSHEET","Sheet Added")
+
+                                            myComponents.navController.navigate(FILL_PARAMETERS)
 
 
                                         }else{

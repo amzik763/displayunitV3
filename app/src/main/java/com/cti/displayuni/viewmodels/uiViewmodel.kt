@@ -2,6 +2,7 @@ package com.cti.displayuni.viewmodels
 
 import android.content.Context
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
@@ -19,6 +20,11 @@ import java.util.Date
 import java.util.Locale
 
 class UiViewModel(context: Context) : ViewModel(){
+
+    var isActualParamEnables = mutableStateOf(false)
+    var isSettingParamEnables = mutableStateOf(true)
+
+    var clearFields = mutableIntStateOf(0)
 
     var isNetworkDialogShown by mutableStateOf(false)
         private set

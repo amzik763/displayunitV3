@@ -38,6 +38,7 @@ import com.cti.displayuni.ui.theme.lightGrey
 import com.cti.displayuni.ui.theme.lightOrange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
+import com.cti.displayuni.utility.FILL_PARAMETERS
 import com.cti.displayuni.utility.mFont
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
@@ -297,6 +298,8 @@ fun Checksheet2() {
                                 )
 
                                 myComponents.mainViewModel.checkItemsInList()
+
+                                myComponents.navController.navigate(FILL_PARAMETERS)
 
                             }
                         )

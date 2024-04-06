@@ -11,9 +11,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cti.displayuni.R
 import com.cti.displayuni.response.*
+import com.cti.displayuni.utility.Actual_Param
 import com.cti.displayuni.utility.KEY_TEXT_VALUE
 import com.cti.displayuni.utility.KEY_TOKEN
 import com.cti.displayuni.utility.PREFERNCES_NAME
+import com.cti.displayuni.utility.Setting_Param
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.myComponents.mUiViewModel
 import com.cti.displayuni.utility.myComponents.mainViewModel
@@ -35,6 +37,14 @@ class MainViewModel(context: Context) : ViewModel(){
     var dob by mutableStateOf("")
     var skill by mutableStateOf("")
     var mobileNum by mutableStateOf("")
+
+
+    val MASTERDATA = MutableLiveData<allDataV2>()
+
+
+    var dataListSetting = mutableListOf<Setting_Param>()
+    var dataListActual = mutableListOf<Actual_Param>()
+
 
     var floorNum by mutableStateOf("")
 
