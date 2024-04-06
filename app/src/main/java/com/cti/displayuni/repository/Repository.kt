@@ -86,29 +86,30 @@ class Repository () {
                 mainViewModel.pass = taskResponse.body()?.workOperatorData?.get(2)?.passed ?: -1
 
 
-                val dataListtemp = mainViewModel.MASTERDATA.value?.process_params_info
+                val dataListtemp = taskResponse.body()?.process_params_info
+
+                showLogs("PARAMS", dataListtemp?.size.toString())
+
 
                 dataListtemp?.forEach{
                     if (it.FPA_status){
-                        mainViewModel.dataListSetting.add(Setting_Param(it.parameter_name, ""))
+                        mainViewModel.dataListSetting.add(Setting_Param(it.parameter_name, "", it.unit ?: " "))
                     }else{
-                        mainViewModel.dataListActual.add(Actual_Param(it.parameter_name, ""))
+                        mainViewModel.dataListActual.add(Actual_Param(it.parameter_name, "",  it.unit ?: " "))
                     }
                 }
-
-
 
                 myComponents.navController.popBackStack()
                 myComponents.navController.navigate(CHECKSHEET)
 
 
                 var p1 =  mainViewModel.dataListSetting.joinToString(separator = ",") { setting ->
-                    "${setting.param_name} ::: ${setting.param_value}"
+                    "${setting.param_name} ::: ${setting.param_value} ::: ${setting.param_unit}"
                 }
                 showLogs("TASK P1: ",p1)
                 
                 var p2 =  mainViewModel.dataListActual.joinToString(separator = ",") { actual ->
-                    "${actual.param_name} ::: ${actual.param_value}"
+                    "${actual.param_name} ::: ${actual.param_value} ::: ${actual.param_unit}"
                 }
 
                 showLogs("TASK P2: ",p2)

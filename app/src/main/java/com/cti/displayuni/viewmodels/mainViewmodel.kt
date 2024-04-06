@@ -39,12 +39,10 @@ class MainViewModel(context: Context) : ViewModel(){
     var mobileNum by mutableStateOf("")
 
 
-    val MASTERDATA = MutableLiveData<allDataV2>()
 
 
     var dataListSetting = mutableListOf<Setting_Param>()
     var dataListActual = mutableListOf<Actual_Param>()
-
 
     var floorNum by mutableStateOf("")
 
