@@ -47,13 +47,16 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.cti.displayuni.R
 import com.cti.displayuni.components.ActualLazyList
+import com.cti.displayuni.components.EnterValue
 import com.cti.displayuni.components.ParametersLazyList
+import com.cti.displayuni.components.PartId
 import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.extraLightGrey
 import com.cti.displayuni.ui.theme.green
 import com.cti.displayuni.ui.theme.lightGrey
 import com.cti.displayuni.ui.theme.lightOrange
 import com.cti.displayuni.ui.theme.orange
+import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
 import com.cti.displayuni.ui.theme.red
 import com.cti.displayuni.utility.mParameters
@@ -236,8 +239,9 @@ fun Header(){
         Row(modifier = Modifier
             .background(color = extraLightGrey)
             .fillMaxWidth()
-            .fillMaxHeight(0.06f)
-            .padding(paddingSmall),
+            .fillMaxHeight(0.07f)
+//            .padding(paddingSmall)
+            ,
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -245,10 +249,11 @@ fun Header(){
             //subRow
             Row(modifier = Modifier.fillMaxHeight(),
                 verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxHeight()
+//                        .fillMaxHeight()
                 ) {
                     OrangeText(name = "Process Name: ", value = "not found")
                     Box(
@@ -262,7 +267,7 @@ fun Header(){
                 Spacer(modifier = Modifier.width(16.dp))
                 Column(
                     modifier = Modifier
-                        .fillMaxHeight()
+//                        .fillMaxHeight()
                 ) {
                     OrangeText(name = "Part Name: ", value = "not found")
                     Box(
@@ -273,7 +278,7 @@ fun Header(){
                             .background(color = lightOrange)
                     )
                 }
-//                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(48.dp))
                 //Shift Timings
                 Text(
                     text = "shiftValue 10:00 AM to 04:00 PM",
@@ -322,29 +327,16 @@ fun Header(){
 
             CheckingParts(checking = "Checking: ${4}", total = "Total: ${29}", pass = "Pass: ${5}", fail = "Fail: ${5}")
             ReadingUI()
-            OutlinedTextField(
-                value = "value",
-                label = {
-                        Box(modifier = Modifier
-                            .background(Color.White)
-                            .padding(start = 3.dp, end = 3.dp)){
-                            Text(text = "Part ID")
 
-                        }
-                        },
-                onValueChange = {
-
-                                },
-                modifier = Modifier
-                    .width(175.dp)
-                    .padding(vertical = 4.dp),
-                shape = RoundedCornerShape(12.dp),
-                colors = TextFieldDefaults.colors(
-                    focusedIndicatorColor = darkBlue,
-                    unfocusedIndicatorColor = lightGrey,
-                    unfocusedContainerColor = Color.White,
-                    focusedContainerColor = Color.White
-                )
+            var partId by remember { mutableStateOf("") }
+            PartId(
+                text = partId,
+                label = "Part ID",
+                onTextChange = { partId = it },
+                color = pureBlack,
+                maxLength = 15,
+//                    keyboardOptions = ,
+                shape = RoundedCornerShape(8.dp)
             )
 
             //Pass fail buttons
