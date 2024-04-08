@@ -21,9 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,7 +45,6 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.cti.displayuni.R
 import com.cti.displayuni.components.ActualLazyList
-import com.cti.displayuni.components.EnterValue
 import com.cti.displayuni.components.ParametersLazyList
 import com.cti.displayuni.components.PartId
 import com.cti.displayuni.ui.theme.darkBlue
@@ -230,6 +227,9 @@ fun OrangeText(
 
 @Composable
 fun Header(){
+
+    var showZoomableImage by remember { mutableStateOf(false) }
+
     Column(modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight()
@@ -247,7 +247,8 @@ fun Header(){
         ) {
 
             //subRow
-            Row(modifier = Modifier.fillMaxHeight()
+            Row(modifier = Modifier
+                .fillMaxHeight()
                 .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -293,7 +294,7 @@ fun Header(){
             //secondSubRow
             Row {
                 Button(
-                    onClick = {},
+                    onClick = {showZoomableImage = !showZoomableImage},
                     shape = RoundedCornerShape(9.dp),
                     border = BorderStroke(3.dp, darkBlue),
                     colors = ButtonDefaults.buttonColors(contentColor = pureWhite, containerColor =  darkBlue),
@@ -377,45 +378,45 @@ fun Header(){
                     )
                 }
                 Spacer(modifier = Modifier.width(24.dp))
-
             }
-
         }
 
+        if (showZoomableImage) {
+            ZoomableImage()
+        }
+        else {
+            //Third Element - Column
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = paddingMedium, bottom = paddingMedium)
+            ) {
 
+                Text(
+                    text = "First Part Approval",
+                    textAlign = TextAlign.Center,
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = fontLarge
+                    ),
+                    modifier = Modifier.fillMaxWidth(1f)
+                )
 
-        //Third Element - Column
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = paddingMedium, bottom = paddingMedium)){
+                Row(modifier = Modifier.padding(24.dp)) {
+                    //1.actual param list
+                    ActualParams()
 
-            Text(
-                text = "First Part Approval",
-                textAlign = TextAlign.Center,
-                style = TextStyle(fontWeight = FontWeight.Bold,
-                    fontSize = fontLarge),
-                modifier = Modifier.fillMaxWidth(1f)
-            )
-
-            Row (modifier = Modifier.padding(24.dp)){
-                //1.actual param list
-                ActualParams()
-
-                Spacer(modifier = Modifier.width(36.dp))
-                //2.settings param list
-                SettingParams()
-
-
-
+                    Spacer(modifier = Modifier.width(36.dp))
+                    //2.settings param list
+                    SettingParams()
+                }
             }
-
-
-
-
         }
 
         //Fourth Element - Image
+
 //        ZoomableImage()
+
     }
 
 }
