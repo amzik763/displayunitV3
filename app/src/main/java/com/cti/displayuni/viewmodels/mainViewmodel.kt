@@ -1,5 +1,9 @@
 package com.cti.displayuni.viewmodels
 
+
+
+
+
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.compose.runtime.getValue
@@ -24,6 +28,7 @@ import com.cti.displayuni.utility.showLogs
 import kotlinx.coroutines.launch
 
 class MainViewModel(context: Context) : ViewModel(){
+
 
     var mContext = context
 
@@ -107,8 +112,6 @@ class MainViewModel(context: Context) : ViewModel(){
 
     fun getTask(station_id:String){
 
-
-
         viewModelScope.launch {
             repository.getTask(station_id)
         }
@@ -144,4 +147,28 @@ fun checkItemsInList() {
          showLogs("DIALOG","HIDE DIALOG")
 
      }
+
+fun itemsInRange():Boolean{
+
+
+    dataListActual.forEach {
+
+        if(it.param_unit.length>0)
+        if(it.param_value > it.max || it.param_value < it.min){
+            myComponents.mUiViewModel.setDialogDetails("Not Eligible","", "${it.param_name} value should be between ${it.min} and ${it.max}",R.drawable.ic_notest)
+            mUiViewModel.showMessageDialog()
+            return false
+        }
+    }
+
+    dataListSetting.forEach {
+        if(it.param_unit.length>0)
+        if(it.param_value > it.max || it.param_value < it.min){
+            myComponents.mUiViewModel.setDialogDetails("Not Eligible","", "${it.param_name} value should be between ${it.min} and ${it.max}",R.drawable.ic_notest)
+            mUiViewModel.showMessageDialog()
+            return false
+        }
+    }
+    return true
+}
 }

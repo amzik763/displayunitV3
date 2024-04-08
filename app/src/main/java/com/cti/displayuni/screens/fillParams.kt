@@ -107,7 +107,6 @@ fun SettingParams() {
         )
 
         Spacer(modifier = Modifier.height(36.dp))
-
         ParametersLazyList(myComponents.mainViewModel.dataListSetting)
 
     }
@@ -131,7 +130,6 @@ fun ReadingUI(){
             ReadingCircles("r4")
             ReadingCircles("r5")
         }
-
 }
 
 @Composable
@@ -358,6 +356,14 @@ fun Header(){
                         text = "PASS",
                         fontSize = fontMedium,
                         modifier = Modifier.padding(horizontal = 30.dp)
+                            .clickable{
+                                if(myComponents.mainViewModel.itemsInRange()){
+                                    //API CALL
+                                }else{
+                                    //showdialogbox that process is not eligible for pass
+                                }
+                            }
+
                     )
                 }
                 Spacer(modifier = Modifier.width(24.dp))
@@ -542,7 +548,7 @@ fun FillParam(){
     Header()
 }
 
-@Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
+@Preview(name = "Tablet", device = "spec:width=1920px, height=1080px, dpi=160, isRound=false, orientation=landscape", showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewUi(){
     FillParam()

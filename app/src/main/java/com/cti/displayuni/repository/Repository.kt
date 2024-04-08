@@ -93,7 +93,6 @@ class Repository () {
 
                 dataListtemp?.forEach{
 
-
                     if (it.FPA_status){
                         mainViewModel.dataListSetting.add(Setting_Param(it.parameter_name, "", it.unit ?: " ", it.min, it.max))
                     }else{
@@ -121,7 +120,7 @@ class Repository () {
             }
 
             if (taskResponse.code() == 401) {
-                mUiViewModel.setDialogDetails("Task Not Found", "Ask floor-incharge to provide task", "", R.drawable.ic_notest)
+                mUiViewModel.setDialogDetails("Task Not Found", "Ask floor-in-charge to provide task", "", R.drawable.ic_notest)
                 mUiViewModel.showMessageDialog()
             }
 
