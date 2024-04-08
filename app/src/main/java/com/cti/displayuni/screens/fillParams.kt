@@ -247,7 +247,8 @@ fun Header(){
         ) {
 
             //subRow
-            Row(modifier = Modifier.fillMaxHeight(),
+            Row(modifier = Modifier.fillMaxHeight()
+                .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
