@@ -94,9 +94,9 @@ class Repository () {
                 dataListtemp?.forEach{
 
                     if (it.FPA_status){
-                        mainViewModel.dataListSetting.add(Setting_Param(it.parameter_name, "", it.unit ?: " ", it.min, it.max))
+                        mainViewModel.dataListSetting.add(Setting_Param(it.parameter_name, "", it.unit ?: "", it.min, it.max))
                     }else{
-                        mainViewModel.dataListActual.add(Actual_Param(it.parameter_name, "",  it.unit ?: " ", it.min, it.max))
+                        mainViewModel.dataListActual.add(Actual_Param(it.parameter_name, "",  it.unit ?: "", it.min, it.max))
                     }
 
                 }

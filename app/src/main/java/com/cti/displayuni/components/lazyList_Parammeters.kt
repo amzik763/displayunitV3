@@ -45,7 +45,7 @@ fun ParametersLazyList(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = item.param_name,
+                        text = item.param_name.toString(),
                         style = TextStyle(
                             fontSize = 15.sp,
                             color = pureBlack,
@@ -72,7 +72,7 @@ fun ParametersLazyList(
                             )
                         }
                         Text(
-                            text = item.param_unit,
+                            text = item.param_unit.toString(),
                             style = TextStyle(
                                 fontSize = 15.sp,
                                 color = pureBlack,

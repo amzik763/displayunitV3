@@ -153,20 +153,46 @@ fun itemsInRange():Boolean{
 
     dataListActual.forEach {
 
-        if(it.param_unit.length>0)
-        if(it.param_value > it.max || it.param_value < it.min){
-            myComponents.mUiViewModel.setDialogDetails("Not Eligible","", "${it.param_name} value should be between ${it.min} and ${it.max}",R.drawable.ic_notest)
-            mUiViewModel.showMessageDialog()
-            return false
-        }
+
+    try {
+        if (!it.param_value.isNullOrBlank())
+            if (it.param_unit?.length.toString() != "0")
+                if (Integer.parseInt(it.param_value.toString()) > Integer.parseInt(it.max.toString()) || Integer.parseInt(
+                        it.param_value.toString()
+                    ) < Integer.parseInt(it.min.toString())
+                ) {
+                    myComponents.mUiViewModel.setDialogDetails(
+                        "Not Eligible",
+                        "",
+                        "${it.param_name} value should be between ${it.min} and ${it.max}",
+                        R.drawable.ic_notest
+                    )
+                    mUiViewModel.showMessageDialog()
+                    return false
+                }
+    }catch (_:Exception){
+
+    }
     }
 
     dataListSetting.forEach {
-        if(it.param_unit.length>0)
-        if(it.param_value > it.max || it.param_value < it.min){
-            myComponents.mUiViewModel.setDialogDetails("Not Eligible","", "${it.param_name} value should be between ${it.min} and ${it.max}",R.drawable.ic_notest)
-            mUiViewModel.showMessageDialog()
-            return false
+        try {
+            if (it.param_unit?.length.toString() != "0")
+                if (Integer.parseInt(it.param_value.toString()) > Integer.parseInt(it.max.toString()) || Integer.parseInt(
+                        it.param_value.toString()
+                    ) < Integer.parseInt(it.min.toString())
+                ) {
+                    myComponents.mUiViewModel.setDialogDetails(
+                        "Not Eligible",
+                        "",
+                        "${it.param_name} value should be between ${it.min} and ${it.max}",
+                        R.drawable.ic_notest
+                    )
+                    mUiViewModel.showMessageDialog()
+                    return false
+                }
+        }catch (_:Exception){
+
         }
     }
     return true
