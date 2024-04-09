@@ -194,9 +194,14 @@ fun ReadingRow1st(){
                 ReadingValue(
                     text = reading1,
                     label = "Enter Value",
-                    onTextChange = { reading1 = it },
+                    onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading1 = filteredValue
+                                   },
                     color = pureBlack,
-                    maxLength = 15,
+                    maxLength = 5,
                     keyboardOptions = KeyboardOptions(),
                     shape = RoundedCornerShape(8.dp),
 //                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
@@ -212,9 +217,14 @@ fun ReadingRow1st(){
                 ReadingValue(
                     text = reading2,
                     label = "Enter Value",
-                    onTextChange = { reading2 = it },
+                    onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading2 = filteredValue
+                                   },
                     color = pureBlack,
-                    maxLength = 15,
+                    maxLength = 5,
                     keyboardOptions = KeyboardOptions(),
                     shape = RoundedCornerShape(8.dp),
                 )
@@ -228,9 +238,14 @@ fun ReadingRow1st(){
                 ReadingValue(
                     text = reading3,
                     label = "Enter Value",
-                    onTextChange = { reading3 = it },
+                    onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading3 = filteredValue
+                                   },
                     color = pureBlack,
-                    maxLength = 15,
+                    maxLength = 5,
                     keyboardOptions = KeyboardOptions(),
                     shape = RoundedCornerShape(8.dp),
                 )
@@ -244,9 +259,14 @@ fun ReadingRow1st(){
                 ReadingValue(
                     text = reading4,
                     label = "Enter Value",
-                    onTextChange = { reading4 = it },
+                    onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading4 = filteredValue
+                                   },
                     color = pureBlack,
-                    maxLength = 15,
+                    maxLength = 5,
                     keyboardOptions = KeyboardOptions(),
                     shape = RoundedCornerShape(8.dp),
                 )
@@ -260,9 +280,14 @@ fun ReadingRow1st(){
                 ReadingValue(
                     text = reading5,
                     label = "Enter Value",
-                    onTextChange = { reading5 = it },
+                    onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading5 = filteredValue
+                                   },
                     color = pureBlack,
-                    maxLength = 15,
+                    maxLength = 5,
                     keyboardOptions = KeyboardOptions(),
                     shape = RoundedCornerShape(8.dp),
                 )
@@ -301,7 +326,7 @@ fun ReadingRow2nd(){
                     label = "Enter Value",
                     onTextChange = { reading12 = it },
                     color = pureBlack,
-                    maxLength = 15,
+                    maxLength = 5,
                     keyboardOptions = KeyboardOptions(),
                     shape = RoundedCornerShape(8.dp),
 //                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
@@ -319,7 +344,7 @@ fun ReadingRow2nd(){
                     label = "Enter Value",
                     onTextChange = { reading22 = it },
                     color = pureBlack,
-                    maxLength = 15,
+                    maxLength = 5,
                     keyboardOptions = KeyboardOptions(),
                     shape = RoundedCornerShape(8.dp),
                 )
@@ -335,7 +360,7 @@ fun ReadingRow2nd(){
                     label = "Enter Value",
                     onTextChange = { reading32 = it },
                     color = pureBlack,
-                    maxLength = 15,
+                    maxLength = 5,
                     keyboardOptions = KeyboardOptions(),
                     shape = RoundedCornerShape(8.dp),
                 )
@@ -351,7 +376,7 @@ fun ReadingRow2nd(){
                     label = "Enter Value",
                     onTextChange = { reading42 = it },
                     color = pureBlack,
-                    maxLength = 15,
+                    maxLength = 5,
                     keyboardOptions = KeyboardOptions(),
                     shape = RoundedCornerShape(8.dp),
                 )
@@ -367,7 +392,7 @@ fun ReadingRow2nd(){
                     label = "Enter Value",
                     onTextChange = { reading52 = it },
                     color = pureBlack,
-                    maxLength = 15,
+                    maxLength = 5,
                     keyboardOptions = KeyboardOptions(),
                     shape = RoundedCornerShape(8.dp),
                 )
@@ -407,7 +432,7 @@ fun ReadingRow3rd(){
                     label = "Enter Value",
                     onTextChange = { reading13 = it },
                     color = pureBlack,
-                    maxLength = 15,
+                    maxLength = 5,
                     keyboardOptions = KeyboardOptions(),
                     shape = RoundedCornerShape(8.dp),
 //                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
@@ -425,7 +450,7 @@ fun ReadingRow3rd(){
                     label = "Enter Value",
                     onTextChange = { reading23 = it },
                     color = pureBlack,
-                    maxLength = 15,
+                    maxLength = 5,
                     keyboardOptions = KeyboardOptions(),
                     shape = RoundedCornerShape(8.dp),
                 )
@@ -441,7 +466,7 @@ fun ReadingRow3rd(){
                     label = "Enter Value",
                     onTextChange = { reading33 = it },
                     color = pureBlack,
-                    maxLength = 15,
+                    maxLength = 5,
                     keyboardOptions = KeyboardOptions(),
                     shape = RoundedCornerShape(8.dp),
                 )
@@ -457,7 +482,7 @@ fun ReadingRow3rd(){
                     label = "Enter Value",
                     onTextChange = { reading43 = it },
                     color = pureBlack,
-                    maxLength = 15,
+                    maxLength = 5,
                     keyboardOptions = KeyboardOptions(),
                     shape = RoundedCornerShape(8.dp),
                 )
@@ -473,7 +498,7 @@ fun ReadingRow3rd(){
                     label = "Enter Value",
                     onTextChange = { reading53 = it },
                     color = pureBlack,
-                    maxLength = 15,
+                    maxLength = 5,
                     keyboardOptions = KeyboardOptions(),
                     shape = RoundedCornerShape(8.dp),
                 )
