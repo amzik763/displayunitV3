@@ -7,6 +7,7 @@ import com.cti.displayuni.utility.Actual_Param
 import com.cti.displayuni.utility.CHECKSHEET
 import com.cti.displayuni.utility.GETTASK
 import com.cti.displayuni.utility.Setting_Param
+import com.cti.displayuni.utility.chart_parameter
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.myComponents.authAPI
 import com.cti.displayuni.utility.myComponents.mUiViewModel
@@ -105,6 +106,13 @@ class Repository () {
 
                 myComponents.navController.popBackStack()
                 myComponents.navController.navigate(CHECKSHEET)
+
+                taskResponse.body()?.process_params_info?.forEach{
+                    if (it.readings_is_available){
+                        mainViewModel.dataListChart.add(chart_parameter(it.parameter_name, it.parameter_no))
+                    }
+
+                }
 
 
                 var p1 =  mainViewModel.dataListSetting.joinToString(separator = ",") { setting ->

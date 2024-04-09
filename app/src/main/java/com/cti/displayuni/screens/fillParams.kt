@@ -438,10 +438,6 @@ fun ZoomableImage(){
         "https://wallpapers.com/images/featured/really-cool-cars-pictures-7gub7gjfes26vk0c.jpg"
     )
 
-//    val url = "https://imageio.forbes.com/specials-images/imageserve/5f962984fe3282ac81f68758/The-Aston-Martin-DBS-Superleggera---/960x0.jpg?format=jpg&width=1440"
-//    val url2 = "https://wallpapers.com/images/featured/really-cool-cars-pictures-7gub7gjfes26vk0c.jpg"
-//    val painter = rememberAsyncImagePainter(url)
-//    val painter2 = rememberAsyncImagePainter(url2)
 
     var currentIndex by remember { mutableStateOf(0) }
 

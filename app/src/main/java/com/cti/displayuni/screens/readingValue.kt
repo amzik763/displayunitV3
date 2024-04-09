@@ -39,21 +39,38 @@ import com.cti.displayuni.ui.theme.green
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
 import com.cti.displayuni.utility.mFont
-import com.cti.displayuni.utility.myComponents
 
 @Composable
 fun ReadingComponent(heading: String) {
     Column(horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(modifier = Modifier.padding(start = 16.dp,
+        Text(modifier = Modifier.padding(start = 36.dp,
             bottom = 16.dp),
             text = heading,
             style = TextStyle(
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = mFont.poppinsbold
+            ),
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Composable
+fun ParamName(heading: String) {
+    Column(
+        modifier = Modifier.padding(start = 36.dp, bottom = 10.dp)
+    ) {
+        Text(
+            text = heading,
+            style = TextStyle(
+                fontSize = 36.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = mFont.nkbold
             )
         )
+
     }
 }
 
@@ -93,244 +110,20 @@ fun CustomPopupContent(
 //    onCloseClicked: () -> Unit,
 ) {
 
-
     Column(modifier = Modifier
         .fillMaxSize()
         .background(color = Color.White)
-        .padding(top = 50.dp),
-     horizontalAlignment = Alignment.CenterHorizontally
+        .padding(top = 50.dp , bottom = 36.dp),
+     horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
         ) {
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-                .fillMaxHeight(0.9f)
-                .background(color = Color.White),
-//            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
-            // Create input text fields with random
-            Column {
-                ReadingComponent(heading = "Reading One")
 
-                var reading1 by remember { mutableStateOf("0") }
+        ReadingRow1st()
 
-                ReadingValue(
-                    text = reading1,
-                    label = "Enter Value",
-                    onTextChange = { reading1 = it },
-                    color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
-                    shape = RoundedCornerShape(8.dp),
-//                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
-                )
+        ReadingRow2nd()
 
-                SubmitButton(text = "Submit", onClick = { })
+        ReadingRow3rd()
 
-
-                Spacer(modifier = Modifier.height(50.dp))
-                var reading12 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading12,
-                    label = "Enter Value",
-                    onTextChange = { reading12 = it },
-                    color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
-                    shape = RoundedCornerShape(8.dp),
-//                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
-                )
-
-                SubmitButton(text = "Submit", onClick = { })
-
-                Spacer(modifier = Modifier.height(50.dp))
-                var reading13 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading13,
-                    label = "Enter Value",
-                    onTextChange = { reading13 = it },
-                    color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
-                    shape = RoundedCornerShape(8.dp),
-//                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
-                )
-
-                SubmitButton(text = "Submit", onClick = { })
-
-
-            }
-
-
-            Column {
-                ReadingComponent(heading = "Reading Two")
-                var reading2 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading2,
-                    label = "Enter Value",
-                    onTextChange = { reading2 = it },
-                    color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
-                    shape = RoundedCornerShape(8.dp),
-                )
-                SubmitButton(text = "Submit", onClick = {})
-
-
-                Spacer(modifier = Modifier.height(50.dp))
-                var reading22 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading22,
-                    label = "Enter Value",
-                    onTextChange = { reading22 = it },
-                    color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
-                    shape = RoundedCornerShape(8.dp),
-                )
-                SubmitButton(text = "Submit", onClick = {})
-
-                Spacer(modifier = Modifier.height(50.dp))
-                var reading23 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading23,
-                    label = "Enter Value",
-                    onTextChange = { reading23 = it },
-                    color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
-                    shape = RoundedCornerShape(8.dp),
-                )
-                SubmitButton(text = "Submit", onClick = {})
-            }
-
-            Column {
-                ReadingComponent(heading = "Reading Three")
-                var reading3 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading3,
-                    label = "Enter Value",
-                    onTextChange = { reading3 = it },
-                    color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
-                    shape = RoundedCornerShape(8.dp),
-                )
-                SubmitButton(text = "Submit", onClick = {})
-
-                Spacer(modifier = Modifier.height(50.dp))
-                var reading32 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading32,
-                    label = "Enter Value",
-                    onTextChange = { reading32 = it },
-                    color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
-                    shape = RoundedCornerShape(8.dp),
-                )
-                SubmitButton(text = "Submit", onClick = {})
-
-                Spacer(modifier = Modifier.height(50.dp))
-                var reading33 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading33,
-                    label = "Enter Value",
-                    onTextChange = { reading33 = it },
-                    color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
-                    shape = RoundedCornerShape(8.dp),
-                )
-                SubmitButton(text = "Submit", onClick = {})
-            }
-
-            Column {
-                ReadingComponent(heading = "Reading Four")
-                var reading4 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading4,
-                    label = "Enter Value",
-                    onTextChange = { reading4 = it },
-                    color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
-                    shape = RoundedCornerShape(8.dp),
-                )
-                SubmitButton(text = "Submit", onClick = {})
-
-
-                Spacer(modifier = Modifier.height(50.dp))
-                var reading42 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading42,
-                    label = "Enter Value",
-                    onTextChange = { reading42 = it },
-                    color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
-                    shape = RoundedCornerShape(8.dp),
-                )
-                SubmitButton(text = "Submit", onClick = {})
-
-                Spacer(modifier = Modifier.height(50.dp))
-                var reading43 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading43,
-                    label = "Enter Value",
-                    onTextChange = { reading43 = it },
-                    color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
-                    shape = RoundedCornerShape(8.dp),
-                )
-                SubmitButton(text = "Submit", onClick = {})
-            }
-
-            Column {
-                ReadingComponent(heading = "Reading Five")
-                var reading5 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading5,
-                    label = "Enter Value",
-                    onTextChange = { reading5 = it },
-                    color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
-                    shape = RoundedCornerShape(8.dp),
-                )
-                SubmitButton(text = "Submit", onClick = {})
-
-
-                Spacer(modifier = Modifier.height(50.dp))
-                var reading52 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading52,
-                    label = "Enter Value",
-                    onTextChange = { reading52 = it },
-                    color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
-                    shape = RoundedCornerShape(8.dp),
-                )
-                SubmitButton(text = "Submit", onClick = {})
-
-
-                Spacer(modifier = Modifier.height(50.dp))
-                var reading53 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading53,
-                    label = "Enter Value",
-                    onTextChange = { reading53 = it },
-                    color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
-                    shape = RoundedCornerShape(8.dp),
-                )
-                SubmitButton(text = "Submit", onClick = {})
-            }
-        }
         Surface(
             modifier = Modifier
                 .padding(start = 16.dp)
@@ -356,6 +149,303 @@ fun CustomPopupContent(
 
                 }
             )
+        }
+    }
+}
+
+@Composable
+fun ReadingRow1st(){
+    Column {
+        ParamName(heading = "Parameter Name")
+
+        Row (
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+                .background(color = Color.White),
+            horizontalArrangement = Arrangement.SpaceAround
+        ){
+
+            Column {
+                var reading1 by remember { mutableStateOf("0") }
+
+                ReadingValue(
+                    text = reading1,
+                    label = "Enter Value",
+                    onTextChange = { reading1 = it },
+                    color = pureBlack,
+                    maxLength = 15,
+                    keyboardOptions = KeyboardOptions(),
+                    shape = RoundedCornerShape(8.dp),
+//                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
+                )
+
+                SubmitButton(text = "Submit", onClick = { })
+
+            }
+
+            Column {
+
+                var reading2 by remember { mutableStateOf("0") }
+                ReadingValue(
+                    text = reading2,
+                    label = "Enter Value",
+                    onTextChange = { reading2 = it },
+                    color = pureBlack,
+                    maxLength = 15,
+                    keyboardOptions = KeyboardOptions(),
+                    shape = RoundedCornerShape(8.dp),
+                )
+                SubmitButton(text = "Submit", onClick = {})
+
+            }
+
+            Column {
+
+                var reading3 by remember { mutableStateOf("0") }
+                ReadingValue(
+                    text = reading3,
+                    label = "Enter Value",
+                    onTextChange = { reading3 = it },
+                    color = pureBlack,
+                    maxLength = 15,
+                    keyboardOptions = KeyboardOptions(),
+                    shape = RoundedCornerShape(8.dp),
+                )
+                SubmitButton(text = "Submit", onClick = {})
+
+            }
+
+            Column {
+
+                var reading4 by remember { mutableStateOf("0") }
+                ReadingValue(
+                    text = reading4,
+                    label = "Enter Value",
+                    onTextChange = { reading4 = it },
+                    color = pureBlack,
+                    maxLength = 15,
+                    keyboardOptions = KeyboardOptions(),
+                    shape = RoundedCornerShape(8.dp),
+                )
+                SubmitButton(text = "Submit", onClick = {})
+
+            }
+
+            Column {
+
+                var reading5 by remember { mutableStateOf("0") }
+                ReadingValue(
+                    text = reading5,
+                    label = "Enter Value",
+                    onTextChange = { reading5 = it },
+                    color = pureBlack,
+                    maxLength = 15,
+                    keyboardOptions = KeyboardOptions(),
+                    shape = RoundedCornerShape(8.dp),
+                )
+                SubmitButton(text = "Submit", onClick = {})
+
+            }
+
+        }
+    }
+}
+
+@Composable
+fun ReadingRow2nd(){
+    Column {
+        ParamName(heading = "Parameter Name")
+
+        Row (
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+                .background(color = Color.White),
+            horizontalArrangement = Arrangement.SpaceAround
+        ){
+
+            Column {
+                var reading12 by remember { mutableStateOf("0") }
+
+                ReadingValue(
+                    text = reading12,
+                    label = "Enter Value",
+                    onTextChange = { reading12 = it },
+                    color = pureBlack,
+                    maxLength = 15,
+                    keyboardOptions = KeyboardOptions(),
+                    shape = RoundedCornerShape(8.dp),
+//                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
+                )
+
+                SubmitButton(text = "Submit", onClick = { })
+
+            }
+
+            Column {
+
+                var reading22 by remember { mutableStateOf("0") }
+                ReadingValue(
+                    text = reading22,
+                    label = "Enter Value",
+                    onTextChange = { reading22 = it },
+                    color = pureBlack,
+                    maxLength = 15,
+                    keyboardOptions = KeyboardOptions(),
+                    shape = RoundedCornerShape(8.dp),
+                )
+                SubmitButton(text = "Submit", onClick = {})
+
+            }
+
+            Column {
+
+                var reading32 by remember { mutableStateOf("0") }
+                ReadingValue(
+                    text = reading32,
+                    label = "Enter Value",
+                    onTextChange = { reading32 = it },
+                    color = pureBlack,
+                    maxLength = 15,
+                    keyboardOptions = KeyboardOptions(),
+                    shape = RoundedCornerShape(8.dp),
+                )
+                SubmitButton(text = "Submit", onClick = {})
+
+            }
+
+            Column {
+
+                var reading42 by remember { mutableStateOf("0") }
+                ReadingValue(
+                    text = reading42,
+                    label = "Enter Value",
+                    onTextChange = { reading42 = it },
+                    color = pureBlack,
+                    maxLength = 15,
+                    keyboardOptions = KeyboardOptions(),
+                    shape = RoundedCornerShape(8.dp),
+                )
+                SubmitButton(text = "Submit", onClick = {})
+
+            }
+
+            Column {
+
+                var reading52 by remember { mutableStateOf("0") }
+                ReadingValue(
+                    text = reading52,
+                    label = "Enter Value",
+                    onTextChange = { reading52 = it },
+                    color = pureBlack,
+                    maxLength = 15,
+                    keyboardOptions = KeyboardOptions(),
+                    shape = RoundedCornerShape(8.dp),
+                )
+                SubmitButton(text = "Submit", onClick = {})
+
+            }
+
+        }
+    }
+}
+
+@Composable
+fun ReadingRow3rd(){
+    Column {
+        ParamName(heading = "Parameter Name")
+
+        Row (
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+                .background(color = Color.White),
+            horizontalArrangement = Arrangement.SpaceAround
+        ){
+
+            Column {
+                var reading13 by remember { mutableStateOf("0") }
+
+                ReadingValue(
+                    text = reading13,
+                    label = "Enter Value",
+                    onTextChange = { reading13 = it },
+                    color = pureBlack,
+                    maxLength = 15,
+                    keyboardOptions = KeyboardOptions(),
+                    shape = RoundedCornerShape(8.dp),
+//                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
+                )
+
+                SubmitButton(text = "Submit", onClick = { })
+
+            }
+
+            Column {
+
+                var reading23 by remember { mutableStateOf("0") }
+                ReadingValue(
+                    text = reading23,
+                    label = "Enter Value",
+                    onTextChange = { reading23 = it },
+                    color = pureBlack,
+                    maxLength = 15,
+                    keyboardOptions = KeyboardOptions(),
+                    shape = RoundedCornerShape(8.dp),
+                )
+                SubmitButton(text = "Submit", onClick = {})
+
+            }
+
+            Column {
+
+                var reading33 by remember { mutableStateOf("0") }
+                ReadingValue(
+                    text = reading33,
+                    label = "Enter Value",
+                    onTextChange = { reading33 = it },
+                    color = pureBlack,
+                    maxLength = 15,
+                    keyboardOptions = KeyboardOptions(),
+                    shape = RoundedCornerShape(8.dp),
+                )
+                SubmitButton(text = "Submit", onClick = {})
+
+            }
+
+            Column {
+
+                var reading43 by remember { mutableStateOf("0") }
+                ReadingValue(
+                    text = reading43,
+                    label = "Enter Value",
+                    onTextChange = { reading43 = it },
+                    color = pureBlack,
+                    maxLength = 15,
+                    keyboardOptions = KeyboardOptions(),
+                    shape = RoundedCornerShape(8.dp),
+                )
+                SubmitButton(text = "Submit", onClick = {})
+
+            }
+
+            Column {
+
+                var reading53 by remember { mutableStateOf("0") }
+                ReadingValue(
+                    text = reading53,
+                    label = "Enter Value",
+                    onTextChange = { reading53 = it },
+                    color = pureBlack,
+                    maxLength = 15,
+                    keyboardOptions = KeyboardOptions(),
+                    shape = RoundedCornerShape(8.dp),
+                )
+                SubmitButton(text = "Submit", onClick = {})
+
+            }
+
         }
     }
 }
