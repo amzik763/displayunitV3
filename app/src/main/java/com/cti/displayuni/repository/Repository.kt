@@ -35,8 +35,7 @@ class Repository () {
                 myComponents.navController.navigate(GETTASK)
 
                 mainViewModel.saveToken(loginResponse.body()?.token.toString())
-                mainViewModel.name =
-                    loginResponse.body()?.fName.toString() + " " + loginResponse.body()?.lName.toString()
+                mainViewModel.name = loginResponse.body()?.fName.toString() + " " + loginResponse.body()?.lName.toString()
                 mainViewModel.employeeId = loginResponse.body()?.employee_id.toString()
                 mainViewModel.dob = loginResponse.body()?.dob.toString()
                 mainViewModel.password = loginResponse.body()?.password.toString()
@@ -83,17 +82,12 @@ class Repository () {
                     showLogs("WORK OPERATOR", workOperatorData.toString())
                 }
                 mainViewModel.ficID = taskResponse.body()?.emoloyee_id_floor_incharge.toString()
-
                 mainViewModel.pass = taskResponse.body()?.workOperatorData?.get(2)?.passed ?: -1
 
-
                 val dataListtemp = taskResponse.body()?.process_params_info
-
                 showLogs("PARAMS", dataListtemp?.size.toString())
 
-
                 dataListtemp?.forEach{
-
                     if (it.FPA_status){
                         mainViewModel.dataListSetting.add(Setting_Param(it.parameter_name, "", it.unit ?: "", it.min, it.max))
                     }else{
@@ -101,8 +95,6 @@ class Repository () {
                     }
 
                 }
-
-
 
                 myComponents.navController.popBackStack()
                 myComponents.navController.navigate(CHECKSHEET)
@@ -114,20 +106,18 @@ class Repository () {
 
                 }
 
-
-                var p1 =  mainViewModel.dataListSetting.joinToString(separator = ",") { setting ->
-                    "${setting.param_name} ::: ${setting.param_value} ::: ${setting.param_unit}"
+                val p1 =  mainViewModel.dataListSetting.joinToString(separator = ",") { setting ->
+                    "${setting.param_name} ::: ${setting.param_value}"
                 }
                 showLogs("TASK P1: ",p1)
-                
-                var p2 =  mainViewModel.dataListActual.joinToString(separator = ",") { actual ->
-                    "${actual.param_name} ::: ${actual.param_value} ::: ${actual.param_unit}"
+                val p2 =  mainViewModel.dataListActual.joinToString(separator = ",") { actual ->
+                    "${actual.param_name} ::: ${actual.param_value}"
                 }
-
                 showLogs("TASK P2: ",p2)
+
             }
 
-            if (taskResponse.code() == 401) {
+            if (taskResponse.code() == 404) {
                 mUiViewModel.setDialogDetails("Task Not Found", "Ask floor-in-charge to provide task", "", R.drawable.ic_notest)
                 mUiViewModel.showMessageDialog()
             }
@@ -163,17 +153,12 @@ class Repository () {
     }
 
 suspend fun notify(stationValue: String, csp_id: String, floor_no: String) {
-
-
         try {
             val notifyResponse= otherAPIs.operatorNotify(stationValue,csp_id,floor_no)
-
             if (notifyResponse.code() == 200) {
-
                 showLogs("NOTIFICATION:","Notification sent")
             }else{
                 showLogs("NOTIFICATION:","Notification not sent")
-
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -195,6 +180,5 @@ suspend fun notify(stationValue: String, csp_id: String, floor_no: String) {
             e.printStackTrace()
         }
         return checkSheetStatus
-
     }
 }
