@@ -153,10 +153,7 @@ fun checkItemsInList() {
 
 fun itemsInRange():Boolean{
 
-
     dataListActual.forEach {
-
-
     try {
         if (!it.param_value.isNullOrBlank())
             if (it.param_unit?.length.toString() != "0")
