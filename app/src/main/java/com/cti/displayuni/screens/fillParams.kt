@@ -56,6 +56,7 @@ import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
 import com.cti.displayuni.ui.theme.red
+import com.cti.displayuni.utility.READING
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.showLogs
@@ -136,7 +137,10 @@ fun ReadingUI(){
 fun ReadingCircles(r: String) {
     Image(painter = painterResource(id = R.drawable.circle),
         contentDescription ="Circle1",
-        colorFilter = ColorFilter.tint(lightGrey)
+        colorFilter = ColorFilter.tint(lightGrey),
+        modifier = Modifier.clickable {
+            myComponents.navController.navigate(READING)
+        }
         /*if(r.length==0||r.isNullOrEmpty()){
             ColorFilter.tint(lightGrey)
 
@@ -326,7 +330,11 @@ fun Header(){
         ) {
 
             CheckingParts(checking = "Checking: ${4}", total = "Total: ${29}", pass = "Pass: ${5}", fail = "Fail: ${5}")
-            ReadingUI()
+
+            showLogs("DATA LIST CHART", myComponents.mainViewModel.dataListChart.size.toString())
+            if (myComponents.mainViewModel.dataListChart.size  != 0){
+                ReadingUI()
+            }
 
             var partId by remember { mutableStateOf("") }
             PartId(
@@ -418,13 +426,7 @@ fun Header(){
                 }
             }
         }
-
-        //Fourth Element - Image
-
-//        ZoomableImage()
-
     }
-
 }
 
 @Composable

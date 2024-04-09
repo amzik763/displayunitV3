@@ -38,7 +38,9 @@ import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.green
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
+import com.cti.displayuni.utility.chart_parameter
 import com.cti.displayuni.utility.mFont
+import com.cti.displayuni.utility.myComponents
 
 @Composable
 fun ReadingComponent(heading: String) {
@@ -118,11 +120,25 @@ fun CustomPopupContent(
         verticalArrangement = Arrangement.SpaceBetween
         ) {
 
-        ReadingRow1st()
+        if (myComponents.mainViewModel.dataListChart.size == 1){
+            ReadingRow1st()
+        }
 
-        ReadingRow2nd()
+        if (myComponents.mainViewModel.dataListChart.size == 2){
+            ReadingRow1st()
 
-        ReadingRow3rd()
+            ReadingRow2nd()
+        }
+
+        if (myComponents.mainViewModel.dataListChart.size == 3){
+            ReadingRow1st()
+
+            ReadingRow2nd()
+
+            ReadingRow3rd()
+        }
+
+
 
         Surface(
             modifier = Modifier
@@ -156,7 +172,13 @@ fun CustomPopupContent(
 @Composable
 fun ReadingRow1st(){
     Column {
-        ParamName(heading = "Parameter Name")
+        var PN = ""
+            try{
+                PN = myComponents.mainViewModel.dataListChart[0].parameter_name
+            }catch (e:Exception){
+
+            }
+        ParamName(heading = PN)
 
         Row (
             modifier = Modifier
@@ -255,7 +277,13 @@ fun ReadingRow1st(){
 @Composable
 fun ReadingRow2nd(){
     Column {
-        ParamName(heading = "Parameter Name")
+        var PN = ""
+        try{
+            PN = myComponents.mainViewModel.dataListChart[1].parameter_name
+        }catch (e:Exception){
+
+        }
+        ParamName(heading = PN)
 
         Row (
             modifier = Modifier
@@ -354,7 +382,14 @@ fun ReadingRow2nd(){
 @Composable
 fun ReadingRow3rd(){
     Column {
-        ParamName(heading = "Parameter Name")
+        var PN = ""
+        try{
+            PN = myComponents.mainViewModel.dataListChart[2].parameter_name
+        }catch (e:Exception){
+
+        }
+        ParamName(heading = PN)
+
 
         Row (
             modifier = Modifier
