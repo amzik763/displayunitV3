@@ -5,11 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CornerSize
@@ -30,7 +27,6 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cti.displayuni.components.ReadingValue
@@ -38,26 +34,8 @@ import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.green
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
-import com.cti.displayuni.utility.chart_parameter
 import com.cti.displayuni.utility.mFont
 import com.cti.displayuni.utility.myComponents
-
-@Composable
-fun ReadingComponent(heading: String) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(modifier = Modifier.padding(start = 36.dp,
-            bottom = 16.dp),
-            text = heading,
-            style = TextStyle(
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = mFont.poppinsbold
-            ),
-            textAlign = TextAlign.Center
-        )
-    }
-}
 
 @Composable
 fun ParamName(heading: String) {
@@ -72,7 +50,6 @@ fun ParamName(heading: String) {
                 fontFamily = mFont.nkbold
             )
         )
-
     }
 }
 
@@ -106,10 +83,10 @@ fun SubmitButton(text: String, onClick: () -> Unit) {
 }
 
 
-@Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
+//@Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
 @Composable
 fun CustomPopupContent(
-//    onCloseClicked: () -> Unit,
+    onCloseClicked: () -> Unit,
 ) {
 
     Column(modifier = Modifier
@@ -161,8 +138,7 @@ fun CustomPopupContent(
                     .fillMaxWidth()
                     .padding(9.dp),
                 onClick = {
-//                    onCloseClicked()
-
+                    onCloseClicked()
                 }
             )
         }
@@ -172,13 +148,14 @@ fun CustomPopupContent(
 @Composable
 fun ReadingRow1st(){
     Column {
-        var PN = ""
+        var pn = ""
             try{
-                PN = myComponents.mainViewModel.dataListChart[0].parameter_name
-            }catch (e:Exception){
+                pn = myComponents.mainViewModel.dataListChart[0].parameter_name
+            }
+            catch (_:Exception){
 
             }
-        ParamName(heading = PN)
+        ParamName(heading = pn)
 
         Row (
             modifier = Modifier
@@ -208,7 +185,8 @@ fun ReadingRow1st(){
 
             Column {
 
-                var reading2 by remember { mutableStateOf("0") }
+
+                                      var reading2 by remember { mutableStateOf("0") }
                 ReadingValue(
                     text = reading2,
                     label = "Enter Value",
@@ -277,13 +255,14 @@ fun ReadingRow1st(){
 @Composable
 fun ReadingRow2nd(){
     Column {
-        var PN = ""
+        var pn = ""
         try{
-            PN = myComponents.mainViewModel.dataListChart[1].parameter_name
-        }catch (e:Exception){
+            pn = myComponents.mainViewModel.dataListChart[1].parameter_name
+        }
+        catch (_:Exception){
 
         }
-        ParamName(heading = PN)
+        ParamName(heading = pn)
 
         Row (
             modifier = Modifier
@@ -372,9 +351,7 @@ fun ReadingRow2nd(){
                     shape = RoundedCornerShape(8.dp),
                 )
                 SubmitButton(text = "Submit", onClick = {})
-
             }
-
         }
     }
 }
@@ -382,13 +359,14 @@ fun ReadingRow2nd(){
 @Composable
 fun ReadingRow3rd(){
     Column {
-        var PN = ""
+        var pn = ""
         try{
-            PN = myComponents.mainViewModel.dataListChart[2].parameter_name
-        }catch (e:Exception){
+            pn = myComponents.mainViewModel.dataListChart[2].parameter_name
+        }
+        catch (_:Exception){
 
         }
-        ParamName(heading = PN)
+        ParamName(heading = pn)
 
 
         Row (

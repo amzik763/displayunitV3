@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cti.displayuni.R
+import com.cti.displayuni.response.CheckSheetData
 import com.cti.displayuni.utility.DialogModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -21,8 +22,9 @@ import java.util.Locale
 
 class UiViewModel(context: Context) : ViewModel(){
 
-    var isActualParamEnables = mutableStateOf(false)
-    var isSettingParamEnables = mutableStateOf(true)
+
+    var showCustomPopup = MutableLiveData<Boolean>()
+
 
     var clearFields = mutableIntStateOf(0)
 

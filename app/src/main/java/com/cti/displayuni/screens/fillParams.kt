@@ -139,7 +139,9 @@ fun ReadingCircles(r: String) {
         contentDescription ="Circle1",
         colorFilter = ColorFilter.tint(lightGrey),
         modifier = Modifier.clickable {
-            myComponents.navController.navigate(READING)
+
+            myComponents.mUiViewModel.showCustomPopup.value = true
+
         }
         /*if(r.length==0||r.isNullOrEmpty()){
             ColorFilter.tint(lightGrey)
@@ -363,11 +365,12 @@ fun Header(){
                     Text(
                         text = "PASS",
                         fontSize = fontMedium,
-                        modifier = Modifier.padding(horizontal = 30.dp)
-                            .clickable{
-                                if(myComponents.mainViewModel.itemsInRange()){
+                        modifier = Modifier
+                            .padding(horizontal = 30.dp)
+                            .clickable {
+                                if (myComponents.mainViewModel.itemsInRange()) {
                                     //API CALL
-                                }else{
+                                } else {
                                     //showdialogbox that process is not eligible for pass
                                 }
                             }
@@ -544,6 +547,13 @@ fun FillParam(){
         showLogs("DENSITY","160")
     }
     Header()
+
+    if(myComponents.mUiViewModel.showCustomPopup.value == true){
+        CustomPopupContent {
+            myComponents.mUiViewModel.showCustomPopup.value = false
+        }
+    }
+
 }
 
 @Preview(name = "Tablet", device = "spec:width=1920px, height=1080px, dpi=160, isRound=false, orientation=landscape", showBackground = true, showSystemUi = true)

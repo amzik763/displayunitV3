@@ -58,8 +58,8 @@ fun Navigate() {
             FillParam()
         }
 
-        composable(READING){
-            CustomPopupContent()
-        }
+//        composable(READING){
+//            CustomPopupContent()
+//        }
     }
 }
