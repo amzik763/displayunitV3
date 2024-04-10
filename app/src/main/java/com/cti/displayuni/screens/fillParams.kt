@@ -1,5 +1,6 @@
 package com.cti.displayuni.screens
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,6 +25,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -514,6 +516,8 @@ fun FillParam(){
     val dnsty = conf.densityDpi
      mParameters.dnsty = dnsty
 
+    val shouldShowCustomPopup = myComponents.mUiViewModel.showCustomPopup.observeAsState()
+
     if (mParameters.dnsty == 320) {
 
          fontSmall = 10.sp
@@ -547,8 +551,14 @@ fun FillParam(){
         showLogs("DENSITY","160")
     }
     Header()
+    showLogs("Early READINGS UI",myComponents.mUiViewModel.showCustomPopup.value.toString())
 
-    if(myComponents.mUiViewModel.showCustomPopup.value == true){
+    if(shouldShowCustomPopup.value == true){
+        showLogs("READINGS UI",myComponents.mUiViewModel.showCustomPopup.value.toString())
+        Log.d("XDATA","Android::"+1+1)
+        Log.d("XDATA","Android::"+(1+1))
+//        Log.d("XDATA",1+1+"Android::")
+//        Log.d("XDATA",(1+1)+"Android::")
         CustomPopupContent {
             myComponents.mUiViewModel.showCustomPopup.value = false
         }

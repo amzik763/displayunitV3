@@ -25,6 +25,10 @@ class UiViewModel(context: Context) : ViewModel(){
 
     var showCustomPopup = MutableLiveData<Boolean>()
 
+    var isActualParamEnables = mutableStateOf(false)
+    var isSettingParamEnables = mutableStateOf(true)
+
+
 
     var clearFields = mutableIntStateOf(0)
 
