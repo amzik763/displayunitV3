@@ -26,6 +26,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -148,14 +150,13 @@ fun CustomPopupContent(
 @Composable
 fun ReadingRow1st(){
     Column {
-        var pn = ""
+        var PN = ""
             try{
-                pn = myComponents.mainViewModel.dataListChart[0].parameter_name
-            }
-            catch (_:Exception){
+                PN = myComponents.mainViewModel.dataListChart[0].parameter_name
+            }catch (_:Exception){
 
             }
-        ParamName(heading = pn)
+        ParamName(heading = PN)
 
         Row (
             modifier = Modifier
@@ -171,10 +172,18 @@ fun ReadingRow1st(){
                 ReadingValue(
                     text = reading1,
                     label = "Enter Value",
-                    onTextChange = { reading1 = it },
+                    onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading1 = filteredValue
+                                   },
                     color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
+                    maxLength = 5,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
                     shape = RoundedCornerShape(8.dp),
 //                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
                 )
@@ -185,15 +194,22 @@ fun ReadingRow1st(){
 
             Column {
 
-
-                                      var reading2 by remember { mutableStateOf("0") }
+                var reading2 by remember { mutableStateOf("0") }
                 ReadingValue(
                     text = reading2,
                     label = "Enter Value",
-                    onTextChange = { reading2 = it },
+                    onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading2 = filteredValue
+                                   },
                     color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
+                    maxLength = 5,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
                     shape = RoundedCornerShape(8.dp),
                 )
                 SubmitButton(text = "Submit", onClick = {})
@@ -206,10 +222,18 @@ fun ReadingRow1st(){
                 ReadingValue(
                     text = reading3,
                     label = "Enter Value",
-                    onTextChange = { reading3 = it },
+                    onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading3 = filteredValue
+                                   },
                     color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
+                    maxLength = 5,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
                     shape = RoundedCornerShape(8.dp),
                 )
                 SubmitButton(text = "Submit", onClick = {})
@@ -222,10 +246,18 @@ fun ReadingRow1st(){
                 ReadingValue(
                     text = reading4,
                     label = "Enter Value",
-                    onTextChange = { reading4 = it },
+                    onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading4 = filteredValue
+                                   },
                     color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
+                    maxLength = 5,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
                     shape = RoundedCornerShape(8.dp),
                 )
                 SubmitButton(text = "Submit", onClick = {})
@@ -238,10 +270,18 @@ fun ReadingRow1st(){
                 ReadingValue(
                     text = reading5,
                     label = "Enter Value",
-                    onTextChange = { reading5 = it },
+                    onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading5 = filteredValue
+                                   },
                     color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
+                    maxLength = 5,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
                     shape = RoundedCornerShape(8.dp),
                 )
                 SubmitButton(text = "Submit", onClick = {})
@@ -255,14 +295,13 @@ fun ReadingRow1st(){
 @Composable
 fun ReadingRow2nd(){
     Column {
-        var pn = ""
+        var PN = ""
         try{
-            pn = myComponents.mainViewModel.dataListChart[1].parameter_name
-        }
-        catch (_:Exception){
+            PN = myComponents.mainViewModel.dataListChart[1].parameter_name
+        }catch (_:Exception){
 
         }
-        ParamName(heading = pn)
+        ParamName(heading = PN)
 
         Row (
             modifier = Modifier
@@ -278,10 +317,18 @@ fun ReadingRow2nd(){
                 ReadingValue(
                     text = reading12,
                     label = "Enter Value",
-                    onTextChange = { reading12 = it },
+                    onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading12 = filteredValue
+                                   },
                     color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
+                    maxLength = 5,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
                     shape = RoundedCornerShape(8.dp),
 //                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
                 )
@@ -296,10 +343,18 @@ fun ReadingRow2nd(){
                 ReadingValue(
                     text = reading22,
                     label = "Enter Value",
-                    onTextChange = { reading22 = it },
+                    onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading22 = filteredValue
+                                   },
                     color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
+                    maxLength = 5,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
                     shape = RoundedCornerShape(8.dp),
                 )
                 SubmitButton(text = "Submit", onClick = {})
@@ -312,10 +367,18 @@ fun ReadingRow2nd(){
                 ReadingValue(
                     text = reading32,
                     label = "Enter Value",
-                    onTextChange = { reading32 = it },
+                    onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading32 = filteredValue
+                                   },
                     color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
+                    maxLength = 5,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
                     shape = RoundedCornerShape(8.dp),
                 )
                 SubmitButton(text = "Submit", onClick = {})
@@ -328,10 +391,18 @@ fun ReadingRow2nd(){
                 ReadingValue(
                     text = reading42,
                     label = "Enter Value",
-                    onTextChange = { reading42 = it },
+                    onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading42 = filteredValue
+                                   },
                     color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
+                    maxLength = 5,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
                     shape = RoundedCornerShape(8.dp),
                 )
                 SubmitButton(text = "Submit", onClick = {})
@@ -344,14 +415,24 @@ fun ReadingRow2nd(){
                 ReadingValue(
                     text = reading52,
                     label = "Enter Value",
-                    onTextChange = { reading52 = it },
+                    onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading52 = filteredValue
+                                   },
                     color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
+                    maxLength = 5,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
                     shape = RoundedCornerShape(8.dp),
                 )
                 SubmitButton(text = "Submit", onClick = {})
+
             }
+
         }
     }
 }
@@ -359,14 +440,13 @@ fun ReadingRow2nd(){
 @Composable
 fun ReadingRow3rd(){
     Column {
-        var pn = ""
+        var PN = ""
         try{
-            pn = myComponents.mainViewModel.dataListChart[2].parameter_name
-        }
-        catch (_:Exception){
+            PN = myComponents.mainViewModel.dataListChart[2].parameter_name
+        }catch (_:Exception){
 
         }
-        ParamName(heading = pn)
+        ParamName(heading = PN)
 
 
         Row (
@@ -383,10 +463,18 @@ fun ReadingRow3rd(){
                 ReadingValue(
                     text = reading13,
                     label = "Enter Value",
-                    onTextChange = { reading13 = it },
+                    onTextChange = {
+                        // Filter out commas from the input text
+                        val filteredValue = it.replace(",", "")
+                        // Update the state with the filtered value
+                        reading13 = filteredValue
+                    },
                     color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
+                    maxLength = 5,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
                     shape = RoundedCornerShape(8.dp),
 //                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
                 )
@@ -401,10 +489,18 @@ fun ReadingRow3rd(){
                 ReadingValue(
                     text = reading23,
                     label = "Enter Value",
-                    onTextChange = { reading23 = it },
+                    onTextChange = {
+                        // Filter out commas from the input text
+                        val filteredValue = it.replace(",", "")
+                        // Update the state with the filtered value
+                        reading23 = filteredValue
+                    },
                     color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
+                    maxLength = 5,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
                     shape = RoundedCornerShape(8.dp),
                 )
                 SubmitButton(text = "Submit", onClick = {})
@@ -417,10 +513,18 @@ fun ReadingRow3rd(){
                 ReadingValue(
                     text = reading33,
                     label = "Enter Value",
-                    onTextChange = { reading33 = it },
+                    onTextChange = {
+                        // Filter out commas from the input text
+                        val filteredValue = it.replace(",", "")
+                        // Update the state with the filtered value
+                        reading33 = filteredValue
+                    },
                     color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
+                    maxLength = 5,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
                     shape = RoundedCornerShape(8.dp),
                 )
                 SubmitButton(text = "Submit", onClick = {})
@@ -433,10 +537,18 @@ fun ReadingRow3rd(){
                 ReadingValue(
                     text = reading43,
                     label = "Enter Value",
-                    onTextChange = { reading43 = it },
+                    onTextChange = {
+                        // Filter out commas from the input text
+                        val filteredValue = it.replace(",", "")
+                        // Update the state with the filtered value
+                        reading43 = filteredValue
+                    },
                     color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
+                    maxLength = 5,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
                     shape = RoundedCornerShape(8.dp),
                 )
                 SubmitButton(text = "Submit", onClick = {})
@@ -449,10 +561,18 @@ fun ReadingRow3rd(){
                 ReadingValue(
                     text = reading53,
                     label = "Enter Value",
-                    onTextChange = { reading53 = it },
+                    onTextChange = {
+                        // Filter out commas from the input text
+                        val filteredValue = it.replace(",", "")
+                        // Update the state with the filtered value
+                        reading53 = filteredValue
+                    },
                     color = pureBlack,
-                    maxLength = 15,
-                    keyboardOptions = KeyboardOptions(),
+                    maxLength = 5,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
                     shape = RoundedCornerShape(8.dp),
                 )
                 SubmitButton(text = "Submit", onClick = {})
