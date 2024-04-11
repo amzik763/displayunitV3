@@ -1,11 +1,11 @@
 package com.cti.displayuni.response
 
-data class work_operator_data(
+data class WorkOperatorData(
     val assigned_by_owner: String,
     val employee_id: String,
     val end_shift_time: String,
     val failed: Int,
-    val filled: Int,
+    val filled: Any,
     val left_for_rework: Int,
     val operator_login_status: Boolean,
     val part_no: String,

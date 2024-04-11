@@ -76,13 +76,10 @@ class Repository () {
                 mainViewModel.mChecksheetData.value?.forEach {
                     mainViewModel.checkSheetList.add("status")
                 }
-                showLogs("WORK OPERATOR Size", taskResponse.body()?.workOperatorData?.size.toString())
+                taskResponse.body()?.work_operator_data?.toString()?.let { showLogs("WORK OPERATOR Size", it) }
 
-                taskResponse.body()?.workOperatorData?.forEach{ workOperatorData ->
-                    showLogs("WORK OPERATOR", workOperatorData.toString())
-                }
                 mainViewModel.ficID = taskResponse.body()?.emoloyee_id_floor_incharge.toString()
-                mainViewModel.pass = taskResponse.body()?.workOperatorData?.get(2)?.passed ?: -1
+                mainViewModel.pass = taskResponse.body()?.work_operator_data?.passed ?: -1
 
                 val dataListtemp = taskResponse.body()?.process_params_info
                 showLogs("PARAMS", dataListtemp?.size.toString())
@@ -93,11 +90,8 @@ class Repository () {
                     }else{
                         mainViewModel.dataListActual.add(Actual_Param(it.parameter_name, "",  it.unit ?: "", it.min, it.max))
                     }
-
                 }
 
-                myComponents.navController.popBackStack()
-                myComponents.navController.navigate(CHECKSHEET)
 
                 taskResponse.body()?.process_params_info?.forEach{
                     if (it.readings_is_available){
@@ -115,14 +109,63 @@ class Repository () {
                 }
                 showLogs("TASK P2: ",p2)
 
+
+                showLogs("SHIFT TIME", "mainViewModel.startShiftTime")
+
+                mainViewModel.startShiftTime = taskResponse.body()?.work_operator_data?.start_shift_time .toString()
+                showLogs("START SHIFT TIME", mainViewModel.startShiftTime)
+
+                mainViewModel.endShiftTime = taskResponse.body()?.work_operator_data?.end_shift_time.toString()
+                showLogs("END SHIFT TIME", mainViewModel.endShiftTime)
+
+                // Assuming startShiftTime and endShiftTime are in string format in the format "HH:MM:SS"
+                val startParts = mainViewModel.startShiftTime.split(":")
+                val endParts = mainViewModel.endShiftTime.split(":")
+
+                // Extracting hours, minutes, and seconds
+                val startHours = startParts[0].toInt()
+                val startMinutes = startParts[1].toInt()
+                val startSeconds = startParts[2].toInt()
+
+                val endHours = endParts[0].toInt()
+                val endMinutes = endParts[1].toInt()
+                val endSeconds = endParts[2].toInt()
+
+                // Calculating the duration
+                val totalStartSeconds = startHours * 3600 + startMinutes * 60 + startSeconds
+                val totalEndSeconds = endHours * 3600 + endMinutes * 60 + endSeconds
+                val shiftDurationSeconds = totalEndSeconds - totalStartSeconds
+
+                val shiftDurationMinutes = shiftDurationSeconds / 60
+
+                mainViewModel.timeDiffer = shiftDurationMinutes.toString()
+
+                showLogs("Shift Duration (minutes)", mainViewModel.timeDiffer)
+
+                // Converting seconds to hours, minutes, and seconds
+                val hours = shiftDurationSeconds / 3600
+                val minutes = (shiftDurationSeconds % 3600) / 60
+                val seconds = shiftDurationSeconds % 60
+
+                val strHours = hours.toString()
+                val strMinutes = minutes.toString()
+                val strSeconds = seconds.toString()
+
+                // Outputting the duration
+                showLogs("Shift Duration", "$strHours:$strMinutes:$strSeconds")
+
+
+
+                myComponents.navController.popBackStack()
+                myComponents.navController.navigate(CHECKSHEET)
+
             }
 
             if (taskResponse.code() == 404) {
                 mUiViewModel.setDialogDetails("Task Not Found", "Ask floor-in-charge to provide task", "", R.drawable.ic_notest)
                 mUiViewModel.showMessageDialog()
             }
-
-        } catch (e: Exception) {
+                } catch (e: Exception) {
             e.printStackTrace()
         }
     }

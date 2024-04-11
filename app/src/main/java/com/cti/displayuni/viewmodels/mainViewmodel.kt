@@ -23,7 +23,6 @@ import com.cti.displayuni.utility.Setting_Param
 import com.cti.displayuni.utility.chart_parameter
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.myComponents.mUiViewModel
-import com.cti.displayuni.utility.myComponents.mainViewModel
 import com.cti.displayuni.utility.myComponents.repository
 import com.cti.displayuni.utility.showLogs
 import kotlinx.coroutines.launch
@@ -44,6 +43,9 @@ class MainViewModel(context: Context) : ViewModel(){
     var skill by mutableStateOf("")
     var mobileNum by mutableStateOf("")
 
+    var startShiftTime by mutableStateOf("")
+    var endShiftTime by mutableStateOf("")
+    var timeDiffer by mutableStateOf("")
 
     var dataListSetting = mutableListOf<Setting_Param>()
     var dataListActual = mutableListOf<Actual_Param>()

@@ -58,7 +58,6 @@ import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
 import com.cti.displayuni.ui.theme.red
-import com.cti.displayuni.utility.READING
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.showLogs
@@ -154,6 +153,7 @@ fun ReadingCircles(r: String) {
         }*/
     )
     Spacer(modifier = Modifier.width(12.dp))
+
 }
 
 @Composable
@@ -196,6 +196,8 @@ fun CheckingParts(checking:String,total:String,pass:String,fail:String){
         )
     }
 }
+
+
 @Composable
 fun MyImageButton(icon: Int, onClick: () -> Unit) {
     IconButton(
