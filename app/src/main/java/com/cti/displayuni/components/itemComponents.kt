@@ -63,7 +63,6 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
 
    if (wd <= 2048 && mParameters.dnsty == 320) {
 
-
       fillMaxWidth = 0.05f
       fillMaxWidth2 = 0.35f
       fillMaxWidth3 = 0.3f
@@ -73,8 +72,6 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
       startPadding1 = 6.dp
       startPadding2 = 12.dp
       imgSize = 30.dp
-
-
 
       Log.d("lwinsize: ", wd.toString())
 
@@ -109,7 +106,6 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
             color = pureBlack,
             fontFamily = nk,
             fontSize = textFont,
-//         textAlign = TextAlign.Center
          )
 
          Text(
@@ -120,7 +116,6 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
             color = pureBlack,
             fontFamily = nk,
             fontSize = textFont,
-//         textAlign = TextAlign.Center
          )
 
          Text(
@@ -131,7 +126,6 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
             color = pureBlack,
             fontFamily = nk,
             fontSize = textFont,
-//         textAlign = TextAlign.Center
          )
 
          Text(
@@ -142,7 +136,6 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
             color = pureBlack,
             fontFamily = nk,
             fontSize = textFont,
-//         textAlign = TextAlign.Center
          )
 
          Text(
@@ -153,7 +146,6 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
             color = pureBlack,
             fontFamily = nk,
             fontSize = textFont,
-//         textAlign = TextAlign.Center
          )
 
          DropDown(item.csp_id, index)

@@ -76,7 +76,6 @@ class MainViewModel(context: Context) : ViewModel(){
         editor.apply()
     }
 
-
     fun getStationValue(): String {
         return sharedPreferences.getString(KEY_TEXT_VALUE, "") ?: ""
     }
@@ -91,10 +90,6 @@ class MainViewModel(context: Context) : ViewModel(){
         return sharedPreferences.getString(KEY_TOKEN, "") ?: ""
     }
 
-
-
-
-
     fun loginUser(username: String, password: String){
 
         if (username.isBlank()){
@@ -107,8 +102,7 @@ class MainViewModel(context: Context) : ViewModel(){
             mUiViewModel.showMessageDialog()
             return
         }
-
-            viewModelScope.launch {
+                viewModelScope.launch {
                 repository.loginUser(username,password)
             }
     }
