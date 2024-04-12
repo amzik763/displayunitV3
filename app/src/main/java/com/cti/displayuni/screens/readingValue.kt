@@ -150,7 +150,7 @@ fun CustomPopupContent(
 @Composable
 fun ReadingRow1st(){
     Column {
-        var PN = ""
+         var PN = ""
             try{
                 PN = myComponents.mainViewModel.dataListChart[0].parameter_name
             }catch (_:Exception){

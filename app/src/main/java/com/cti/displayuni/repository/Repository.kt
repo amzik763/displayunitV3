@@ -100,6 +100,7 @@ class Repository () {
 
                 }
 
+                //SHOULD BE SHIFTED TO OTHER API
                 val p1 =  mainViewModel.dataListSetting.joinToString(separator = ",") { setting ->
                     "${setting.param_name} ::: ${setting.param_value}"
                 }
@@ -118,42 +119,8 @@ class Repository () {
                 mainViewModel.endShiftTime = taskResponse.body()?.work_operator_data?.end_shift_time.toString()
                 showLogs("END SHIFT TIME", mainViewModel.endShiftTime)
 
-                // Assuming startShiftTime and endShiftTime are in string format in the format "HH:MM:SS"
-                val startParts = mainViewModel.startShiftTime.split(":")
-                val endParts = mainViewModel.endShiftTime.split(":")
 
-                // Extracting hours, minutes, and seconds
-                val startHours = startParts[0].toInt()
-                val startMinutes = startParts[1].toInt()
-                val startSeconds = startParts[2].toInt()
-
-                val endHours = endParts[0].toInt()
-                val endMinutes = endParts[1].toInt()
-                val endSeconds = endParts[2].toInt()
-
-                // Calculating the duration
-                val totalStartSeconds = startHours * 3600 + startMinutes * 60 + startSeconds
-                val totalEndSeconds = endHours * 3600 + endMinutes * 60 + endSeconds
-                val shiftDurationSeconds = totalEndSeconds - totalStartSeconds
-
-                val shiftDurationMinutes = shiftDurationSeconds / 60
-
-                mainViewModel.timeDiffer = shiftDurationMinutes.toString()
-
-                showLogs("Shift Duration (minutes)", mainViewModel.timeDiffer)
-
-                // Converting seconds to hours, minutes, and seconds
-                val hours = shiftDurationSeconds / 3600
-                val minutes = (shiftDurationSeconds % 3600) / 60
-                val seconds = shiftDurationSeconds % 60
-
-                val strHours = hours.toString()
-                val strMinutes = minutes.toString()
-                val strSeconds = seconds.toString()
-
-                // Outputting the duration
-                showLogs("Shift Duration", "$strHours:$strMinutes:$strSeconds")
-
+                calculateShiftData()
 
 
                 myComponents.navController.popBackStack()
@@ -168,6 +135,47 @@ class Repository () {
                 } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    private fun calculateShiftData() {
+        // Assuming startShiftTime and endShiftTime are in string format in the format "HH:MM:SS"
+        val startParts = mainViewModel.startShiftTime.split(":")
+        val endParts = mainViewModel.endShiftTime.split(":")
+
+        // Extracting hours, minutes, and seconds
+        val startHours = startParts[0].toInt()
+        val startMinutes = startParts[1].toInt()
+        val startSeconds = startParts[2].toInt()
+
+        val endHours = endParts[0].toInt()
+        val endMinutes = endParts[1].toInt()
+        val endSeconds = endParts[2].toInt()
+
+
+
+        // Calculating the duration
+        val totalStartSeconds = startHours * 3600 + startMinutes * 60 + startSeconds
+        val totalEndSeconds = endHours * 3600 + endMinutes * 60 + endSeconds
+        val shiftDurationSeconds = totalEndSeconds - totalStartSeconds
+
+        val shiftDurationMinutes = shiftDurationSeconds / 60
+
+        mainViewModel.timeDiffer = shiftDurationMinutes.toString()
+
+        showLogs("Shift Duration (minutes)", mainViewModel.timeDiffer)
+
+        // Converting seconds to hours, minutes, and seconds
+        val hours = shiftDurationSeconds / 3600
+        val minutes = (shiftDurationSeconds % 3600) / 60
+        val seconds = shiftDurationSeconds % 60
+
+        val strHours = hours.toString()
+        val strMinutes = minutes.toString()
+        val strSeconds = seconds.toString()
+
+        // Outputting the duration
+        showLogs("Shift Duration", "$strHours:$strMinutes:$strSeconds")
+
     }
 
     suspend fun checkSheetStatus(

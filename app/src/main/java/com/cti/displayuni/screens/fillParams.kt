@@ -374,11 +374,11 @@ fun Header(){
                             .clickable {
                                 if (myComponents.mainViewModel.itemsInRange()) {
                                     //API CALL
+
                                 } else {
                                     //showdialogbox that process is not eligible for pass
                                 }
                             }
-
                     )
                 }
                 Spacer(modifier = Modifier.width(24.dp))
@@ -390,7 +390,6 @@ fun Header(){
                         contentColor = pureWhite,
                         containerColor = red
                     ),
-
                     ) {
                     Text(
                         text = "FAIL",
