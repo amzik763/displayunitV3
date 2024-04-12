@@ -22,7 +22,6 @@ import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.lightGrey
 import com.cti.displayuni.ui.theme.orange
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReadingValue(
@@ -36,9 +35,7 @@ fun ReadingValue(
     maxLength: Int,
     keyboardOptions: KeyboardOptions,
     shape: RoundedCornerShape,
-//    enabled : Boolean
-
-
+//  enabled : Boolean
     ) {
     val conf = LocalConfiguration.current
     val widthdp = conf.screenWidthDp.dp
