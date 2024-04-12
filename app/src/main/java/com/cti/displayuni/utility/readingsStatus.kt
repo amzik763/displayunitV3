@@ -1,16 +1,17 @@
 package com.cti.displayuni.utility
 
 
-enum class readingStatus {
+enum class readingStatusEnum {
     notAvailable,
     available,
     completed
 }
+
 data class readingsStatus(
 
     val readingTime:Int,
     val readingParts:Int,
-    val readingStatus: readingStatus
+    val readingStatus: readingStatusEnum
 
 )
 

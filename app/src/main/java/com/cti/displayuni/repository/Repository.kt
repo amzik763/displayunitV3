@@ -1,6 +1,7 @@
 package com.cti.displayuni.repository
 
 import android.util.Log
+import androidx.compose.ui.geometry.times
 import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.R
 import com.cti.displayuni.utility.Actual_Param
@@ -13,10 +14,14 @@ import com.cti.displayuni.utility.myComponents.authAPI
 import com.cti.displayuni.utility.myComponents.mUiViewModel
 import com.cti.displayuni.utility.myComponents.mainViewModel
 import com.cti.displayuni.utility.myComponents.otherAPIs
+import com.cti.displayuni.utility.readingStatusEnum
 import com.cti.displayuni.utility.responses.checkSheetResponse
 import com.cti.displayuni.utility.responses.loginResponse
 import com.cti.displayuni.utility.responses.taskResponse
 import com.cti.displayuni.utility.showLogs
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class Repository () {
 
@@ -137,6 +142,27 @@ class Repository () {
         }
     }
 
+    fun getCurrentTime(): String {
+        val currentTime = Date()
+        val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+        return dateFormat.format(currentTime)
+    }
+
+    private fun setReadingStatus(minutes: Int) {
+
+//        val currentTime = getCurrentTime()
+        var eachTime = minutes/5
+        var eachPart = taskResponse.body()?.work_operator_data?.total_assigned_task?.div(5)
+
+        mainViewModel.readingStatusList.add(eachTime,eachPart,readingStatusEnum.notAvailable)
+        mainViewModel.readingStatusList.add(eachTime*2,eachPart?.times(2),readingStatusEnum.notAvailable)
+        mainViewModel.readingStatusList.add(eachTime*3,eachPart?.times(3),readingStatusEnum.notAvailable)
+        mainViewModel.readingStatusList.add(eachTime*4,eachPart?.times(4),readingStatusEnum.notAvailable)
+        mainViewModel.readingStatusList.add(eachTime*5,eachPart?.times(5),readingStatusEnum.notAvailable)
+
+
+    }
+
     private fun calculateShiftData() {
         // Assuming startShiftTime and endShiftTime are in string format in the format "HH:MM:SS"
         val startParts = mainViewModel.startShiftTime.split(":")
@@ -172,7 +198,7 @@ class Repository () {
         val strHours = hours.toString()
         val strMinutes = minutes.toString()
         val strSeconds = seconds.toString()
-
+        setReadingStatus(minutes)
         // Outputting the duration
         showLogs("Shift Duration", "$strHours:$strMinutes:$strSeconds")
 

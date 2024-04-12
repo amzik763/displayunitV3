@@ -24,6 +24,7 @@ import com.cti.displayuni.utility.chart_parameter
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.myComponents.mUiViewModel
 import com.cti.displayuni.utility.myComponents.repository
+import com.cti.displayuni.utility.readingStatus
 import com.cti.displayuni.utility.showLogs
 import kotlinx.coroutines.launch
 
@@ -46,6 +47,8 @@ class MainViewModel(context: Context) : ViewModel(){
     var startShiftTime by mutableStateOf("")
     var endShiftTime by mutableStateOf("")
     var timeDiffer by mutableStateOf("")
+
+    var readingStatusList = mutableListOf<readingStatus>()
 
     var dataListSetting = mutableListOf<Setting_Param>()
     var dataListActual = mutableListOf<Actual_Param>()
