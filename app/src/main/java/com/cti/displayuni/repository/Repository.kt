@@ -15,6 +15,7 @@ import com.cti.displayuni.utility.myComponents.mUiViewModel
 import com.cti.displayuni.utility.myComponents.mainViewModel
 import com.cti.displayuni.utility.myComponents.otherAPIs
 import com.cti.displayuni.utility.readingStatusEnum
+import com.cti.displayuni.utility.readingsStatusItems
 import com.cti.displayuni.utility.responses.checkSheetResponse
 import com.cti.displayuni.utility.responses.loginResponse
 import com.cti.displayuni.utility.responses.taskResponse
@@ -152,13 +153,24 @@ class Repository () {
 
 //        val currentTime = getCurrentTime()
         var eachTime = minutes/5
-        var eachPart = taskResponse.body()?.work_operator_data?.total_assigned_task?.div(5)
+        var eachPart:Int? = taskResponse.body()?.work_operator_data?.total_assigned_task?.div(5)
 
-        mainViewModel.readingStatusList.add(eachTime,eachPart,readingStatusEnum.notAvailable)
+//        val item:readingsStatusItems = readingsStatusItems(eachTime, eachPart, readingStatusEnum.notAvailable)
+//        mainViewModel.readingStatusList.add(item)
+
+        mainViewModel.readingStatusList.add(readingsStatusItems(eachTime, eachPart, readingStatusEnum.notAvailable))
+        mainViewModel.readingStatusList.add(readingsStatusItems(eachTime*2, eachPart?.times(2), readingStatusEnum.notAvailable))
+        mainViewModel.readingStatusList.add(readingsStatusItems(eachTime*3, eachPart?.times(3), readingStatusEnum.notAvailable))
+        mainViewModel.readingStatusList.add(readingsStatusItems(eachTime*4, eachPart?.times(4), readingStatusEnum.notAvailable))
+        mainViewModel.readingStatusList.add(readingsStatusItems(eachTime*5, eachPart?.times(5), readingStatusEnum.notAvailable))
+
+        /*
+
         mainViewModel.readingStatusList.add(eachTime*2,eachPart?.times(2),readingStatusEnum.notAvailable)
         mainViewModel.readingStatusList.add(eachTime*3,eachPart?.times(3),readingStatusEnum.notAvailable)
         mainViewModel.readingStatusList.add(eachTime*4,eachPart?.times(4),readingStatusEnum.notAvailable)
         mainViewModel.readingStatusList.add(eachTime*5,eachPart?.times(5),readingStatusEnum.notAvailable)
+*/
 
 
     }

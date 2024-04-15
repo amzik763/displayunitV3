@@ -1,9 +1,5 @@
 package com.cti.displayuni.viewmodels
 
-
-
-
-
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.compose.runtime.getValue
@@ -24,7 +20,7 @@ import com.cti.displayuni.utility.chart_parameter
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.myComponents.mUiViewModel
 import com.cti.displayuni.utility.myComponents.repository
-import com.cti.displayuni.utility.readingStatus
+import com.cti.displayuni.utility.readingsStatusItems
 import com.cti.displayuni.utility.showLogs
 import kotlinx.coroutines.launch
 
@@ -48,7 +44,7 @@ class MainViewModel(context: Context) : ViewModel(){
     var endShiftTime by mutableStateOf("")
     var timeDiffer by mutableStateOf("")
 
-    var readingStatusList = mutableListOf<readingStatus>()
+    var readingStatusList = mutableListOf<readingsStatusItems>()
 
     var dataListSetting = mutableListOf<Setting_Param>()
     var dataListActual = mutableListOf<Actual_Param>()
@@ -61,7 +57,6 @@ class MainViewModel(context: Context) : ViewModel(){
 
     var pass = 0
     var fail = mutableIntStateOf(0)
-
 
     var tempParamID by mutableStateOf("")
 
@@ -110,6 +105,7 @@ class MainViewModel(context: Context) : ViewModel(){
             }
     }
 
+
     fun getTask(station_id:String){
 
         viewModelScope.launch {
@@ -149,7 +145,6 @@ fun checkItemsInList() {
      }
 
 fun itemsInRange():Boolean{
-
     dataListActual.forEach {
     try {
         if (!it.param_value.isNullOrBlank())

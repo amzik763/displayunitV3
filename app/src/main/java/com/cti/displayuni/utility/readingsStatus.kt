@@ -7,11 +7,11 @@ enum class readingStatusEnum {
     completed
 }
 
-data class readingsStatus(
+data class readingsStatusItems(
 
     val readingTime:Int,
-    val readingParts:Int,
-    val readingStatus: readingStatusEnum
+    val readingParts:Int?,
+    val readingStatusE: readingStatusEnum
 
 )
 
