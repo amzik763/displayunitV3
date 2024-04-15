@@ -9,7 +9,12 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.dialogBox.MessageDialog
 import com.cti.displayuni.dialogBox.NetworkErrorDialog
@@ -111,9 +116,10 @@ fun NetworkDialog(mUiViewModel: UiViewModel, applicationContext: Context) {
                 },
                 dialogModel = mUiViewModel.dialogModel,
 
-                )
+            )
         }
     }
+
 
     @Composable
     fun NoTaskDia(mUiViewModel: UiViewModel) {
@@ -130,7 +136,6 @@ fun NetworkDialog(mUiViewModel: UiViewModel, applicationContext: Context) {
         }
     }
 }
-
 
 @Composable
 fun SupLoginDia(mUiViewModel: UiViewModel) {

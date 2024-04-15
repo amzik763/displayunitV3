@@ -7,5 +7,6 @@ data class allDataV2(
     val process_params_info: List<ProcessParamsInfo>,
     val total_check_sheet_params: Int,
     val urls: String,
-    val work_operator_data: WorkOperatorData
+    val work_operator_data: WorkOperatorData,
+    val station_reading_data: readingData
 )

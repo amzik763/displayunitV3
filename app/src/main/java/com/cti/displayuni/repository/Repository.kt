@@ -30,6 +30,7 @@ class Repository () {
         Log.d("Repository:", "Created")
     }
 
+
     suspend fun loginUser(username: String, password: String) {
         try {
             loginResponse = authAPI.login(username, password)
@@ -241,7 +242,7 @@ class Repository () {
 
     }
 
-suspend fun notify(stationValue: String, csp_id: String, floor_no: String) {
+    suspend fun notify(stationValue: String, csp_id: String, floor_no: String) {
         try {
             val notifyResponse= otherAPIs.operatorNotify(stationValue,csp_id,floor_no)
             if (notifyResponse.code() == 200) {
@@ -263,7 +264,7 @@ suspend fun notify(stationValue: String, csp_id: String, floor_no: String) {
             }
             val new_checkSheetStatus = checkSheetStatus.dropLast(1)
 
-            showLogs("CHECKSHEEEET", new_checkSheetStatus.toString())
+            showLogs("CHECKSHEEEET", new_checkSheetStatus)
 
         } catch (e: Exception) {
             e.printStackTrace()

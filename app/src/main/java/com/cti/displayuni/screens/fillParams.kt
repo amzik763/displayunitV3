@@ -91,7 +91,6 @@ fun ActualParams() {
         ActualLazyList(
             myComponents.mainViewModel.dataListActual
         )
-
     }
 }
 
@@ -99,7 +98,6 @@ fun ActualParams() {
 @Composable
 fun SettingParams() {
     Column(modifier = Modifier.fillMaxWidth()) {
-
         Text(
             text = "Process Setting Parameters",
             style = TextStyle(
@@ -145,7 +143,7 @@ fun ReadingCircles(r: String) {
 
         }
         /*if(r.length==0||r.isNullOrEmpty()){
-            ColorFilter.tint(lightGrey)
+            ColorFilter.tint(lightGrey)t
 
         }else{
             ColorFilter.tint(green)
@@ -157,7 +155,7 @@ fun ReadingCircles(r: String) {
 }
 
 @Composable
-fun CheckingParts(checking:String,total:String,pass:String,fail:String){
+fun CheckingParts(checking:String, total:String, pass:String, fail:String){
     Row {
         Spacer(modifier = Modifier.width(24.dp))
         Text(
