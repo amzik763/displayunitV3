@@ -126,9 +126,7 @@ class Repository () {
                 mainViewModel.endShiftTime = taskResponse.body()?.work_operator_data?.end_shift_time.toString()
                 showLogs("END SHIFT TIME", mainViewModel.endShiftTime)
 
-
                 calculateShiftData()
-
 
                 myComponents.navController.popBackStack()
                 myComponents.navController.navigate(CHECKSHEET)
@@ -172,7 +170,6 @@ class Repository () {
         mainViewModel.readingStatusList.add(eachTime*4,eachPart?.times(4),readingStatusEnum.notAvailable)
         mainViewModel.readingStatusList.add(eachTime*5,eachPart?.times(5),readingStatusEnum.notAvailable)
 */
-
 
     }
 

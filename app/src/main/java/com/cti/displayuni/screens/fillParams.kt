@@ -372,6 +372,7 @@ fun Header(){
                             .clickable {
                                 if (myComponents.mainViewModel.itemsInRange()) {
                                     //API CALL
+                                    myComponents.mainViewModel.submitPartInfo()
 
                                 } else {
                                     //showdialogbox that process is not eligible for pass

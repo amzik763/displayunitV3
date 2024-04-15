@@ -23,6 +23,9 @@ import com.cti.displayuni.utility.myComponents.repository
 import com.cti.displayuni.utility.readingsStatusItems
 import com.cti.displayuni.utility.showLogs
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class MainViewModel(context: Context) : ViewModel(){
 
@@ -189,4 +192,41 @@ fun itemsInRange():Boolean{
     }
     return true
 }
+
+    fun getCurrentTime(): String {
+        val currentTime = Date()
+        val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+        return dateFormat.format(currentTime)
+    }
+
+    fun submitPartInfo() {
+        checkIfReadingTime()
+        //Other code
+    }
+
+
+    private fun checkIfReadingTime(){
+
+        val timeDifferenceInMinutes = calculateTimeDifferenceInMinutes(startShiftTime, getCurrentTime())
+
+        // Now you have the time difference in minutes, you can use it as needed
+        println("Time difference in minutes: $timeDifferenceInMinutes")
+
+
+
+    }
+
+    fun calculateTimeDifferenceInMinutes(time1: String, time2: String): Long {
+        val format = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+        try {
+            val date1 = format.parse(time1)
+            val date2 = format.parse(time2)
+
+            val differenceInMillis = date2.time - date1.time
+            return differenceInMillis / (1000 * 60)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return -1 // Return a negative value to indicate error
+        }
+    }
 }
