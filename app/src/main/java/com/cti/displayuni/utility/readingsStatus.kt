@@ -11,7 +11,7 @@ data class readingsStatusItems(
 
     val readingTime:Int,
     val readingParts:Int?,
-    val readingStatusE: readingStatusEnum
+    var readingStatusE: readingStatusEnum
 
 )
 

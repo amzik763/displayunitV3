@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
@@ -20,6 +21,7 @@ import com.cti.displayuni.utility.chart_parameter
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.myComponents.mUiViewModel
 import com.cti.displayuni.utility.myComponents.repository
+import com.cti.displayuni.utility.readingStatusEnum
 import com.cti.displayuni.utility.readingsStatusItems
 import com.cti.displayuni.utility.showLogs
 import kotlinx.coroutines.launch
@@ -47,7 +49,8 @@ class MainViewModel(context: Context) : ViewModel(){
     var endShiftTime by mutableStateOf("")
     var timeDiffer by mutableStateOf("")
 
-    var readingStatusList = mutableListOf<readingsStatusItems>()
+//  var readingStatusList = mutableListOf<readingsStatusItems>()
+    val readingStatusList = mutableStateListOf<readingsStatusItems>()
 
     var dataListSetting = mutableListOf<Setting_Param>()
     var dataListActual = mutableListOf<Actual_Param>()
@@ -200,18 +203,45 @@ fun itemsInRange():Boolean{
     }
 
     fun submitPartInfo() {
-        checkIfReadingTime()
+        updateReadingStatus()
+        checkReadingTimeAndShowPopup()
         //Other code
     }
 
+    private fun checkReadingTimeAndShowPopup() {
 
-    private fun checkIfReadingTime(){
+        if(readingStatusList[0].readingStatusE == readingStatusEnum.available){
+            //showPopup
+        }else if(){
+
+        }
+
+    }
+
+
+    private fun updateReadingStatus(){
 
         val timeDifferenceInMinutes = calculateTimeDifferenceInMinutes(startShiftTime, getCurrentTime())
 
         // Now you have the time difference in minutes, you can use it as needed
         println("Time difference in minutes: $timeDifferenceInMinutes")
 
+        if(timeDifferenceInMinutes>=readingStatusList[0].readingTime && readingStatusList[0].readingStatusE != readingStatusEnum.completed){
+            readingStatusList[0].readingStatusE = readingStatusEnum.available
+
+        }else
+        if(timeDifferenceInMinutes>=readingStatusList[1].readingTime && readingStatusList[1].readingStatusE != readingStatusEnum.completed){
+            readingStatusList[1].readingStatusE = readingStatusEnum.available
+        }else
+        if(timeDifferenceInMinutes>=readingStatusList[2].readingTime && readingStatusList[2].readingStatusE != readingStatusEnum.completed){
+            readingStatusList[2].readingStatusE = readingStatusEnum.available
+        }else
+        if(timeDifferenceInMinutes>=readingStatusList[3].readingTime && readingStatusList[3].readingStatusE != readingStatusEnum.completed){
+            readingStatusList[3].readingStatusE = readingStatusEnum.available
+        }else
+        if(timeDifferenceInMinutes>=readingStatusList[4].readingTime && readingStatusList[4].readingStatusE != readingStatusEnum.completed){
+            readingStatusList[4].readingStatusE = readingStatusEnum.available
+        }
 
 
     }

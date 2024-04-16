@@ -38,6 +38,8 @@ import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
 import com.cti.displayuni.utility.mFont
 import com.cti.displayuni.utility.myComponents
+import com.cti.displayuni.utility.readingStatusEnum
+import com.cti.displayuni.utility.showLogs
 
 @Composable
 fun ParamName(heading: String) {
@@ -150,7 +152,7 @@ fun CustomPopupContent(
 @Composable
 fun ReadingRow1st(){
     Column {
-         var PN = ""
+        var PN = ""
             try{
                 PN = myComponents.mainViewModel.dataListChart[0].parameter_name
             }catch (_:Exception){
@@ -165,7 +167,8 @@ fun ReadingRow1st(){
                 .background(color = Color.White),
             horizontalArrangement = Arrangement.SpaceAround
         ){
-
+                showLogs("READING STATUS DATA: ",myComponents.mainViewModel.readingStatusList[0].readingStatusE + " ")
+                if(myComponents.mainViewModel.readingStatusList[0].readingStatusE == readingStatusEnum.available)
             Column {
                 var reading1 by remember { mutableStateOf("0") }
 
