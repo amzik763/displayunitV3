@@ -190,11 +190,11 @@ fun ReadingRow1st(){
                     shape = RoundedCornerShape(8.dp),
 //                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
                 )
+                if(myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.completed)
 
-                SubmitButton(text = "Submit", onClick = { })
+                    SubmitButton(text = "Submit", onClick = { })
 
             }
-
             if(myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.available)
             Column {
 
@@ -216,11 +216,15 @@ fun ReadingRow1st(){
                     ),
                     shape = RoundedCornerShape(8.dp),
                 )
+
+                if(myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.completed)
                 SubmitButton(text = "Submit", onClick = {})
 
             }
 
-            Column {
+
+            if(myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.notAvailable)
+                Column {
 
                 var reading3 by remember { mutableStateOf("0") }
                 ReadingValue(
@@ -240,11 +244,14 @@ fun ReadingRow1st(){
                     ),
                     shape = RoundedCornerShape(8.dp),
                 )
-                SubmitButton(text = "Submit", onClick = {})
+
+                    if(myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.completed)
+                    SubmitButton(text = "Submit", onClick = {})
 
             }
 
-            Column {
+            if(myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.notAvailable)
+                Column {
 
                 var reading4 by remember { mutableStateOf("0") }
                 ReadingValue(
@@ -264,10 +271,13 @@ fun ReadingRow1st(){
                     ),
                     shape = RoundedCornerShape(8.dp),
                 )
-                SubmitButton(text = "Submit", onClick = {})
+
+                    if(myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.completed)
+                    SubmitButton(text = "Submit", onClick = {})
 
             }
 
+            if(myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.notAvailable)
             Column {
 
                 var reading5 by remember { mutableStateOf("0") }
@@ -288,7 +298,9 @@ fun ReadingRow1st(){
                     ),
                     shape = RoundedCornerShape(8.dp),
                 )
-                SubmitButton(text = "Submit", onClick = {})
+
+                if(myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.completed)
+                    SubmitButton(text = "Submit", onClick = {})
 
             }
 
@@ -315,7 +327,7 @@ fun ReadingRow2nd(){
             horizontalArrangement = Arrangement.SpaceAround
         ){
 
-            if(myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.available)
+            if(myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.notAvailable)
             Column {
                 var reading12 by remember { mutableStateOf("0") }
 
@@ -338,11 +350,12 @@ fun ReadingRow2nd(){
 //                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
                 )
 
+                if (myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.completed)
                 SubmitButton(text = "Submit", onClick = { })
 
             }
 
-            if(myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.available)
+            if(myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.notAvailable)
             Column {
 
                 var reading22 by remember { mutableStateOf("0") }
@@ -363,10 +376,13 @@ fun ReadingRow2nd(){
                     ),
                     shape = RoundedCornerShape(8.dp),
                 )
+
+                if (myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.completed)
                 SubmitButton(text = "Submit", onClick = {})
 
             }
 
+            if (myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.notAvailable)
             Column {
 
                 var reading32 by remember { mutableStateOf("0") }
@@ -387,10 +403,12 @@ fun ReadingRow2nd(){
                     ),
                     shape = RoundedCornerShape(8.dp),
                 )
+
+                if (myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.completed)
                 SubmitButton(text = "Submit", onClick = {})
 
             }
-
+            if (myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.notAvailable)
             Column {
 
                 var reading42 by remember { mutableStateOf("0") }
@@ -411,12 +429,14 @@ fun ReadingRow2nd(){
                     ),
                     shape = RoundedCornerShape(8.dp),
                 )
+
+                if (myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.completed)
                 SubmitButton(text = "Submit", onClick = {})
 
             }
 
+            if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.notAvailable)
             Column {
-
                 var reading52 by remember { mutableStateOf("0") }
                 ReadingValue(
                     text = reading52,
@@ -435,6 +455,8 @@ fun ReadingRow2nd(){
                     ),
                     shape = RoundedCornerShape(8.dp),
                 )
+
+                if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.completed)
                 SubmitButton(text = "Submit", onClick = {})
 
             }
@@ -463,6 +485,7 @@ fun ReadingRow3rd(){
             horizontalArrangement = Arrangement.SpaceAround
         ){
 
+            if (myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.notAvailable)
             Column {
                 var reading13 by remember { mutableStateOf("0") }
 
@@ -485,12 +508,14 @@ fun ReadingRow3rd(){
 //                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
                 )
 
+                if (myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.completed)
                 SubmitButton(text = "Submit", onClick = { })
 
             }
 
-            Column {
 
+            if (myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.notAvailable)
+            Column {
                 var reading23 by remember { mutableStateOf("0") }
                 ReadingValue(
                     text = reading23,
@@ -509,11 +534,15 @@ fun ReadingRow3rd(){
                     ),
                     shape = RoundedCornerShape(8.dp),
                 )
+
+                if (myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.completed)
                 SubmitButton(text = "Submit", onClick = {})
 
             }
 
-            Column {
+
+            if (myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.notAvailable)
+                Column {
 
                 var reading33 by remember { mutableStateOf("0") }
                 ReadingValue(
@@ -533,10 +562,15 @@ fun ReadingRow3rd(){
                     ),
                     shape = RoundedCornerShape(8.dp),
                 )
-                SubmitButton(text = "Submit", onClick = {})
+
+                    if (myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.completed)
+                    SubmitButton(text = "Submit", onClick = {})
 
             }
 
+
+
+            if (myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.notAvailable)
             Column {
 
                 var reading43 by remember { mutableStateOf("0") }
@@ -557,10 +591,13 @@ fun ReadingRow3rd(){
                     ),
                     shape = RoundedCornerShape(8.dp),
                 )
+                if (myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.completed)
                 SubmitButton(text = "Submit", onClick = {})
 
             }
 
+
+            if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.notAvailable)
             Column {
 
                 var reading53 by remember { mutableStateOf("0") }
@@ -581,10 +618,11 @@ fun ReadingRow3rd(){
                     ),
                     shape = RoundedCornerShape(8.dp),
                 )
+
+                if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.completed)
+
                 SubmitButton(text = "Submit", onClick = {})
-
             }
-
         }
     }
 }

@@ -108,7 +108,7 @@ class MainViewModel(context: Context) : ViewModel(){
         }
                 viewModelScope.launch {
                 repository.loginUser(username,password)
-            }
+        }
     }
 
 
@@ -125,7 +125,6 @@ class MainViewModel(context: Context) : ViewModel(){
             repository.notify(stationValue, csp_id, floor_no)
         }
     }
-
     fun addChecksheetData(){
         viewModelScope.launch {
             showLogs("CHECKSHEET API: ",employeeId)
@@ -203,7 +202,7 @@ fun itemsInRange():Boolean{
     }
 
     fun submitPartInfo() {
-//        updateReadingStatus()
+        updateReadingStatus()
         checkReadingTimeAndShowPopup()
         //Other code
     }
@@ -213,12 +212,12 @@ fun itemsInRange():Boolean{
         if(readingStatusList[0].readingStatusE.equals(readingStatusEnum.available)){
             showLogs("readingstatusenum"," available")
             showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
-            readingStatusList[0].readingStatusE = readingStatusEnum.notAvailable
+//            readingStatusList[0].readingStatusE = readingStatusEnum.notAvailable
 
         }else if(readingStatusList[0].readingStatusE.equals(readingStatusEnum.notAvailable)){
            showLogs("readingstatusenum"," not available")
             showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
-            readingStatusList[0].readingStatusE = readingStatusEnum.available
+//            readingStatusList[0].readingStatusE = readingStatusEnum.available
 
 
         }
@@ -228,9 +227,13 @@ fun itemsInRange():Boolean{
     private fun updateReadingStatus(){
 
         val timeDifferenceInMinutes = calculateTimeDifferenceInMinutes(startShiftTime, getCurrentTime())
+        val timeDifferenceOfShift = calculateTimeDifferenceInMinutes(startShiftTime, endShiftTime)
+
+
 
         // Now you have the time difference in minutes, you can use it as needed
         println("Time difference in minutes: $timeDifferenceInMinutes")
+        println("Time difference in minutes: $timeDifferenceOfShift")
 
         if(timeDifferenceInMinutes>=readingStatusList[0].readingTime && readingStatusList[0].readingStatusE != readingStatusEnum.completed){
             readingStatusList[0].readingStatusE = readingStatusEnum.available
