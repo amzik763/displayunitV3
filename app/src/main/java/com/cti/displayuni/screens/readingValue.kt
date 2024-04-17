@@ -168,7 +168,7 @@ fun ReadingRow1st(){
             horizontalArrangement = Arrangement.SpaceAround
         ){
                 showLogs("READING STATUS DATA: ",myComponents.mainViewModel.readingStatusList[0].readingStatusE.toString() + " ")
-                if(myComponents.mainViewModel.readingStatusList[0].readingStatusE == readingStatusEnum.available)
+                if(myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.notAvailable)
             Column {
                 var reading1 by remember { mutableStateOf("0") }
 
@@ -195,6 +195,7 @@ fun ReadingRow1st(){
 
             }
 
+            if(myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.available)
             Column {
 
                 var reading2 by remember { mutableStateOf("0") }
@@ -314,6 +315,7 @@ fun ReadingRow2nd(){
             horizontalArrangement = Arrangement.SpaceAround
         ){
 
+            if(myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.available)
             Column {
                 var reading12 by remember { mutableStateOf("0") }
 
@@ -340,6 +342,7 @@ fun ReadingRow2nd(){
 
             }
 
+            if(myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.available)
             Column {
 
                 var reading22 by remember { mutableStateOf("0") }

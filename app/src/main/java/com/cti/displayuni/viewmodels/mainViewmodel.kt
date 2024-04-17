@@ -203,20 +203,23 @@ fun itemsInRange():Boolean{
     }
 
     fun submitPartInfo() {
-        updateReadingStatus()
+//        updateReadingStatus()
         checkReadingTimeAndShowPopup()
         //Other code
     }
 
     private fun checkReadingTimeAndShowPopup() {
 
-        if(readingStatusList[0].readingStatusE == readingStatusEnum.available){
-            //showPopup
-            readingStatusList[0].readingStatusE = readingStatusEnum.notAvailable
+        if(readingStatusList[0].readingStatusE.equals(readingStatusEnum.available)){
             showLogs("readingstatusenum"," available")
-        }else if(readingStatusList[0].readingStatusE == readingStatusEnum.notAvailable){
+            showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
+            readingStatusList[0].readingStatusE = readingStatusEnum.notAvailable
+
+        }else if(readingStatusList[0].readingStatusE.equals(readingStatusEnum.notAvailable)){
+           showLogs("readingstatusenum"," not available")
+            showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
             readingStatusList[0].readingStatusE = readingStatusEnum.available
-            showLogs("readingstatusenum"," not available")
+
 
         }
 
