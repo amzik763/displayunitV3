@@ -212,12 +212,15 @@ fun itemsInRange():Boolean{
 
         if(readingStatusList[0].readingStatusE == readingStatusEnum.available){
             //showPopup
-        }else if(){
+            readingStatusList[0].readingStatusE = readingStatusEnum.notAvailable
+            showLogs("readingstatusenum"," available")
+        }else if(readingStatusList[0].readingStatusE == readingStatusEnum.notAvailable){
+            readingStatusList[0].readingStatusE = readingStatusEnum.available
+            showLogs("readingstatusenum"," not available")
 
         }
 
     }
-
 
     private fun updateReadingStatus(){
 
@@ -228,7 +231,6 @@ fun itemsInRange():Boolean{
 
         if(timeDifferenceInMinutes>=readingStatusList[0].readingTime && readingStatusList[0].readingStatusE != readingStatusEnum.completed){
             readingStatusList[0].readingStatusE = readingStatusEnum.available
-
         }else
         if(timeDifferenceInMinutes>=readingStatusList[1].readingTime && readingStatusList[1].readingStatusE != readingStatusEnum.completed){
             readingStatusList[1].readingStatusE = readingStatusEnum.available

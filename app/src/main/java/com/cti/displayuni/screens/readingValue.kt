@@ -167,7 +167,7 @@ fun ReadingRow1st(){
                 .background(color = Color.White),
             horizontalArrangement = Arrangement.SpaceAround
         ){
-                showLogs("READING STATUS DATA: ",myComponents.mainViewModel.readingStatusList[0].readingStatusE + " ")
+                showLogs("READING STATUS DATA: ",myComponents.mainViewModel.readingStatusList[0].readingStatusE.toString() + " ")
                 if(myComponents.mainViewModel.readingStatusList[0].readingStatusE == readingStatusEnum.available)
             Column {
                 var reading1 by remember { mutableStateOf("0") }
