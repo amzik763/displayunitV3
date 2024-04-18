@@ -1,5 +1,6 @@
 package com.cti.displayuni.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -296,6 +297,7 @@ fun ReadingRow1st(){
     }
 }
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun ReadingRow2nd(){
     Column {

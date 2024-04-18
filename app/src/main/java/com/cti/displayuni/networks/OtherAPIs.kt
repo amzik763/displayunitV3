@@ -85,5 +85,13 @@ interface OtherAPIs {
         @Field("reading_4") reading_4: String,
     ): Response<String>
 
+    @FormUrlEncoded
+    @POST("/operator/add_and_update/work")
+    suspend fun addData(
+        @Field("failed") failed: String,
+        @Field("passed") passed: String,
+        @Field("station_id") station_id: String,
+    ): Response<String>
+
 
 }
