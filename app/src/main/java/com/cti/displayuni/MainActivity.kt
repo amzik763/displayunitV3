@@ -9,12 +9,19 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.dialogBox.MessageDialog
 import com.cti.displayuni.dialogBox.NetworkErrorDialog
@@ -22,6 +29,8 @@ import com.cti.displayuni.dialogBox.SupLoginDialog
 import com.cti.displayuni.dialogBox.TaskNotApproved
 import com.cti.displayuni.navigation.Navigate
 import com.cti.displayuni.repository.Repository
+import com.cti.displayuni.ui.theme.blue
+import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.utility.NetworkMonitor
 import com.cti.displayuni.utility.myComponents.authAPI
 import com.cti.displayuni.utility.myComponents.mUiViewModel
@@ -104,7 +113,7 @@ fun NetworkDialog(mUiViewModel: UiViewModel, applicationContext: Context) {
                 uiviewModel = mUiViewModel
             )
         }
-}
+    }
 
     @Composable
     fun MessageDia(mUiViewModel: UiViewModel) {
@@ -119,7 +128,6 @@ fun NetworkDialog(mUiViewModel: UiViewModel, applicationContext: Context) {
             )
         }
     }
-
 
     @Composable
     fun NoTaskDia(mUiViewModel: UiViewModel) {
@@ -150,4 +158,3 @@ fun SupLoginDia(mUiViewModel: UiViewModel) {
         )
     }
 }
-

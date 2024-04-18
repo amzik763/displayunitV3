@@ -90,7 +90,7 @@ interface OtherAPIs {
     suspend fun addData(
         @Field("failed") failed: String,
         @Field("passed") passed: String,
-        @Field("station_id") station_id: String,
+        @Field("station_id") station_id: String
     ): Response<String>
 
 

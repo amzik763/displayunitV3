@@ -196,7 +196,7 @@ fun ReadingRow1st(){
                     SubmitButton(text = "Submit", onClick = { })
 
             }
-            if(myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.available)
+            if(myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.notAvailable)
             Column {
 
                 var reading2 by remember { mutableStateOf("0") }
@@ -222,7 +222,6 @@ fun ReadingRow1st(){
                 SubmitButton(text = "Submit", onClick = {})
 
             }
-
 
             if(myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
@@ -486,7 +485,6 @@ fun ReadingRow3rd(){
                 .background(color = Color.White),
             horizontalArrangement = Arrangement.SpaceAround
         ){
-
             if (myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.notAvailable)
             Column {
                 var reading13 by remember { mutableStateOf("0") }
@@ -515,7 +513,6 @@ fun ReadingRow3rd(){
 
             }
 
-
             if (myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.notAvailable)
             Column {
                 var reading23 by remember { mutableStateOf("0") }
@@ -541,7 +538,6 @@ fun ReadingRow3rd(){
                 SubmitButton(text = "Submit", onClick = {})
 
             }
-
 
             if (myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
@@ -570,8 +566,6 @@ fun ReadingRow3rd(){
 
             }
 
-
-
             if (myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.notAvailable)
             Column {
 
@@ -597,7 +591,6 @@ fun ReadingRow3rd(){
                 SubmitButton(text = "Submit", onClick = {})
 
             }
-
 
             if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.notAvailable)
             Column {
