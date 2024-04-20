@@ -335,6 +335,7 @@ fun Header(){
 
             CheckingParts(checking = "Checking: ${4}", total = "Total: ${29}", pass = "Pass: ${5}", fail = "Fail: ${5}")
 
+
             showLogs("DATA LIST CHART", myComponents.mainViewModel.dataListChart.size.toString())
             if (myComponents.mainViewModel.dataListChart.size  != 0){
                 ReadingUI()

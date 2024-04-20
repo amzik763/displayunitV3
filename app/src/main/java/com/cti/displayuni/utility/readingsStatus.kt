@@ -7,6 +7,7 @@ enum class readingStatusEnum {
     completed
 }
 
+
 data class readingsStatusItems(
 
     val readingTime:Int,
