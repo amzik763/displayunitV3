@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -65,6 +66,8 @@ class MainViewModel(context: Context) : ViewModel(){
 
     var pass = mutableIntStateOf(0)
     var fail = mutableIntStateOf(0)
+
+    var showZoomableImage  by mutableStateOf(true)
 
     var tempParamID by mutableStateOf("")
 
@@ -206,14 +209,16 @@ fun itemsInRange():Boolean{
     suspend fun submitPartInfo() {
         val addData = myComponents.mainViewModel.addData(passed = myComponents.mainViewModel.pass.intValue.toString(), failed = myComponents.mainViewModel.fail.intValue.toString(), station_id = myComponents.mainViewModel.getStationValue() )
         if(addData){
+
+            updateReadingStatus()
+            checkReadingTimeAndShowPopup()
+
             showLogs("API RESP"," API SUCCESSFUll")
         }else{
             showLogs("API RESP"," API UN-SUCCESSFUll")
 
         }
-        updateReadingStatus()
-        checkReadingTimeAndShowPopup()
-        //Other code
+
     }
 
     private fun checkReadingTimeAndShowPopup() {
@@ -280,5 +285,14 @@ fun itemsInRange():Boolean{
             }
             result.await()
         }
+    }
+
+    fun areActualParamsFilled(dataListActual: MutableList<Actual_Param>): Boolean {
+        for (item in dataListActual) {
+            if (item.param_value?.isBlank() == true) {
+                return false // Return false if any param_value is blank
+            }
+        }
+        return true // Return true if all param_values are filled
     }
 }

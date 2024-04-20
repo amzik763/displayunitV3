@@ -236,8 +236,6 @@ fun OrangeText(
 @Composable
 fun Header(){
 
-    var showZoomableImage by remember { mutableStateOf(false) }
-
     Column(modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight()
@@ -302,7 +300,7 @@ fun Header(){
             //secondSubRow
             Row {
                 Button(
-                    onClick = {showZoomableImage = !showZoomableImage},
+                    onClick = {myComponents.mainViewModel.showZoomableImage = !myComponents.mainViewModel.showZoomableImage},
                     shape = RoundedCornerShape(9.dp),
                     border = BorderStroke(3.dp, darkBlue),
                     colors = ButtonDefaults.buttonColors(contentColor = pureWhite, containerColor =  darkBlue),
@@ -357,7 +355,40 @@ fun Header(){
             Row {
 
                 Button(
-                    onClick = {},
+                    onClick = {
+                        showLogs("PASS", myComponents.mainViewModel.pass.intValue.toString())
+                        showLogs("FAIL", myComponents.mainViewModel.fail.intValue.toString())
+                        showLogs("STATION VALUE", myComponents.mainViewModel.getStationValue())
+
+
+                        val passFail = myComponents.mainViewModel.pass.intValue + myComponents.mainViewModel.fail.intValue
+                        if (passFail < 2){
+                            myComponents.mUiViewModel.setDialogDetails("PENDING FPA", "", "Click on FPA button and then fill all parameter values", R.drawable.ic_notest)
+                            myComponents.mUiViewModel.showMessageDialog()
+
+                            showLogs("PASS FAIL", "Pass Fail sum is less then 2")
+
+                        }
+
+                        showLogs("PASS FAIL", passFail.toString())
+
+
+
+                        val actualParamsFilled = myComponents.mainViewModel.areActualParamsFilled(myComponents.mainViewModel.dataListActual)
+
+                        showLogs("Actual Param", actualParamsFilled.toString())
+
+
+                        if (myComponents.mainViewModel.itemsInRange()) {
+                            //API CALL
+                            GlobalScope.launch {
+                                myComponents.mainViewModel.submitPartInfo()
+                            }
+
+                        } else {
+                            //showdialogbox that process is not eligible for pass
+                        }
+                    },
                     shape = RoundedCornerShape(29.dp),
                     border = BorderStroke(3.dp, green),
                     colors = ButtonDefaults.buttonColors(
@@ -371,26 +402,7 @@ fun Header(){
                         fontSize = fontMedium,
                         modifier = Modifier
                             .padding(horizontal = 30.dp)
-                            .clickable {
 
-                                showLogs("PASS", myComponents.mainViewModel.pass.intValue.toString())
-                                showLogs("FAIL", myComponents.mainViewModel.fail.intValue.toString())
-                                showLogs("STATION VALUE", myComponents.mainViewModel.getStationValue())
-
-
-
-
-
-                                if (myComponents.mainViewModel.itemsInRange()) {
-                                    //API CALL
-                                    GlobalScope.launch {
-                                        myComponents.mainViewModel.submitPartInfo()
-                                    }
-
-                                } else {
-                                    //showdialogbox that process is not eligible for pass
-                                }
-                            }
                     )
                 }
                 Spacer(modifier = Modifier.width(24.dp))
@@ -413,7 +425,7 @@ fun Header(){
             }
         }
 
-        if (showZoomableImage) {
+        if (myComponents.mainViewModel.showZoomableImage) {
             ZoomableImage()
         }
         else {
