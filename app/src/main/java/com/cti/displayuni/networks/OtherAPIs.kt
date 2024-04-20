@@ -1,14 +1,13 @@
 package com.cti.displayuni.networks
 
+import com.cti.displayuni.response.addData_Response
 import com.cti.displayuni.response.allDataV2
 import com.cti.displayuni.response.checksheet_Status
-import com.cti.displayuni.response.login_response
 import com.cti.displayuni.response.notify_response
 import com.cti.displayuni.response.sup_response
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface OtherAPIs {
@@ -91,7 +90,5 @@ interface OtherAPIs {
         @Field("failed") failed: String,
         @Field("passed") passed: String,
         @Field("station_id") station_id: String
-    ): Response<String>
-
-
+    ): Response<addData_Response>
 }

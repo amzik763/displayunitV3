@@ -28,6 +28,8 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 
 class MainViewModel(context: Context) : ViewModel(){
 
@@ -61,7 +63,7 @@ class MainViewModel(context: Context) : ViewModel(){
 
     var errorMsg by mutableStateOf("")
 
-    var pass = 0
+    var pass = mutableIntStateOf(0)
     var fail = mutableIntStateOf(0)
 
     var tempParamID by mutableStateOf("")
@@ -201,7 +203,14 @@ fun itemsInRange():Boolean{
         return dateFormat.format(currentTime)
     }
 
-    fun submitPartInfo() {
+    suspend fun submitPartInfo() {
+        val addData = myComponents.mainViewModel.addData(passed = myComponents.mainViewModel.pass.intValue.toString(), failed = myComponents.mainViewModel.fail.intValue.toString(), station_id = myComponents.mainViewModel.getStationValue() )
+        if(addData){
+            showLogs("API RESP"," API SUCCESSFUll")
+        }else{
+            showLogs("API RESP"," API UN-SUCCESSFUll")
+
+        }
         updateReadingStatus()
         checkReadingTimeAndShowPopup()
         //Other code
@@ -218,18 +227,13 @@ fun itemsInRange():Boolean{
            showLogs("readingstatusenum"," not available")
             showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
-
-
         }
-
     }
 
     private fun updateReadingStatus(){
 
         val timeDifferenceInMinutes = calculateTimeDifferenceInMinutes(startShiftTime, getCurrentTime())
         val timeDifferenceOfShift = calculateTimeDifferenceInMinutes(startShiftTime, endShiftTime)
-
-
 
         // Now you have the time difference in minutes, you can use it as needed
         println("Time difference in minutes: $timeDifferenceInMinutes")
@@ -265,6 +269,16 @@ fun itemsInRange():Boolean{
         } catch (e: Exception) {
             e.printStackTrace()
             return -1 // Return a negative value to indicate error
+        }
+    }
+
+
+    suspend fun addData(failed: String, passed: String, station_id: String): Boolean {
+        return coroutineScope {
+            val result = async {
+                repository.addData(failed, passed, station_id)
+            }
+            result.await()
         }
     }
 }

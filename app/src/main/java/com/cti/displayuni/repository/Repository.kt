@@ -86,7 +86,12 @@ class Repository () {
                 taskResponse.body()?.work_operator_data?.toString()?.let { showLogs("WORK OPERATOR Size", it) }
 
                 mainViewModel.ficID = taskResponse.body()?.emoloyee_id_floor_incharge.toString()
-                mainViewModel.pass = taskResponse.body()?.work_operator_data?.passed ?: -1
+                mainViewModel.pass.intValue = taskResponse.body()?.work_operator_data?.passed ?: -1
+                showLogs("PASS", mainViewModel.pass.intValue.toString())
+
+                mainViewModel.fail.intValue = taskResponse.body()?.work_operator_data?.failed ?: -1
+                showLogs("FAIL", mainViewModel.fail.intValue.toString())
+
 
                 val dataListtemp = taskResponse.body()?.process_params_info
                 showLogs("PARAMS", dataListtemp?.size.toString())
@@ -246,6 +251,25 @@ class Repository () {
                 showLogs("NOTIFICATION:","Notification not sent")
             }
         } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
+
+    suspend fun addData(failed: String, passed: String, station_id: String):Boolean {
+
+        try {
+            val addDataResponse= otherAPIs.addData(failed,passed,station_id)
+            if (addDataResponse.code() == 200) {
+                return true
+                showLogs("ADD DATA:","Data Added Successfully")
+            }else{
+                return false
+                showLogs("ADD DATA:","Data Not Added")
+            }
+        } catch (e: Exception) {
+            return false
             e.printStackTrace()
         }
     }

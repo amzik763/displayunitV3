@@ -61,6 +61,8 @@ import com.cti.displayuni.ui.theme.red
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.showLogs
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 var fontSmall = 12.sp
@@ -370,9 +372,20 @@ fun Header(){
                         modifier = Modifier
                             .padding(horizontal = 30.dp)
                             .clickable {
+
+                                showLogs("PASS", myComponents.mainViewModel.pass.intValue.toString())
+                                showLogs("FAIL", myComponents.mainViewModel.fail.intValue.toString())
+                                showLogs("STATION VALUE", myComponents.mainViewModel.getStationValue())
+
+
+
+
+
                                 if (myComponents.mainViewModel.itemsInRange()) {
                                     //API CALL
-                                    myComponents.mainViewModel.submitPartInfo()
+                                    GlobalScope.launch {
+                                        myComponents.mainViewModel.submitPartInfo()
+                                    }
 
                                 } else {
                                     //showdialogbox that process is not eligible for pass
