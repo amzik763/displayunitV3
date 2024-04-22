@@ -45,6 +45,7 @@ import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
 import com.cti.displayuni.utility.CHECKSHEET
+import com.cti.displayuni.utility.PROFILE
 import com.cti.displayuni.utility.mFont
 import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mFont.poppinsbold
@@ -233,6 +234,9 @@ fun GetTask() {
                       painter = painterResource(id = R.drawable.ic_account),
                       contentDescription = "Account",
                       modifier = Modifier.size(imgSize)
+                          .clickable {
+                              myComponents.navController.navigate(PROFILE)
+                          }
                   )
                   Image(
                       painter = painterResource(id = R.drawable.ic_logout),

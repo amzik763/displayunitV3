@@ -380,6 +380,12 @@ fun Header(){
                         showLogs("Actual Param", actualParamsFilled.toString())
 
 
+                        val settingParamsFilled = myComponents.mainViewModel.areSettingParamsFilled(myComponents.mainViewModel.dataListSetting)
+                        showLogs("Setting Param", settingParamsFilled.toString())
+
+
+
+
                         if (myComponents.mainViewModel.itemsInRange()) {
                             //API CALL
                             GlobalScope.launch {

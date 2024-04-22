@@ -216,9 +216,7 @@ fun itemsInRange():Boolean{
             showLogs("API RESP"," API SUCCESSFUll")
         }else{
             showLogs("API RESP"," API UN-SUCCESSFUll")
-
         }
-
     }
 
     private fun checkReadingTimeAndShowPopup() {
@@ -289,6 +287,15 @@ fun itemsInRange():Boolean{
 
     fun areActualParamsFilled(dataListActual: MutableList<Actual_Param>): Boolean {
         for (item in dataListActual) {
+            if (item.param_value?.isBlank() == true) {
+                return false // Return false if any param_value is blank
+            }
+        }
+        return true // Return true if all param_values are filled
+    }
+
+    fun areSettingParamsFilled(dataListSetting: MutableList<Setting_Param>): Boolean {
+        for (item in dataListSetting) {
             if (item.param_value?.isBlank() == true) {
                 return false // Return false if any param_value is blank
             }
