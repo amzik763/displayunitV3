@@ -97,7 +97,8 @@ fun ConfigureNew(){
     var floorValue by remember { mutableStateOf("") }
     var lineValue by remember { mutableStateOf("") }
     var stationValue by remember { mutableStateOf("") }
-    var G0F0L0S0Value by remember { mutableStateOf("0 F0 L0 S0") }
+    var G0F0L0S0Value by remember { mutableStateOf(" F L S") }
+
 
 
         val widthDP = conf.screenWidthDp.dp

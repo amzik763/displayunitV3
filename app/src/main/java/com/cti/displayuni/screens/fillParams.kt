@@ -363,38 +363,41 @@ fun Header(){
 
 
                         val passFail = myComponents.mainViewModel.pass.intValue + myComponents.mainViewModel.fail.intValue
-                        if (passFail < 2){
-                            myComponents.mUiViewModel.setDialogDetails("PENDING FPA", "", "Click on FPA button and then fill all parameter values", R.drawable.ic_notest)
-                            myComponents.mUiViewModel.showMessageDialog()
-
-                            showLogs("PASS FAIL", "Pass Fail sum is less then 2")
-
-                        }
-
-                        showLogs("PASS FAIL", passFail.toString())
-
-
 
                         val actualParamsFilled = myComponents.mainViewModel.areActualParamsFilled(myComponents.mainViewModel.dataListActual)
-
                         showLogs("Actual Param", actualParamsFilled.toString())
-
 
                         val settingParamsFilled = myComponents.mainViewModel.areSettingParamsFilled(myComponents.mainViewModel.dataListSetting)
                         showLogs("Setting Param", settingParamsFilled.toString())
 
+                        if (passFail < 2){
 
+                            if(myComponents.mainViewModel.showZoomableImage){
+                            myComponents.mUiViewModel.setDialogDetails("PENDING FPA", "", "Click on FPA button and then fill all parameter values", R.drawable.ic_notest)
+                            myComponents.mUiViewModel.showMessageDialog()
+                            showLogs("PASS FAIL", "Pass Fail sum is less then 2")
+                            return@Button}
+                            
+                            else if(!actualParamsFilled || !settingParamsFilled){
+                                myComponents.mUiViewModel.setDialogDetails("Fill Values", "", "Please fill all the parameter values", R.drawable.ic_notest )
+                                myComponents.mUiViewModel.showMessageDialog()
+                                return@Button
+                            }
+                        }
 
+                        showLogs("PASS FAIL", passFail.toString())
 
                         if (myComponents.mainViewModel.itemsInRange()) {
                             //API CALL
                             GlobalScope.launch {
                                 myComponents.mainViewModel.submitPartInfo()
                             }
+                            return@Button
 
                         } else {
                             //showdialogbox that process is not eligible for pass
                         }
+
                     },
                     shape = RoundedCornerShape(29.dp),
                     border = BorderStroke(3.dp, green),
