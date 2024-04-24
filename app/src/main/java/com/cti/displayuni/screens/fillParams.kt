@@ -361,7 +361,6 @@ fun Header(){
                         showLogs("FAIL", myComponents.mainViewModel.fail.intValue.toString())
                         showLogs("STATION VALUE", myComponents.mainViewModel.getStationValue())
 
-
                         val passFail = myComponents.mainViewModel.pass.intValue + myComponents.mainViewModel.fail.intValue
 
                         val actualParamsFilled = myComponents.mainViewModel.areActualParamsFilled(myComponents.mainViewModel.dataListActual)
@@ -377,7 +376,7 @@ fun Header(){
                             myComponents.mUiViewModel.showMessageDialog()
                             showLogs("PASS FAIL", "Pass Fail sum is less then 2")
                             return@Button}
-                            
+
                             else if(!actualParamsFilled || !settingParamsFilled){
                                 myComponents.mUiViewModel.setDialogDetails("Fill Values", "", "Please fill all the parameter values", R.drawable.ic_notest )
                                 myComponents.mUiViewModel.showMessageDialog()

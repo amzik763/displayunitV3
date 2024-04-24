@@ -1,5 +1,6 @@
 package com.cti.displayuni.networks
 
+import com.cti.displayuni.response.FpaData_res
 import com.cti.displayuni.response.addData_Response
 import com.cti.displayuni.response.allDataV2
 import com.cti.displayuni.response.checksheet_Status
@@ -91,4 +92,42 @@ interface OtherAPIs {
         @Field("passed") passed: String,
         @Field("station_id") station_id: String
     ): Response<addData_Response>
+    @FormUrlEncoded
+    @POST("/operator/add_fpa_data")
+    suspend fun fpaData(
+        @Field("failed") failed: String,
+        @Field("passed") passed: String,
+        @Field("start_shift_1_parameters_values") start_shift_1_parameters_values: String,
+        @Field("station_id") station_id: String
+    ): Response<FpaData_res>
+
+
+    @FormUrlEncoded
+    @POST("/operator/add_fpa_data")
+    suspend fun fpaData2(
+        @Field("failed") failed: String,
+        @Field("passed") passed: String,
+        @Field("start_shift_2_parameters_values") start_shift_2_parameters_values: String,
+        @Field("station_id") station_id: String
+    ): Response<FpaData_res>
+
+
+    @FormUrlEncoded
+    @POST("/operator/add_fpa_data")
+    suspend fun fpaData3(
+        @Field("failed") failed: String,
+        @Field("passed") passed: String,
+        @Field("start_shift_3_parameters_values") start_shift_3_parameters_values: String,
+        @Field("station_id") station_id: String
+    ): Response<FpaData_res>
+
+    @FormUrlEncoded
+    @POST("/operator/add_fpa_data")
+    suspend fun fpaData4(
+        @Field("failed") failed: String,
+        @Field("passed") passed: String,
+        @Field("start_shift_4_parameters_values") start_shift_4_parameters_values: String,
+        @Field("station_id") station_id: String
+    ): Response<FpaData_res>
+
 }

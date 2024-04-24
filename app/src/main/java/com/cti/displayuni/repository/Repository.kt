@@ -275,6 +275,24 @@ class Repository () {
         }
     }
 
+    suspend fun fpaData(failed: String, passed: String, station_id: String) {
+
+        try {
+            val addDataResponse= otherAPIs.addData(failed,passed,station_id)
+            if (addDataResponse.code() == 200) {
+
+                showLogs("FPA DATA:","Fpa Data Added Successfully")
+            }else{
+
+                showLogs("FPA DATA:","Fpa Data Not Added")
+            }
+        } catch (e: Exception) {
+
+            e.printStackTrace()
+
+        }
+    }
+
 
     fun fillChecksheet(): String {
         var checkSheetStatus = ""
