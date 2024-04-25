@@ -389,9 +389,15 @@ fun Header(){
                         if (myComponents.mainViewModel.itemsInRange()) {
                             //API CALL
                             GlobalScope.launch {
-                                myComponents.mainViewModel.submitPartInfo()
+
+                                if(passFail<2){
+                                    myComponents.mainViewModel.submitPartInfoWithParams()
+
+                                }else{
+                                    myComponents.mainViewModel.submitPartInfo()
+                                }
                             }
-                            return@Button
+//                            return@Button
 
                         } else {
                             //showdialogbox that process is not eligible for pass

@@ -52,7 +52,7 @@ class MainViewModel(context: Context) : ViewModel(){
     var endShiftTime by mutableStateOf("")
     var timeDiffer by mutableStateOf("")
 
-//  var readingStatusList = mutableListOf<readingsStatusItems>()
+    //  var readingStatusList = mutableListOf<readingsStatusItems>()
     val readingStatusList = mutableStateListOf<readingsStatusItems>()
 
     var dataListSetting = mutableListOf<Setting_Param>()
@@ -75,6 +75,8 @@ class MainViewModel(context: Context) : ViewModel(){
     //VARIABLE FOR NEW CHECKSHEETDATA
     val mChecksheetData = MutableLiveData<List<CheckSheetData>>()
     var ficID = "none"
+
+    var FPACounter = 1;
 
     private val sharedPreferences: SharedPreferences
         get() = mContext.getSharedPreferences(PREFERNCES_NAME, Context.MODE_PRIVATE)
@@ -111,8 +113,8 @@ class MainViewModel(context: Context) : ViewModel(){
             mUiViewModel.showMessageDialog()
             return
         }
-                viewModelScope.launch {
-                repository.loginUser(username,password)
+        viewModelScope.launch {
+            repository.loginUser(username,password)
         }
     }
 
@@ -140,7 +142,7 @@ class MainViewModel(context: Context) : ViewModel(){
         }
     }
 
-fun checkItemsInList() {
+    fun checkItemsInList() {
         val checkSheetList = myComponents.mainViewModel.checkSheetList
         for (item in checkSheetList) {
             if (item == "SUP_OK") {
@@ -150,55 +152,55 @@ fun checkItemsInList() {
             }
         }
         myComponents.mainViewModel.addChecksheetData()
-         showLogs("DIALOG","HIDE DIALOG")
-
-     }
-
-fun itemsInRange():Boolean{
-    dataListActual.forEach {
-    try {
-        if (!it.param_value.isNullOrBlank())
-            if (it.param_unit?.length.toString() != "0")
-                if (Integer.parseInt(it.param_value.toString()) > Integer.parseInt(it.max.toString()) || Integer.parseInt(
-                        it.param_value.toString()
-                    ) < Integer.parseInt(it.min.toString())
-                ) {
-                    myComponents.mUiViewModel.setDialogDetails(
-                        "Not Eligible",
-                        "",
-                        "${it.param_name} value should be between ${it.min} and ${it.max}",
-                        R.drawable.ic_notest
-                    )
-                    mUiViewModel.showMessageDialog()
-                    return false
-                }
-    }catch (_:Exception){
+        showLogs("DIALOG","HIDE DIALOG")
 
     }
-    }
 
-    dataListSetting.forEach {
-        try {
-            if (it.param_unit?.length.toString() != "0")
-                if (Integer.parseInt(it.param_value.toString()) > Integer.parseInt(it.max.toString()) || Integer.parseInt(
-                        it.param_value.toString()
-                    ) < Integer.parseInt(it.min.toString())
-                ) {
-                    myComponents.mUiViewModel.setDialogDetails(
-                        "Not Eligible",
-                        "",
-                        "${it.param_name} value should be between ${it.min} and ${it.max}",
-                        R.drawable.ic_notest
-                    )
-                    mUiViewModel.showMessageDialog()
-                    return false
-                }
-        }catch (_:Exception){
+    fun itemsInRange():Boolean{
+        dataListActual.forEach {
+            try {
+                if (!it.param_value.isNullOrBlank())
+                    if (it.param_unit?.length.toString() != "0")
+                        if (Integer.parseInt(it.param_value.toString()) > Integer.parseInt(it.max.toString()) || Integer.parseInt(
+                                it.param_value.toString()
+                            ) < Integer.parseInt(it.min.toString())
+                        ) {
+                            myComponents.mUiViewModel.setDialogDetails(
+                                "Not Eligible",
+                                "",
+                                "${it.param_name} value should be between ${it.min} and ${it.max}",
+                                R.drawable.ic_notest
+                            )
+                            mUiViewModel.showMessageDialog()
+                            return false
+                        }
+            }catch (_:Exception){
 
+            }
         }
+
+        dataListSetting.forEach {
+            try {
+                if (it.param_unit?.length.toString() != "0")
+                    if (Integer.parseInt(it.param_value.toString()) > Integer.parseInt(it.max.toString()) || Integer.parseInt(
+                            it.param_value.toString()
+                        ) < Integer.parseInt(it.min.toString())
+                    ) {
+                        myComponents.mUiViewModel.setDialogDetails(
+                            "Not Eligible",
+                            "",
+                            "${it.param_name} value should be between ${it.min} and ${it.max}",
+                            R.drawable.ic_notest
+                        )
+                        mUiViewModel.showMessageDialog()
+                        return false
+                    }
+            }catch (_:Exception){
+
+            }
+        }
+        return true
     }
-    return true
-}
 
     fun getCurrentTime(): String {
         val currentTime = Date()
@@ -207,8 +209,10 @@ fun itemsInRange():Boolean{
     }
 
     suspend fun submitPartInfo() {
+
         val addData = myComponents.mainViewModel.addData(passed = myComponents.mainViewModel.pass.intValue.toString(), failed = myComponents.mainViewModel.fail.intValue.toString(), station_id = myComponents.mainViewModel.getStationValue() )
         if(addData){
+            //set pass fail and checking part values
 
             updateReadingStatus()
             checkReadingTimeAndShowPopup()
@@ -225,12 +229,18 @@ fun itemsInRange():Boolean{
             showLogs("readingstatusenum"," available")
             showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.notAvailable
+            mUiViewModel.showCustomPopup.value = true
 
-        }else if(readingStatusList[0].readingStatusE.equals(readingStatusEnum.notAvailable)){
-           showLogs("readingstatusenum"," not available")
+
+        }else if(readingStatusList[1].readingStatusE.equals(readingStatusEnum.available)){
+            showLogs("readingstatusenum"," not available")
             showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
+            mUiViewModel.showCustomPopup.value = true
+
         }
+
+
     }
 
     private fun updateReadingStatus(){
@@ -245,18 +255,18 @@ fun itemsInRange():Boolean{
         if(timeDifferenceInMinutes>=readingStatusList[0].readingTime && readingStatusList[0].readingStatusE != readingStatusEnum.completed){
             readingStatusList[0].readingStatusE = readingStatusEnum.available
         }else
-        if(timeDifferenceInMinutes>=readingStatusList[1].readingTime && readingStatusList[1].readingStatusE != readingStatusEnum.completed){
-            readingStatusList[1].readingStatusE = readingStatusEnum.available
-        }else
-        if(timeDifferenceInMinutes>=readingStatusList[2].readingTime && readingStatusList[2].readingStatusE != readingStatusEnum.completed){
-            readingStatusList[2].readingStatusE = readingStatusEnum.available
-        }else
-        if(timeDifferenceInMinutes>=readingStatusList[3].readingTime && readingStatusList[3].readingStatusE != readingStatusEnum.completed){
-            readingStatusList[3].readingStatusE = readingStatusEnum.available
-        }else
-        if(timeDifferenceInMinutes>=readingStatusList[4].readingTime && readingStatusList[4].readingStatusE != readingStatusEnum.completed){
-            readingStatusList[4].readingStatusE = readingStatusEnum.available
-        }
+            if(timeDifferenceInMinutes>=readingStatusList[1].readingTime && readingStatusList[1].readingStatusE != readingStatusEnum.completed){
+                readingStatusList[1].readingStatusE = readingStatusEnum.available
+            }else
+                if(timeDifferenceInMinutes>=readingStatusList[2].readingTime && readingStatusList[2].readingStatusE != readingStatusEnum.completed){
+                    readingStatusList[2].readingStatusE = readingStatusEnum.available
+                }else
+                    if(timeDifferenceInMinutes>=readingStatusList[3].readingTime && readingStatusList[3].readingStatusE != readingStatusEnum.completed){
+                        readingStatusList[3].readingStatusE = readingStatusEnum.available
+                    }else
+                        if(timeDifferenceInMinutes>=readingStatusList[4].readingTime && readingStatusList[4].readingStatusE != readingStatusEnum.completed){
+                            readingStatusList[4].readingStatusE = readingStatusEnum.available
+                        }
 
 
     }
@@ -302,4 +312,10 @@ fun itemsInRange():Boolean{
         }
         return true // Return true if all param_values are filled
     }
+
+    suspend fun submitPartInfoWithParams() {
+        repository.addDataWithParams()
+    }
 }
+
+

@@ -193,7 +193,9 @@ fun ReadingRow1st(){
                 )
                 if(myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.completed)
 
-                    SubmitButton(text = "Submit", onClick = { })
+                    SubmitButton(text = "Submit", onClick = {
+
+                    })
 
             }
             if(myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.notAvailable)
@@ -613,7 +615,6 @@ fun ReadingRow3rd(){
                     ),
                     shape = RoundedCornerShape(8.dp),
                 )
-
                 if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.completed)
 
                 SubmitButton(text = "Submit", onClick = {})

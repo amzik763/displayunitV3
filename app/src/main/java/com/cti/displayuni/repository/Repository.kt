@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.ui.geometry.times
 import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.R
+import com.cti.displayuni.response.FpaData_res
 import com.cti.displayuni.utility.Actual_Param
 import com.cti.displayuni.utility.CHECKSHEET
 import com.cti.displayuni.utility.GETTASK
@@ -20,6 +21,7 @@ import com.cti.displayuni.utility.responses.checkSheetResponse
 import com.cti.displayuni.utility.responses.loginResponse
 import com.cti.displayuni.utility.responses.taskResponse
 import com.cti.displayuni.utility.showLogs
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -140,7 +142,7 @@ class Repository () {
                 mUiViewModel.setDialogDetails("Task Not Found", "Ask floor-in-charge to provide task", "", R.drawable.ic_notest)
                 mUiViewModel.showMessageDialog()
             }
-                } catch (e: Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
@@ -167,7 +169,6 @@ class Repository () {
         mainViewModel.readingStatusList.add(readingsStatusItems(eachTime*5, eachPart?.times(5), readingStatusEnum.notAvailable))
 
         /*
-
         mainViewModel.readingStatusList.add(eachTime*2,eachPart?.times(2),readingStatusEnum.notAvailable)
         mainViewModel.readingStatusList.add(eachTime*3,eachPart?.times(3),readingStatusEnum.notAvailable)
         mainViewModel.readingStatusList.add(eachTime*4,eachPart?.times(4),readingStatusEnum.notAvailable)
@@ -189,8 +190,6 @@ class Repository () {
         val endHours = endParts[0].toInt()
         val endMinutes = endParts[1].toInt()
         val endSeconds = endParts[2].toInt()
-
-
 
         // Calculating the duration
         val totalStartSeconds = startHours * 3600 + startMinutes * 60 + startSeconds
@@ -239,9 +238,7 @@ class Repository () {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
-
 
     suspend fun notify(stationValue: String, csp_id: String, floor_no: String) {
         try {
@@ -259,7 +256,6 @@ class Repository () {
 
 
     suspend fun addData(failed: String, passed: String, station_id: String):Boolean {
-
         try {
             val addDataResponse= otherAPIs.addData(failed,passed,station_id)
             if (addDataResponse.code() == 200) {
@@ -274,25 +270,6 @@ class Repository () {
             e.printStackTrace()
         }
     }
-
-    suspend fun fpaData(failed: String, passed: String, station_id: String) {
-
-        try {
-            val addDataResponse= otherAPIs.addData(failed,passed,station_id)
-            if (addDataResponse.code() == 200) {
-
-                showLogs("FPA DATA:","Fpa Data Added Successfully")
-            }else{
-
-                showLogs("FPA DATA:","Fpa Data Not Added")
-            }
-        } catch (e: Exception) {
-
-            e.printStackTrace()
-
-        }
-    }
-
 
     fun fillChecksheet(): String {
         var checkSheetStatus = ""
@@ -310,4 +287,51 @@ class Repository () {
         }
         return checkSheetStatus
     }
+
+    suspend fun addDataWithParams() {
+        //SHOULD BE SHIFTED TO OTHER API
+        val p1 =  mainViewModel.dataListSetting.joinToString(separator = ",") { setting ->
+            "${setting.param_name} ::: ${setting.param_value}"
+        }
+        showLogs("TASK P1: ",p1)
+        val p2 =  mainViewModel.dataListActual.joinToString(separator = ",") { actual ->
+            "${actual.param_name} ::: ${actual.param_value}"
+        }
+        showLogs("TASK P2: ",p2)
+
+        val p1p2 = "$p1, $p2".trim(',')
+
+        showLogs("Combined String: ", p1p2)
+        lateinit var dataResponseWithParam:Response<FpaData_res>
+        try{
+            when(mainViewModel.FPACounter){
+                1 -> {
+                    dataResponseWithParam = otherAPIs.fpaData(mainViewModel.fail.toString(), mainViewModel.pass.toString(),p1p2 ,mainViewModel.getStationValue())
+                }
+                2 -> {
+                    dataResponseWithParam = otherAPIs.fpaData2(mainViewModel.fail.toString(), mainViewModel.pass.toString(),p1p2 ,mainViewModel.getStationValue())
+                }
+                3 -> {
+                    dataResponseWithParam = otherAPIs.fpaData3(mainViewModel.fail.toString(), mainViewModel.pass.toString(),p1p2 ,mainViewModel.getStationValue())
+                }
+                4 -> {
+                    dataResponseWithParam = otherAPIs.fpaData4(mainViewModel.fail.toString(), mainViewModel.pass.toString(),p1p2 ,mainViewModel.getStationValue())
+                }
+            }
+
+
+            if(dataResponseWithParam.isSuccessful){
+                mainViewModel.FPACounter++
+                //show toast successfull
+            }else{
+                //show retry orfailed dialog box
+            }
+
+        }catch (_:Exception){
+
+        }
+    }
 }
+
+
+

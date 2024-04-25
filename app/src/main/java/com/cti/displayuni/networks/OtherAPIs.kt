@@ -61,6 +61,8 @@ interface OtherAPIs {
         @Field("reading_5") reading_5: String,
     ): Response<String>
 
+
+
     @FormUrlEncoded
     @POST("/operator/add_and_update/readings")
     suspend fun readingTwo(
