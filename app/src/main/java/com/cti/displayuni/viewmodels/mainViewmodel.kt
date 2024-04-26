@@ -76,6 +76,7 @@ class MainViewModel(context: Context) : ViewModel(){
     val mChecksheetData = MutableLiveData<List<CheckSheetData>>()
     var ficID = "none"
 
+
     var FPACounter = 1;
 
     private val sharedPreferences: SharedPreferences
@@ -295,6 +296,8 @@ class MainViewModel(context: Context) : ViewModel(){
         }
     }
 
+
+
     fun areActualParamsFilled(dataListActual: MutableList<Actual_Param>): Boolean {
         for (item in dataListActual) {
             if (item.param_value?.isBlank() == true) {
@@ -310,11 +313,11 @@ class MainViewModel(context: Context) : ViewModel(){
                 return false // Return false if any param_value is blank
             }
         }
+
         return true // Return true if all param_values are filled
     }
-
-    suspend fun submitPartInfoWithParams() {
-        repository.addDataWithParams()
+    suspend fun submitPartInfoWithParams(i:Int) {
+        repository.addDataWithParams(i)
     }
 }
 

@@ -253,21 +253,22 @@ class Repository () {
         }
     }
 
-
-
     suspend fun addData(failed: String, passed: String, station_id: String):Boolean {
         try {
             val addDataResponse= otherAPIs.addData(failed,passed,station_id)
             if (addDataResponse.code() == 200) {
-                return true
+                showLogs("ADDWITHPARAM", mainViewModel.pass.intValue.toString() + " " + mainViewModel.fail.intValue.toString())
                 showLogs("ADD DATA:","Data Added Successfully")
+
+                return true
             }else{
-                return false
                 showLogs("ADD DATA:","Data Not Added")
+
+                return false
             }
         } catch (e: Exception) {
-            return false
             e.printStackTrace()
+            return false
         }
     }
 
@@ -288,7 +289,7 @@ class Repository () {
         return checkSheetStatus
     }
 
-    suspend fun addDataWithParams() {
+    suspend fun addDataWithParams(i:Int) {
         //SHOULD BE SHIFTED TO OTHER API
         val p1 =  mainViewModel.dataListSetting.joinToString(separator = ",") { setting ->
             "${setting.param_name} ::: ${setting.param_value}"
@@ -302,36 +303,50 @@ class Repository () {
         val p1p2 = "$p1, $p2".trim(',')
 
         showLogs("Combined String: ", p1p2)
+        showLogs("Station ID: ", mainViewModel.getStationValue())
+        showLogs("PASS: ", mainViewModel.pass.intValue.toString())
+        showLogs("FAIL: ",  mainViewModel.fail.intValue.toString())
         lateinit var dataResponseWithParam:Response<FpaData_res>
         try{
             when(mainViewModel.FPACounter){
                 1 -> {
-                    dataResponseWithParam = otherAPIs.fpaData(mainViewModel.fail.toString(), mainViewModel.pass.toString(),p1p2 ,mainViewModel.getStationValue())
+                    dataResponseWithParam = otherAPIs.fpaData(mainViewModel.fail.intValue.toString(), mainViewModel.pass.intValue.toString(),p1p2 ,mainViewModel.getStationValue())
                 }
                 2 -> {
-                    dataResponseWithParam = otherAPIs.fpaData2(mainViewModel.fail.toString(), mainViewModel.pass.toString(),p1p2 ,mainViewModel.getStationValue())
+                    dataResponseWithParam = otherAPIs.fpaData2(mainViewModel.fail.intValue.toString(), mainViewModel.pass.intValue.toString(),p1p2 ,mainViewModel.getStationValue())
                 }
                 3 -> {
-                    dataResponseWithParam = otherAPIs.fpaData3(mainViewModel.fail.toString(), mainViewModel.pass.toString(),p1p2 ,mainViewModel.getStationValue())
+                    dataResponseWithParam = otherAPIs.fpaData3(mainViewModel.fail.intValue.toString(),mainViewModel.pass.intValue.toString(),p1p2 ,mainViewModel.getStationValue())
                 }
                 4 -> {
-                    dataResponseWithParam = otherAPIs.fpaData4(mainViewModel.fail.toString(), mainViewModel.pass.toString(),p1p2 ,mainViewModel.getStationValue())
+                    dataResponseWithParam = otherAPIs.fpaData4(mainViewModel.fail.intValue.toString(), mainViewModel.pass.intValue.toString(),p1p2 ,mainViewModel.getStationValue())
                 }
             }
-
 
             if(dataResponseWithParam.isSuccessful){
                 mainViewModel.FPACounter++
-                //show toast successfull
+                if(i==1)
+                    mainViewModel.pass.intValue++
+                else if(i==0)
+                    mainViewModel.fail.intValue++
+
+
+                showLogs("ADDWITHPARAM", mainViewModel.pass.intValue.toString() + " " + mainViewModel.fail.intValue.toString())
+
+                //show toast successful
+                showLogs("ADDWITHPARAM","successfull")
+                showLogs("ADDWITHPARAM","${mainViewModel.FPACounter}")
             }else{
-                //show retry orfailed dialog box
+                showLogs("ADDWITHPARAM","un-successfull")
+                showLogs("ADDWITHPARAMFAIL",dataResponseWithParam.message())
+                showLogs("ADDWITHPARAMFAIL",dataResponseWithParam.errorBody().toString())
+
+                //show retry or failed dialog box
             }
-
-        }catch (_:Exception){
-
+        }
+        catch (e:Exception){
+            showLogs("ADDWITHPARAM Error",e.printStackTrace().toString())
         }
     }
 }
-
-
 

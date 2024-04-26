@@ -391,7 +391,7 @@ fun Header(){
                             GlobalScope.launch {
 
                                 if(passFail<2){
-                                    myComponents.mainViewModel.submitPartInfoWithParams()
+                                    myComponents.mainViewModel.submitPartInfoWithParams(1)
 
                                 }else{
                                     myComponents.mainViewModel.submitPartInfo()
