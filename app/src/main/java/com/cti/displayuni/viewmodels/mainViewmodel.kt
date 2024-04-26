@@ -225,7 +225,7 @@ class MainViewModel(context: Context) : ViewModel(){
     }
 
     private fun checkReadingTimeAndShowPopup() {
-
+viewModelScope.launch {
         if(readingStatusList[0].readingStatusE.equals(readingStatusEnum.available)){
             showLogs("readingstatusenum"," available")
             showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
@@ -233,11 +233,12 @@ class MainViewModel(context: Context) : ViewModel(){
             mUiViewModel.showCustomPopup.value = true
 
 
-        }else if(readingStatusList[1].readingStatusE.equals(readingStatusEnum.available)){
-            showLogs("readingstatusenum"," not available")
+        }else if(readingStatusList[1].readingStatusE.equals(readingStatusEnum.available)) {
+            showLogs("readingstatusenum", " not available")
             showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
             mUiViewModel.showCustomPopup.value = true
+        }
 
         }
 

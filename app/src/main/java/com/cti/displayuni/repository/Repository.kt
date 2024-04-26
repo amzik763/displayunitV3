@@ -290,6 +290,12 @@ class Repository () {
     }
 
     suspend fun addDataWithParams(i:Int) {
+
+        if(i==1)
+            mainViewModel.pass.intValue++
+        else if(i==0)
+            mainViewModel.fail.intValue++
+
         //SHOULD BE SHIFTED TO OTHER API
         val p1 =  mainViewModel.dataListSetting.joinToString(separator = ",") { setting ->
             "${setting.param_name} ::: ${setting.param_value}"
@@ -325,10 +331,6 @@ class Repository () {
 
             if(dataResponseWithParam.isSuccessful){
                 mainViewModel.FPACounter++
-                if(i==1)
-                    mainViewModel.pass.intValue++
-                else if(i==0)
-                    mainViewModel.fail.intValue++
 
 
                 showLogs("ADDWITHPARAM", mainViewModel.pass.intValue.toString() + " " + mainViewModel.fail.intValue.toString())
@@ -340,6 +342,10 @@ class Repository () {
                 showLogs("ADDWITHPARAM","un-successfull")
                 showLogs("ADDWITHPARAMFAIL",dataResponseWithParam.message())
                 showLogs("ADDWITHPARAMFAIL",dataResponseWithParam.errorBody().toString())
+                if(i==1)
+                    mainViewModel.pass.intValue--
+                else if(i==0)
+                    mainViewModel.fail.intValue--
 
                 //show retry or failed dialog box
             }
