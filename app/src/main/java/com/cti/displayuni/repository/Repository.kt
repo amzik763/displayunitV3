@@ -291,6 +291,8 @@ class Repository () {
 
     suspend fun addDataWithParams(i:Int) {
 
+
+        var isAPISuccessfull = false
         if(i==1)
             mainViewModel.pass.intValue++
         else if(i==0)
@@ -330,6 +332,7 @@ class Repository () {
             }
 
             if(dataResponseWithParam.isSuccessful){
+                isAPISuccessfull = true
                 mainViewModel.FPACounter++
 
 
@@ -342,10 +345,6 @@ class Repository () {
                 showLogs("ADDWITHPARAM","un-successfull")
                 showLogs("ADDWITHPARAMFAIL",dataResponseWithParam.message())
                 showLogs("ADDWITHPARAMFAIL",dataResponseWithParam.errorBody().toString())
-                if(i==1)
-                    mainViewModel.pass.intValue--
-                else if(i==0)
-                    mainViewModel.fail.intValue--
 
                 //show retry or failed dialog box
             }
@@ -353,6 +352,13 @@ class Repository () {
         catch (e:Exception){
             showLogs("ADDWITHPARAM Error",e.printStackTrace().toString())
         }
+
+        if(!isAPISuccessfull)
+            if(i==1)
+                mainViewModel.pass.intValue--
+            else if(i==0)
+                mainViewModel.fail.intValue--
+
     }
 }
 

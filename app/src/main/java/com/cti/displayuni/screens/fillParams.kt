@@ -375,7 +375,8 @@ fun Header(){
                             myComponents.mUiViewModel.setDialogDetails("PENDING FPA", "", "Click on FPA button and then fill all parameter values", R.drawable.ic_notest)
                             myComponents.mUiViewModel.showMessageDialog()
                             showLogs("PASS FAIL", "Pass Fail sum is less then 2")
-                            return@Button}
+                            return@Button
+                            }
 
                             else if(!actualParamsFilled || !settingParamsFilled){
                                 myComponents.mUiViewModel.setDialogDetails("Fill Values", "", "Please fill all the parameter values", R.drawable.ic_notest )
@@ -439,6 +440,7 @@ fun Header(){
                 Spacer(modifier = Modifier.width(24.dp))
             }
         }
+
 
         if (myComponents.mainViewModel.showZoomableImage) {
             ZoomableImage()
