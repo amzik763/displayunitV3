@@ -268,36 +268,29 @@ class Repository () {
     }
 
     suspend fun addData(failed: String, passed: String, station_id: String,i:Int):Boolean {
-        var isAPISuccessfull = false
+        var p=mainViewModel.pass.intValue;var f=mainViewModel.fail.intValue
         if(i==1)
-            mainViewModel.pass.intValue++
+            ++p
         else if(i==0)
-            mainViewModel.fail.intValue++
+            ++f
         try {
-            val addDataResponse= otherAPIs.addData(failed,passed,station_id)
+            val addDataResponse= otherAPIs.addData(p.toString(),f.toString(),station_id)
             if (addDataResponse.code() == 200) {
+               if(i==1) mainViewModel.pass.intValue++
+                else if(i==0) mainViewModel.fail.intValue++
                 showLogs("ADDWITHPARAM", mainViewModel.pass.intValue.toString() + " " + mainViewModel.fail.intValue.toString())
+                showLogs("ADDWITHPARAM", p.toString() + " " + f.toString())
                 showLogs("ADD DATA:","Data Added Successfully")
-                isAPISuccessfull = true
                 return true
             }else{
                 showLogs("ADD DATA:","Data Not Added")
-                isAPISuccessfull = false
 
                 return false
             }
         } catch (e: Exception) {
             e.printStackTrace()
-//            return false
-            isAPISuccessfull = false
+            return false
         }
-        if(!isAPISuccessfull)
-            if(i==1)
-                mainViewModel.pass.intValue--
-            else if(i==0)
-                mainViewModel.fail.intValue--
-
-        return false
     }
 
     fun fillChecksheet(): String {

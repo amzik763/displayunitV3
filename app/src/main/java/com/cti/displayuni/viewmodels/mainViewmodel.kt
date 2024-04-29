@@ -273,20 +273,34 @@ viewModelScope.launch {
 
         if(timeDifferenceInMinutes>=readingStatusList[0].readingTime && readingStatusList[0].readingStatusE != readingStatusEnum.completed){
             readingStatusList[0].readingStatusE = readingStatusEnum.available
+            showLogs("READING STATUS 1",readingStatusList[0].readingStatusE.name)
         }else
             if(timeDifferenceInMinutes>=readingStatusList[1].readingTime && readingStatusList[1].readingStatusE != readingStatusEnum.completed){
                 readingStatusList[1].readingStatusE = readingStatusEnum.available
+                showLogs("READING STATUS 2",readingStatusList[1].readingStatusE.name)
+
             }else
                 if(timeDifferenceInMinutes>=readingStatusList[2].readingTime && readingStatusList[2].readingStatusE != readingStatusEnum.completed){
                     readingStatusList[2].readingStatusE = readingStatusEnum.available
+                    showLogs("READING STATUS 3",readingStatusList[2].readingStatusE.name)
+
                 }else
                     if(timeDifferenceInMinutes>=readingStatusList[3].readingTime && readingStatusList[3].readingStatusE != readingStatusEnum.completed){
                         readingStatusList[3].readingStatusE = readingStatusEnum.available
+                        showLogs("READING STATUS 4",readingStatusList[3].readingStatusE.name)
+
                     }else
                         if(timeDifferenceInMinutes>=readingStatusList[4].readingTime && readingStatusList[4].readingStatusE != readingStatusEnum.completed){
                             readingStatusList[4].readingStatusE = readingStatusEnum.available
+                            showLogs("READING STATUS 5",readingStatusList[4].readingStatusE.name)
+
                         }
 
+        showLogs("READING STATUS ALL",readingStatusList[0].readingStatusE.name + " " + readingStatusList[0].readingTime)
+        showLogs("READING STATUS ALL",readingStatusList[1].readingStatusE.name + " " + readingStatusList[1].readingTime)
+        showLogs("READING STATUS ALL",readingStatusList[2].readingStatusE.name + " " + readingStatusList[2].readingTime)
+        showLogs("READING STATUS ALL",readingStatusList[3].readingStatusE.name + " " + readingStatusList[3].readingTime)
+        showLogs("READING STATUS ALL",readingStatusList[4].readingStatusE.name + " " + readingStatusList[4].readingTime)
 
     }
 
