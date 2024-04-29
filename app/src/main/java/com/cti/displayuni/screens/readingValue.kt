@@ -18,6 +18,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -102,17 +103,17 @@ fun CustomPopupContent(
         verticalArrangement = Arrangement.SpaceBetween
     ) {
 
-        if (myComponents.mainViewModel.dataListChart.size == 1){
+        if (myComponents.mainViewModel.dataListChart.value?.size == 1){
             ReadingRow1st()
         }
 
-        if (myComponents.mainViewModel.dataListChart.size == 2){
+        if (myComponents.mainViewModel.dataListChart.value?.size == 2){
             ReadingRow1st()
 
             ReadingRow2nd()
         }
 
-        if (myComponents.mainViewModel.dataListChart.size == 3){
+        if (myComponents.mainViewModel.dataListChart.value?.size == 3){
             ReadingRow1st()
 
             ReadingRow2nd()
@@ -152,10 +153,12 @@ fun CustomPopupContent(
 
 @Composable
 fun ReadingRow1st(){
+    val dataListChart = myComponents.mainViewModel.dataListChart.observeAsState(emptyList())
+
     Column {
         var PN = ""
         try{
-            PN = myComponents.mainViewModel.dataListChart[0].parameter_name
+            PN = myComponents.mainViewModel.dataListChart.value?.get(0)?.parameter_name ?: "none"
         }catch (_:Exception){
 
         }
@@ -171,15 +174,26 @@ fun ReadingRow1st(){
             showLogs("READING STATUS DATA: ",myComponents.mainViewModel.readingStatusList[0].readingStatusE.toString() + " ")
             if(myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
-                    var reading1 by remember { mutableStateOf("0") }
-
+                    var reading1 by remember {
+                        mutableStateOf(dataListChart.value.get(0).values.get(0))
+                    }
                     ReadingValue(
                         text =  reading1,
                         label = "Enter Value",
                         onTextChange = {it ->
                             // Filter out commas from the input text
                             val filteredValue = it.filter { it.isLetterOrDigit() }
-                            // Update the state with the filtered value
+                            val dataList = dataListChart.value
+                            if (dataList != null && dataList.isNotEmpty()) {
+                                val chartParameter = dataList[0]
+                                val updatedValues = chartParameter.values.toMutableList()
+                                updatedValues[0] = filteredValue
+                                val updatedChartParameter = chartParameter.copy(values = updatedValues)
+                                val updatedDataList = dataList.toMutableList().apply {
+                                    set(0, updatedChartParameter)
+                                }
+                                myComponents.mainViewModel.dataListChart.value = updatedDataList
+                            }
                             reading1 = filteredValue
                         },
                         color = pureBlack,
@@ -329,7 +343,8 @@ fun ReadingRow2nd(){
     Column {
         var PN = ""
         try{
-            PN = myComponents.mainViewModel.dataListChart[1].parameter_name
+            PN = myComponents.mainViewModel.dataListChart.value?.get(1)?.parameter_name ?: "none"
+
         }catch (_:Exception){
 
         }
@@ -499,12 +514,11 @@ fun ReadingRow3rd(){
     Column {
         var PN = ""
         try{
-            PN = myComponents.mainViewModel.dataListChart[2].parameter_name
+            PN = myComponents.mainViewModel.dataListChart.value?.get(2)?.parameter_name?:"none"
         }catch (_:Exception){
 
         }
         ParamName(heading = PN)
-
 
         Row (
             modifier = Modifier

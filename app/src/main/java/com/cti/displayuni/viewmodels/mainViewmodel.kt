@@ -58,7 +58,8 @@ class MainViewModel(context: Context) : ViewModel(){
     var dataListSetting = mutableListOf<Setting_Param>()
     var dataListActual = mutableListOf<Actual_Param>()
 
-    var dataListChart = mutableListOf<chart_parameter>()
+    val dataListChart = MutableLiveData<List<chart_parameter>>()
+//  var dataListChart = mutableListOf<chart_parameter>()
 
     var floorNum by mutableStateOf("")
 
@@ -215,7 +216,7 @@ class MainViewModel(context: Context) : ViewModel(){
         if(addData){
             //set pass fail and checking part values
 
-            if(dataListChart.size!=0) {
+            if(dataListChart.value?.size!=0) {
                 updateReadingStatus()
                 checkReadingTimeAndShowPopup()
             }
