@@ -174,7 +174,7 @@ fun ReadingRow1st(){
                     var reading1 by remember { mutableStateOf("0") }
 
                     ReadingValue(
-                        text = reading1,
+                        text =  reading1,
                         label = "Enter Value",
                         onTextChange = {it ->
                             // Filter out commas from the input text
@@ -195,7 +195,7 @@ fun ReadingRow1st(){
 
                         SubmitButton(text = "Submit", onClick = {
                             //runReadingAPI
-                            myComponents.mainViewModel.runReadingAPI(reading1,0)
+                            myComponents.mainViewModel.runReadingAPI(0,reading1,0)
                         })
                 }
             if(myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.notAvailable)
@@ -223,7 +223,7 @@ fun ReadingRow1st(){
                     if(myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
 
-                            myComponents.mainViewModel.runReadingAPI(reading2,0)
+                            myComponents.mainViewModel.runReadingAPI(0, reading2, 0)
 
                         })
 
@@ -253,7 +253,7 @@ fun ReadingRow1st(){
 
                     if(myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(reading3,0)
+                            myComponents.mainViewModel.runReadingAPI(0, reading3, 0)
 
                         })
 
@@ -283,7 +283,7 @@ fun ReadingRow1st(){
 
                     if(myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(reading4,0)
+                            myComponents.mainViewModel.runReadingAPI(0, reading4, 0)
 
                         })
 
@@ -313,7 +313,7 @@ fun ReadingRow1st(){
 
                     if(myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(reading5,0)
+                            myComponents.mainViewModel.runReadingAPI(0, reading5, 0)
 
                         })
 
@@ -368,7 +368,7 @@ fun ReadingRow2nd(){
 
                     if (myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(reading12,1)
+                            myComponents.mainViewModel.runReadingAPI(0, reading12, 1)
 
                         })
 
@@ -398,7 +398,7 @@ fun ReadingRow2nd(){
 
                     if (myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(reading22,1)
+                            myComponents.mainViewModel.runReadingAPI(0, reading22, 1)
 
                         })
 
@@ -428,7 +428,7 @@ fun ReadingRow2nd(){
 
                     if (myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(reading32,1)
+                            myComponents.mainViewModel.runReadingAPI(0, reading32, 1)
 
                         })
 
@@ -457,7 +457,7 @@ fun ReadingRow2nd(){
 
                     if (myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(reading42,1)
+                            myComponents.mainViewModel.runReadingAPI(0, reading42, 1)
                         })
 
                 }
@@ -485,7 +485,7 @@ fun ReadingRow2nd(){
 
                     if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(reading52,1)
+                            myComponents.mainViewModel.runReadingAPI(0, reading52, 1)
                         })
 
                 }
@@ -538,7 +538,7 @@ fun ReadingRow3rd(){
 
                     if (myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(reading13,2)
+                            myComponents.mainViewModel.runReadingAPI(0, reading13, 2)
 
                         })
 
@@ -567,7 +567,7 @@ fun ReadingRow3rd(){
 
                     if (myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(reading23,2)
+                            myComponents.mainViewModel.runReadingAPI(0, reading23, 2)
 
                         })
 
@@ -597,7 +597,7 @@ fun ReadingRow3rd(){
 
                     if (myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(reading33,2)
+                            myComponents.mainViewModel.runReadingAPI(0, reading33, 2)
 
                         })
 
@@ -626,7 +626,7 @@ fun ReadingRow3rd(){
                     )
                     if (myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(reading43,2)
+                            myComponents.mainViewModel.runReadingAPI(0, reading43, 2)
 
                         })
                 }
@@ -655,7 +655,7 @@ fun ReadingRow3rd(){
                     if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.completed)
 
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(reading53,2)
+                            myComponents.mainViewModel.runReadingAPI(0, reading53, 2)
 
                         })
                 }

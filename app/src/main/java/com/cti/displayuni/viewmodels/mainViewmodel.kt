@@ -20,6 +20,7 @@ import com.cti.displayuni.utility.Setting_Param
 import com.cti.displayuni.utility.chart_parameter
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.myComponents.mUiViewModel
+import com.cti.displayuni.utility.myComponents.mainViewModel
 import com.cti.displayuni.utility.myComponents.repository
 import com.cti.displayuni.utility.readingStatusEnum
 import com.cti.displayuni.utility.readingsStatusItems
@@ -214,9 +215,10 @@ class MainViewModel(context: Context) : ViewModel(){
         if(addData){
             //set pass fail and checking part values
 
-            updateReadingStatus()
-            checkReadingTimeAndShowPopup()
-
+            if(dataListChart.size!=0) {
+                updateReadingStatus()
+                checkReadingTimeAndShowPopup()
+            }
             showLogs("API RESP"," API SUCCESSFUll")
         }else{
             showLogs("API RESP"," API UN-SUCCESSFUll")
@@ -234,25 +236,25 @@ viewModelScope.launch {
 
         }else if(readingStatusList[1].readingStatusE.equals(readingStatusEnum.available)) {
             showLogs("readingstatusenum", " not available")
-            showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
+            showLogs("readingstatusenum2", readingStatusList[1].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
             mUiViewModel.showCustomPopup.value = true
         }
         else if(readingStatusList[2].readingStatusE.equals(readingStatusEnum.available)) {
             showLogs("readingstatusenum", " not available")
-            showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
+            showLogs("readingstatusenum2", readingStatusList[2].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
             mUiViewModel.showCustomPopup.value = true
         }
         else if(readingStatusList[3].readingStatusE.equals(readingStatusEnum.available)) {
             showLogs("readingstatusenum", " not available")
-            showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
+            showLogs("readingstatusenum2", readingStatusList[3].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
             mUiViewModel.showCustomPopup.value = true
         }
         else if(readingStatusList[4].readingStatusE.equals(readingStatusEnum.available)) {
             showLogs("readingstatusenum", " not available")
-            showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
+            showLogs("readingstatusenum2", readingStatusList[4].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
             mUiViewModel.showCustomPopup.value = true
         }
@@ -352,9 +354,9 @@ viewModelScope.launch {
         repository.addDataWithParams(i)
     }
 
-    fun runReadingAPI(reading1: String, index: Int) {
+    fun runReadingAPI(readingIndex: Int, reading1: String, index: Int) {
         viewModelScope.launch {
-            repository.runReadingAPI(reading1,index)
+            repository.runReadingAPI(readingIndex,reading1,index)
         }
     }
 }

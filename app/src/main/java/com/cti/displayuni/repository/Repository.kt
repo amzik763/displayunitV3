@@ -382,11 +382,41 @@ class Repository () {
 
     }
 
-    suspend fun runReadingAPI(reading1: String,index:Int) {
+    suspend fun runReadingAPI(readingIndex: Int, reading1: String, index: Int) {
         showLogs("READING API DATA", mainViewModel.getStationValue())
         showLogs("READING API DATA", mainViewModel.dataListChart[0].parameter_no)
         showLogs("READING API DATA", reading1)
-        var myReadingRespnse = otherAPIs.readingOne(mainViewModel.getStationValue(),mainViewModel.dataListChart[0].parameter_no,reading1)
+
+
+        var myReadingRespnse =
+            when(readingIndex) {
+               1-> otherAPIs.readingOne(
+                    mainViewModel.getStationValue(),
+                    mainViewModel.dataListChart[index].parameter_no,
+                    reading1
+                )
+                2-> otherAPIs.readingTwo(
+                    mainViewModel.getStationValue(),
+                    mainViewModel.dataListChart[index].parameter_no,
+                    reading1
+                )
+                3-> otherAPIs.readingThree(
+                    mainViewModel.getStationValue(),
+                    mainViewModel.dataListChart[index].parameter_no,
+                    reading1
+                )
+                4-> otherAPIs.readingFour(
+                    mainViewModel.getStationValue(),
+                    mainViewModel.dataListChart[index].parameter_no,
+                    reading1
+                )
+
+                else -> otherAPIs.readingFive(
+                    mainViewModel.getStationValue(),
+                    mainViewModel.dataListChart[index].parameter_no,
+                    reading1
+                )
+            }
         if(myReadingRespnse.isSuccessful){
             mainViewModel.readingStatusList[index].readingStatusE = readingStatusEnum.completed
             showLogs("READING API","value added")
