@@ -136,7 +136,11 @@ class Repository () {
                 showLogs("END SHIFT TIME", mainViewModel.endShiftTime)
                 calculateShiftData()
                 myComponents.navController.popBackStack()
-                myComponents.navController.navigate(CHECKSHEET)
+
+                if(taskResponse.body()?.check_sheet_fill_status == true)
+                    myComponents.navController.navigate(FILL_PARAMETERS)
+                else
+                    myComponents.navController.navigate(CHECKSHEET)
 
             }
 
@@ -274,22 +278,26 @@ class Repository () {
             if (addDataResponse.code() == 200) {
                 showLogs("ADDWITHPARAM", mainViewModel.pass.intValue.toString() + " " + mainViewModel.fail.intValue.toString())
                 showLogs("ADD DATA:","Data Added Successfully")
-
+                isAPISuccessfull = true
                 return true
             }else{
                 showLogs("ADD DATA:","Data Not Added")
+                isAPISuccessfull = false
 
                 return false
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            return false
+//            return false
+            isAPISuccessfull = false
         }
         if(!isAPISuccessfull)
             if(i==1)
                 mainViewModel.pass.intValue--
             else if(i==0)
                 mainViewModel.fail.intValue--
+
+        return false
     }
 
     fun fillChecksheet(): String {
@@ -355,6 +363,7 @@ class Repository () {
                 isAPISuccessfull = true
                 mainViewModel.FPACounter++
 
+
                 showLogs("ADDWITHPARAM", mainViewModel.pass.intValue.toString() + " " + mainViewModel.fail.intValue.toString())
 
                 //show toast successful
@@ -381,6 +390,9 @@ class Repository () {
     }
 
     suspend fun runReadingAPI(reading1: String,index:Int) {
+        showLogs("READING API DATA", mainViewModel.getStationValue())
+        showLogs("READING API DATA", mainViewModel.dataListChart[0].parameter_no)
+        showLogs("READING API DATA", reading1)
         var myReadingRespnse = otherAPIs.readingOne(mainViewModel.getStationValue(),mainViewModel.dataListChart[0].parameter_no,reading1)
         if(myReadingRespnse.isSuccessful){
             mainViewModel.readingStatusList[index].readingStatusE = readingStatusEnum.completed

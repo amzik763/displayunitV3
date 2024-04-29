@@ -5,6 +5,7 @@ import com.cti.displayuni.response.addData_Response
 import com.cti.displayuni.response.allDataV2
 import com.cti.displayuni.response.checksheet_Status
 import com.cti.displayuni.response.notify_response
+import com.cti.displayuni.response.reading_Response
 import com.cti.displayuni.response.sup_response
 import retrofit2.Response
 import retrofit2.http.Field
@@ -51,7 +52,7 @@ interface OtherAPIs {
         @Field("station_id") station_id: String,
         @Field("parameter_no") parameter_no: String,
         @Field("reading_1") reading_1: String,
-    ): Response<String>
+    ): Response<reading_Response>
 
     @FormUrlEncoded
     @POST("/operator/add_and_update/readings")
@@ -59,7 +60,7 @@ interface OtherAPIs {
         @Field("station_id") station_id: String,
         @Field("parameter_no") parameter_no: String,
         @Field("reading_5") reading_5: String,
-    ): Response<String>
+    ): Response<reading_Response>
 
 
 
@@ -69,7 +70,7 @@ interface OtherAPIs {
         @Field("station_id") station_id: String,
         @Field("parameter_no") parameter_no: String,
         @Field("reading_2") reading_2: String,
-    ): Response<String>
+    ): Response<reading_Response>
 
     @FormUrlEncoded
     @POST("/operator/add_and_update/readings")
@@ -77,7 +78,9 @@ interface OtherAPIs {
         @Field("station_id") station_id: String,
         @Field("parameter_no") parameter_no: String,
         @Field("reading_3") reading_3: String,
-    ): Response<String>
+    ): Response<reading_Response>
+
+
 
     @FormUrlEncoded
     @POST("/operator/add_and_update/readings")
@@ -85,7 +88,7 @@ interface OtherAPIs {
         @Field("station_id") station_id: String,
         @Field("parameter_no") parameter_no: String,
         @Field("reading_4") reading_4: String,
-    ): Response<String>
+    ): Response<reading_Response>
 
     @FormUrlEncoded
     @POST("/operator/add_and_update/work")
