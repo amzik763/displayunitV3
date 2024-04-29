@@ -176,9 +176,9 @@ fun ReadingRow1st(){
                     ReadingValue(
                         text = reading1,
                         label = "Enter Value",
-                        onTextChange = {
+                        onTextChange = {it ->
                             // Filter out commas from the input text
-                            val filteredValue = it.replace(",", "")
+                            val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading1 = filteredValue
                         },
@@ -205,9 +205,9 @@ fun ReadingRow1st(){
                     ReadingValue(
                         text = reading2,
                         label = "Enter Value",
-                        onTextChange = {
+                        onTextChange = { it ->
                             // Filter out commas from the input text
-                            val filteredValue = it.replace(",", "")
+                            val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading2 = filteredValue
                         },
@@ -236,9 +236,9 @@ fun ReadingRow1st(){
                     ReadingValue(
                         text = reading3,
                         label = "Enter Value",
-                        onTextChange = {
+                        onTextChange = { it ->
                             // Filter out commas from the input text
-                            val filteredValue = it.replace(",", "")
+                            val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading3 = filteredValue
                         },
@@ -266,9 +266,9 @@ fun ReadingRow1st(){
                     ReadingValue(
                         text = reading4,
                         label = "Enter Value",
-                        onTextChange = {
+                        onTextChange = { it ->
                             // Filter out commas from the input text
-                            val filteredValue = it.replace(",", "")
+                            val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading4 = filteredValue
                         },
@@ -296,9 +296,9 @@ fun ReadingRow1st(){
                     ReadingValue(
                         text = reading5,
                         label = "Enter Value",
-                        onTextChange = {
+                        onTextChange = { it ->
                             // Filter out commas from the input text
-                            val filteredValue = it.replace(",", "")
+                            val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading5 = filteredValue
                         },
@@ -350,9 +350,9 @@ fun ReadingRow2nd(){
                     ReadingValue(
                         text = reading12,
                         label = "Enter Value",
-                        onTextChange = {
+                        onTextChange = { it ->
                             // Filter out commas from the input text
-                            val filteredValue = it.replace(",", "")
+                            val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading12 = filteredValue
                         },
@@ -383,7 +383,7 @@ fun ReadingRow2nd(){
                         label = "Enter Value",
                         onTextChange = {
                             // Filter out commas from the input text
-                            val filteredValue = it.replace(",", "")
+                            val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading22 = filteredValue
                         },
@@ -411,9 +411,9 @@ fun ReadingRow2nd(){
                     ReadingValue(
                         text = reading32,
                         label = "Enter Value",
-                        onTextChange = {
+                        onTextChange = { it ->
                             // Filter out commas from the input text
-                            val filteredValue = it.replace(",", "")
+                            val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading32 = filteredValue
                         },
@@ -440,9 +440,9 @@ fun ReadingRow2nd(){
                     ReadingValue(
                         text = reading42,
                         label = "Enter Value",
-                        onTextChange = {
+                        onTextChange = { it ->
                             // Filter out commas from the input text
-                            val filteredValue = it.replace(",", "")
+                            val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading42 = filteredValue
                         },
@@ -468,9 +468,9 @@ fun ReadingRow2nd(){
                     ReadingValue(
                         text = reading52,
                         label = "Enter Value",
-                        onTextChange = {
+                        onTextChange = { it ->
                             // Filter out commas from the input text
-                            val filteredValue = it.replace(",", "")
+                            val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading52 = filteredValue
                         },
@@ -520,9 +520,9 @@ fun ReadingRow3rd(){
                     ReadingValue(
                         text = reading13,
                         label = "Enter Value",
-                        onTextChange = {
+                        onTextChange = { it ->
                             // Filter out commas from the input text
-                            val filteredValue = it.replace(",", "")
+                            val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading13 = filteredValue
                         },
@@ -550,9 +550,9 @@ fun ReadingRow3rd(){
                     ReadingValue(
                         text = reading23,
                         label = "Enter Value",
-                        onTextChange = {
+                        onTextChange = { it ->
                             // Filter out commas from the input text
-                            val filteredValue = it.replace(",", "")
+                            val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading23 = filteredValue
                         },
@@ -580,9 +580,9 @@ fun ReadingRow3rd(){
                     ReadingValue(
                         text = reading33,
                         label = "Enter Value",
-                        onTextChange = {
+                        onTextChange = { it ->
                             // Filter out commas from the input text
-                            val filteredValue = it.replace(",", "")
+                            val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading33 = filteredValue
                         },
@@ -610,9 +610,9 @@ fun ReadingRow3rd(){
                     ReadingValue(
                         text = reading43,
                         label = "Enter Value",
-                        onTextChange = {
+                        onTextChange = { it ->
                             // Filter out commas from the input text
-                            val filteredValue = it.replace(",", "")
+                            val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading43 = filteredValue
                         },
@@ -638,9 +638,9 @@ fun ReadingRow3rd(){
                     ReadingValue(
                         text = reading53,
                         label = "Enter Value",
-                        onTextChange = {
+                        onTextChange = { it ->
                             // Filter out commas from the input text
-                            val filteredValue = it.replace(",", "")
+                            val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading53 = filteredValue
                         },

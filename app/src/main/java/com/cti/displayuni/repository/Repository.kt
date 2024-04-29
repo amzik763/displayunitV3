@@ -6,6 +6,7 @@ import com.cti.displayuni.R
 import com.cti.displayuni.response.FpaData_res
 import com.cti.displayuni.utility.Actual_Param
 import com.cti.displayuni.utility.CHECKSHEET
+import com.cti.displayuni.utility.FILL_PARAMETERS
 import com.cti.displayuni.utility.GETTASK
 import com.cti.displayuni.utility.Setting_Param
 import com.cti.displayuni.utility.chart_parameter
@@ -86,9 +87,11 @@ class Repository () {
                 }
                 taskResponse.body()?.work_operator_data?.toString()?.let { showLogs("WORK OPERATOR Size", it) }
 
-                mainViewModel.ficID = taskResponse.body()?.emoloyee_id_floor_incharge.toString()
+                mainViewModel.ficID = taskResponse.body()?.work_operator_data?.flrInchr_employee_id.toString()
                 mainViewModel.pass.intValue = taskResponse.body()?.work_operator_data?.passed ?: -1
                 showLogs("PASS", mainViewModel.pass.intValue.toString())
+//                showLogs("FLR ID",taskResponse.body()?.work_operator_data.emoloyee_id_floor_incharge.toString() )
+                showLogs("FLR ID",taskResponse.body()?.work_operator_data?.flrInchr_employee_id.toString() )
 
                 mainViewModel.fail.intValue = taskResponse.body()?.work_operator_data?.failed ?: -1
                 showLogs("FAIL", mainViewModel.fail.intValue.toString())
@@ -222,14 +225,21 @@ class Repository () {
         fillChecksheet: String
     ) {
         try {
+            showLogs("CHECKSHEET DATAA:",employeeId)
+            showLogs("CHECKSHEET DATAA:",ficID)
+            showLogs("CHECKSHEET DATAA:",fillChecksheet)
+            showLogs("CHECKSHEET DATAA:",stationValue)
+
             checkSheetResponse =
                 otherAPIs.checkSheetData(employeeId, ficID, fillChecksheet, stationValue)
 
             if (checkSheetResponse.code() == 200) {
                 //move to last page page
                 showLogs("CHECKSHEEEEEEt:","ADDED")
-//                myComponents.navController.popBackStack()
+                myComponents.navController.popBackStack()
 //                myComponents.navController.navigate(CHECKSHEET)
+                myComponents.navController.navigate(FILL_PARAMETERS)
+
             }else{
                 showLogs("CHECKSHEEEEEEt:","NOT ADDED")
 
@@ -241,6 +251,7 @@ class Repository () {
 
     suspend fun notify(stationValue: String, csp_id: String, floor_no: String) {
         try {
+            showLogs("FLN",floor_no)
             val notifyResponse= otherAPIs.operatorNotify(stationValue,csp_id,floor_no)
             if (notifyResponse.code() == 200) {
                 showLogs("NOTIFICATION:","Notification sent")
@@ -373,8 +384,11 @@ class Repository () {
         var myReadingRespnse = otherAPIs.readingOne(mainViewModel.getStationValue(),mainViewModel.dataListChart[0].parameter_no,reading1)
         if(myReadingRespnse.isSuccessful){
             mainViewModel.readingStatusList[index].readingStatusE = readingStatusEnum.completed
+            showLogs("READING API","value added")
         }else{
             //showToastMessageToTryAgain
+            showLogs("READING API","got error")
+
         }
     }
 }

@@ -299,7 +299,7 @@ fun Checksheet2() {
 
                                 myComponents.mainViewModel.checkItemsInList()
 
-                                myComponents.navController.navigate(FILL_PARAMETERS)
+//                                myComponents.navController.navigate(FILL_PARAMETERS)
 
                             }
                         )

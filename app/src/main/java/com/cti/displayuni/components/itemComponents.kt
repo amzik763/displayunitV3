@@ -165,7 +165,8 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
                      myComponents.mainViewModel.notify(
                         myComponents.mainViewModel.getStationValue(),
                         item.csp_id,
-                        myComponents.mainViewModel.floorNum
+//                        myComponents.mainViewModel.floorNum
+                        myComponents.mainViewModel.getStationValue().split(" ").take(2).joinToString(" ")
                      )
                   }
             )
