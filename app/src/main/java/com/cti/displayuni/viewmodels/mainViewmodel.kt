@@ -6,7 +6,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -209,9 +208,9 @@ class MainViewModel(context: Context) : ViewModel(){
         return dateFormat.format(currentTime)
     }
 
-    suspend fun submitPartInfo() {
+    suspend fun submitPartInfo(i:Int) {
 
-        val addData = myComponents.mainViewModel.addData(passed = myComponents.mainViewModel.pass.intValue.toString(), failed = myComponents.mainViewModel.fail.intValue.toString(), station_id = myComponents.mainViewModel.getStationValue() )
+        val addData = myComponents.mainViewModel.addData(passed = myComponents.mainViewModel.pass.intValue.toString(), failed = myComponents.mainViewModel.fail.intValue.toString(), station_id = myComponents.mainViewModel.getStationValue(),i= i)
         if(addData){
             //set pass fail and checking part values
 
@@ -234,6 +233,24 @@ viewModelScope.launch {
 
 
         }else if(readingStatusList[1].readingStatusE.equals(readingStatusEnum.available)) {
+            showLogs("readingstatusenum", " not available")
+            showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
+//            readingStatusList[0].readingStatusE = readingStatusEnum.available
+            mUiViewModel.showCustomPopup.value = true
+        }
+        else if(readingStatusList[2].readingStatusE.equals(readingStatusEnum.available)) {
+            showLogs("readingstatusenum", " not available")
+            showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
+//            readingStatusList[0].readingStatusE = readingStatusEnum.available
+            mUiViewModel.showCustomPopup.value = true
+        }
+        else if(readingStatusList[3].readingStatusE.equals(readingStatusEnum.available)) {
+            showLogs("readingstatusenum", " not available")
+            showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
+//            readingStatusList[0].readingStatusE = readingStatusEnum.available
+            mUiViewModel.showCustomPopup.value = true
+        }
+        else if(readingStatusList[4].readingStatusE.equals(readingStatusEnum.available)) {
             showLogs("readingstatusenum", " not available")
             showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
@@ -288,10 +305,10 @@ viewModelScope.launch {
     }
 
 
-    suspend fun addData(failed: String, passed: String, station_id: String): Boolean {
+    suspend fun addData(failed: String, passed: String, station_id: String,i:Int): Boolean {
         return coroutineScope {
             val result = async {
-                repository.addData(failed, passed, station_id)
+                repository.addData(failed, passed, station_id,i)
             }
             result.await()
         }
@@ -319,6 +336,12 @@ viewModelScope.launch {
     }
     suspend fun submitPartInfoWithParams(i:Int) {
         repository.addDataWithParams(i)
+    }
+
+    fun runReadingAPI(reading1: String, index: Int) {
+        viewModelScope.launch {
+            repository.runReadingAPI(reading1,index)
+        }
     }
 }
 

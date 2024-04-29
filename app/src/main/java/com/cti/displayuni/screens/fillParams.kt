@@ -395,7 +395,7 @@ fun Header(){
                                     myComponents.mainViewModel.submitPartInfoWithParams(1)
 
                                 }else{
-                                    myComponents.mainViewModel.submitPartInfo()
+                                    myComponents.mainViewModel.submitPartInfo(1)
                                 }
                             }
 //                            return@Button
@@ -545,11 +545,8 @@ fun ZoomableImage(){
                     .size(80.dp)
                     .clickable { nextImage() })
         }
-
     }
 }
-
-
 
 @Composable
 fun FillParam(){
@@ -605,7 +602,6 @@ fun FillParam(){
             myComponents.mUiViewModel.showCustomPopup.value = false
         }
     }
-
 }
 
 @Preview(name = "Tablet", device = "spec:width=1920px, height=1080px, dpi=160, isRound=false, orientation=landscape", showBackground = true, showSystemUi = true)

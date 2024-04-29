@@ -1,7 +1,6 @@
 package com.cti.displayuni.repository
 
 import android.util.Log
-import androidx.compose.ui.geometry.times
 import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.R
 import com.cti.displayuni.response.FpaData_res
@@ -253,7 +252,12 @@ class Repository () {
         }
     }
 
-    suspend fun addData(failed: String, passed: String, station_id: String):Boolean {
+    suspend fun addData(failed: String, passed: String, station_id: String,i:Int):Boolean {
+        var isAPISuccessfull = false
+        if(i==1)
+            mainViewModel.pass.intValue++
+        else if(i==0)
+            mainViewModel.fail.intValue++
         try {
             val addDataResponse= otherAPIs.addData(failed,passed,station_id)
             if (addDataResponse.code() == 200) {
@@ -270,6 +274,11 @@ class Repository () {
             e.printStackTrace()
             return false
         }
+        if(!isAPISuccessfull)
+            if(i==1)
+                mainViewModel.pass.intValue--
+            else if(i==0)
+                mainViewModel.fail.intValue--
     }
 
     fun fillChecksheet(): String {
@@ -335,7 +344,6 @@ class Repository () {
                 isAPISuccessfull = true
                 mainViewModel.FPACounter++
 
-
                 showLogs("ADDWITHPARAM", mainViewModel.pass.intValue.toString() + " " + mainViewModel.fail.intValue.toString())
 
                 //show toast successful
@@ -359,6 +367,15 @@ class Repository () {
             else if(i==0)
                 mainViewModel.fail.intValue--
 
+    }
+
+    suspend fun runReadingAPI(reading1: String,index:Int) {
+        var myReadingRespnse = otherAPIs.readingOne(mainViewModel.getStationValue(),mainViewModel.dataListChart[0].parameter_no,reading1)
+        if(myReadingRespnse.isSuccessful){
+            mainViewModel.readingStatusList[index].readingStatusE = readingStatusEnum.completed
+        }else{
+            //showToastMessageToTryAgain
+        }
     }
 }
 

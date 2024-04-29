@@ -98,9 +98,9 @@ fun CustomPopupContent(
         .fillMaxSize()
         .background(color = Color.White)
         .padding(top = 50.dp , bottom = 36.dp),
-     horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
-        ) {
+    ) {
 
         if (myComponents.mainViewModel.dataListChart.size == 1){
             ReadingRow1st()
@@ -154,11 +154,11 @@ fun CustomPopupContent(
 fun ReadingRow1st(){
     Column {
         var PN = ""
-            try{
-                PN = myComponents.mainViewModel.dataListChart[0].parameter_name
-            }catch (_:Exception){
+        try{
+            PN = myComponents.mainViewModel.dataListChart[0].parameter_name
+        }catch (_:Exception){
 
-            }
+        }
         ParamName(heading = PN)
 
         Row (
@@ -168,143 +168,156 @@ fun ReadingRow1st(){
                 .background(color = Color.White),
             horizontalArrangement = Arrangement.SpaceAround
         ){
-                showLogs("READING STATUS DATA: ",myComponents.mainViewModel.readingStatusList[0].readingStatusE.toString() + " ")
-                if(myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.notAvailable)
-            Column {
-                var reading1 by remember { mutableStateOf("0") }
+            showLogs("READING STATUS DATA: ",myComponents.mainViewModel.readingStatusList[0].readingStatusE.toString() + " ")
+            if(myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.notAvailable)
+                Column {
+                    var reading1 by remember { mutableStateOf("0") }
 
-                ReadingValue(
-                    text = reading1,
-                    label = "Enter Value",
-                    onTextChange = {
+                    ReadingValue(
+                        text = reading1,
+                        label = "Enter Value",
+                        onTextChange = {
                             // Filter out commas from the input text
                             val filteredValue = it.replace(",", "")
                             // Update the state with the filtered value
                             reading1 = filteredValue
-                                   },
-                    color = pureBlack,
-                    maxLength = 5,
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
-                    shape = RoundedCornerShape(8.dp),
+                        },
+                        color = pureBlack,
+                        maxLength = 5,
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done
+                        ),
+                        shape = RoundedCornerShape(8.dp),
 //                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
-                )
-                if(myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.completed)
+                    )
+                    if(myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.completed)
 
-                    SubmitButton(text = "Submit", onClick = {
-
-                    })
-
-            }
+                        SubmitButton(text = "Submit", onClick = {
+                            //runReadingAPI
+                            myComponents.mainViewModel.runReadingAPI(reading1,0)
+                        })
+                }
             if(myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.notAvailable)
-            Column {
+                Column {
 
-                var reading2 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading2,
-                    label = "Enter Value",
-                    onTextChange = {
+                    var reading2 by remember { mutableStateOf("0") }
+                    ReadingValue(
+                        text = reading2,
+                        label = "Enter Value",
+                        onTextChange = {
                             // Filter out commas from the input text
                             val filteredValue = it.replace(",", "")
                             // Update the state with the filtered value
                             reading2 = filteredValue
-                                   },
-                    color = pureBlack,
-                    maxLength = 5,
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
-                    shape = RoundedCornerShape(8.dp),
-                )
+                        },
+                        color = pureBlack,
+                        maxLength = 5,
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done
+                        ),
+                        shape = RoundedCornerShape(8.dp),
+                    )
 
-                if(myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.completed)
-                SubmitButton(text = "Submit", onClick = {})
+                    if(myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.completed)
+                        SubmitButton(text = "Submit", onClick = {
 
-            }
+                            myComponents.mainViewModel.runReadingAPI(reading2,0)
+
+                        })
+
+                }
 
             if(myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
 
-                var reading3 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading3,
-                    label = "Enter Value",
-                    onTextChange = {
+                    var reading3 by remember { mutableStateOf("0") }
+                    ReadingValue(
+                        text = reading3,
+                        label = "Enter Value",
+                        onTextChange = {
                             // Filter out commas from the input text
                             val filteredValue = it.replace(",", "")
                             // Update the state with the filtered value
                             reading3 = filteredValue
-                                   },
-                    color = pureBlack,
-                    maxLength = 5,
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
-                    shape = RoundedCornerShape(8.dp),
-                )
+                        },
+                        color = pureBlack,
+                        maxLength = 5,
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done
+                        ),
+                        shape = RoundedCornerShape(8.dp),
+                    )
 
                     if(myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.completed)
-                    SubmitButton(text = "Submit", onClick = {})
+                        SubmitButton(text = "Submit", onClick = {
+                            myComponents.mainViewModel.runReadingAPI(reading3,0)
 
-            }
+                        })
+
+                }
 
             if(myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
 
-                var reading4 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading4,
-                    label = "Enter Value",
-                    onTextChange = {
+                    var reading4 by remember { mutableStateOf("0") }
+                    ReadingValue(
+                        text = reading4,
+                        label = "Enter Value",
+                        onTextChange = {
                             // Filter out commas from the input text
                             val filteredValue = it.replace(",", "")
                             // Update the state with the filtered value
                             reading4 = filteredValue
-                                   },
-                    color = pureBlack,
-                    maxLength = 5,
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
-                    shape = RoundedCornerShape(8.dp),
-                )
+                        },
+                        color = pureBlack,
+                        maxLength = 5,
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done
+                        ),
+                        shape = RoundedCornerShape(8.dp),
+                    )
 
                     if(myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.completed)
-                    SubmitButton(text = "Submit", onClick = {})
+                        SubmitButton(text = "Submit", onClick = {
+                            myComponents.mainViewModel.runReadingAPI(reading4,0)
 
-            }
+                        })
+
+                }
 
             if(myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.notAvailable)
-            Column {
+                Column {
 
-                var reading5 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading5,
-                    label = "Enter Value",
-                    onTextChange = {
+                    var reading5 by remember { mutableStateOf("0") }
+                    ReadingValue(
+                        text = reading5,
+                        label = "Enter Value",
+                        onTextChange = {
                             // Filter out commas from the input text
                             val filteredValue = it.replace(",", "")
                             // Update the state with the filtered value
                             reading5 = filteredValue
-                                   },
-                    color = pureBlack,
-                    maxLength = 5,
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
-                    shape = RoundedCornerShape(8.dp),
-                )
+                        },
+                        color = pureBlack,
+                        maxLength = 5,
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done
+                        ),
+                        shape = RoundedCornerShape(8.dp),
+                    )
 
-                if(myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.completed)
-                    SubmitButton(text = "Submit", onClick = {})
+                    if(myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.completed)
+                        SubmitButton(text = "Submit", onClick = {
+                            myComponents.mainViewModel.runReadingAPI(reading5,0)
 
-            }
+                        })
+
+                }
 
         }
     }
@@ -331,138 +344,151 @@ fun ReadingRow2nd(){
         ){
 
             if(myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.notAvailable)
-            Column {
-                var reading12 by remember { mutableStateOf("0") }
+                Column {
+                    var reading12 by remember { mutableStateOf("0") }
 
-                ReadingValue(
-                    text = reading12,
-                    label = "Enter Value",
-                    onTextChange = {
+                    ReadingValue(
+                        text = reading12,
+                        label = "Enter Value",
+                        onTextChange = {
                             // Filter out commas from the input text
                             val filteredValue = it.replace(",", "")
                             // Update the state with the filtered value
                             reading12 = filteredValue
-                                   },
-                    color = pureBlack,
-                    maxLength = 5,
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
-                    shape = RoundedCornerShape(8.dp),
+                        },
+                        color = pureBlack,
+                        maxLength = 5,
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done
+                        ),
+                        shape = RoundedCornerShape(8.dp),
 //                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
-                )
+                    )
 
-                if (myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.completed)
-                SubmitButton(text = "Submit", onClick = { })
+                    if (myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.completed)
+                        SubmitButton(text = "Submit", onClick = {
+                            myComponents.mainViewModel.runReadingAPI(reading12,1)
 
-            }
+                        })
+
+                }
 
             if(myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.notAvailable)
-            Column {
+                Column {
 
-                var reading22 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading22,
-                    label = "Enter Value",
-                    onTextChange = {
+                    var reading22 by remember { mutableStateOf("0") }
+                    ReadingValue(
+                        text = reading22,
+                        label = "Enter Value",
+                        onTextChange = {
                             // Filter out commas from the input text
                             val filteredValue = it.replace(",", "")
                             // Update the state with the filtered value
                             reading22 = filteredValue
-                                   },
-                    color = pureBlack,
-                    maxLength = 5,
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
-                    shape = RoundedCornerShape(8.dp),
-                )
+                        },
+                        color = pureBlack,
+                        maxLength = 5,
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done
+                        ),
+                        shape = RoundedCornerShape(8.dp),
+                    )
 
-                if (myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.completed)
-                SubmitButton(text = "Submit", onClick = {})
+                    if (myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.completed)
+                        SubmitButton(text = "Submit", onClick = {
+                            myComponents.mainViewModel.runReadingAPI(reading22,1)
 
-            }
+                        })
+
+                }
 
             if (myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.notAvailable)
-            Column {
+                Column {
 
-                var reading32 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading32,
-                    label = "Enter Value",
-                    onTextChange = {
+                    var reading32 by remember { mutableStateOf("0") }
+                    ReadingValue(
+                        text = reading32,
+                        label = "Enter Value",
+                        onTextChange = {
                             // Filter out commas from the input text
                             val filteredValue = it.replace(",", "")
                             // Update the state with the filtered value
                             reading32 = filteredValue
-                                   },
-                    color = pureBlack,
-                    maxLength = 5,
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
-                    shape = RoundedCornerShape(8.dp),
-                )
+                        },
+                        color = pureBlack,
+                        maxLength = 5,
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done
+                        ),
+                        shape = RoundedCornerShape(8.dp),
+                    )
 
-                if (myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.completed)
-                SubmitButton(text = "Submit", onClick = {})
+                    if (myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.completed)
+                        SubmitButton(text = "Submit", onClick = {
+                            myComponents.mainViewModel.runReadingAPI(reading32,1)
 
-            }
+                        })
+
+                }
             if (myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.notAvailable)
-            Column {
+                Column {
 
-                var reading42 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading42,
-                    label = "Enter Value",
-                    onTextChange = {
+                    var reading42 by remember { mutableStateOf("0") }
+                    ReadingValue(
+                        text = reading42,
+                        label = "Enter Value",
+                        onTextChange = {
                             // Filter out commas from the input text
                             val filteredValue = it.replace(",", "")
                             // Update the state with the filtered value
                             reading42 = filteredValue
-                                   },
-                    color = pureBlack,
-                    maxLength = 5,
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
-                    shape = RoundedCornerShape(8.dp),
-                )
+                        },
+                        color = pureBlack,
+                        maxLength = 5,
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done
+                        ),
+                        shape = RoundedCornerShape(8.dp),
+                    )
 
-                if (myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.completed)
-                SubmitButton(text = "Submit", onClick = {})
+                    if (myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.completed)
+                        SubmitButton(text = "Submit", onClick = {
+                            myComponents.mainViewModel.runReadingAPI(reading42,1)
+                        })
 
-            }
+                }
 
             if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.notAvailable)
-            Column {
-                var reading52 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading52,
-                    label = "Enter Value",
-                    onTextChange = {
+                Column {
+                    var reading52 by remember { mutableStateOf("0") }
+                    ReadingValue(
+                        text = reading52,
+                        label = "Enter Value",
+                        onTextChange = {
                             // Filter out commas from the input text
                             val filteredValue = it.replace(",", "")
                             // Update the state with the filtered value
                             reading52 = filteredValue
-                                   },
-                    color = pureBlack,
-                    maxLength = 5,
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
-                    shape = RoundedCornerShape(8.dp),
-                )
+                        },
+                        color = pureBlack,
+                        maxLength = 5,
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done
+                        ),
+                        shape = RoundedCornerShape(8.dp),
+                    )
 
-                if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.completed)
-                SubmitButton(text = "Submit", onClick = {})
+                    if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.completed)
+                        SubmitButton(text = "Submit", onClick = {
+                            myComponents.mainViewModel.runReadingAPI(reading52,1)
+                        })
 
-            }
+                }
 
         }
     }
@@ -488,137 +514,151 @@ fun ReadingRow3rd(){
             horizontalArrangement = Arrangement.SpaceAround
         ){
             if (myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.notAvailable)
-            Column {
-                var reading13 by remember { mutableStateOf("0") }
+                Column {
+                    var reading13 by remember { mutableStateOf("0") }
 
-                ReadingValue(
-                    text = reading13,
-                    label = "Enter Value",
-                    onTextChange = {
-                        // Filter out commas from the input text
-                        val filteredValue = it.replace(",", "")
-                        // Update the state with the filtered value
-                        reading13 = filteredValue
-                    },
-                    color = pureBlack,
-                    maxLength = 5,
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
-                    shape = RoundedCornerShape(8.dp),
+                    ReadingValue(
+                        text = reading13,
+                        label = "Enter Value",
+                        onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading13 = filteredValue
+                        },
+                        color = pureBlack,
+                        maxLength = 5,
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done
+                        ),
+                        shape = RoundedCornerShape(8.dp),
 //                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
-                )
+                    )
 
-                if (myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.completed)
-                SubmitButton(text = "Submit", onClick = { })
+                    if (myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.completed)
+                        SubmitButton(text = "Submit", onClick = {
+                            myComponents.mainViewModel.runReadingAPI(reading13,2)
 
-            }
+                        })
+
+                }
 
             if (myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.notAvailable)
-            Column {
-                var reading23 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading23,
-                    label = "Enter Value",
-                    onTextChange = {
-                        // Filter out commas from the input text
-                        val filteredValue = it.replace(",", "")
-                        // Update the state with the filtered value
-                        reading23 = filteredValue
-                    },
-                    color = pureBlack,
-                    maxLength = 5,
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
-                    shape = RoundedCornerShape(8.dp),
-                )
+                Column {
+                    var reading23 by remember { mutableStateOf("0") }
+                    ReadingValue(
+                        text = reading23,
+                        label = "Enter Value",
+                        onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading23 = filteredValue
+                        },
+                        color = pureBlack,
+                        maxLength = 5,
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done
+                        ),
+                        shape = RoundedCornerShape(8.dp),
+                    )
 
-                if (myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.completed)
-                SubmitButton(text = "Submit", onClick = {})
+                    if (myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.completed)
+                        SubmitButton(text = "Submit", onClick = {
+                            myComponents.mainViewModel.runReadingAPI(reading23,2)
 
-            }
+                        })
+
+                }
 
             if (myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
 
-                var reading33 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading33,
-                    label = "Enter Value",
-                    onTextChange = {
-                        // Filter out commas from the input text
-                        val filteredValue = it.replace(",", "")
-                        // Update the state with the filtered value
-                        reading33 = filteredValue
-                    },
-                    color = pureBlack,
-                    maxLength = 5,
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
-                    shape = RoundedCornerShape(8.dp),
-                )
+                    var reading33 by remember { mutableStateOf("0") }
+                    ReadingValue(
+                        text = reading33,
+                        label = "Enter Value",
+                        onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading33 = filteredValue
+                        },
+                        color = pureBlack,
+                        maxLength = 5,
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done
+                        ),
+                        shape = RoundedCornerShape(8.dp),
+                    )
 
                     if (myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.completed)
-                    SubmitButton(text = "Submit", onClick = {})
+                        SubmitButton(text = "Submit", onClick = {
+                            myComponents.mainViewModel.runReadingAPI(reading33,2)
 
-            }
+                        })
+
+                }
 
             if (myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.notAvailable)
-            Column {
+                Column {
 
-                var reading43 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading43,
-                    label = "Enter Value",
-                    onTextChange = {
-                        // Filter out commas from the input text
-                        val filteredValue = it.replace(",", "")
-                        // Update the state with the filtered value
-                        reading43 = filteredValue
-                    },
-                    color = pureBlack,
-                    maxLength = 5,
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
-                    shape = RoundedCornerShape(8.dp),
-                )
-                if (myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.completed)
-                SubmitButton(text = "Submit", onClick = {})
+                    var reading43 by remember { mutableStateOf("0") }
+                    ReadingValue(
+                        text = reading43,
+                        label = "Enter Value",
+                        onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading43 = filteredValue
+                        },
+                        color = pureBlack,
+                        maxLength = 5,
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done
+                        ),
+                        shape = RoundedCornerShape(8.dp),
+                    )
+                    if (myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.completed)
+                        SubmitButton(text = "Submit", onClick = {
+                            myComponents.mainViewModel.runReadingAPI(reading43,2)
 
-            }
+                        })
+                }
 
             if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.notAvailable)
-            Column {
+                Column {
 
-                var reading53 by remember { mutableStateOf("0") }
-                ReadingValue(
-                    text = reading53,
-                    label = "Enter Value",
-                    onTextChange = {
-                        // Filter out commas from the input text
-                        val filteredValue = it.replace(",", "")
-                        // Update the state with the filtered value
-                        reading53 = filteredValue
-                    },
-                    color = pureBlack,
-                    maxLength = 5,
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
-                    shape = RoundedCornerShape(8.dp),
-                )
-                if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.completed)
+                    var reading53 by remember { mutableStateOf("0") }
+                    ReadingValue(
+                        text = reading53,
+                        label = "Enter Value",
+                        onTextChange = {
+                            // Filter out commas from the input text
+                            val filteredValue = it.replace(",", "")
+                            // Update the state with the filtered value
+                            reading53 = filteredValue
+                        },
+                        color = pureBlack,
+                        maxLength = 5,
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done
+                        ),
+                        shape = RoundedCornerShape(8.dp),
+                    )
+                    if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.completed)
 
-                SubmitButton(text = "Submit", onClick = {})
-            }
+                        SubmitButton(text = "Submit", onClick = {
+                            myComponents.mainViewModel.runReadingAPI(reading53,2)
+
+                        })
+                }
         }
     }
 }
