@@ -17,6 +17,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -38,6 +39,7 @@ import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.green
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
+import com.cti.displayuni.utility.chart_parameter
 import com.cti.displayuni.utility.mFont
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.readingStatusEnum
@@ -94,6 +96,7 @@ fun SubmitButton(text: String, onClick: () -> Unit) {
 fun CustomPopupContent(
     onCloseClicked: () -> Unit,
 ) {
+    val dataListChart = myComponents.mainViewModel.dataListChart.observeAsState(emptyList())
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -104,21 +107,21 @@ fun CustomPopupContent(
     ) {
 
         if (myComponents.mainViewModel.dataListChart.value?.size == 1){
-            ReadingRow1st()
+            ReadingRow1st(dataListChart)
         }
 
         if (myComponents.mainViewModel.dataListChart.value?.size == 2){
-            ReadingRow1st()
+            ReadingRow1st(dataListChart)
 
-            ReadingRow2nd()
+            ReadingRow2nd(dataListChart)
         }
 
         if (myComponents.mainViewModel.dataListChart.value?.size == 3){
-            ReadingRow1st()
+            ReadingRow1st(dataListChart)
 
-            ReadingRow2nd()
+            ReadingRow2nd(dataListChart)
 
-            ReadingRow3rd()
+            ReadingRow3rd(dataListChart)
         }
 
 
@@ -152,8 +155,7 @@ fun CustomPopupContent(
 }
 
 @Composable
-fun ReadingRow1st(){
-    val dataListChart = myComponents.mainViewModel.dataListChart.observeAsState(emptyList())
+fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
 
     Column {
         var PN = ""
@@ -181,20 +183,9 @@ fun ReadingRow1st(){
                         text =  reading1,
                         label = "Enter Value",
                         onTextChange = {it ->
-                            // Filter out commas from the input text
                             val filteredValue = it.filter { it.isLetterOrDigit() }
-                            val dataList = dataListChart.value
-                            if (dataList != null && dataList.isNotEmpty()) {
-                                val chartParameter = dataList[0]
-                                val updatedValues = chartParameter.values.toMutableList()
-                                updatedValues[0] = filteredValue
-                                val updatedChartParameter = chartParameter.copy(values = updatedValues)
-                                val updatedDataList = dataList.toMutableList().apply {
-                                    set(0, updatedChartParameter)
-                                }
-                                myComponents.mainViewModel.dataListChart.value = updatedDataList
-                            }
                             reading1 = filteredValue
+                            myComponents.mainViewModel.dataListChart.value?.get(0)?.values?.set(0,filteredValue)
                         },
                         color = pureBlack,
                         maxLength = 5,
@@ -215,15 +206,16 @@ fun ReadingRow1st(){
             if(myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
 
-                    var reading2 by remember { mutableStateOf("0") }
+                    var reading2 by remember {
+                        mutableStateOf(dataListChart.value.get(0).values.get(1))
+                    }
                     ReadingValue(
                         text = reading2,
                         label = "Enter Value",
                         onTextChange = { it ->
-                            // Filter out commas from the input text
                             val filteredValue = it.filter { it.isLetterOrDigit() }
-                            // Update the state with the filtered value
                             reading2 = filteredValue
+                            myComponents.mainViewModel.dataListChart.value?.get(0)?.values?.set(1,filteredValue)
                         },
                         color = pureBlack,
                         maxLength = 5,
@@ -237,7 +229,7 @@ fun ReadingRow1st(){
                     if(myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
 
-                            myComponents.mainViewModel.runReadingAPI(0, reading2, 0)
+                            myComponents.mainViewModel.runReadingAPI(0, reading2, 1)
 
                         })
 
@@ -246,15 +238,18 @@ fun ReadingRow1st(){
             if(myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
 
-                    var reading3 by remember { mutableStateOf("0") }
+                    var reading3 by remember {
+                        mutableStateOf(dataListChart.value.get(0).values.get(2))
+                    }
+
                     ReadingValue(
                         text = reading3,
                         label = "Enter Value",
                         onTextChange = { it ->
-                            // Filter out commas from the input text
                             val filteredValue = it.filter { it.isLetterOrDigit() }
-                            // Update the state with the filtered value
                             reading3 = filteredValue
+                            myComponents.mainViewModel.dataListChart.value?.get(0)?.values?.set(2,filteredValue)
+
                         },
                         color = pureBlack,
                         maxLength = 5,
@@ -267,7 +262,7 @@ fun ReadingRow1st(){
 
                     if(myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(0, reading3, 0)
+                            myComponents.mainViewModel.runReadingAPI(0, reading3, 2)
 
                         })
 
@@ -276,7 +271,10 @@ fun ReadingRow1st(){
             if(myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
 
-                    var reading4 by remember { mutableStateOf("0") }
+                    var reading4 by remember {
+                        mutableStateOf(dataListChart.value.get(0).values.get(3))
+                    }
+
                     ReadingValue(
                         text = reading4,
                         label = "Enter Value",
@@ -285,6 +283,8 @@ fun ReadingRow1st(){
                             val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading4 = filteredValue
+                            myComponents.mainViewModel.dataListChart.value?.get(0)?.values?.set(3,filteredValue)
+
                         },
                         color = pureBlack,
                         maxLength = 5,
@@ -297,7 +297,7 @@ fun ReadingRow1st(){
 
                     if(myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(0, reading4, 0)
+                            myComponents.mainViewModel.runReadingAPI(0, reading4, 3)
 
                         })
 
@@ -306,15 +306,18 @@ fun ReadingRow1st(){
             if(myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
 
-                    var reading5 by remember { mutableStateOf("0") }
+                    var reading5 by remember {
+                        mutableStateOf(dataListChart.value.get(0).values.get(4))
+                    }
+
                     ReadingValue(
                         text = reading5,
                         label = "Enter Value",
                         onTextChange = { it ->
-                            // Filter out commas from the input text
                             val filteredValue = it.filter { it.isLetterOrDigit() }
-                            // Update the state with the filtered value
                             reading5 = filteredValue
+                            myComponents.mainViewModel.dataListChart.value?.get(0)?.values?.set(4,filteredValue)
+
                         },
                         color = pureBlack,
                         maxLength = 5,
@@ -327,7 +330,7 @@ fun ReadingRow1st(){
 
                     if(myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(0, reading5, 0)
+                            myComponents.mainViewModel.runReadingAPI(0, reading5, 4)
 
                         })
 
@@ -339,7 +342,7 @@ fun ReadingRow1st(){
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun ReadingRow2nd(){
+fun ReadingRow2nd(dataListChart: State<List<chart_parameter>>) {
     Column {
         var PN = ""
         try{
@@ -360,7 +363,10 @@ fun ReadingRow2nd(){
 
             if(myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
-                    var reading12 by remember { mutableStateOf("0") }
+
+                    var reading12 by remember {
+                        mutableStateOf(dataListChart.value.get(1).values.get(0))
+                    }
 
                     ReadingValue(
                         text = reading12,
@@ -370,6 +376,8 @@ fun ReadingRow2nd(){
                             val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading12 = filteredValue
+                            myComponents.mainViewModel.dataListChart.value?.get(1)?.values?.set(0,filteredValue)
+
                         },
                         color = pureBlack,
                         maxLength = 5,
@@ -383,7 +391,7 @@ fun ReadingRow2nd(){
 
                     if (myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(0, reading12, 1)
+                            myComponents.mainViewModel.runReadingAPI(1, reading12, 0)
 
                         })
 
@@ -392,7 +400,9 @@ fun ReadingRow2nd(){
             if(myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
 
-                    var reading22 by remember { mutableStateOf("0") }
+                    var reading22 by remember {
+                        mutableStateOf(dataListChart.value.get(1).values.get(1))
+                    }
                     ReadingValue(
                         text = reading22,
                         label = "Enter Value",
@@ -401,6 +411,8 @@ fun ReadingRow2nd(){
                             val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading22 = filteredValue
+                            myComponents.mainViewModel.dataListChart.value?.get(1)?.values?.set(1,filteredValue)
+
                         },
                         color = pureBlack,
                         maxLength = 5,
@@ -413,7 +425,7 @@ fun ReadingRow2nd(){
 
                     if (myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(0, reading22, 1)
+                            myComponents.mainViewModel.runReadingAPI(1, reading22, 1)
 
                         })
 
@@ -422,7 +434,9 @@ fun ReadingRow2nd(){
             if (myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
 
-                    var reading32 by remember { mutableStateOf("0") }
+                    var reading32 by remember {
+                        mutableStateOf(dataListChart.value.get(1).values.get(2))
+                    }
                     ReadingValue(
                         text = reading32,
                         label = "Enter Value",
@@ -431,6 +445,8 @@ fun ReadingRow2nd(){
                             val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading32 = filteredValue
+                            myComponents.mainViewModel.dataListChart.value?.get(1)?.values?.set(2,filteredValue)
+
                         },
                         color = pureBlack,
                         maxLength = 5,
@@ -443,7 +459,7 @@ fun ReadingRow2nd(){
 
                     if (myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(0, reading32, 1)
+                            myComponents.mainViewModel.runReadingAPI(1, reading32, 2)
 
                         })
 
@@ -451,7 +467,10 @@ fun ReadingRow2nd(){
             if (myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
 
-                    var reading42 by remember { mutableStateOf("0") }
+                    var reading42 by remember {
+                        mutableStateOf(dataListChart.value.get(1).values.get(3))
+                    }
+
                     ReadingValue(
                         text = reading42,
                         label = "Enter Value",
@@ -460,6 +479,8 @@ fun ReadingRow2nd(){
                             val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading42 = filteredValue
+                            myComponents.mainViewModel.dataListChart.value?.get(1)?.values?.set(3,filteredValue)
+
                         },
                         color = pureBlack,
                         maxLength = 5,
@@ -472,14 +493,18 @@ fun ReadingRow2nd(){
 
                     if (myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(0, reading42, 1)
+                            myComponents.mainViewModel.runReadingAPI(1, reading42, 3)
                         })
 
                 }
 
             if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
-                    var reading52 by remember { mutableStateOf("0") }
+
+                    var reading52 by remember {
+                        mutableStateOf(dataListChart.value.get(1).values.get(4))
+                    }
+
                     ReadingValue(
                         text = reading52,
                         label = "Enter Value",
@@ -488,6 +513,8 @@ fun ReadingRow2nd(){
                             val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading52 = filteredValue
+                            myComponents.mainViewModel.dataListChart.value?.get(1)?.values?.set(4,filteredValue)
+
                         },
                         color = pureBlack,
                         maxLength = 5,
@@ -500,7 +527,7 @@ fun ReadingRow2nd(){
 
                     if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(0, reading52, 1)
+                            myComponents.mainViewModel.runReadingAPI(1, reading52, 4)
                         })
 
                 }
@@ -510,7 +537,7 @@ fun ReadingRow2nd(){
 }
 
 @Composable
-fun ReadingRow3rd(){
+fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
     Column {
         var PN = ""
         try{
@@ -529,7 +556,10 @@ fun ReadingRow3rd(){
         ){
             if (myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
-                    var reading13 by remember { mutableStateOf("0") }
+
+                    var reading13 by remember {
+                        mutableStateOf(dataListChart.value.get(2).values.get(0))
+                    }
 
                     ReadingValue(
                         text = reading13,
@@ -539,6 +569,8 @@ fun ReadingRow3rd(){
                             val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading13 = filteredValue
+                            myComponents.mainViewModel.dataListChart.value?.get(2)?.values?.set(0,filteredValue)
+
                         },
                         color = pureBlack,
                         maxLength = 5,
@@ -552,7 +584,7 @@ fun ReadingRow3rd(){
 
                     if (myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(0, reading13, 2)
+                            myComponents.mainViewModel.runReadingAPI(2, reading13, 0)
 
                         })
 
@@ -560,7 +592,11 @@ fun ReadingRow3rd(){
 
             if (myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
-                    var reading23 by remember { mutableStateOf("0") }
+
+                    var reading23 by remember {
+                        mutableStateOf(dataListChart.value.get(2).values.get(1))
+                    }
+
                     ReadingValue(
                         text = reading23,
                         label = "Enter Value",
@@ -569,6 +605,8 @@ fun ReadingRow3rd(){
                             val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading23 = filteredValue
+                            myComponents.mainViewModel.dataListChart.value?.get(2)?.values?.set(1,filteredValue)
+
                         },
                         color = pureBlack,
                         maxLength = 5,
@@ -581,7 +619,7 @@ fun ReadingRow3rd(){
 
                     if (myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(0, reading23, 2)
+                            myComponents.mainViewModel.runReadingAPI(2, reading23, 1)
 
                         })
 
@@ -590,7 +628,10 @@ fun ReadingRow3rd(){
             if (myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
 
-                    var reading33 by remember { mutableStateOf("0") }
+                    var reading33 by remember {
+                        mutableStateOf(dataListChart.value.get(2).values.get(2))
+                    }
+
                     ReadingValue(
                         text = reading33,
                         label = "Enter Value",
@@ -599,6 +640,8 @@ fun ReadingRow3rd(){
                             val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading33 = filteredValue
+                            myComponents.mainViewModel.dataListChart.value?.get(2)?.values?.set(2,filteredValue)
+
                         },
                         color = pureBlack,
                         maxLength = 5,
@@ -611,7 +654,7 @@ fun ReadingRow3rd(){
 
                     if (myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(0, reading33, 2)
+                            myComponents.mainViewModel.runReadingAPI(2, reading33, 2)
 
                         })
 
@@ -620,8 +663,11 @@ fun ReadingRow3rd(){
             if (myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
 
-                    var reading43 by remember { mutableStateOf("0") }
-                    ReadingValue(
+                    var reading43 by remember {
+                        mutableStateOf(dataListChart.value.get(2).values.get(3))
+                    }
+
+                     ReadingValue(
                         text = reading43,
                         label = "Enter Value",
                         onTextChange = { it ->
@@ -629,6 +675,8 @@ fun ReadingRow3rd(){
                             val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading43 = filteredValue
+                            myComponents.mainViewModel.dataListChart.value?.get(2)?.values?.set(3,filteredValue)
+
                         },
                         color = pureBlack,
                         maxLength = 5,
@@ -640,7 +688,7 @@ fun ReadingRow3rd(){
                     )
                     if (myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.completed)
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(0, reading43, 2)
+                            myComponents.mainViewModel.runReadingAPI(2, reading43, 3)
 
                         })
                 }
@@ -648,7 +696,10 @@ fun ReadingRow3rd(){
             if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
 
-                    var reading53 by remember { mutableStateOf("0") }
+                    var reading53 by remember {
+                        mutableStateOf(dataListChart.value.get(2).values.get(4))
+                    }
+
                     ReadingValue(
                         text = reading53,
                         label = "Enter Value",
@@ -657,6 +708,8 @@ fun ReadingRow3rd(){
                             val filteredValue = it.filter { it.isLetterOrDigit() }
                             // Update the state with the filtered value
                             reading53 = filteredValue
+                            myComponents.mainViewModel.dataListChart.value?.get(2)?.values?.set(4,filteredValue)
+
                         },
                         color = pureBlack,
                         maxLength = 5,
@@ -669,7 +722,7 @@ fun ReadingRow3rd(){
                     if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.completed)
 
                         SubmitButton(text = "Submit", onClick = {
-                            myComponents.mainViewModel.runReadingAPI(0, reading53, 2)
+                            myComponents.mainViewModel.runReadingAPI(2, reading53, 4)
 
                         })
                 }

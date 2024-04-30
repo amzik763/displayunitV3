@@ -111,7 +111,7 @@ class Repository () {
 
                 taskResponse.body()?.process_params_info?.forEach{
                     if (it.readings_is_available){
-                        mainViewModel.dataListChart.add(chart_parameter(it.parameter_name, it.parameter_no))
+                        mainViewModel.dataListChart.value?.add(chart_parameter(it.parameter_name, it.parameter_no))
                     }
 
                 }
@@ -384,36 +384,40 @@ class Repository () {
 
     suspend fun runReadingAPI(readingIndex: Int, reading1: String, index: Int) {
         showLogs("READING API DATA", mainViewModel.getStationValue())
-        showLogs("READING API DATA", mainViewModel.dataListChart[0].parameter_no)
+        mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no?.let {
+            showLogs("READING API DATA",
+                it
+            )
+        }
         showLogs("READING API DATA", reading1)
 
 
         var myReadingRespnse =
-            when(readingIndex) {
+            when(index) {
                1-> otherAPIs.readingOne(
                     mainViewModel.getStationValue(),
-                    mainViewModel.dataListChart[index].parameter_no,
+                    mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString(),
                     reading1
                 )
                 2-> otherAPIs.readingTwo(
                     mainViewModel.getStationValue(),
-                    mainViewModel.dataListChart[index].parameter_no,
+                    mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString(),
                     reading1
                 )
                 3-> otherAPIs.readingThree(
                     mainViewModel.getStationValue(),
-                    mainViewModel.dataListChart[index].parameter_no,
+                    mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString(),
                     reading1
                 )
                 4-> otherAPIs.readingFour(
                     mainViewModel.getStationValue(),
-                    mainViewModel.dataListChart[index].parameter_no,
+                    mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString(),
                     reading1
                 )
 
                 else -> otherAPIs.readingFive(
                     mainViewModel.getStationValue(),
-                    mainViewModel.dataListChart[index].parameter_no,
+                    mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString(),
                     reading1
                 )
             }
