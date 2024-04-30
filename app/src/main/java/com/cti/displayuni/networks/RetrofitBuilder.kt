@@ -99,8 +99,6 @@ object RetrofitBuilder {
         return retrofitWithoutToken.create(AuthAPIs::class.java)
     }
 
-
-
     fun createApiServiceWithToken(): OtherAPIs {
 
         val retrofitWithToken = Retrofit.Builder()

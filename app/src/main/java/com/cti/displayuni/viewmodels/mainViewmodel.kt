@@ -77,7 +77,6 @@ class MainViewModel(context: Context) : ViewModel(){
     val mChecksheetData = MutableLiveData<List<CheckSheetData>>()
     var ficID = "none"
 
-
     var FPACounter = 1;
 
     private val sharedPreferences: SharedPreferences
@@ -129,7 +128,6 @@ class MainViewModel(context: Context) : ViewModel(){
     }
 
     fun notify(stationValue: String, csp_id: String, floor_no: String){
-
         viewModelScope.launch {
             repository.notify(stationValue, csp_id, floor_no)
         }
@@ -155,7 +153,6 @@ class MainViewModel(context: Context) : ViewModel(){
         }
         myComponents.mainViewModel.addChecksheetData()
         showLogs("DIALOG","HIDE DIALOG")
-
     }
 
     fun itemsInRange():Boolean{
@@ -198,7 +195,6 @@ class MainViewModel(context: Context) : ViewModel(){
                         return false
                     }
             }catch (_:Exception){
-
             }
         }
         return true
@@ -259,10 +255,7 @@ viewModelScope.launch {
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
             mUiViewModel.showCustomPopup.value = true
         }
-
-        }
-
-
+      }
     }
 
     private fun updateReadingStatus(){
@@ -348,7 +341,6 @@ viewModelScope.launch {
                 return false // Return false if any param_value is blank
             }
         }
-
         return true // Return true if all param_values are filled
     }
     suspend fun submitPartInfoWithParams(i:Int) {
