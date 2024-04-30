@@ -312,13 +312,11 @@ class Repository () {
 
     suspend fun addDataWithParams(i:Int) {
 
-
-        var isAPISuccessfull = false
+        var p=mainViewModel.pass.intValue;var f=mainViewModel.fail.intValue
         if(i==1)
-            mainViewModel.pass.intValue++
+            ++p
         else if(i==0)
-            mainViewModel.fail.intValue++
-
+            ++f
         //SHOULD BE SHIFTED TO OTHER API
         val p1 =  mainViewModel.dataListSetting.joinToString(separator = ",") { setting ->
             "${setting.param_name} ::: ${setting.param_value}"
@@ -333,29 +331,31 @@ class Repository () {
 
         showLogs("Combined String: ", p1p2)
         showLogs("Station ID: ", mainViewModel.getStationValue())
-        showLogs("PASS: ", mainViewModel.pass.intValue.toString())
-        showLogs("FAIL: ",  mainViewModel.fail.intValue.toString())
+//        showLogs("PASS: ", mainViewModel.pass.intValue.toString())
+//        showLogs("FAIL: ",  mainViewModel.fail.intValue.toString())
         lateinit var dataResponseWithParam:Response<FpaData_res>
         try{
             when(mainViewModel.FPACounter){
                 1 -> {
-                    dataResponseWithParam = otherAPIs.fpaData(mainViewModel.fail.intValue.toString(), mainViewModel.pass.intValue.toString(),p1p2 ,mainViewModel.getStationValue())
+                    dataResponseWithParam = otherAPIs.fpaData(f.toString(), p.toString(),p1p2 ,mainViewModel.getStationValue())
                 }
                 2 -> {
-                    dataResponseWithParam = otherAPIs.fpaData2(mainViewModel.fail.intValue.toString(), mainViewModel.pass.intValue.toString(),p1p2 ,mainViewModel.getStationValue())
+                    dataResponseWithParam = otherAPIs.fpaData2(f.toString(), p.toString(),p1p2 ,mainViewModel.getStationValue())
                 }
                 3 -> {
-                    dataResponseWithParam = otherAPIs.fpaData3(mainViewModel.fail.intValue.toString(),mainViewModel.pass.intValue.toString(),p1p2 ,mainViewModel.getStationValue())
+                    dataResponseWithParam = otherAPIs.fpaData3(f.toString(),p.toString(),p1p2 ,mainViewModel.getStationValue())
                 }
                 4 -> {
-                    dataResponseWithParam = otherAPIs.fpaData4(mainViewModel.fail.intValue.toString(), mainViewModel.pass.intValue.toString(),p1p2 ,mainViewModel.getStationValue())
+                    dataResponseWithParam = otherAPIs.fpaData4(f.toString(),p.toString(),p1p2 ,mainViewModel.getStationValue())
                 }
             }
 
             if(dataResponseWithParam.isSuccessful){
-                isAPISuccessfull = true
                 mainViewModel.FPACounter++
-
+                if(i==1)
+                    ++mainViewModel.pass.intValue
+                else if(i==0)
+                    ++mainViewModel.fail.intValue
 
                 showLogs("ADDWITHPARAM", mainViewModel.pass.intValue.toString() + " " + mainViewModel.fail.intValue.toString())
 
@@ -374,11 +374,6 @@ class Repository () {
             showLogs("ADDWITHPARAM Error",e.printStackTrace().toString())
         }
 
-        if(!isAPISuccessfull)
-            if(i==1)
-                mainViewModel.pass.intValue--
-            else if(i==0)
-                mainViewModel.fail.intValue--
 
     }
 
