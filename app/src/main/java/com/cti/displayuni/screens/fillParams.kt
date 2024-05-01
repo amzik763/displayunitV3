@@ -31,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -63,7 +64,6 @@ import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.showLogs
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-
 
 var fontSmall = 12.sp
 var fontMedium = 18.sp
@@ -117,7 +117,6 @@ fun SettingParams() {
 
 @Composable
 fun ReadingUI(){
-
         Row{
             Text(
                 text = "   Readings   ",
@@ -140,9 +139,7 @@ fun ReadingCircles(r: String) {
         contentDescription ="Circle1",
         colorFilter = ColorFilter.tint(lightGrey),
         modifier = Modifier.clickable {
-
             myComponents.mUiViewModel.showCustomPopup.value = true
-
         }
         /*if(r.length==0||r.isNullOrEmpty()){
             ColorFilter.tint(lightGrey)t
@@ -239,6 +236,7 @@ fun Header(){
     Column(modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight()
+        .scale(0.75f)
             ) {
 
         //First Row

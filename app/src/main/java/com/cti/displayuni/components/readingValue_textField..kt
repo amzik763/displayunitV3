@@ -42,7 +42,8 @@ fun ReadingValue(
 
     Box(
         modifier = modifier
-            .padding(start = 36.dp, top = 12.dp),
+//            .padding(start = 36.dp, top = 12.dp), uncomment later
+        .padding(start = 36.dp, top = 2.dp),
         contentAlignment = Alignment.CenterStart,
 
         ) {

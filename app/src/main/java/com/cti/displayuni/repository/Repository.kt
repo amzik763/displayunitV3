@@ -4,6 +4,7 @@ import android.util.Log
 import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.R
 import com.cti.displayuni.response.FpaData_res
+import com.cti.displayuni.response.reading_Response
 import com.cti.displayuni.utility.Actual_Param
 import com.cti.displayuni.utility.CHECKSHEET
 import com.cti.displayuni.utility.FILL_PARAMETERS
@@ -75,12 +76,10 @@ class Repository () {
 
     suspend fun getTask(station_id: String) {
         try {
-
             Log.d("abcbc: ", station_id)
             taskResponse = otherAPIs.getTask(station_id)
 
             if (taskResponse.code() == 200) {
-                //move to checksheet page
                 mainViewModel.mChecksheetData.value = taskResponse.let { it.body()?.check_sheet_datas }
                 mainViewModel.mChecksheetData.value?.forEach {
                     mainViewModel.checkSheetList.add("status")
@@ -96,7 +95,6 @@ class Repository () {
                 mainViewModel.fail.intValue = taskResponse.body()?.work_operator_data?.failed ?: -1
                 showLogs("FAIL", mainViewModel.fail.intValue.toString())
 
-
                 val dataListtemp = taskResponse.body()?.process_params_info
                 showLogs("PARAMS", dataListtemp?.size.toString())
 
@@ -108,13 +106,22 @@ class Repository () {
                     }
                 }
 
-
+                val chartParameters = mutableListOf<chart_parameter>()
                 taskResponse.body()?.process_params_info?.forEach{
                     if (it.readings_is_available){
-                        mainViewModel.dataListChart.value?.add(chart_parameter(it.parameter_name, it.parameter_no))
+                        val parameterName = it.parameter_name
+                        val parameterNo = it.parameter_no
+                        val values = MutableList(5) { " " } // Initialize values list with default values
+                        val chartParam = chart_parameter(parameterName, parameterNo, values)
+                        chartParameters.add(chartParam)
+                        showLogs("DATA LIST ADDING", it.readings_is_available.toString() + " " + it.parameter_name)
+
                     }
 
                 }
+                mainViewModel.dataListChart.value = chartParameters
+                showLogs("DATA LIST VALUES", mainViewModel.dataListChart.value.toString())
+
 
                 //SHOULD BE SHIFTED TO OTHER API
                 val p1 =  mainViewModel.dataListSetting.joinToString(separator = ",") { setting ->
@@ -141,7 +148,6 @@ class Repository () {
                     myComponents.navController.navigate(FILL_PARAMETERS)
                 else
                     myComponents.navController.navigate(CHECKSHEET)
-
             }
 
             if (taskResponse.code() == 404) {
@@ -160,13 +166,12 @@ class Repository () {
     }
 
     private fun setReadingStatus(minutes: Int) {
-
 //        val currentTime = getCurrentTime()
         var eachTime = minutes/5
         var eachPart:Int? = taskResponse.body()?.work_operator_data?.total_assigned_task?.div(5)
-
-//        val item:readingsStatusItems = readingsStatusItems(eachTime, eachPart, readingStatusEnum.notAvailable)
-//        mainViewModel.readingStatusList.add(item)
+        showLogs("TIME SET: ",eachTime.toString() + " out of " + minutes)
+//      val item:readingsStatusItems = readingsStatusItems(eachTime, eachPart, readingStatusEnum.notAvailable)
+//      mainViewModel.readingStatusList.add(item)
 
         mainViewModel.readingStatusList.add(readingsStatusItems(eachTime, eachPart, readingStatusEnum.notAvailable))
         mainViewModel.readingStatusList.add(readingsStatusItems(eachTime*2, eachPart?.times(2), readingStatusEnum.notAvailable))
@@ -180,8 +185,8 @@ class Repository () {
         mainViewModel.readingStatusList.add(eachTime*4,eachPart?.times(4),readingStatusEnum.notAvailable)
         mainViewModel.readingStatusList.add(eachTime*5,eachPart?.times(5),readingStatusEnum.notAvailable)
 */
-
     }
+
 
     private fun calculateShiftData() {
         // Assuming startShiftTime and endShiftTime are in string format in the format "HH:MM:SS"
@@ -216,7 +221,7 @@ class Repository () {
         val strHours = hours.toString()
         val strMinutes = minutes.toString()
         val strSeconds = seconds.toString()
-        setReadingStatus(minutes)
+        setReadingStatus(Integer.parseInt(mainViewModel.timeDiffer))
         // Outputting the duration
         showLogs("Shift Duration", "$strHours:$strMinutes:$strSeconds")
 
@@ -284,7 +289,6 @@ class Repository () {
                 return true
             }else{
                 showLogs("ADD DATA:","Data Not Added")
-
                 return false
             }
         } catch (e: Exception) {
@@ -386,44 +390,117 @@ class Repository () {
         }
         showLogs("READING API DATA", reading1)
 
-
-        var myReadingRespnse =
+        mainViewModel.mState.value = true
+        lateinit var myReadingResonse:Response<reading_Response>
             when(index) {
-               1-> otherAPIs.readingOne(
-                    mainViewModel.getStationValue(),
-                    mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString(),
-                    reading1
-                )
-                2-> otherAPIs.readingTwo(
-                    mainViewModel.getStationValue(),
-                    mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString(),
-                    reading1
-                )
-                3-> otherAPIs.readingThree(
-                    mainViewModel.getStationValue(),
-                    mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString(),
-                    reading1
-                )
-                4-> otherAPIs.readingFour(
-                    mainViewModel.getStationValue(),
-                    mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString(),
-                    reading1
-                )
+                0 -> {
+                    showLogs(
+                        "READING API RUN 1",
+                        mainViewModel.getStationValue() + " " +
+                                mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString() + " " +
+                                reading1
+                    )
+                    myReadingResonse = otherAPIs.readingOne(
+                        mainViewModel.getStationValue(),
+                        mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString(),
+                        reading1
+                    )
+                }
 
-                else -> otherAPIs.readingFive(
-                    mainViewModel.getStationValue(),
-                    mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString(),
-                    reading1
-                )
+                1 -> {
+                    showLogs(
+                        "READING API RUN 2",
+                        mainViewModel.getStationValue() + " " +
+                                mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString() + " " +
+                                reading1
+                    )
+                    myReadingResonse = otherAPIs.readingTwo(
+                        mainViewModel.getStationValue(),
+                        mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString(),
+                        reading1
+                    )
+                }
+
+                2 -> {
+                    showLogs(
+                        "READING API RUN 3",
+                        mainViewModel.getStationValue() + " " +
+                                mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString() + " " +
+                                reading1
+                    )
+
+                    myReadingResonse = otherAPIs.readingThree(
+                        mainViewModel.getStationValue(),
+                        mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString(),
+                        reading1
+                    )
+                }
+
+                3 -> {
+                    showLogs(
+                        "READING API RUN 4",
+                        mainViewModel.getStationValue() + " " +
+                                mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString() + " " +
+                                reading1
+                    )
+                    myReadingResonse = otherAPIs.readingFour(
+                        mainViewModel.getStationValue(),
+                        mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString(),
+                        reading1
+                    )
+                }
+
+                4 -> {
+                    showLogs(
+                        "READING API RUN 5",
+                        mainViewModel.getStationValue() + " " +
+                                mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString() + " " +
+                                reading1
+                    )
+
+
+                    myReadingResonse = otherAPIs.readingFive(
+                        mainViewModel.getStationValue(),
+                        mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString(),
+                        reading1
+                    )
+                }
             }
-        if(myReadingRespnse.isSuccessful){
-            mainViewModel.readingStatusList[index].readingStatusE = readingStatusEnum.completed
+        if(myReadingResonse.isSuccessful){
+
+            if(readingIndex==0){
+                mainViewModel.isCompleted1[index] = true
+            }else if(readingIndex == 1){
+                mainViewModel.isCompleted2[index] = true
+            }else{
+                mainViewModel.isCompleted3[index] = true
+            }
+
+            if(mainViewModel.isCompleted1[index] && mainViewModel.isCompleted2[index] && mainViewModel.isCompleted3[index])
+                mainViewModel.readingStatusList[index].readingStatusE = readingStatusEnum.completed
+
             showLogs("READING API","value added")
+            mainViewModel.isCompleted1.forEach {
+                showLogs("ISCOMPLETED 1: ", it.toString())
+            }
+            mainViewModel.isCompleted2.forEach {
+                showLogs("ISCOMPLETED 1: ", it.toString())
+            }
+            mainViewModel.isCompleted3.forEach {
+                showLogs("ISCOMPLETED 1: ", it.toString())
+            }
+            showLogs("COMPLETED VALUES","")
+            mainViewModel.mState.value = false
+
         }else{
             //showToastMessageToTryAgain
             showLogs("READING API","got error")
+            mainViewModel.mState.value = false
+
 
         }
-    }
+            }
+
+
 }
 

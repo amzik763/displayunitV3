@@ -54,12 +54,17 @@ class MainViewModel(context: Context) : ViewModel(){
 
     //  var readingStatusList = mutableListOf<readingsStatusItems>()
     val readingStatusList = mutableStateListOf<readingsStatusItems>()
+    val isCompleted1 = mutableStateListOf<Boolean>(false,false,false,false,false)
+    val isCompleted2 = mutableStateListOf<Boolean>(false,false,false,false,false)
+    val isCompleted3 = mutableStateListOf<Boolean>(false,false,false,false,false)
 
     var dataListSetting = mutableListOf<Setting_Param>()
     var dataListActual = mutableListOf<Actual_Param>()
 
     val dataListChart = MutableLiveData<MutableList<chart_parameter>>()
 //  var dataListChart = mutableListOf<chart_parameter>()
+    val mState = MutableLiveData<Boolean>()
+
 
     var floorNum by mutableStateOf("")
 
@@ -353,19 +358,7 @@ viewModelScope.launch {
         }
     }
 
-    fun updateValues(filteredValue:String,i:Int,j:Int) {
-        val dataList = dataListChart.value
-        if (dataList != null && dataList.isNotEmpty()) {
-            val chartParameter = dataList[0]
-            val updatedValues = chartParameter.values.toMutableList()
-            updatedValues[0] = filteredValue
-            val updatedChartParameter = chartParameter.copy(values = updatedValues)
-            val updatedDataList = dataList.toMutableList().apply {
-                set(0, updatedChartParameter)
-            }
-            myComponents.mainViewModel.dataListChart.value = updatedDataList
-        }
-    }
+
 }
 
 

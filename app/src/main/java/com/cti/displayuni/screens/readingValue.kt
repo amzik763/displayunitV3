@@ -25,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -48,12 +49,14 @@ import com.cti.displayuni.utility.showLogs
 @Composable
 fun ParamName(heading: String) {
     Column(
-        modifier = Modifier.padding(start = 36.dp, bottom = 10.dp)
+//        modifier = Modifier.padding(start = 36.dp, bottom = 10.dp) uncomment later
+                modifier = Modifier.padding(start = 6.dp, bottom = 2.dp)
     ) {
         Text(
             text = heading,
             style = TextStyle(
-                fontSize = 36.sp,
+//                fontSize = 36.sp, uncomment later
+                fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = mFont.nkbold
             )
@@ -67,6 +70,8 @@ fun SubmitButton(text: String, onClick: () -> Unit) {
         modifier = Modifier
             .padding(start = 38.dp, top = 16.dp)
             .size(width = 150.dp, height = 48.dp),
+//        .padding(start = 38.dp, top = 16.dp) uncomment later
+//    .size(width = 150.dp, height = 48.dp), uncomment later
         color = green,
         shape = RoundedCornerShape(corner = CornerSize(36.dp)),
         border = BorderStroke(width = 1.dp, color = green)
@@ -96,35 +101,41 @@ fun SubmitButton(text: String, onClick: () -> Unit) {
 fun CustomPopupContent(
     onCloseClicked: () -> Unit,
 ) {
+
+    val mState = myComponents.mainViewModel.mState.observeAsState(false)
+
     val dataListChart = myComponents.mainViewModel.dataListChart.observeAsState(emptyList())
 
     Column(modifier = Modifier
         .fillMaxSize()
         .background(color = Color.White)
-        .padding(top = 50.dp , bottom = 36.dp),
+//        .scale(0.75f)
+        .padding(top = 20.dp, bottom = 16.dp),
+//        .padding(top = 50.dp, bottom = 36.dp), uncomment later
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
 
-        if (myComponents.mainViewModel.dataListChart.value?.size == 1){
-            ReadingRow1st(dataListChart)
+        if(!mState.value) {
+            showLogs("mSTATE: ",mState.value.toString())
+            if (myComponents.mainViewModel.dataListChart.value?.size == 1) {
+                ReadingRow1st(dataListChart)
+            }
+
+            if (myComponents.mainViewModel.dataListChart.value?.size == 2) {
+                ReadingRow1st(dataListChart)
+
+                ReadingRow2nd(dataListChart)
+            }
+
+            if (myComponents.mainViewModel.dataListChart.value?.size == 3) {
+                ReadingRow1st(dataListChart)
+
+                ReadingRow2nd(dataListChart)
+
+                ReadingRow3rd(dataListChart)
+            }
         }
-
-        if (myComponents.mainViewModel.dataListChart.value?.size == 2){
-            ReadingRow1st(dataListChart)
-
-            ReadingRow2nd(dataListChart)
-        }
-
-        if (myComponents.mainViewModel.dataListChart.value?.size == 3){
-            ReadingRow1st(dataListChart)
-
-            ReadingRow2nd(dataListChart)
-
-            ReadingRow3rd(dataListChart)
-        }
-
-
 
         Surface(
             modifier = Modifier
@@ -196,8 +207,7 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
                         shape = RoundedCornerShape(8.dp),
 //                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
                     )
-                    if(myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.completed)
-
+                    if(!myComponents.mainViewModel.isCompleted1[0])
                         SubmitButton(text = "Submit", onClick = {
                             //runReadingAPI
                             myComponents.mainViewModel.runReadingAPI(0,reading1,0)
@@ -226,7 +236,7 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
                         shape = RoundedCornerShape(8.dp),
                     )
 
-                    if(myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.completed)
+                    if(!myComponents.mainViewModel.isCompleted1[1])
                         SubmitButton(text = "Submit", onClick = {
 
                             myComponents.mainViewModel.runReadingAPI(0, reading2, 1)
@@ -260,7 +270,7 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
                         shape = RoundedCornerShape(8.dp),
                     )
 
-                    if(myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.completed)
+                    if(!myComponents.mainViewModel.isCompleted1[2])
                         SubmitButton(text = "Submit", onClick = {
                             myComponents.mainViewModel.runReadingAPI(0, reading3, 2)
 
@@ -295,7 +305,7 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
                         shape = RoundedCornerShape(8.dp),
                     )
 
-                    if(myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.completed)
+                    if(!myComponents.mainViewModel.isCompleted1[3])
                         SubmitButton(text = "Submit", onClick = {
                             myComponents.mainViewModel.runReadingAPI(0, reading4, 3)
 
@@ -328,7 +338,7 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
                         shape = RoundedCornerShape(8.dp),
                     )
 
-                    if(myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.completed)
+                    if(!myComponents.mainViewModel.isCompleted1[4])
                         SubmitButton(text = "Submit", onClick = {
                             myComponents.mainViewModel.runReadingAPI(0, reading5, 4)
 
@@ -389,7 +399,7 @@ fun ReadingRow2nd(dataListChart: State<List<chart_parameter>>) {
 //                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
                     )
 
-                    if (myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.completed)
+                    if (!myComponents.mainViewModel.isCompleted2[0])
                         SubmitButton(text = "Submit", onClick = {
                             myComponents.mainViewModel.runReadingAPI(1, reading12, 0)
 
@@ -423,7 +433,7 @@ fun ReadingRow2nd(dataListChart: State<List<chart_parameter>>) {
                         shape = RoundedCornerShape(8.dp),
                     )
 
-                    if (myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.completed)
+                    if (!myComponents.mainViewModel.isCompleted2[1])
                         SubmitButton(text = "Submit", onClick = {
                             myComponents.mainViewModel.runReadingAPI(1, reading22, 1)
 
@@ -457,7 +467,7 @@ fun ReadingRow2nd(dataListChart: State<List<chart_parameter>>) {
                         shape = RoundedCornerShape(8.dp),
                     )
 
-                    if (myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.completed)
+                    if (!myComponents.mainViewModel.isCompleted2[2])
                         SubmitButton(text = "Submit", onClick = {
                             myComponents.mainViewModel.runReadingAPI(1, reading32, 2)
 
@@ -491,7 +501,7 @@ fun ReadingRow2nd(dataListChart: State<List<chart_parameter>>) {
                         shape = RoundedCornerShape(8.dp),
                     )
 
-                    if (myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.completed)
+                    if (!myComponents.mainViewModel.isCompleted2[3])
                         SubmitButton(text = "Submit", onClick = {
                             myComponents.mainViewModel.runReadingAPI(1, reading42, 3)
                         })
@@ -525,7 +535,7 @@ fun ReadingRow2nd(dataListChart: State<List<chart_parameter>>) {
                         shape = RoundedCornerShape(8.dp),
                     )
 
-                    if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.completed)
+                    if (!myComponents.mainViewModel.isCompleted2[4])
                         SubmitButton(text = "Submit", onClick = {
                             myComponents.mainViewModel.runReadingAPI(1, reading52, 4)
                         })
@@ -582,7 +592,7 @@ fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
 //                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
                     )
 
-                    if (myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.completed)
+                    if (!myComponents.mainViewModel.isCompleted3[0])
                         SubmitButton(text = "Submit", onClick = {
                             myComponents.mainViewModel.runReadingAPI(2, reading13, 0)
 
@@ -617,7 +627,7 @@ fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
                         shape = RoundedCornerShape(8.dp),
                     )
 
-                    if (myComponents.mainViewModel.readingStatusList[1].readingStatusE != readingStatusEnum.completed)
+                    if (!myComponents.mainViewModel.isCompleted3[1])
                         SubmitButton(text = "Submit", onClick = {
                             myComponents.mainViewModel.runReadingAPI(2, reading23, 1)
 
@@ -652,7 +662,7 @@ fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
                         shape = RoundedCornerShape(8.dp),
                     )
 
-                    if (myComponents.mainViewModel.readingStatusList[2].readingStatusE != readingStatusEnum.completed)
+                    if (!myComponents.mainViewModel.isCompleted3[2])
                         SubmitButton(text = "Submit", onClick = {
                             myComponents.mainViewModel.runReadingAPI(2, reading33, 2)
 
@@ -686,7 +696,7 @@ fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
                         ),
                         shape = RoundedCornerShape(8.dp),
                     )
-                    if (myComponents.mainViewModel.readingStatusList[3].readingStatusE != readingStatusEnum.completed)
+                    if (!myComponents.mainViewModel.isCompleted3[3])
                         SubmitButton(text = "Submit", onClick = {
                             myComponents.mainViewModel.runReadingAPI(2, reading43, 3)
 
@@ -719,7 +729,7 @@ fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
                         ),
                         shape = RoundedCornerShape(8.dp),
                     )
-                    if (myComponents.mainViewModel.readingStatusList[4].readingStatusE != readingStatusEnum.completed)
+                    if (!myComponents.mainViewModel.isCompleted3[4])
 
                         SubmitButton(text = "Submit", onClick = {
                             myComponents.mainViewModel.runReadingAPI(2, reading53, 4)
