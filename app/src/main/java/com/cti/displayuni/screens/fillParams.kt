@@ -421,7 +421,33 @@ fun Header(){
                 }
                 Spacer(modifier = Modifier.width(24.dp))
                 Button(
-                    onClick = {},
+                    onClick = {
+                        showLogs("PASS", myComponents.mainViewModel.pass.intValue.toString())
+                        showLogs("FAIL", myComponents.mainViewModel.fail.intValue.toString())
+                        showLogs("STATION VALUE", myComponents.mainViewModel.getStationValue())
+
+                        val passFail = myComponents.mainViewModel.pass.intValue + myComponents.mainViewModel.fail.intValue
+
+                        val actualParamsFilled = myComponents.mainViewModel.areActualParamsFilled(myComponents.mainViewModel.dataListActual)
+                        showLogs("Actual Param", actualParamsFilled.toString())
+
+                        val settingParamsFilled = myComponents.mainViewModel.areSettingParamsFilled(myComponents.mainViewModel.dataListSetting)
+                        showLogs("Setting Param", settingParamsFilled.toString())
+
+                        if (passFail < 2){
+                            myComponents.mainViewModel.isFPATime = true
+                            showLogs("FPA FAILED: ","FPA SHOULD BE PASS TO PROCEED")
+                            //show DIALOG BOX
+                        }else
+                            myComponents.mainViewModel.isFPATime = false
+
+
+                            myComponents.mUiViewModel.showRejectReasonDialog()
+//                            myComponents.mainViewModel.submitFailedPartInfo(0)
+
+
+
+                    },
                     shape = RoundedCornerShape(29.dp),
                     border = BorderStroke(3.dp, red),
                     colors = ButtonDefaults.buttonColors(

@@ -29,6 +29,8 @@ class UiViewModel(context: Context) : ViewModel(){
     var isSettingParamEnables = mutableStateOf(true)
 
 
+    var isRejectReasonDialogShown by mutableStateOf(false)
+        private set
 
     var clearFields = mutableIntStateOf(0)
 
@@ -49,6 +51,16 @@ class UiViewModel(context: Context) : ViewModel(){
     fun hideNetworkDialog(){
         isNetworkDialogShown = false
     }
+
+
+    fun showRejectReasonDialog() {
+        isRejectReasonDialogShown = true
+    }
+
+    fun hideRejectReasonDialog() {
+        isRejectReasonDialogShown = false
+    }
+
 
     var dialogModel: DialogModel = DialogModel("Please Enter Password","Loading...","", R.drawable.thanks)
 

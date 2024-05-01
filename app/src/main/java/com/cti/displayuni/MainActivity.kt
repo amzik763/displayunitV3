@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.dialogBox.MessageDialog
 import com.cti.displayuni.dialogBox.NetworkErrorDialog
+import com.cti.displayuni.dialogBox.RejectReasonDialog
 import com.cti.displayuni.dialogBox.SupLoginDialog
 import com.cti.displayuni.dialogBox.TaskNotApproved
 import com.cti.displayuni.navigation.Navigate
@@ -124,6 +125,19 @@ fun NetworkDialog(mUiViewModel: UiViewModel, applicationContext: Context) {
 
                 },
                 dialogModel = mUiViewModel.dialogModel,
+
+            )
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    @Composable
+    fun mRejectReasonDialog() {
+        if (mUiViewModel.isRejectReasonDialogShown) {
+            RejectReasonDialog(
+                onDismiss = {
+                    mUiViewModel.hideRejectReasonDialog()
+                }
 
             )
         }

@@ -382,17 +382,20 @@ class Repository () {
     }
 
     suspend fun runReadingAPI(readingIndex: Int, reading1: String, index: Int) {
-        showLogs("READING API DATA", mainViewModel.getStationValue())
-        mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no?.let {
-            showLogs("READING API DATA",
-                it
-            )
-        }
-        showLogs("READING API DATA", reading1)
 
-        mainViewModel.mState.value = true
-        lateinit var myReadingResonse:Response<reading_Response>
-            when(index) {
+        try {
+            showLogs("READING API DATA", mainViewModel.getStationValue())
+            mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no?.let {
+                showLogs(
+                    "READING API DATA",
+                    it
+                )
+            }
+            showLogs("READING API DATA", reading1)
+
+            mainViewModel.mState.value = true
+            lateinit var myReadingResonse: Response<reading_Response>
+            when (index) {
                 0 -> {
                     showLogs(
                         "READING API RUN 1",
@@ -458,7 +461,6 @@ class Repository () {
                                 reading1
                     )
 
-
                     myReadingResonse = otherAPIs.readingFive(
                         mainViewModel.getStationValue(),
                         mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no.toString(),
@@ -466,40 +468,50 @@ class Repository () {
                     )
                 }
             }
-        if(myReadingResonse.isSuccessful){
+            if (myReadingResonse.isSuccessful) {
 
-            if(readingIndex==0){
-                mainViewModel.isCompleted1[index] = true
-            }else if(readingIndex == 1){
-                mainViewModel.isCompleted2[index] = true
-            }else{
-                mainViewModel.isCompleted3[index] = true
-            }
+                if (readingIndex == 0) {
+                    mainViewModel.isCompleted1[index] = true
+                } else if (readingIndex == 1) {
+                    mainViewModel.isCompleted2[index] = true
+                } else {
+                    mainViewModel.isCompleted3[index] = true
+                }
 
-            if(mainViewModel.isCompleted1[index] && mainViewModel.isCompleted2[index] && mainViewModel.isCompleted3[index])
-                mainViewModel.readingStatusList[index].readingStatusE = readingStatusEnum.completed
+                if (mainViewModel.isCompleted1[index] && mainViewModel.isCompleted2[index] && mainViewModel.isCompleted3[index])
+                    mainViewModel.readingStatusList[index].readingStatusE =
+                        readingStatusEnum.completed
 
-            showLogs("READING API","value added")
-            mainViewModel.isCompleted1.forEach {
-                showLogs("ISCOMPLETED 1: ", it.toString())
+                showLogs("READING API", "value added")
+                mainViewModel.isCompleted1.forEach {
+                    showLogs("ISCOMPLETED 1: ", it.toString())
+                }
+                mainViewModel.isCompleted2.forEach {
+                    showLogs("ISCOMPLETED 1: ", it.toString())
+                }
+                mainViewModel.isCompleted3.forEach {
+                    showLogs("ISCOMPLETED 1: ", it.toString())
+                }
+                showLogs("COMPLETED VALUES", "")
+                mainViewModel.mState.value = false
+
+            } else {
+                //showToastMessageToTryAgain
+                showLogs("READING API", "got error")
+                mainViewModel.mState.value = false
+
             }
-            mainViewModel.isCompleted2.forEach {
-                showLogs("ISCOMPLETED 1: ", it.toString())
-            }
-            mainViewModel.isCompleted3.forEach {
-                showLogs("ISCOMPLETED 1: ", it.toString())
-            }
-            showLogs("COMPLETED VALUES","")
+        }catch (e:Exception){
             mainViewModel.mState.value = false
-
-        }else{
-            //showToastMessageToTryAgain
-            showLogs("READING API","got error")
-            mainViewModel.mState.value = false
-
-
+            //show toast or dialog that could not add
         }
-            }
+    }
+
+
+
+    fun addFailedData(i: Int) {
+
+    }
 
 
 }

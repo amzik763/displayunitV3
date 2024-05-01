@@ -83,6 +83,10 @@ class MainViewModel(context: Context) : ViewModel(){
     var ficID = "none"
 
     var FPACounter = 1;
+    var isFPATime = false
+
+    var mSelectedReason = ""
+    val mReasonList = MutableLiveData<List<myReason>>()
 
     private val sharedPreferences: SharedPreferences
         get() = mContext.getSharedPreferences(PREFERNCES_NAME, Context.MODE_PRIVATE)
@@ -356,6 +360,12 @@ viewModelScope.launch {
         viewModelScope.launch {
             repository.runReadingAPI(readingIndex,reading1,index)
         }
+    }
+
+
+
+    fun submitFailedPartInfo(i: Int) {
+        repository.addFailedData(i)
     }
 
 

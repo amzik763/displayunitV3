@@ -97,6 +97,19 @@ interface OtherAPIs {
         @Field("passed") passed: String,
         @Field("station_id") station_id: String
     ): Response<addData_Response>
+
+
+    @FormUrlEncoded
+    @POST("/operator/add_failed_items")
+    suspend fun addFailedData(
+        @Field("failed") failed: String,
+        @Field("passed") passed: String,
+        @Field("item_id") item_id: String,
+        @Field("part_no") part_no: String,
+        @Field("reason_id") reason_id: String
+    ): Response<addData_Response>
+
+
     @FormUrlEncoded
     @POST("/operator/add_fpa_data")
     suspend fun fpaData(
