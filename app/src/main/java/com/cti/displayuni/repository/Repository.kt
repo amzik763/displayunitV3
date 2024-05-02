@@ -322,7 +322,8 @@ class Repository () {
     }
 
     suspend fun addDataWithParams(i:Int) {
-
+        mUiViewModel.setDialogDetails("SUBMITTING FPA", "", "Hold on.....", R.drawable.thanks)
+        mUiViewModel.showMessageDialog()
         var p=mainViewModel.pass.intValue;var f=mainViewModel.fail.intValue
         if(i==1)
             ++p
@@ -362,6 +363,7 @@ class Repository () {
             }
 
             if(dataResponseWithParam.isSuccessful){
+                mUiViewModel.hideMessageDialog()
                 mainViewModel.FPACounter++
                 if(i==1)
                     ++mainViewModel.pass.intValue
@@ -374,6 +376,8 @@ class Repository () {
                 showLogs("ADDWITHPARAM","successfull")
                 showLogs("ADDWITHPARAM","${mainViewModel.FPACounter}")
             }else{
+                mUiViewModel.setDialogDetails("Failed", "Try Again", ".....", R.drawable.ic_notest)
+                mUiViewModel.showMessageDialog()
                 showLogs("ADDWITHPARAM","un-successfull")
                 showLogs("ADDWITHPARAMFAIL",dataResponseWithParam.message())
                 showLogs("ADDWITHPARAMFAIL",dataResponseWithParam.errorBody().toString())
@@ -382,6 +386,8 @@ class Repository () {
             }
         }
         catch (e:Exception){
+            mUiViewModel.setDialogDetails("Failed", "Try Again", ".....", R.drawable.ic_notest)
+            mUiViewModel.showMessageDialog()
             showLogs("ADDWITHPARAM Error",e.printStackTrace().toString())
         }
 
@@ -519,6 +525,7 @@ class Repository () {
     suspend fun addFailedData() {
         val p = mainViewModel.pass.intValue
         val f = mainViewModel.fail.intValue + 1
+
         try{
             val myFailResponse = otherAPIs.addFailedData(f.toString(), p.toString(), mainViewModel.partID,  mainViewModel.mPartName, mainViewModel.mSelectedReason)
             if(myFailResponse.isSuccessful){

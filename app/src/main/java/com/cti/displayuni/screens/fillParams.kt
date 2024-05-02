@@ -287,7 +287,7 @@ fun Header(){
                 Spacer(modifier = Modifier.width(48.dp))
                 //Shift Timings
                 Text(
-                    text = "shiftValue 10:00 AM to 04:00 PM",
+                    text = "${myComponents.mainViewModel.startShiftTime} to ${myComponents.mainViewModel.endShiftTime}",
                     style = TextStyle(
                         fontWeight = FontWeight.Bold,
                         fontSize = fontMedium,
