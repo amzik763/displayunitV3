@@ -434,19 +434,18 @@ fun Header(){
                         val settingParamsFilled = myComponents.mainViewModel.areSettingParamsFilled(myComponents.mainViewModel.dataListSetting)
                         showLogs("Setting Param", settingParamsFilled.toString())
 
-                        if (passFail < 2){
+                        if(passFail < 2){
                             myComponents.mainViewModel.isFPATime = true
                             showLogs("FPA FAILED: ","FPA SHOULD BE PASS TO PROCEED")
                             //show DIALOG BOX
-                        }else
+                            myComponents.mUiViewModel.setDialogDetails("FPA FAILED", "FPA SHOULD BE PASS TO PROCEED", "Ask Floor-In-Charge for necessary help", R.drawable.ic_notest )
+                            myComponents.mUiViewModel.showMessageDialog()
+                        }
+                        else {
                             myComponents.mainViewModel.isFPATime = false
-
-
                             myComponents.mUiViewModel.showRejectReasonDialog()
+                        }
 //                            myComponents.mainViewModel.submitFailedPartInfo(0)
-
-
-
                     },
                     shape = RoundedCornerShape(29.dp),
                     border = BorderStroke(3.dp, red),

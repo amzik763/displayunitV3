@@ -89,10 +89,11 @@ class MainActivity : ComponentActivity() {
 
         setContent {
               Navigate()
-              NetworkDialog(mUiViewModel , applicationContext )
+              NetworkDialog(mUiViewModel , applicationContext)
               MessageDia(mUiViewModel)
               NoTaskDia(mUiViewModel = mUiViewModel)
               SupLoginDia(mUiViewModel)
+              mRejectReasonDialog()
         }
     }
 
@@ -104,7 +105,6 @@ fun NetworkDialog(mUiViewModel: UiViewModel, applicationContext: Context) {
                 onConfirm = {
 
                 },
-
                 onRetry = {
                     if (networkMonitor.isNetworkAvailable(applicationContext)) {
                         mUiViewModel.hideNetworkDialog()
@@ -135,9 +135,9 @@ fun NetworkDialog(mUiViewModel: UiViewModel, applicationContext: Context) {
     fun mRejectReasonDialog() {
         if (mUiViewModel.isRejectReasonDialogShown) {
             RejectReasonDialog(
-                onDismiss = {
-                    mUiViewModel.hideRejectReasonDialog()
-                }
+//                onDismiss = {
+//                    mUiViewModel.hideRejectReasonDialog()
+//                }
 
             )
         }

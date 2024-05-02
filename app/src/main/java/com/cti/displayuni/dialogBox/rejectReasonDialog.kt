@@ -62,12 +62,12 @@ import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents.mUiViewModel
 import com.cti.displayuni.utility.myComponents.mainViewModel
 
-//@Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
+@Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RejectReasonDialog(
 //    uiviewModel: UiViewModel,
-    onDismiss: () -> Unit,
+//      onDismiss: () -> Unit,
 //    onConfirm: () -> Unit,
 //    onRetry: () -> Unit,
 //    dialogText: String,
@@ -169,7 +169,7 @@ fun RejectReasonDialog(
 //    val isConnected by rememberUpdatedState(newValue = isNetworkAvailable(context))
     Dialog(
         onDismissRequest = {
-            onDismiss()
+//            onDismiss()  to be uncommented later ,
         },
         properties = DialogProperties(
             usePlatformDefaultWidth = false
@@ -297,7 +297,7 @@ fun RejectReasonDialog(
                                     .padding(9.dp)
                                     .align(Alignment.CenterHorizontally),
                                 onClick = {
-                                    if(mainViewModel.mSelectedReason.isNullOrEmpty()){
+                                    /*if(mainViewModel.mSelectedReason.isNullOrEmpty()){
                                         mUiViewModel.setDialogDetails("Please Select Reason","Select reason, After selecting it click SUBMIT button"," ",R.drawable.ic_notest)
                                         mUiViewModel.showMessageDialog()
                                     }else{
@@ -306,7 +306,7 @@ fun RejectReasonDialog(
 //                                        mainViewModel.addWorkV2(0,a)
                                         //run api to add failed data`    0
                                         mark = ""
-                                    }
+                                    }*/
 
                                 }
                             )

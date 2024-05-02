@@ -38,9 +38,9 @@ import com.cti.displayuni.utility.myComponents
 fun ReasonDropdown() {
     var expanded by remember { mutableStateOf(false) }
     var selectedItem by remember { mutableStateOf("Select Reason") }
-//    val items = listOf("1", "2", "3", "4", "5")
-    val items by myComponents.mainViewModel.mReasonList.observeAsState()
-
+//  val items = listOf("1", "2", "3", "4", "5")
+    val mItems by myComponents.mainViewModel.mReasonList.observeAsState()
+    val items = mItems?.reasons
     val conf = LocalConfiguration.current
     val widthdp = conf.screenWidthDp.dp
     val dnsty = conf.densityDpi
@@ -54,20 +54,15 @@ fun ReasonDropdown() {
     var width = 180.dp
     var height = 48.dp
 
-
     Log.d("dwinsize: ", wd.toString())
-
     mParameters.dnsty = dnsty
     Log.d("mparam density: ", mParameters.dnsty.toString())
 
     if (wd <= 2048 && mParameters.dnsty == 320) {
 
-
         textFont1 = 12.sp
         width = 180.dp
         height = 48.dp
-
-
         Log.d("lwinsize: ", wd.toString())
 
     } else if (wd <= 2048 && mParameters.dnsty == 160) {
@@ -75,7 +70,6 @@ fun ReasonDropdown() {
         textFont1 = 16.sp
         width = 230.dp
         height = 48.dp
-
         Log.d("Desktop: ", wd.toString())
     }
 

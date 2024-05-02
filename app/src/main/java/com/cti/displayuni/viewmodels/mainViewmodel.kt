@@ -86,7 +86,7 @@ class MainViewModel(context: Context) : ViewModel(){
     var isFPATime = false
 
     var mSelectedReason = ""
-    val mReasonList = MutableLiveData<List<myReason>>()
+    val mReasonList = MutableLiveData<myReason>()
 
     private val sharedPreferences: SharedPreferences
         get() = mContext.getSharedPreferences(PREFERNCES_NAME, Context.MODE_PRIVATE)
@@ -216,11 +216,9 @@ class MainViewModel(context: Context) : ViewModel(){
     }
 
     suspend fun submitPartInfo(i:Int) {
-
-        val addData = myComponents.mainViewModel.addData(passed = myComponents.mainViewModel.pass.intValue.toString(), failed = myComponents.mainViewModel.fail.intValue.toString(), station_id = myComponents.mainViewModel.getStationValue(),i= i)
+        val addData = mainViewModel.addData(passed = mainViewModel.pass.intValue.toString(), failed = mainViewModel.fail.intValue.toString(), station_id = mainViewModel.getStationValue(),i= i)
         if(addData){
             //set pass fail and checking part values
-
             if(dataListChart.value?.size!=0) {
                 updateReadingStatus()
                 checkReadingTimeAndShowPopup()
@@ -232,7 +230,7 @@ class MainViewModel(context: Context) : ViewModel(){
     }
 
     private fun checkReadingTimeAndShowPopup() {
-viewModelScope.launch {
+      viewModelScope.launch {
         if(readingStatusList[0].readingStatusE.equals(readingStatusEnum.available)){
             showLogs("readingstatusenum"," available")
             showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
