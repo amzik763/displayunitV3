@@ -261,7 +261,7 @@ fun Header(){
                     modifier = Modifier
 //                        .fillMaxHeight()
                 ) {
-                    OrangeText(name = "Process Name: ", value = "not found")
+                    OrangeText(name = "Process Name: ", value = myComponents.mainViewModel.mProcessName)
                     Box(
                         modifier = Modifier
                             .padding(top = 4.dp)
@@ -275,7 +275,7 @@ fun Header(){
                     modifier = Modifier
 //                        .fillMaxHeight()
                 ) {
-                    OrangeText(name = "Part Name: ", value = "not found")
+                    OrangeText(name = "Part Name: ", value = myComponents.mainViewModel.mPartName)
                     Box(
                         modifier = Modifier
                             .padding(top = 4.dp)
@@ -331,7 +331,7 @@ fun Header(){
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
-            CheckingParts(checking = "Checking: ${4}", total = "Total: ${29}", pass = "Pass: ${5}", fail = "Fail: ${5}")
+            CheckingParts(checking = "Checking: ${myComponents.mainViewModel.pass.intValue + myComponents.mainViewModel.fail.intValue}", total = "Total: ${myComponents.mainViewModel.totalAssigned}", pass = "Pass: ${myComponents.mainViewModel.pass}", fail = "Fail: ${myComponents.mainViewModel.fail}")
 
 
             showLogs("DATA LIST CHART", myComponents.mainViewModel.dataListChart.value?.size.toString())
@@ -343,7 +343,8 @@ fun Header(){
             PartId(
                 text = partId,
                 label = "Part ID",
-                onTextChange = { partId = it },
+                onTextChange = { partId = it
+                               myComponents.mainViewModel.partID = it},
                 color = pureBlack,
                 maxLength = 15,
 //                    keyboardOptions = ,
@@ -352,7 +353,6 @@ fun Header(){
 
             //Pass fail buttons
             Row {
-
                 Button(
                     onClick = {
                         showLogs("PASS", myComponents.mainViewModel.pass.intValue.toString())
@@ -360,7 +360,6 @@ fun Header(){
                         showLogs("STATION VALUE", myComponents.mainViewModel.getStationValue())
 
                         val passFail = myComponents.mainViewModel.pass.intValue + myComponents.mainViewModel.fail.intValue
-
                         val actualParamsFilled = myComponents.mainViewModel.areActualParamsFilled(myComponents.mainViewModel.dataListActual)
                         showLogs("Actual Param", actualParamsFilled.toString())
 
@@ -368,7 +367,6 @@ fun Header(){
                         showLogs("Setting Param", settingParamsFilled.toString())
 
                         if (passFail < 2){
-
                             if(myComponents.mainViewModel.showZoomableImage){
                             myComponents.mUiViewModel.setDialogDetails("PENDING FPA", "", "Click on FPA button and then fill all parameter values", R.drawable.ic_notest)
                             myComponents.mUiViewModel.showMessageDialog()
@@ -443,7 +441,12 @@ fun Header(){
                         }
                         else {
                             myComponents.mainViewModel.isFPATime = false
-                            myComponents.mUiViewModel.showRejectReasonDialog()
+                            //show loading dialog
+                            if(myComponents.mainViewModel.isReasonRetrieved)
+                                myComponents.mUiViewModel.showRejectReasonDialog()
+                            else
+                                myComponents.mainViewModel.getReasonData()
+
                         }
 //                            myComponents.mainViewModel.submitFailedPartInfo(0)
                     },

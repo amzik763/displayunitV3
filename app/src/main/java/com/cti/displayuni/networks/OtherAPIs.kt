@@ -4,6 +4,7 @@ import com.cti.displayuni.response.FpaData_res
 import com.cti.displayuni.response.addData_Response
 import com.cti.displayuni.response.allDataV2
 import com.cti.displayuni.response.checksheet_Status
+import com.cti.displayuni.response.myReasons
 import com.cti.displayuni.response.notify_response
 import com.cti.displayuni.response.reading_Response
 import com.cti.displayuni.response.sup_response
@@ -108,6 +109,13 @@ interface OtherAPIs {
         @Field("part_no") part_no: String,
         @Field("reason_id") reason_id: String
     ): Response<addData_Response>
+
+
+    @FormUrlEncoded
+    @POST("/operator/get_reasons_for_items")
+    suspend fun getReasons(
+        @Field("floor_no") floor_no: String
+    ): Response<myReasons>
 
 
     @FormUrlEncoded

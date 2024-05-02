@@ -52,6 +52,9 @@ class MainViewModel(context: Context) : ViewModel(){
     var endShiftTime by mutableStateOf("")
     var timeDiffer by mutableStateOf("")
 
+    var mProcessName by mutableStateOf("")
+    var mPartName by mutableStateOf("")
+
     //  var readingStatusList = mutableListOf<readingsStatusItems>()
     val readingStatusList = mutableStateListOf<readingsStatusItems>()
     val isCompleted1 = mutableStateListOf<Boolean>(false,false,false,false,false)
@@ -72,6 +75,8 @@ class MainViewModel(context: Context) : ViewModel(){
 
     var pass = mutableIntStateOf(0)
     var fail = mutableIntStateOf(0)
+    var totalAssigned = mutableIntStateOf(0)
+
 
     var showZoomableImage  by mutableStateOf(true)
 
@@ -86,7 +91,10 @@ class MainViewModel(context: Context) : ViewModel(){
     var isFPATime = false
 
     var mSelectedReason = ""
-    val mReasonList = MutableLiveData<myReason>()
+    val mReasonList = MutableLiveData<myReasons>()
+    var isReasonRetrieved = false
+
+    var partID = ""
 
     private val sharedPreferences: SharedPreferences
         get() = mContext.getSharedPreferences(PREFERNCES_NAME, Context.MODE_PRIVATE)
@@ -362,9 +370,16 @@ class MainViewModel(context: Context) : ViewModel(){
 
 
 
-    fun submitFailedPartInfo(i: Int) {
-        repository.addFailedData(i)
+    fun submitFailedPartInfo() {
+        viewModelScope.launch {
+            repository.addFailedData()
+        }
     }
+
+    fun getReasonData() {
+        viewModelScope.launch {
+        repository.getReasonData()
+    }}
 
 
 }

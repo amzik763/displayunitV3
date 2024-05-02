@@ -4,6 +4,7 @@ import android.util.Log
 import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.R
 import com.cti.displayuni.response.FpaData_res
+import com.cti.displayuni.response.allDataV2
 import com.cti.displayuni.response.reading_Response
 import com.cti.displayuni.utility.Actual_Param
 import com.cti.displayuni.utility.CHECKSHEET
@@ -76,6 +77,8 @@ class Repository () {
 
     suspend fun getTask(station_id: String) {
         try {
+            mainViewModel.floorNum = mainViewModel.getStationValue().split(" ").take(2).joinToString(" ")
+
             Log.d("abcbc: ", station_id)
             taskResponse = otherAPIs.getTask(station_id)
 
@@ -142,6 +145,10 @@ class Repository () {
                 mainViewModel.endShiftTime = taskResponse.body()?.work_operator_data?.end_shift_time.toString()
                 showLogs("END SHIFT TIME", mainViewModel.endShiftTime)
                 calculateShiftData()
+
+                mainViewModel.mProcessName = taskResponse.body()?.work_operator_data?.process_no.toString()
+                mainViewModel.mPartName = taskResponse.body()?.work_operator_data?.part_no.toString()
+                mainViewModel.totalAssigned.intValue = taskResponse.body()?.work_operator_data?.total_assigned_task?:0
                 myComponents.navController.popBackStack()
 
                 if(taskResponse.body()?.check_sheet_fill_status == true)
@@ -509,8 +516,49 @@ class Repository () {
 
 
 
-    fun addFailedData(i: Int) {
+    suspend fun addFailedData() {
+        val p = mainViewModel.pass.intValue
+        val f = mainViewModel.fail.intValue + 1
+        try{
+            val myFailResponse = otherAPIs.addFailedData(f.toString(), p.toString(), mainViewModel.partID,  mainViewModel.mPartName, mainViewModel.mSelectedReason)
+            if(myFailResponse.isSuccessful){
+                showLogs("PROCESS FAILED INFO","Success")
+                ++mainViewModel.fail.intValue
 
+
+            }else{
+                showLogs("PROCESS FAILED INFO","Failed")
+            }
+        }catch (e:Exception){
+            showLogs("PROCESS FAILED INFO","Error")
+            e.printStackTrace()
+        }
+    }
+
+
+
+    suspend fun getReasonData() {
+        try{
+            showLogs("REASON FLOOR", mainViewModel.floorNum)
+            val myReasonResponse = otherAPIs.getReasons(mainViewModel.floorNum)
+            if (myReasonResponse.isSuccessful){
+                mUiViewModel.showRejectReasonDialog()
+                myReasonResponse.body()?.reasons?.forEach {
+                    showLogs("REASON IN LIST",it.reason + " " + it.reason_id)
+                }
+                mainViewModel.mReasonList.value = myReasonResponse.body()
+                mainViewModel.isReasonRetrieved = true
+                mainViewModel.mReasonList.value?.reasons?.forEach {
+                    showLogs("REASON IN LIST",it.reason + " " + it.reason_id)
+                }
+            }else{
+                showLogs("REASON RESPONSE: ","Failed, try again")
+
+            }
+        }catch (e:Exception){
+            showLogs("REASON RESPONSE: ","error")
+            e.printStackTrace()
+        }
     }
 
 

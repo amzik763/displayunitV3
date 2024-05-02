@@ -135,9 +135,9 @@ fun NetworkDialog(mUiViewModel: UiViewModel, applicationContext: Context) {
     fun mRejectReasonDialog() {
         if (mUiViewModel.isRejectReasonDialogShown) {
             RejectReasonDialog(
-//                onDismiss = {
-//                    mUiViewModel.hideRejectReasonDialog()
-//                }
+                onDismiss = {
+                    mUiViewModel.hideRejectReasonDialog()
+                }
 
             )
         }

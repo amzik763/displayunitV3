@@ -99,7 +99,7 @@ fun ReasonDropdown() {
                         )
                     ) },
                     onClick = {
-                        selectedItem = item.reason
+                        selectedItem = item.reason_id.toString()
                         myComponents.mainViewModel.mSelectedReason = selectedItem
                         expanded = false
                     })
