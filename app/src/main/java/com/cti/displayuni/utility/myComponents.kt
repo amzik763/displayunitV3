@@ -14,9 +14,11 @@ import com.cti.displayuni.viewmodels.UiViewModel
 import com.cti.displayuni.viewmodels.UiViewModelFactory
 import retrofit2.Response
 
-object myComponents {
 
+object myComponents {
     lateinit var authAPI: AuthAPIs
+
+
     lateinit var otherAPIs: OtherAPIs
     lateinit var repository: Repository
     lateinit var mUiViewModelFactory: UiViewModelFactory

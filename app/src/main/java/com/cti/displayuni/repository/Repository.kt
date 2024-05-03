@@ -4,7 +4,6 @@ import android.util.Log
 import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.R
 import com.cti.displayuni.response.FpaData_res
-import com.cti.displayuni.response.allDataV2
 import com.cti.displayuni.response.reading_Response
 import com.cti.displayuni.utility.Actual_Param
 import com.cti.displayuni.utility.CHECKSHEET
@@ -23,6 +22,7 @@ import com.cti.displayuni.utility.responses.checkSheetResponse
 import com.cti.displayuni.utility.responses.loginResponse
 import com.cti.displayuni.utility.responses.taskResponse
 import com.cti.displayuni.utility.showLogs
+import retrofit2.HttpException
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -145,10 +145,36 @@ class Repository () {
                 mainViewModel.endShiftTime = taskResponse.body()?.work_operator_data?.end_shift_time.toString()
                 showLogs("END SHIFT TIME", mainViewModel.endShiftTime)
                 calculateShiftData()
+                showLogs("PART NUM", taskResponse.body()?.work_operator_data?.part_no.toString())
+                showLogs("PROCESS NUM", taskResponse.body()?.work_operator_data?.process_no.toString())
 
                 mainViewModel.mProcessName = taskResponse.body()?.work_operator_data?.process_no.toString()
                 mainViewModel.mPartName = taskResponse.body()?.work_operator_data?.part_no.toString()
                 mainViewModel.totalAssigned.intValue = taskResponse.body()?.work_operator_data?.total_assigned_task?:0
+
+                try {
+                    mainViewModel.fpa1 =
+                        taskResponse.body()?.station_fpa_data?.get(0)?.start_shift_1_parameters_values
+                    mainViewModel.fpa2 =
+                        taskResponse.body()?.station_fpa_data?.get(0)?.start_shift_2_parameters_values
+                    mainViewModel.fpa3 =
+                        taskResponse.body()?.station_fpa_data?.get(0)?.end_shift_1_parameters_values
+                    mainViewModel.fpa4 =
+                        taskResponse.body()?.station_fpa_data?.get(0)?.end_shift_2_parameters_values
+                }catch (e:Exception){
+                    showLogs("ERROR","error while assigning FPA")
+                }
+
+                if(mainViewModel.fpa4.isNullOrEmpty()){
+                    mainViewModel.FPACounter = 4
+                }else if(mainViewModel.fpa3.isNullOrEmpty()){
+                    mainViewModel.FPACounter = 3
+                }else if(mainViewModel.fpa2.isNullOrEmpty()){
+                    mainViewModel.FPACounter = 2
+                }else if(mainViewModel.fpa1.isNullOrEmpty()){
+                    mainViewModel.FPACounter = 1
+                }else mainViewModel.FPACounter = 5
+
                 myComponents.navController.popBackStack()
 
                 if(taskResponse.body()?.check_sheet_fill_status == true)
@@ -157,20 +183,21 @@ class Repository () {
                     myComponents.navController.navigate(CHECKSHEET)
             }
 
-            if (taskResponse.code() == 404) {
+            else if (taskResponse.code() == 404) {
+                myComponents.mUiViewModel.hideMessageDialog()
                 mUiViewModel.setDialogDetails("Task Not Found", "Ask floor-in-charge to provide task", "", R.drawable.ic_notest)
                 mUiViewModel.showMessageDialog()
+            }else{
+                myComponents.mUiViewModel.hideMessageDialog()
+                myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+                myComponents.mUiViewModel.showMessageDialog()
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-    fun getCurrentTime(): String {
-        val currentTime = Date()
-        val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
-        return dateFormat.format(currentTime)
-    }
+
 
     private fun setReadingStatus(minutes: Int) {
 //        val currentTime = getCurrentTime()
@@ -199,12 +226,10 @@ class Repository () {
         // Assuming startShiftTime and endShiftTime are in string format in the format "HH:MM:SS"
         val startParts = mainViewModel.startShiftTime.split(":")
         val endParts = mainViewModel.endShiftTime.split(":")
-
         // Extracting hours, minutes, and seconds
         val startHours = startParts[0].toInt()
         val startMinutes = startParts[1].toInt()
         val startSeconds = startParts[2].toInt()
-
         val endHours = endParts[0].toInt()
         val endMinutes = endParts[1].toInt()
         val endSeconds = endParts[2].toInt()
@@ -213,11 +238,9 @@ class Repository () {
         val totalStartSeconds = startHours * 3600 + startMinutes * 60 + startSeconds
         val totalEndSeconds = endHours * 3600 + endMinutes * 60 + endSeconds
         val shiftDurationSeconds = totalEndSeconds - totalStartSeconds
-
         val shiftDurationMinutes = shiftDurationSeconds / 60
 
         mainViewModel.timeDiffer = shiftDurationMinutes.toString()
-
         showLogs("Shift Duration (minutes)", mainViewModel.timeDiffer)
 
         // Converting seconds to hours, minutes, and seconds
@@ -234,12 +257,9 @@ class Repository () {
 
     }
 
-    suspend fun checkSheetStatus(
-        employeeId: String,
-        ficID: String,
-        stationValue: String,
-        fillChecksheet: String
-    ) {
+    suspend fun checkSheetStatus(employeeId: String, ficID: String, stationValue: String, fillChecksheet: String) {
+        myComponents.mUiViewModel.setDialogDetails("Submitting...","checksheet is being submitted","hold on...",R.drawable.thanks)
+        mUiViewModel.showMessageDialog()
         try {
             showLogs("CHECKSHEET DATAA:",employeeId)
             showLogs("CHECKSHEET DATAA:",ficID)
@@ -250,6 +270,7 @@ class Repository () {
                 otherAPIs.checkSheetData(employeeId, ficID, fillChecksheet, stationValue)
 
             if (checkSheetResponse.code() == 200) {
+                mUiViewModel.hideMessageDialog()
                 //move to last page page
                 showLogs("CHECKSHEEEEEEt:","ADDED")
                 myComponents.navController.popBackStack()
@@ -258,28 +279,44 @@ class Repository () {
 
             }else{
                 showLogs("CHECKSHEEEEEEt:","NOT ADDED")
-
+                myComponents.mUiViewModel.hideMessageDialog()
+                myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+                myComponents.mUiViewModel.showMessageDialog()
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            myComponents.mUiViewModel.hideMessageDialog()
+            myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+            myComponents.mUiViewModel.showMessageDialog()
         }
     }
 
     suspend fun notify(stationValue: String, csp_id: String, floor_no: String) {
+        myComponents.mUiViewModel.setDialogDetails("Notifying...","","hold on...",R.drawable.thanks)
+        mUiViewModel.showMessageDialog()
         try {
             showLogs("FLN",floor_no)
             val notifyResponse= otherAPIs.operatorNotify(stationValue,csp_id,floor_no)
             if (notifyResponse.code() == 200) {
                 showLogs("NOTIFICATION:","Notification sent")
+                mUiViewModel.hideMessageDialog()
             }else{
+                myComponents.mUiViewModel.hideMessageDialog()
+                myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+                myComponents.mUiViewModel.showMessageDialog()
                 showLogs("NOTIFICATION:","Notification not sent")
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            myComponents.mUiViewModel.hideMessageDialog()
+            myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+            myComponents.mUiViewModel.showMessageDialog()
         }
     }
 
     suspend fun addData(failed: String, passed: String, station_id: String,i:Int):Boolean {
+        myComponents.mUiViewModel.setDialogDetails("Submitting...","","hold on...",R.drawable.thanks)
+        mUiViewModel.showMessageDialog()
         var p=mainViewModel.pass.intValue;var f=mainViewModel.fail.intValue
         if(i==1)
             ++p
@@ -293,13 +330,21 @@ class Repository () {
                 showLogs("ADDWITHPARAM", mainViewModel.pass.intValue.toString() + " " + mainViewModel.fail.intValue.toString())
                 showLogs("ADDWITHPARAM", p.toString() + " " + f.toString())
                 showLogs("ADD DATA:","Data Added Successfully")
+                mUiViewModel.hideMessageDialog()
+
                 return true
             }else{
+                myComponents.mUiViewModel.hideMessageDialog()
+                myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+                myComponents.mUiViewModel.showMessageDialog()
                 showLogs("ADD DATA:","Data Not Added")
                 return false
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            myComponents.mUiViewModel.hideMessageDialog()
+            myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+            myComponents.mUiViewModel.showMessageDialog()
             return false
         }
     }
@@ -317,6 +362,9 @@ class Repository () {
 
         } catch (e: Exception) {
             e.printStackTrace()
+            myComponents.mUiViewModel.hideMessageDialog()
+            myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+            myComponents.mUiViewModel.showMessageDialog()
         }
         return checkSheetStatus
     }
@@ -376,8 +424,9 @@ class Repository () {
                 showLogs("ADDWITHPARAM","successfull")
                 showLogs("ADDWITHPARAM","${mainViewModel.FPACounter}")
             }else{
-                mUiViewModel.setDialogDetails("Failed", "Try Again", ".....", R.drawable.ic_notest)
-                mUiViewModel.showMessageDialog()
+                myComponents.mUiViewModel.hideMessageDialog()
+                myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+                myComponents.mUiViewModel.showMessageDialog()
                 showLogs("ADDWITHPARAM","un-successfull")
                 showLogs("ADDWITHPARAMFAIL",dataResponseWithParam.message())
                 showLogs("ADDWITHPARAMFAIL",dataResponseWithParam.errorBody().toString())
@@ -386,8 +435,9 @@ class Repository () {
             }
         }
         catch (e:Exception){
-            mUiViewModel.setDialogDetails("Failed", "Try Again", ".....", R.drawable.ic_notest)
-            mUiViewModel.showMessageDialog()
+            myComponents.mUiViewModel.hideMessageDialog()
+            myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+            myComponents.mUiViewModel.showMessageDialog()
             showLogs("ADDWITHPARAM Error",e.printStackTrace().toString())
         }
 
@@ -395,7 +445,8 @@ class Repository () {
     }
 
     suspend fun runReadingAPI(readingIndex: Int, reading1: String, index: Int) {
-
+        myComponents.mUiViewModel.setDialogDetails("SUBMITTING","Adding reading","hold on...",R.drawable.thanks)
+        myComponents.mUiViewModel.showMessageDialog()
         try {
             showLogs("READING API DATA", mainViewModel.getStationValue())
             mainViewModel.dataListChart.value?.get(readingIndex)?.parameter_no?.let {
@@ -482,6 +533,7 @@ class Repository () {
                 }
             }
             if (myReadingResonse.isSuccessful) {
+                mUiViewModel.hideMessageDialog()
 
                 if (readingIndex == 0) {
                     mainViewModel.isCompleted1[index] = true
@@ -507,37 +559,60 @@ class Repository () {
                 }
                 showLogs("COMPLETED VALUES", "")
                 mainViewModel.mState.value = false
-
+                myComponents.mUiViewModel.hideMessageDialog()
             } else {
                 //showToastMessageToTryAgain
+                myComponents.mUiViewModel.hideMessageDialog()
+                myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+                myComponents.mUiViewModel.showMessageDialog()
                 showLogs("READING API", "got error")
                 mainViewModel.mState.value = false
 
             }
         }catch (e:Exception){
             mainViewModel.mState.value = false
+            myComponents.mUiViewModel.hideMessageDialog()
+            myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+            myComponents.mUiViewModel.showMessageDialog()
             //show toast or dialog that could not add
         }
     }
 
-
-
     suspend fun addFailedData() {
         val p = mainViewModel.pass.intValue
         val f = mainViewModel.fail.intValue + 1
-
+        myComponents.mUiViewModel.setDialogDetails("SUBMITTING","Adding failed part","hold on...",R.drawable.thanks)
+        myComponents.mUiViewModel.showMessageDialog()
         try{
-            val myFailResponse = otherAPIs.addFailedData(f.toString(), p.toString(), mainViewModel.partID,  mainViewModel.mPartName, mainViewModel.mSelectedReason)
+            val myFailResponse = otherAPIs.addFailedData(f.toString(), p.toString(), mainViewModel.partID,  mainViewModel.mPartName, mainViewModel.mSelectedReason,
+                mainViewModel.getStationValue(),
+                mainViewModel.mark)
             if(myFailResponse.isSuccessful){
                 showLogs("PROCESS FAILED INFO","Success")
                 ++mainViewModel.fail.intValue
+                mainViewModel.mark = ""
+                myComponents.mUiViewModel.hideMessageDialog()
 
 
             }else{
                 showLogs("PROCESS FAILED INFO","Failed")
+                myComponents.mUiViewModel.hideMessageDialog()
+                myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+                myComponents.mUiViewModel.showMessageDialog()
             }
+        }catch (e:HttpException){
+            showLogs("PROCESS FAILED INFO","Error http")
+            myComponents.mUiViewModel.hideMessageDialog()
+            myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+            myComponents.mUiViewModel.showMessageDialog()
+
+            e.printStackTrace()
         }catch (e:Exception){
             showLogs("PROCESS FAILED INFO","Error")
+            myComponents.mUiViewModel.hideMessageDialog()
+            myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+            myComponents.mUiViewModel.showMessageDialog()
+
             e.printStackTrace()
         }
     }
@@ -565,6 +640,9 @@ class Repository () {
         }catch (e:Exception){
             showLogs("REASON RESPONSE: ","error")
             e.printStackTrace()
+            myComponents.mUiViewModel.hideMessageDialog()
+            myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+            myComponents.mUiViewModel.showMessageDialog()
         }
     }
 

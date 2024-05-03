@@ -107,7 +107,9 @@ interface OtherAPIs {
         @Field("passed") passed: String,
         @Field("item_id") item_id: String,
         @Field("part_no") part_no: String,
-        @Field("reason_id") reason_id: String
+        @Field("reason_id") reason_id: String,
+        @Field("station_id") station_id: String,
+        @Field("remark") remark: String
     ): Response<addData_Response>
 
 

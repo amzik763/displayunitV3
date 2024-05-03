@@ -331,7 +331,7 @@ fun Header(){
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
-            CheckingParts(checking = "Checking: ${myComponents.mainViewModel.pass.intValue + myComponents.mainViewModel.fail.intValue}", total = "Total: ${myComponents.mainViewModel.totalAssigned}", pass = "Pass: ${myComponents.mainViewModel.pass}", fail = "Fail: ${myComponents.mainViewModel.fail}")
+            CheckingParts(checking = "Checking: ${myComponents.mainViewModel.pass.intValue + myComponents.mainViewModel.fail.intValue}", total = "Total: ${myComponents.mainViewModel.totalAssigned.intValue}", pass = "Pass: ${myComponents.mainViewModel.pass.intValue}", fail = "Fail: ${myComponents.mainViewModel.fail.intValue}")
 
 
             showLogs("DATA LIST CHART", myComponents.mainViewModel.dataListChart.value?.size.toString())
@@ -367,18 +367,38 @@ fun Header(){
                         showLogs("Setting Param", settingParamsFilled.toString())
 
                         if (passFail < 2){
+                            myComponents.mainViewModel.isFPATime = true
                             if(myComponents.mainViewModel.showZoomableImage){
                             myComponents.mUiViewModel.setDialogDetails("PENDING FPA", "", "Click on FPA button and then fill all parameter values", R.drawable.ic_notest)
                             myComponents.mUiViewModel.showMessageDialog()
                             showLogs("PASS FAIL", "Pass Fail sum is less then 2")
                             return@Button
                             }
-
                             else if(!actualParamsFilled || !settingParamsFilled){
                                 myComponents.mUiViewModel.setDialogDetails("Fill Values", "", "Please fill all the parameter values", R.drawable.ic_notest )
                                 myComponents.mUiViewModel.showMessageDialog()
                                 return@Button
                             }
+                        }
+
+                        if(myComponents.mainViewModel.isCurrentTimeExceedsMidTime(myComponents.mainViewModel.startShiftTime,myComponents.mainViewModel.endShiftTime)){
+                                if(myComponents.mainViewModel.fpa1.isNullOrEmpty() && myComponents.mainViewModel.fpa2.isNullOrEmpty())
+                                {   myComponents.mainViewModel.isFPATime = true
+
+                                        if(myComponents.mainViewModel.showZoomableImage){
+                                            myComponents.mUiViewModel.setDialogDetails("PENDING FPA", "", "Click on FPA button and then fill all parameter values", R.drawable.ic_notest)
+                                            myComponents.mUiViewModel.showMessageDialog()
+                                            showLogs("PASS FAIL 2", "FILL FPA")
+                                            return@Button
+                                        }
+                                        else if(!actualParamsFilled || !settingParamsFilled){
+                                            myComponents.mUiViewModel.setDialogDetails("Fill Values", "", "Please fill all the parameter values", R.drawable.ic_notest )
+                                            myComponents.mUiViewModel.showMessageDialog()
+                                            return@Button
+                                        }
+
+                                }
+
                         }
 
                         showLogs("PASS FAIL", passFail.toString())
@@ -387,7 +407,7 @@ fun Header(){
                             //API CALL
                             GlobalScope.launch {
 
-                                if(passFail<2){
+                                if(myComponents.mainViewModel.isFPATime){
                                     myComponents.mainViewModel.submitPartInfoWithParams(1)
 
                                 }else{

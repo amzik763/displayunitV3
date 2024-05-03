@@ -32,6 +32,7 @@ import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
+import com.cti.displayuni.utility.showLogs
 
 @Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
 @Composable
@@ -99,8 +100,9 @@ fun ReasonDropdown() {
                         )
                     ) },
                     onClick = {
-                        selectedItem = item.reason_id.toString()
-                        myComponents.mainViewModel.mSelectedReason = selectedItem
+                        selectedItem = item.reason.toString()
+                        showLogs("SECECTED:", item.reason + " " + item.reason_id)
+                        myComponents.mainViewModel.mSelectedReason = item.reason_id.toString()
                         expanded = false
                     })
             }

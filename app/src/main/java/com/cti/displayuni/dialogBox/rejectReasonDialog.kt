@@ -41,7 +41,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -59,6 +58,7 @@ import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mFont.nkmedium
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
+import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.myComponents.mUiViewModel
 import com.cti.displayuni.utility.myComponents.mainViewModel
 
@@ -264,7 +264,8 @@ fun RejectReasonDialog(
                             AddMark(
                                 text = mark,
                                 label = "Add Remark(Optional)",
-                                onTextChange = { mark = it},
+                                onTextChange = { mark = it
+                                               myComponents.mainViewModel.mark = it},
                                 color = pureBlack,
                                 maxLength = 20,
                                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text) ,

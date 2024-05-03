@@ -31,9 +31,14 @@ import java.util.Date
 import java.util.Locale
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import java.util.Calendar
 
 class MainViewModel(context: Context) : ViewModel(){
 
+//    @HiltViewModel
+//    class MainViewModel @Inject constructot(private val context: Context):Viewmodel{
+//
+//    }
 
     var mContext = context
 
@@ -51,6 +56,7 @@ class MainViewModel(context: Context) : ViewModel(){
     var startShiftTime by mutableStateOf("")
     var endShiftTime by mutableStateOf("")
     var timeDiffer by mutableStateOf("")
+    var timeDifferMid by mutableStateOf("")
 
     var mProcessName by mutableStateOf("")
     var mPartName by mutableStateOf("")
@@ -93,8 +99,14 @@ class MainViewModel(context: Context) : ViewModel(){
     var mSelectedReason = ""
     val mReasonList = MutableLiveData<myReasons>()
     var isReasonRetrieved = false
+    var mark = ""
 
     var partID = ""
+
+    var fpa1:String? = null
+    var fpa2:String? = null
+    var fpa3:String? = null
+    var fpa4:String? = null
 
     private val sharedPreferences: SharedPreferences
         get() = mContext.getSharedPreferences(PREFERNCES_NAME, Context.MODE_PRIVATE)
@@ -116,7 +128,7 @@ class MainViewModel(context: Context) : ViewModel(){
     }
 
     fun getToken(): String {
-        return sharedPreferences.getString(KEY_TOKEN, "") ?: ""
+        return sharedPreferences.getString(KEY_TOKEN, "")?:""
     }
 
     fun loginUser(username: String, password: String){
@@ -136,6 +148,37 @@ class MainViewModel(context: Context) : ViewModel(){
         }
     }
 
+    fun getCurrentTimeInHHMMSS(): String {
+        val currentTime = Date()
+        val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+        return dateFormat.format(currentTime)
+    }
+
+    fun isCurrentTimeExceedsMidTime(time1: String, time2: String): Boolean {
+        val currentTime = getCurrentTime()
+        // Convert time1, time2, and currentTime to milliseconds for comparison
+        val time1Millis = timeStringToMillis(time1)
+        val time2Millis = timeStringToMillis(time2)
+        val currentTimeMillis = timeStringToMillis(currentTime)
+
+        // Calculate mid-time in milliseconds
+        val midTimeMillis = (time1Millis + time2Millis) / 2
+
+        // Check if currentTime is after mid-time
+        return currentTimeMillis > midTimeMillis
+    }
+
+    fun timeStringToMillis(timeString: String): Long {
+        val parts = timeString.split(":").map { it.toInt() }
+        val currentTime = Date()
+        val calendar = Calendar.getInstance().apply {
+            time = currentTime
+            set(Calendar.HOUR_OF_DAY, parts[0])
+            set(Calendar.MINUTE, parts[1])
+            set(Calendar.SECOND, parts[2])
+        }
+        return calendar.timeInMillis
+    }
 
     fun getTask(station_id:String){
 
@@ -273,6 +316,7 @@ class MainViewModel(context: Context) : ViewModel(){
       }
     }
 
+
     private fun updateReadingStatus(){
 
         val timeDifferenceInMinutes = calculateTimeDifferenceInMinutes(startShiftTime, getCurrentTime())
@@ -281,7 +325,7 @@ class MainViewModel(context: Context) : ViewModel(){
         // Now you have the time difference in minutes, you can use it as needed
         println("Time difference in minutes: $timeDifferenceInMinutes")
         println("Time difference in minutes: $timeDifferenceOfShift")
-
+        timeDifferMid = timeDifferenceOfShift.toString()
         if(timeDifferenceInMinutes>=readingStatusList[0].readingTime && readingStatusList[0].readingStatusE != readingStatusEnum.completed){
             readingStatusList[0].readingStatusE = readingStatusEnum.available
             showLogs("READING STATUS 1",readingStatusList[0].readingStatusE.name)
