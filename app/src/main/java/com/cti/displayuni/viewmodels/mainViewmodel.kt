@@ -37,7 +37,6 @@ class MainViewModel(context: Context) : ViewModel(){
 
 //    @HiltViewModel
 //    class MainViewModel @Inject constructot(private val context: Context):Viewmodel{
-//
 //    }
 
     var mContext = context
@@ -168,6 +167,19 @@ class MainViewModel(context: Context) : ViewModel(){
         return currentTimeMillis > midTimeMillis
     }
 
+
+    fun isShiftOver(time1: String): Boolean {
+        val currentTime = getCurrentTime()
+        // Convert time1, time2, and currentTime to milliseconds for comparison
+        val time1Millis = timeStringToMillis(time1)
+        val currentTimeMillis = timeStringToMillis(currentTime)
+
+        // Calculate mid-time in milliseconds
+
+        // Check if currentTime is after mid-time
+        return currentTimeMillis > time1Millis
+    }
+
     fun timeStringToMillis(timeString: String): Long {
         val parts = timeString.split(":").map { it.toInt() }
         val currentTime = Date()
@@ -267,7 +279,7 @@ class MainViewModel(context: Context) : ViewModel(){
     }
 
     suspend fun submitPartInfo(i:Int) {
-        val addData = mainViewModel.addData(passed = mainViewModel.pass.intValue.toString(), failed = mainViewModel.fail.intValue.toString(), station_id = mainViewModel.getStationValue(),i= i)
+        val addData = mainViewModel.addData(mainViewModel.fail.intValue.toString(), mainViewModel.pass.intValue.toString(), station_id = mainViewModel.getStationValue(),i= i)
         if(addData){
             //set pass fail and checking part values
             if(dataListChart.value?.size!=0) {

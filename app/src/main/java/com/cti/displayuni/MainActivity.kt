@@ -28,6 +28,7 @@ import com.cti.displayuni.dialogBox.NetworkErrorDialog
 import com.cti.displayuni.dialogBox.RejectReasonDialog
 import com.cti.displayuni.dialogBox.SupLoginDialog
 import com.cti.displayuni.dialogBox.TaskNotApproved
+import com.cti.displayuni.dialogBox.ThanksDialog
 import com.cti.displayuni.navigation.Navigate
 import com.cti.displayuni.repository.Repository
 import com.cti.displayuni.ui.theme.blue
@@ -95,6 +96,7 @@ class MainActivity : ComponentActivity() {
               NoTaskDia(mUiViewModel = mUiViewModel)
               SupLoginDia(mUiViewModel)
               mRejectReasonDialog()
+              mThanksDialog()
         }
     }
 
@@ -117,6 +119,17 @@ fun NetworkDialog(mUiViewModel: UiViewModel, applicationContext: Context) {
         }
     }
 
+
+    @Composable
+    fun mThanksDialog() {
+        if (mUiViewModel.isThanksDialogShown) {
+            ThanksDialog(
+                onDismiss = {
+                    mUiViewModel.hideThanksDialog()
+                },
+            )
+        }
+    }
     @Composable
     fun MessageDia(mUiViewModel: UiViewModel) {
         if (mUiViewModel.isMessageDialogShown) {

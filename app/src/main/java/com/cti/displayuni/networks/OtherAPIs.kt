@@ -145,7 +145,7 @@ interface OtherAPIs {
     suspend fun fpaData3(
         @Field("failed") failed: String,
         @Field("passed") passed: String,
-        @Field("start_shift_3_parameters_values") start_shift_3_parameters_values: String,
+        @Field("end_shift_1_parameters_values") end_shift_1_parameters_values: String,
         @Field("station_id") station_id: String
     ): Response<FpaData_res>
 
@@ -154,7 +154,7 @@ interface OtherAPIs {
     suspend fun fpaData4(
         @Field("failed") failed: String,
         @Field("passed") passed: String,
-        @Field("start_shift_4_parameters_values") start_shift_4_parameters_values: String,
+        @Field("end_shift_2_parameters_values") end_shift_2_parameters_values: String,
         @Field("station_id") station_id: String
     ): Response<FpaData_res>
 

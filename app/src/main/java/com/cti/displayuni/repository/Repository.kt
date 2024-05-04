@@ -135,22 +135,27 @@ class Repository () {
                     "${actual.param_name} ::: ${actual.param_value}"
                 }
                 showLogs("TASK P2: ",p2)
-
-
                 showLogs("SHIFT TIME", "mainViewModel.startShiftTime")
-
                 mainViewModel.startShiftTime = taskResponse.body()?.work_operator_data?.start_shift_time .toString()
                 showLogs("START SHIFT TIME", mainViewModel.startShiftTime)
-
                 mainViewModel.endShiftTime = taskResponse.body()?.work_operator_data?.end_shift_time.toString()
                 showLogs("END SHIFT TIME", mainViewModel.endShiftTime)
                 calculateShiftData()
                 showLogs("PART NUM", taskResponse.body()?.work_operator_data?.part_no.toString())
                 showLogs("PROCESS NUM", taskResponse.body()?.work_operator_data?.process_no.toString())
-
                 mainViewModel.mProcessName = taskResponse.body()?.work_operator_data?.process_no.toString()
                 mainViewModel.mPartName = taskResponse.body()?.work_operator_data?.part_no.toString()
                 mainViewModel.totalAssigned.intValue = taskResponse.body()?.work_operator_data?.total_assigned_task?:0
+
+                if(mainViewModel.isShiftOver(mainViewModel.endShiftTime)){
+                    mUiViewModel.showThanksDialog()
+                    return
+                }
+
+                if(mainViewModel.pass.intValue + mainViewModel.fail.intValue >= mainViewModel.totalAssigned.intValue){
+                    mUiViewModel.showThanksDialog()
+                    return
+                }
 
                 try {
                     mainViewModel.fpa1 =
@@ -164,17 +169,33 @@ class Repository () {
                 }catch (e:Exception){
                     showLogs("ERROR","error while assigning FPA")
                 }
+                showLogs("FPA1",mainViewModel.fpa1.toString())
+                showLogs("FPA2",mainViewModel.fpa2.toString())
+                showLogs("FPA3",mainViewModel.fpa3.toString())
+                showLogs("FPA4",mainViewModel.fpa4.toString())
 
                 if(mainViewModel.fpa4.isNullOrEmpty()){
                     mainViewModel.FPACounter = 4
-                }else if(mainViewModel.fpa3.isNullOrEmpty()){
-                    mainViewModel.FPACounter = 3
-                }else if(mainViewModel.fpa2.isNullOrEmpty()){
-                    mainViewModel.FPACounter = 2
-                }else if(mainViewModel.fpa1.isNullOrEmpty()){
-                    mainViewModel.FPACounter = 1
-                }else mainViewModel.FPACounter = 5
+                    showLogs("FPA44",mainViewModel.fpa4.toString())
 
+                }
+                if(mainViewModel.fpa3.isNullOrEmpty()){
+                    mainViewModel.FPACounter = 3
+                    showLogs("FPA33",mainViewModel.fpa3.toString())
+
+                }
+                if(mainViewModel.fpa2.isNullOrEmpty()){
+                    mainViewModel.FPACounter = 2
+                    showLogs("FPA22",mainViewModel.fpa2.toString())
+
+                }
+                if(mainViewModel.fpa1.isNullOrEmpty()){
+                    mainViewModel.FPACounter = 1
+                    showLogs("FPA11",mainViewModel.fpa1.toString())
+
+                }
+
+                showLogs("FPA VAL: ", mainViewModel.FPACounter.toString())
                 myComponents.navController.popBackStack()
 
                 if(taskResponse.body()?.check_sheet_fill_status == true)
@@ -323,7 +344,7 @@ class Repository () {
         else if(i==0)
             ++f
         try {
-            val addDataResponse= otherAPIs.addData(p.toString(),f.toString(),station_id)
+            val addDataResponse= otherAPIs.addData(f.toString(),p.toString(),station_id)
             if (addDataResponse.code() == 200) {
                if(i==1) mainViewModel.pass.intValue++
                 else if(i==0) mainViewModel.fail.intValue++
@@ -372,29 +393,32 @@ class Repository () {
     suspend fun addDataWithParams(i:Int) {
         mUiViewModel.setDialogDetails("SUBMITTING FPA", "", "Hold on.....", R.drawable.thanks)
         mUiViewModel.showMessageDialog()
-        var p=mainViewModel.pass.intValue;var f=mainViewModel.fail.intValue
+        var p=mainViewModel.pass.intValue
+        var f=mainViewModel.fail.intValue
         if(i==1)
             ++p
         else if(i==0)
             ++f
         //SHOULD BE SHIFTED TO OTHER API
-        val p1 =  mainViewModel.dataListSetting.joinToString(separator = ",") { setting ->
+        val p1 =  mainViewModel.dataListSetting.joinToString(separator = ","){ setting ->
             "${setting.param_name} ::: ${setting.param_value}"
         }
         showLogs("TASK P1: ",p1)
-        val p2 =  mainViewModel.dataListActual.joinToString(separator = ",") { actual ->
+        val p2 =  mainViewModel.dataListActual.joinToString(separator = ","){ actual ->
             "${actual.param_name} ::: ${actual.param_value}"
         }
+
         showLogs("TASK P2: ",p2)
-
         val p1p2 = "$p1, $p2".trim(',')
-
         showLogs("Combined String: ", p1p2)
         showLogs("Station ID: ", mainViewModel.getStationValue())
 //        showLogs("PASS: ", mainViewModel.pass.intValue.toString())
 //        showLogs("FAIL: ",  mainViewModel.fail.intValue.toString())
         lateinit var dataResponseWithParam:Response<FpaData_res>
         try{
+            showLogs("FCENTER", mainViewModel.FPACounter.toString())
+            showLogs("PASS FAIL", p.toString() + " " + f.toString())
+            showLogs("PASS FAIL Viewmodel","${ mainViewModel.pass.intValue} "+ " " +  mainViewModel.fail.intValue)
             when(mainViewModel.FPACounter){
                 1 -> {
                     dataResponseWithParam = otherAPIs.fpaData(f.toString(), p.toString(),p1p2 ,mainViewModel.getStationValue())
@@ -411,6 +435,7 @@ class Repository () {
             }
 
             if(dataResponseWithParam.isSuccessful){
+                mainViewModel.isFPATime = false
                 mUiViewModel.hideMessageDialog()
                 mainViewModel.FPACounter++
                 if(i==1)
@@ -424,9 +449,11 @@ class Repository () {
                 showLogs("ADDWITHPARAM","successfull")
                 showLogs("ADDWITHPARAM","${mainViewModel.FPACounter}")
             }else{
-                myComponents.mUiViewModel.hideMessageDialog()
-                myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
-                myComponents.mUiViewModel.showMessageDialog()
+                mainViewModel.isFPATime = false
+
+                mUiViewModel.hideMessageDialog()
+                mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+                mUiViewModel.showMessageDialog()
                 showLogs("ADDWITHPARAM","un-successfull")
                 showLogs("ADDWITHPARAMFAIL",dataResponseWithParam.message())
                 showLogs("ADDWITHPARAMFAIL",dataResponseWithParam.errorBody().toString())
@@ -435,9 +462,10 @@ class Repository () {
             }
         }
         catch (e:Exception){
-            myComponents.mUiViewModel.hideMessageDialog()
-            myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
-            myComponents.mUiViewModel.showMessageDialog()
+            mainViewModel.isFPATime = false
+            mUiViewModel.hideMessageDialog()
+            mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+            mUiViewModel.showMessageDialog()
             showLogs("ADDWITHPARAM Error",e.printStackTrace().toString())
         }
 
@@ -581,8 +609,8 @@ class Repository () {
     suspend fun addFailedData() {
         val p = mainViewModel.pass.intValue
         val f = mainViewModel.fail.intValue + 1
-        myComponents.mUiViewModel.setDialogDetails("SUBMITTING","Adding failed part","hold on...",R.drawable.thanks)
-        myComponents.mUiViewModel.showMessageDialog()
+        mUiViewModel.setDialogDetails("SUBMITTING","Adding failed part","hold on...",R.drawable.thanks)
+        mUiViewModel.showMessageDialog()
         try{
             val myFailResponse = otherAPIs.addFailedData(f.toString(), p.toString(), mainViewModel.partID,  mainViewModel.mPartName, mainViewModel.mSelectedReason,
                 mainViewModel.getStationValue(),
@@ -591,28 +619,25 @@ class Repository () {
                 showLogs("PROCESS FAILED INFO","Success")
                 ++mainViewModel.fail.intValue
                 mainViewModel.mark = ""
-                myComponents.mUiViewModel.hideMessageDialog()
-
-
+                mUiViewModel.hideMessageDialog()
             }else{
                 showLogs("PROCESS FAILED INFO","Failed")
-                myComponents.mUiViewModel.hideMessageDialog()
-                myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
-                myComponents.mUiViewModel.showMessageDialog()
+                mUiViewModel.hideMessageDialog()
+                mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+                mUiViewModel.showMessageDialog()
             }
         }catch (e:HttpException){
             showLogs("PROCESS FAILED INFO","Error http")
-            myComponents.mUiViewModel.hideMessageDialog()
-            myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
-            myComponents.mUiViewModel.showMessageDialog()
+            mUiViewModel.hideMessageDialog()
+            mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+            mUiViewModel.showMessageDialog()
 
             e.printStackTrace()
         }catch (e:Exception){
             showLogs("PROCESS FAILED INFO","Error")
-            myComponents.mUiViewModel.hideMessageDialog()
-            myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
-            myComponents.mUiViewModel.showMessageDialog()
-
+            mUiViewModel.hideMessageDialog()
+            mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+            mUiViewModel.showMessageDialog()
             e.printStackTrace()
         }
     }

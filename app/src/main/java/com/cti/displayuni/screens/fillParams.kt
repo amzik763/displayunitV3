@@ -360,6 +360,16 @@ fun Header(){
                         showLogs("STATION VALUE", myComponents.mainViewModel.getStationValue())
 
                         val passFail = myComponents.mainViewModel.pass.intValue + myComponents.mainViewModel.fail.intValue
+                        if(passFail >= myComponents.mainViewModel.totalAssigned.intValue){
+                            myComponents.mUiViewModel.showThanksDialog()
+                            return@Button
+                        }
+
+                        if(myComponents.mainViewModel.isShiftOver(myComponents.mainViewModel.endShiftTime)){
+                            myComponents.mUiViewModel.showThanksDialog()
+                            return@Button
+                        }
+
                         val actualParamsFilled = myComponents.mainViewModel.areActualParamsFilled(myComponents.mainViewModel.dataListActual)
                         showLogs("Actual Param", actualParamsFilled.toString())
 
@@ -382,7 +392,7 @@ fun Header(){
                         }
 
                         if(myComponents.mainViewModel.isCurrentTimeExceedsMidTime(myComponents.mainViewModel.startShiftTime,myComponents.mainViewModel.endShiftTime)){
-                                if(myComponents.mainViewModel.fpa1.isNullOrEmpty() && myComponents.mainViewModel.fpa2.isNullOrEmpty())
+                                if(myComponents.mainViewModel.fpa3.isNullOrEmpty() || myComponents.mainViewModel.fpa4.isNullOrEmpty())
                                 {   myComponents.mainViewModel.isFPATime = true
 
                                         if(myComponents.mainViewModel.showZoomableImage){
@@ -415,7 +425,6 @@ fun Header(){
                                 }
                             }
 //                            return@Button
-
                         } else {
                             //showdialogbox that process is not eligible for pass
                         }
@@ -458,6 +467,17 @@ fun Header(){
                             //show DIALOG BOX
                             myComponents.mUiViewModel.setDialogDetails("FPA FAILED", "FPA SHOULD BE PASS TO PROCEED", "Ask Floor-In-Charge for necessary help", R.drawable.ic_notest )
                             myComponents.mUiViewModel.showMessageDialog()
+                        }else if(myComponents.mainViewModel.isCurrentTimeExceedsMidTime(myComponents.mainViewModel.startShiftTime,myComponents.mainViewModel.endShiftTime)){
+                            if(myComponents.mainViewModel.fpa3.isNullOrEmpty() || myComponents.mainViewModel.fpa4.isNullOrEmpty())
+                            {   myComponents.mainViewModel.isFPATime = true
+
+                                myComponents.mainViewModel.isFPATime = true
+                                showLogs("FPA FAILED: ","FPA SHOULD BE PASS TO PROCEED")
+                                //show DIALOG BOX
+                                myComponents.mUiViewModel.setDialogDetails("FPA FAILED", "FPA SHOULD BE PASS TO PROCEED", "Ask Floor-In-Charge for necessary help", R.drawable.ic_notest )
+                                myComponents.mUiViewModel.showMessageDialog()
+
+                            }
                         }
                         else {
                             myComponents.mainViewModel.isFPATime = false
@@ -466,9 +486,7 @@ fun Header(){
                                 myComponents.mUiViewModel.showRejectReasonDialog()
                             else
                                 myComponents.mainViewModel.getReasonData()
-
                         }
-//                            myComponents.mainViewModel.submitFailedPartInfo(0)
                     },
                     shape = RoundedCornerShape(29.dp),
                     border = BorderStroke(3.dp, red),
@@ -486,8 +504,6 @@ fun Header(){
                 Spacer(modifier = Modifier.width(24.dp))
             }
         }
-
-
         if (myComponents.mainViewModel.showZoomableImage) {
             ZoomableImage()
         }
@@ -498,7 +514,6 @@ fun Header(){
                     .fillMaxWidth()
                     .padding(top = paddingMedium, bottom = paddingMedium)
             ) {
-
                 Text(
                     text = "First Part Approval",
                     textAlign = TextAlign.Center,
@@ -508,11 +523,9 @@ fun Header(){
                     ),
                     modifier = Modifier.fillMaxWidth(1f)
                 )
-
                 Row(modifier = Modifier.padding(24.dp)) {
                     //1.actual param list
                     ActualParams()
-
                     Spacer(modifier = Modifier.width(36.dp))
                     //2.settings param list
                     SettingParams()
@@ -532,7 +545,6 @@ fun ZoomableImage(){
         "https://imageio.forbes.com/specials-images/imageserve/5f962984fe3282ac81f68758/The-Aston-Martin-DBS-Superleggera---/960x0.jpg?format=jpg&width=1440",
         "https://wallpapers.com/images/featured/really-cool-cars-pictures-7gub7gjfes26vk0c.jpg"
     )
-
 
     var currentIndex by remember { mutableStateOf(0) }
 

@@ -78,6 +78,9 @@ class UiViewModel(context: Context) : ViewModel(){
         isMessageDialogShown = false
     }
 
+    var isThanksDialogShown by mutableStateOf(false)
+        private set
+
     var isTaskNotApprovedShown by mutableStateOf(false)
         private set
     fun showTaskNotApprovedDialog() {
@@ -87,6 +90,15 @@ class UiViewModel(context: Context) : ViewModel(){
     fun hideTaskNotApprovedDialog() {
         isTaskNotApprovedShown = false
     }
+
+    fun showThanksDialog() {
+        isThanksDialogShown = true
+    }
+
+    fun hideThanksDialog() {
+        isThanksDialogShown = false
+    }
+
 
     var isLoginSupShown by mutableStateOf(false)
         private set
