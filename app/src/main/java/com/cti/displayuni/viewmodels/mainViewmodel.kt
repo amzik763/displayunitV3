@@ -73,18 +73,14 @@ class MainViewModel(context: Context) : ViewModel(){
 //  var dataListChart = mutableListOf<chart_parameter>()
     val mState = MutableLiveData<Boolean>()
 
-
     var floorNum by mutableStateOf("")
-
     var errorMsg by mutableStateOf("")
 
     var pass = mutableIntStateOf(0)
     var fail = mutableIntStateOf(0)
     var totalAssigned = mutableIntStateOf(0)
 
-
     var showZoomableImage  by mutableStateOf(true)
-
     var tempParamID by mutableStateOf("")
 
     val checkSheetList = mutableListOf<String>()
@@ -130,18 +126,20 @@ class MainViewModel(context: Context) : ViewModel(){
         return sharedPreferences.getString(KEY_TOKEN, "")?:""
     }
 
-    fun loginUser(username: String, password: String){
 
+    fun loginUser(username: String, password: String){
         if (username.isBlank()){
             mUiViewModel.setDialogDetails("Please Enter Username", "Please ask administrator for your username", "", R.drawable.thanks)
             mUiViewModel.showMessageDialog()
             return
         }
+
         else if (password.isBlank()){
             mUiViewModel.setDialogDetails("Please Enter Password", "Please ask administrator for your password", "", R.drawable.thanks)
             mUiViewModel.showMessageDialog()
             return
         }
+
         viewModelScope.launch {
             repository.loginUser(username,password)
         }
@@ -159,23 +157,18 @@ class MainViewModel(context: Context) : ViewModel(){
         val time1Millis = timeStringToMillis(time1)
         val time2Millis = timeStringToMillis(time2)
         val currentTimeMillis = timeStringToMillis(currentTime)
-
         // Calculate mid-time in milliseconds
         val midTimeMillis = (time1Millis + time2Millis) / 2
-
         // Check if currentTime is after mid-time
         return currentTimeMillis > midTimeMillis
     }
-
 
     fun isShiftOver(time1: String): Boolean {
         val currentTime = getCurrentTime()
         // Convert time1, time2, and currentTime to milliseconds for comparison
         val time1Millis = timeStringToMillis(time1)
         val currentTimeMillis = timeStringToMillis(currentTime)
-
         // Calculate mid-time in milliseconds
-
         // Check if currentTime is after mid-time
         return currentTimeMillis > time1Millis
     }
@@ -193,7 +186,6 @@ class MainViewModel(context: Context) : ViewModel(){
     }
 
     fun getTask(station_id:String){
-
         viewModelScope.launch {
             repository.getTask(station_id)
         }
@@ -204,6 +196,7 @@ class MainViewModel(context: Context) : ViewModel(){
             repository.notify(stationValue, csp_id, floor_no)
         }
     }
+
     fun addChecksheetData(){
         viewModelScope.launch {
             showLogs("CHECKSHEET API: ",employeeId)
@@ -215,7 +208,7 @@ class MainViewModel(context: Context) : ViewModel(){
     }
 
     fun checkItemsInList() {
-        val checkSheetList = myComponents.mainViewModel.checkSheetList
+        val checkSheetList =  mainViewModel.checkSheetList
         for (item in checkSheetList) {
             if (item == "SUP_OK") {
                 showLogs("DIALOG","SHOW DIALOG")
@@ -223,7 +216,7 @@ class MainViewModel(context: Context) : ViewModel(){
                 return
             }
         }
-        myComponents.mainViewModel.addChecksheetData()
+        mainViewModel.addChecksheetData()
         showLogs("DIALOG","HIDE DIALOG")
     }
 

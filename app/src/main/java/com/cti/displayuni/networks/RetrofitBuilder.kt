@@ -53,7 +53,7 @@ object RetrofitBuilder {
 
     // OLD BASE URL FOR PRODUCTION
     // private const val BASE_URL = "http://10.0.3.101:5000"
-    private const val BASE_URL = "http://192.168.1.17:5000"
+    private const val BASE_URL = "http://192.168.1.3:5000"
 
     // Define your logging interceptor
     private val loggingInterceptor = HttpLoggingInterceptor().apply {

@@ -236,7 +236,7 @@ fun Header(){
     Column(modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight()
-        .scale(0.75f)
+//        .scale(0.75f)
             ) {
 
         //First Row

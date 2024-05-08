@@ -34,7 +34,6 @@ class Repository () {
         Log.d("Repository:", "Created")
     }
 
-
     suspend fun loginUser(username: String, password: String) {
         try {
             loginResponse = authAPI.login(username, password)
@@ -157,7 +156,7 @@ class Repository () {
                     return
                 }
 
-                try {
+                try{
                     mainViewModel.fpa1 =
                         taskResponse.body()?.station_fpa_data?.get(0)?.start_shift_1_parameters_values
                     mainViewModel.fpa2 =
@@ -169,10 +168,49 @@ class Repository () {
                 }catch (e:Exception){
                     showLogs("ERROR","error while assigning FPA")
                 }
+
                 showLogs("FPA1",mainViewModel.fpa1.toString())
                 showLogs("FPA2",mainViewModel.fpa2.toString())
                 showLogs("FPA3",mainViewModel.fpa3.toString())
                 showLogs("FPA4",mainViewModel.fpa4.toString())
+
+                showLogs("RDATA", taskResponse.body()?.station_reading_data?.reading_1.toString())
+                showLogs("RDATA", taskResponse.body()?.station_reading_data?.reading_2.toString())
+                showLogs("RDATA", taskResponse.body()?.station_reading_data?.reading_3.toString())
+                showLogs("RDATA", taskResponse.body()?.station_reading_data?.reading_4.toString())
+                showLogs("RDATA", taskResponse.body()?.station_reading_data?.reading_5.toString())
+
+
+                if(taskResponse.body()?.station_reading_data?.reading_1.isNullOrEmpty()){
+
+                }else{
+                    mainViewModel.readingStatusList[0].readingStatusE = readingStatusEnum.completed
+                }
+
+                if(taskResponse.body()?.station_reading_data?.reading_2.isNullOrEmpty()){
+
+                }else{
+                    mainViewModel.readingStatusList[1].readingStatusE = readingStatusEnum.completed
+                }
+
+                if(taskResponse.body()?.station_reading_data?.reading_3.isNullOrEmpty()){
+
+                }else{
+                    mainViewModel.readingStatusList[2].readingStatusE = readingStatusEnum.completed
+                }
+
+                if(taskResponse.body()?.station_reading_data?.reading_4.isNullOrEmpty()){
+
+                }else{
+                    mainViewModel.readingStatusList[3].readingStatusE = readingStatusEnum.completed
+                }
+
+                if(taskResponse.body()?.station_reading_data?.reading_5.isNullOrEmpty()){
+
+                }else{
+                    mainViewModel.readingStatusList[4].readingStatusE = readingStatusEnum.completed
+                }
+
 
                 if(mainViewModel.fpa4.isNullOrEmpty()){
                     mainViewModel.FPACounter = 4
@@ -352,6 +390,7 @@ class Repository () {
                 showLogs("ADDWITHPARAM", p.toString() + " " + f.toString())
                 showLogs("ADD DATA:","Data Added Successfully")
                 mUiViewModel.hideMessageDialog()
+                myComponents.mUiViewModel.clearFields.intValue++
 
                 return true
             }else{
@@ -448,6 +487,8 @@ class Repository () {
                 //show toast successful
                 showLogs("ADDWITHPARAM","successfull")
                 showLogs("ADDWITHPARAM","${mainViewModel.FPACounter}")
+                myComponents.mUiViewModel.clearFields.intValue++
+
             }else{
                 mainViewModel.isFPATime = false
 
@@ -615,30 +656,35 @@ class Repository () {
             val myFailResponse = otherAPIs.addFailedData(f.toString(), p.toString(), mainViewModel.partID,  mainViewModel.mPartName, mainViewModel.mSelectedReason,
                 mainViewModel.getStationValue(),
                 mainViewModel.mark)
+
             if(myFailResponse.isSuccessful){
                 showLogs("PROCESS FAILED INFO","Success")
                 ++mainViewModel.fail.intValue
                 mainViewModel.mark = ""
                 mUiViewModel.hideMessageDialog()
+                mainViewModel.mSelectedReason = ""
+
             }else{
                 showLogs("PROCESS FAILED INFO","Failed")
                 mUiViewModel.hideMessageDialog()
                 mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
                 mUiViewModel.showMessageDialog()
+
             }
         }catch (e:HttpException){
             showLogs("PROCESS FAILED INFO","Error http")
             mUiViewModel.hideMessageDialog()
             mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
             mUiViewModel.showMessageDialog()
-
             e.printStackTrace()
+
         }catch (e:Exception){
             showLogs("PROCESS FAILED INFO","Error")
             mUiViewModel.hideMessageDialog()
             mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
             mUiViewModel.showMessageDialog()
             e.printStackTrace()
+
         }
     }
 
