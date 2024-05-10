@@ -390,8 +390,10 @@ fun Header(){
                                 return@Button
                             }
                         }
+                            if (myComponents.mainViewModel.FPACounter==5){
 
-                        if(myComponents.mainViewModel.isCurrentTimeExceedsMidTime(myComponents.mainViewModel.startShiftTime,myComponents.mainViewModel.endShiftTime)){
+                            }
+                        else if(myComponents.mainViewModel.isCurrentTimeExceedsMidTime(myComponents.mainViewModel.startShiftTime,myComponents.mainViewModel.endShiftTime)){
                                 if(myComponents.mainViewModel.fpa3.isNullOrEmpty() || myComponents.mainViewModel.fpa4.isNullOrEmpty())
                                 {   myComponents.mainViewModel.isFPATime = true
 
@@ -404,11 +406,13 @@ fun Header(){
                                         else if(!actualParamsFilled || !settingParamsFilled){
                                             myComponents.mUiViewModel.setDialogDetails("Fill Values", "", "Please fill all the parameter values", R.drawable.ic_notest )
                                             myComponents.mUiViewModel.showMessageDialog()
+                                            showLogs("PASS FAIL 222", "FILL FPA")
+
                                             return@Button
                                         }
-
+                                }else{
+                                    myComponents.mainViewModel.isFPATime = false
                                 }
-
                         }
 
                         showLogs("PASS FAIL", passFail.toString())
@@ -468,7 +472,25 @@ fun Header(){
                             myComponents.mUiViewModel.setDialogDetails("FPA FAILED", "FPA SHOULD BE PASS TO PROCEED", "Ask Floor-In-Charge for necessary help", R.drawable.ic_notest )
                             myComponents.mUiViewModel.showMessageDialog()
                         }else if(myComponents.mainViewModel.isCurrentTimeExceedsMidTime(myComponents.mainViewModel.startShiftTime,myComponents.mainViewModel.endShiftTime)){
-                            if(myComponents.mainViewModel.fpa3.isNullOrEmpty() || myComponents.mainViewModel.fpa4.isNullOrEmpty())
+                            showLogs("FAILED: ","time exceed")
+
+                            if(myComponents.mainViewModel.FPACounter ==5){
+                                showLogs("FAILED: ","counter 5")
+
+                                myComponents.mainViewModel.isFPATime = false
+                                //show loading dialog
+                                if(myComponents.mainViewModel.isReasonRetrieved) {
+                                    showLogs("FAILED: ","reason retrieved")
+
+                                    myComponents.mUiViewModel.showRejectReasonDialog()
+                                }
+                                else{
+                                    showLogs("FAILED: ","getting reason")
+                                    myComponents.mainViewModel.getReasonData()
+
+                                }
+                            }
+                            else if(myComponents.mainViewModel.fpa3.isNullOrEmpty() || myComponents.mainViewModel.fpa4.isNullOrEmpty())
                             {   myComponents.mainViewModel.isFPATime = true
 
                                 myComponents.mainViewModel.isFPATime = true

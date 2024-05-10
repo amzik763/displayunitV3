@@ -181,34 +181,53 @@ class Repository () {
                 showLogs("RDATA", taskResponse.body()?.station_reading_data?.reading_5.toString())
 
 
-                if(taskResponse.body()?.station_reading_data?.reading_1.isNullOrEmpty()){
+                if(taskResponse.body()?.station_reading_data?.reading_1.toString()=="null"){
+                    showLogs("RDATA2" , "1 is null")
 
                 }else{
                     mainViewModel.readingStatusList[0].readingStatusE = readingStatusEnum.completed
+                    mainViewModel.isCompleted1[0] = true
+                    mainViewModel.isCompleted2[0] = true
+                    mainViewModel.isCompleted3[0] = true
                 }
 
-                if(taskResponse.body()?.station_reading_data?.reading_2.isNullOrEmpty()){
+                if(taskResponse.body()?.station_reading_data?.reading_2.toString()=="null"){
+                    showLogs("RDATA2" , "2 is null")
 
                 }else{
                     mainViewModel.readingStatusList[1].readingStatusE = readingStatusEnum.completed
+                    mainViewModel.isCompleted1[1] = true
+                    mainViewModel.isCompleted2[1] = true
+                    mainViewModel.isCompleted3[1] = true
                 }
 
-                if(taskResponse.body()?.station_reading_data?.reading_3.isNullOrEmpty()){
+                if(taskResponse.body()?.station_reading_data?.reading_3.toString() == "null"){
+                    showLogs("RDATA2" , "3 is null")
 
                 }else{
                     mainViewModel.readingStatusList[2].readingStatusE = readingStatusEnum.completed
+                    mainViewModel.isCompleted1[2] = true
+                    mainViewModel.isCompleted2[2] = true
+                    mainViewModel.isCompleted3[2] = true
                 }
 
-                if(taskResponse.body()?.station_reading_data?.reading_4.isNullOrEmpty()){
+                if(taskResponse.body()?.station_reading_data?.reading_4.toString()=="null"){
+                    showLogs("RDATA2" , "4 is null")
 
                 }else{
                     mainViewModel.readingStatusList[3].readingStatusE = readingStatusEnum.completed
+                    mainViewModel.isCompleted1[3] = true
+                    mainViewModel.isCompleted2[3] = true
+                    mainViewModel.isCompleted3[3] = true
                 }
 
-                if(taskResponse.body()?.station_reading_data?.reading_5.isNullOrEmpty()){
-
+                if(taskResponse.body()?.station_reading_data?.reading_5.toString()=="null"){
+                        showLogs("RDATA2" , "5 is null")
                 }else{
                     mainViewModel.readingStatusList[4].readingStatusE = readingStatusEnum.completed
+                    mainViewModel.isCompleted1[4] = true
+                    mainViewModel.isCompleted2[4] = true
+                    mainViewModel.isCompleted3[4] = true
                 }
 
 
@@ -477,6 +496,7 @@ class Repository () {
                 mainViewModel.isFPATime = false
                 mUiViewModel.hideMessageDialog()
                 mainViewModel.FPACounter++
+
                 if(i==1)
                     ++mainViewModel.pass.intValue
                 else if(i==0)
@@ -486,7 +506,7 @@ class Repository () {
 
                 //show toast successful
                 showLogs("ADDWITHPARAM","successfull")
-                showLogs("ADDWITHPARAM","${mainViewModel.FPACounter}")
+                showLogs("ADDWITHPARAM FPA Counter","${mainViewModel.FPACounter}")
                 myComponents.mUiViewModel.clearFields.intValue++
 
             }else{
@@ -604,27 +624,34 @@ class Repository () {
             if (myReadingResonse.isSuccessful) {
                 mUiViewModel.hideMessageDialog()
 
-                if (readingIndex == 0) {
-                    mainViewModel.isCompleted1[index] = true
-                } else if (readingIndex == 1) {
-                    mainViewModel.isCompleted2[index] = true
-                } else {
-                    mainViewModel.isCompleted3[index] = true
+                when (readingIndex) {
+                    0 -> {
+                        mainViewModel.isCompleted1[index] = true
+                    }
+                    1 -> {
+                        mainViewModel.isCompleted2[index] = true
+                    }
+                    else -> {
+                        mainViewModel.isCompleted3[index] = true
+                    }
                 }
+                //can be improved to check all three param or two params if present, to do later
 
-                if (mainViewModel.isCompleted1[index] && mainViewModel.isCompleted2[index] && mainViewModel.isCompleted3[index])
-                    mainViewModel.readingStatusList[index].readingStatusE =
+                if (mainViewModel.isCompleted1[index])
+                { mainViewModel.readingStatusList[index].readingStatusE =
                         readingStatusEnum.completed
+
+                }
 
                 showLogs("READING API", "value added")
                 mainViewModel.isCompleted1.forEach {
                     showLogs("ISCOMPLETED 1: ", it.toString())
                 }
                 mainViewModel.isCompleted2.forEach {
-                    showLogs("ISCOMPLETED 1: ", it.toString())
+                    showLogs("ISCOMPLETED 2: ", it.toString())
                 }
                 mainViewModel.isCompleted3.forEach {
-                    showLogs("ISCOMPLETED 1: ", it.toString())
+                    showLogs("ISCOMPLETED 3: ", it.toString())
                 }
                 showLogs("COMPLETED VALUES", "")
                 mainViewModel.mState.value = false
@@ -688,8 +715,6 @@ class Repository () {
         }
     }
 
-
-
     suspend fun getReasonData() {
         try{
             showLogs("REASON FLOOR", mainViewModel.floorNum)
@@ -706,17 +731,14 @@ class Repository () {
                 }
             }else{
                 showLogs("REASON RESPONSE: ","Failed, try again")
-
             }
         }catch (e:Exception){
             showLogs("REASON RESPONSE: ","error")
             e.printStackTrace()
-            myComponents.mUiViewModel.hideMessageDialog()
-            myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
-            myComponents.mUiViewModel.showMessageDialog()
+            mUiViewModel.hideMessageDialog()
+            mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+            mUiViewModel.showMessageDialog()
         }
     }
-
-
 }
 

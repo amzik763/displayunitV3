@@ -38,22 +38,18 @@ class AuthInterceptor(private val tokenProvider: TokenProvider) : Interceptor {
             // If token is not available, throw an exception indicating unauthorized access
             throw IOException("Unauthorized access. Token is not available.")
         }
-
         val newRequest = originalRequest.newBuilder()
             .header("Authorization", "Bearer $token")
             .build()
-
         return chain.proceed(newRequest)
     }
 }
-
  */
 
 object RetrofitBuilder {
-
     // OLD BASE URL FOR PRODUCTION
     // private const val BASE_URL = "http://10.0.3.101:5000"
-    private const val BASE_URL = "http://192.168.1.3:5000"
+    private const val BASE_URL = "http://192.168.1.8:5000"
 
     // Define your logging interceptor
     private val loggingInterceptor = HttpLoggingInterceptor().apply {

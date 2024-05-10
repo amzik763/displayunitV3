@@ -288,32 +288,27 @@ class MainViewModel(context: Context) : ViewModel(){
     private fun checkReadingTimeAndShowPopup() {
       viewModelScope.launch {
         if(readingStatusList[0].readingStatusE.equals(readingStatusEnum.available)){
-            showLogs("readingstatusenum"," available")
             showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.notAvailable
             mUiViewModel.showCustomPopup.value = true
 
 
         }else if(readingStatusList[1].readingStatusE.equals(readingStatusEnum.available)) {
-            showLogs("readingstatusenum", " not available")
             showLogs("readingstatusenum2", readingStatusList[1].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
             mUiViewModel.showCustomPopup.value = true
         }
         else if(readingStatusList[2].readingStatusE.equals(readingStatusEnum.available)) {
-            showLogs("readingstatusenum", " not available")
             showLogs("readingstatusenum2", readingStatusList[2].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
             mUiViewModel.showCustomPopup.value = true
         }
         else if(readingStatusList[3].readingStatusE.equals(readingStatusEnum.available)) {
-            showLogs("readingstatusenum", " not available")
             showLogs("readingstatusenum2", readingStatusList[3].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
             mUiViewModel.showCustomPopup.value = true
         }
         else if(readingStatusList[4].readingStatusE.equals(readingStatusEnum.available)) {
-            showLogs("readingstatusenum", " not available")
             showLogs("readingstatusenum2", readingStatusList[4].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
             mUiViewModel.showCustomPopup.value = true
@@ -348,12 +343,10 @@ class MainViewModel(context: Context) : ViewModel(){
                     if(timeDifferenceInMinutes>=readingStatusList[3].readingTime && readingStatusList[3].readingStatusE != readingStatusEnum.completed){
                         readingStatusList[3].readingStatusE = readingStatusEnum.available
                         showLogs("READING STATUS 4",readingStatusList[3].readingStatusE.name)
-
                     }else
                         if(timeDifferenceInMinutes>=readingStatusList[4].readingTime && readingStatusList[4].readingStatusE != readingStatusEnum.completed){
                             readingStatusList[4].readingStatusE = readingStatusEnum.available
                             showLogs("READING STATUS 5",readingStatusList[4].readingStatusE.name)
-
                         }
 
         showLogs("READING STATUS ALL",readingStatusList[0].readingStatusE.name + " " + readingStatusList[0].readingTime)
@@ -369,7 +362,6 @@ class MainViewModel(context: Context) : ViewModel(){
         try {
             val date1 = format.parse(time1)
             val date2 = format.parse(time2)
-
             val differenceInMillis = date2.time - date1.time
             return differenceInMillis / (1000 * 60)
         } catch (e: Exception) {
@@ -377,7 +369,6 @@ class MainViewModel(context: Context) : ViewModel(){
             return -1 // Return a negative value to indicate error
         }
     }
-
 
     suspend fun addData(failed: String, passed: String, station_id: String,i:Int): Boolean {
         return coroutineScope {
@@ -387,8 +378,6 @@ class MainViewModel(context: Context) : ViewModel(){
             result.await()
         }
     }
-
-
 
     fun areActualParamsFilled(dataListActual: MutableList<Actual_Param>): Boolean {
         for (item in dataListActual) {
@@ -417,8 +406,6 @@ class MainViewModel(context: Context) : ViewModel(){
         }
     }
 
-
-
     fun submitFailedPartInfo() {
         viewModelScope.launch {
             repository.addFailedData()
@@ -429,8 +416,6 @@ class MainViewModel(context: Context) : ViewModel(){
         viewModelScope.launch {
         repository.getReasonData()
     }}
-
-
 }
 
 
