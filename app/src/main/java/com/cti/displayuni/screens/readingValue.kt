@@ -205,6 +205,7 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
                             keyboardType = KeyboardType.Number,
                             imeAction = ImeAction.Done
                         ),
+
                         shape = RoundedCornerShape(8.dp),
 //                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
                     )
