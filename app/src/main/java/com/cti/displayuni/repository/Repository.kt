@@ -52,7 +52,6 @@ class Repository () {
                 mainViewModel.email = loginResponse.body()?.email.toString()
                 mainViewModel.skill = loginResponse.body()?.skill.toString()
                 mainViewModel.mobileNum = loginResponse.body()?.mobile.toString()
-
                 mainViewModel.deviceId = mainViewModel.getStationValue()
                 otherAPIs = RetrofitBuilder.createApiServiceWithToken()
 

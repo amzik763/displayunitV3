@@ -199,6 +199,7 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
                             reading1 = filteredValue
                             myComponents.mainViewModel.dataListChart.value?.get(0)?.values?.set(0,filteredValue)}
                         },
+
                         color = pureBlack,
                         maxLength = 5,
                         keyboardOptions = KeyboardOptions.Default.copy(
