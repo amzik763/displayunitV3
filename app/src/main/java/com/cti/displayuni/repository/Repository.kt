@@ -288,7 +288,7 @@ class Repository () {
         mainViewModel.readingStatusList.add(readingsStatusItems(eachTime*2, eachPart?.times(2), readingStatusEnum.notAvailable))
         mainViewModel.readingStatusList.add(readingsStatusItems(eachTime*3, eachPart?.times(3), readingStatusEnum.notAvailable))
         mainViewModel.readingStatusList.add(readingsStatusItems(eachTime*4, eachPart?.times(4), readingStatusEnum.notAvailable))
-        mainViewModel.readingStatusList.add(readingsStatusItems(eachTime*5, eachPart?.times(5), readingStatusEnum.notAvailable))
+        mainViewModel.readingStatusList.add(readingsStatusItems(eachTime*5 - 5, eachPart?.times(5)?.minus(5), readingStatusEnum.notAvailable))
 
         /*
         mainViewModel.readingStatusList.add(eachTime*2,eachPart?.times(2),readingStatusEnum.notAvailable)

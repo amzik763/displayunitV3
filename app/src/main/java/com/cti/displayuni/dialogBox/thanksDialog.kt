@@ -1,5 +1,6 @@
 package com.cti.displayuni.dialogBox
 
+import android.app.Activity
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -308,7 +309,8 @@ fun ThanksDialog(
                                         .align(Alignment.CenterHorizontally),
                                     onClick = {
                                             //close app or goto main screen
-//                                        ct.requireActivity().finishAffinity()
+                                        val a = ct as? Activity
+                                        a?.finishAffinity()
                                         showLogs("GOING:","Just Going there")
 //                                        navController.navigate(SIGNING_SCREEN)
 
