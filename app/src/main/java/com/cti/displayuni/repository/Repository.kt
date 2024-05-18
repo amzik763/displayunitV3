@@ -251,6 +251,11 @@ class Repository () {
 
                 }
 
+
+                mainViewModel.imageUrl = taskResponse.body()?.urls.toString().split(",").map { it.trim() }.toMutableList()
+
+                showLogs("IMAGE URL", mainViewModel.imageUrl.toString())
+
                 showLogs("FPA VAL: ", mainViewModel.FPACounter.toString())
                 myComponents.navController.popBackStack()
 
@@ -258,6 +263,8 @@ class Repository () {
                     myComponents.navController.navigate(FILL_PARAMETERS)
                 else
                     myComponents.navController.navigate(CHECKSHEET)
+
+
             }
 
             else if (taskResponse.code() == 404) {

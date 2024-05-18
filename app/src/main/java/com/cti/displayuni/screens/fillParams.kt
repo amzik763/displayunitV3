@@ -563,21 +563,18 @@ fun ZoomableImage(){
     var scale by remember { mutableStateOf(1f) }
     var offset by remember { mutableStateOf(Offset(0f, 0f)) }
 
-    val imageUrls = listOf(
-        "https://imageio.forbes.com/specials-images/imageserve/5f962984fe3282ac81f68758/The-Aston-Martin-DBS-Superleggera---/960x0.jpg?format=jpg&width=1440",
-        "https://wallpapers.com/images/featured/really-cool-cars-pictures-7gub7gjfes26vk0c.jpg"
-    )
+
 
     var currentIndex by remember { mutableStateOf(0) }
 
-    val painter = rememberAsyncImagePainter(imageUrls[currentIndex])
+    val painter = rememberAsyncImagePainter(myComponents.mainViewModel.imageUrl[currentIndex])
 
     fun previousImage() {
-        currentIndex = (currentIndex - 1 + imageUrls.size) % imageUrls.size
+        currentIndex = (currentIndex - 1 + myComponents.mainViewModel.imageUrl.size) % myComponents.mainViewModel.imageUrl.size
     }
 
     fun nextImage() {
-        currentIndex = (currentIndex + 1) % imageUrls.size
+        currentIndex = (currentIndex + 1) % myComponents.mainViewModel.imageUrl.size
     }
 
     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {

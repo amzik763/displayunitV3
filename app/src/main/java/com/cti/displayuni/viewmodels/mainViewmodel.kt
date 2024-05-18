@@ -32,7 +32,7 @@ import java.util.Locale
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import java.util.Calendar
-
+//
 class MainViewModel(context: Context) : ViewModel(){
 
 //    @HiltViewModel
@@ -68,6 +68,8 @@ class MainViewModel(context: Context) : ViewModel(){
 
     var dataListSetting = mutableListOf<Setting_Param>()
     var dataListActual = mutableListOf<Actual_Param>()
+
+    var imageUrl = mutableListOf<String>()
 
     val dataListChart = MutableLiveData<MutableList<chart_parameter>>()
 //  var dataListChart = mutableListOf<chart_parameter>()

@@ -3,6 +3,7 @@ package com.cti.displayuni.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -39,7 +40,8 @@ fun ParametersLazyList(
         items(dataListSetting) { item ->
             Column {
                 Row(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .padding(start = 10.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
@@ -51,9 +53,13 @@ fun ParametersLazyList(
                             color = pureBlack,
                             fontFamily = mFont.nkbold,
                         ),
-                        modifier = Modifier.padding(top = 8.dp),
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .fillMaxWidth(0.7f),
                         color = Color.Black
                     )
+
+                    Spacer(modifier = Modifier.width(30.dp))
 
                     Row (verticalAlignment = Alignment.CenterVertically){
                         var enterValue by remember { mutableStateOf("") }
@@ -79,7 +85,7 @@ fun ParametersLazyList(
                                 fontFamily = mFont.nk,
                             ),
                             modifier = Modifier
-                                .padding(top = 8.dp, start = 8.dp)
+                                .padding(top = 8.dp, start = 4.dp)
                                 .width(60.dp),
                             color = Color.Black,
                             textAlign = TextAlign.Center
