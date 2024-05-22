@@ -117,20 +117,20 @@ fun SettingParams() {
 
 @Composable
 fun ReadingUI(){
-        Row{
-            Text(
-                text = "   Readings   ",
-                style = TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    fontSize = fontLarge
-                )
+    Row{
+        Text(
+            text = "   Readings   ",
+            style = TextStyle(
+                fontWeight = FontWeight.Bold,
+                fontSize = fontLarge
             )
-            ReadingCircles("r1")
-            ReadingCircles("r2")
-            ReadingCircles("r3")
-            ReadingCircles("r4")
-            ReadingCircles("r5")
-        }
+        )
+        ReadingCircles("r1")
+        ReadingCircles("r2")
+        ReadingCircles("r3")
+        ReadingCircles("r4")
+        ReadingCircles("r5")
+    }
 }
 
 @Composable
@@ -237,7 +237,7 @@ fun Header(){
         .fillMaxWidth()
         .fillMaxHeight()
 //        .scale(0.75f)
-            ) {
+    ) {
 
         //First Row
         Row(modifier = Modifier
@@ -303,7 +303,7 @@ fun Header(){
                     border = BorderStroke(3.dp, darkBlue),
                     colors = ButtonDefaults.buttonColors(contentColor = pureWhite, containerColor =  darkBlue),
 
-                ) {
+                    ) {
                     Text(
                         text = "First Part Approval",
                         fontSize = fontMedium,
@@ -344,7 +344,7 @@ fun Header(){
                 text = partId,
                 label = "Part ID",
                 onTextChange = { partId = it
-                               myComponents.mainViewModel.partID = it},
+                    myComponents.mainViewModel.partID = it},
                 color = pureBlack,
                 maxLength = 15,
 //                    keyboardOptions = ,
@@ -379,10 +379,10 @@ fun Header(){
                         if (passFail < 2){
                             myComponents.mainViewModel.isFPATime = true
                             if(myComponents.mainViewModel.showZoomableImage){
-                            myComponents.mUiViewModel.setDialogDetails("PENDING FPA", "", "Click on FPA button and then fill all parameter values", R.drawable.ic_notest)
-                            myComponents.mUiViewModel.showMessageDialog()
-                            showLogs("PASS FAIL", "Pass Fail sum is less then 2")
-                            return@Button
+                                myComponents.mUiViewModel.setDialogDetails("PENDING FPA", "", "Click on FPA button and then fill all parameter values", R.drawable.ic_notest)
+                                myComponents.mUiViewModel.showMessageDialog()
+                                showLogs("PASS FAIL", "Pass Fail sum is less then 2")
+                                return@Button
                             }
                             else if(!actualParamsFilled || !settingParamsFilled){
                                 myComponents.mUiViewModel.setDialogDetails("Fill Values", "", "Please fill all the parameter values", R.drawable.ic_notest )
@@ -390,29 +390,29 @@ fun Header(){
                                 return@Button
                             }
                         }
-                            if (myComponents.mainViewModel.FPACounter==5){
+                        if (myComponents.mainViewModel.FPACounter==5){
 
-                            }
+                        }
                         else if(myComponents.mainViewModel.isCurrentTimeExceedsMidTime(myComponents.mainViewModel.startShiftTime,myComponents.mainViewModel.endShiftTime)){
-                                if(myComponents.mainViewModel.fpa3.isNullOrEmpty() || myComponents.mainViewModel.fpa4.isNullOrEmpty())
-                                {   myComponents.mainViewModel.isFPATime = true
+                            if(myComponents.mainViewModel.fpa3.isNullOrEmpty() || myComponents.mainViewModel.fpa4.isNullOrEmpty())
+                            {   myComponents.mainViewModel.isFPATime = true
 
-                                        if(myComponents.mainViewModel.showZoomableImage){
-                                            myComponents.mUiViewModel.setDialogDetails("PENDING FPA", "", "Click on FPA button and then fill all parameter values", R.drawable.ic_notest)
-                                            myComponents.mUiViewModel.showMessageDialog()
-                                            showLogs("PASS FAIL 2", "FILL FPA")
-                                            return@Button
-                                        }
-                                        else if(!actualParamsFilled || !settingParamsFilled){
-                                            myComponents.mUiViewModel.setDialogDetails("Fill Values", "", "Please fill all the parameter values", R.drawable.ic_notest )
-                                            myComponents.mUiViewModel.showMessageDialog()
-                                            showLogs("PASS FAIL 222", "FILL FPA")
-
-                                            return@Button
-                                        }
-                                }else{
-                                    myComponents.mainViewModel.isFPATime = false
+                                if(myComponents.mainViewModel.showZoomableImage){
+                                    myComponents.mUiViewModel.setDialogDetails("PENDING FPA", "", "Click on FPA button and then fill all parameter values", R.drawable.ic_notest)
+                                    myComponents.mUiViewModel.showMessageDialog()
+                                    showLogs("PASS FAIL 2", "FILL FPA")
+                                    return@Button
                                 }
+                                else if(!actualParamsFilled || !settingParamsFilled){
+                                    myComponents.mUiViewModel.setDialogDetails("Fill Values", "", "Please fill all the parameter values", R.drawable.ic_notest )
+                                    myComponents.mUiViewModel.showMessageDialog()
+                                    showLogs("PASS FAIL 222", "FILL FPA")
+
+                                    return@Button
+                                }
+                            }else{
+                                myComponents.mainViewModel.isFPATime = false
+                            }
                         }
 
                         showLogs("PASS FAIL", passFail.toString())
@@ -516,7 +516,7 @@ fun Header(){
                         contentColor = pureWhite,
                         containerColor = red
                     ),
-                    ) {
+                ) {
                     Text(
                         text = "FAIL",
                         fontSize = fontMedium,
@@ -578,15 +578,15 @@ fun ZoomableImage(){
     }
 
     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-        
+
         Row (modifier = Modifier.fillMaxHeight(),
             verticalAlignment = Alignment.CenterVertically){
 
-         Image(painter = painterResource(id = R.drawable.arrow_left),
-             contentDescription = "leftArrow",
-             modifier = Modifier
-                 .size(80.dp)
-                 .clickable { previousImage() })
+            Image(painter = painterResource(id = R.drawable.arrow_left),
+                contentDescription = "leftArrow",
+                modifier = Modifier
+                    .size(80.dp)
+                    .clickable { previousImage() })
 
             Spacer(modifier = Modifier.width(36.dp))
 
@@ -630,24 +630,24 @@ fun FillParam(){
 
     val conf = LocalConfiguration.current
     val dnsty = conf.densityDpi
-     mParameters.dnsty = dnsty
+    mParameters.dnsty = dnsty
 
     val shouldShowCustomPopup = myComponents.mUiViewModel.showCustomPopup.observeAsState()
 
     if (mParameters.dnsty == 320) {
 
-         fontSmall = 10.sp
-         fontMedium = 12.sp
-         fontLarge = 17.sp
-         paddingSmall = 2.dp
-         paddingMedium = 4.dp
-         paddingLarge = 8.dp
-         heightSmall = 34.dp
-         heightMedium = 50.dp
-         heightLarge = 70.dp
-         heightinFSmall = 0.06f
-         heightinFMedium = 0.073f
-         heightinFLarge = 80.dp
+        fontSmall = 10.sp
+        fontMedium = 12.sp
+        fontLarge = 17.sp
+        paddingSmall = 2.dp
+        paddingMedium = 4.dp
+        paddingLarge = 8.dp
+        heightSmall = 34.dp
+        heightMedium = 50.dp
+        heightLarge = 70.dp
+        heightinFSmall = 0.06f
+        heightinFMedium = 0.073f
+        heightinFLarge = 80.dp
         showLogs("DENSITY","320")
 
     } else if (mParameters.dnsty == 160) {

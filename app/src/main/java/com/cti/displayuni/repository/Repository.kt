@@ -34,6 +34,7 @@ class Repository () {
         Log.d("Repository:", "Created")
     }
 
+
     suspend fun loginUser(username: String, password: String) {
         try {
             loginResponse = authAPI.login(username, password)
@@ -420,7 +421,7 @@ class Repository () {
                 return true
             }else{
                 myComponents.mUiViewModel.hideMessageDialog()
-                myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+                myComponents.mUiViewModel.setDialogDetails("Try again!","Error in adding data","",R.drawable.ic_notest)
                 myComponents.mUiViewModel.showMessageDialog()
                 showLogs("ADD DATA:","Data Not Added")
                 return false
@@ -428,7 +429,7 @@ class Repository () {
         } catch (e: Exception) {
             e.printStackTrace()
             myComponents.mUiViewModel.hideMessageDialog()
-            myComponents.mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+            myComponents.mUiViewModel.setDialogDetails("Try again!","Error in adding data","",R.drawable.ic_notest)
             myComponents.mUiViewModel.showMessageDialog()
             return false
         }
@@ -519,7 +520,7 @@ class Repository () {
                 mainViewModel.isFPATime = false
 
                 mUiViewModel.hideMessageDialog()
-                mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+                mUiViewModel.setDialogDetails("Try again!","Error in adding FPA data","",R.drawable.ic_notest)
                 mUiViewModel.showMessageDialog()
                 showLogs("ADDWITHPARAM","un-successfull")
                 showLogs("ADDWITHPARAMFAIL",dataResponseWithParam.message())
@@ -531,7 +532,7 @@ class Repository () {
         catch (e:Exception){
             mainViewModel.isFPATime = false
             mUiViewModel.hideMessageDialog()
-            mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+            mUiViewModel.setDialogDetails("Try again!","Error in adding FPA data","",R.drawable.ic_notest)
             mUiViewModel.showMessageDialog()
             showLogs("ADDWITHPARAM Error",e.printStackTrace().toString())
         }

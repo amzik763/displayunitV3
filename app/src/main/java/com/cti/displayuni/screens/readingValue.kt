@@ -118,21 +118,18 @@ fun CustomPopupContent(
 
         if(!mState.value) {
             showLogs("mSTATE: ",mState.value.toString())
-            if (myComponents.mainViewModel.dataListChart.value?.size == 1) {
+            if(myComponents.mainViewModel.dataListChart.value?.size == 1) {
                 ReadingRow1st(dataListChart)
             }
 
-            if (myComponents.mainViewModel.dataListChart.value?.size == 2) {
+            if(myComponents.mainViewModel.dataListChart.value?.size == 2) {
                 ReadingRow1st(dataListChart)
-
                 ReadingRow2nd(dataListChart)
             }
 
-            if (myComponents.mainViewModel.dataListChart.value?.size == 3) {
+            if(myComponents.mainViewModel.dataListChart.value?.size == 3) {
                 ReadingRow1st(dataListChart)
-
                 ReadingRow2nd(dataListChart)
-
                 ReadingRow3rd(dataListChart)
             }
         }

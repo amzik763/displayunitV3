@@ -98,7 +98,8 @@ fun Profile(){
         Log.d("Desktop: ", wd.toString())
     }
 
-    Column (modifier = Modifier.padding(top = 56.dp, start = 36.dp)){
+    Column (modifier = Modifier.padding(top = 56.dp, start = 36.dp)
+        .fillMaxWidth()){
     Text(text = "Profile Information",
         style = TextStyle(
             fontSize = 36.sp,
@@ -153,9 +154,9 @@ fun Profile(){
 
         Surface(
             modifier = Modifier
-                .padding(top = 16.dp)
+                .padding(top = 36.dp)
                 .size(width = width, height = height)
-                .align(Alignment.End),
+                .align(Alignment.CenterHorizontally),
             color = darkBlue,
             shape = RoundedCornerShape(corner = CornerSize(24.dp)),
             border = BorderStroke(width = 1.dp, color = darkBlue)
