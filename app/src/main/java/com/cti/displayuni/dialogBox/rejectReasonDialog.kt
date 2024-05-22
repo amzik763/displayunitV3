@@ -298,10 +298,26 @@ fun RejectReasonDialog(
                                     .padding(9.dp)
                                     .align(Alignment.CenterHorizontally),
                                 onClick = {
+
+                                    val passFail = myComponents.mainViewModel.pass.intValue + myComponents.mainViewModel.fail.intValue
+                                    if(passFail >= myComponents.mainViewModel.totalAssigned.intValue){
+                                        myComponents.mUiViewModel.showThanksDialog()
+                                        return@ClickableText
+//                                        return@Button
+                                    }
+
+                                    if(myComponents.mainViewModel.isShiftOver(myComponents.mainViewModel.endShiftTime)){
+                                        myComponents.mUiViewModel.showThanksDialog()
+//                                        return@Button
+                                        return@ClickableText
+
+                                    }
                                     if(mainViewModel.mSelectedReason.isNullOrEmpty()){
                                         mUiViewModel.setDialogDetails("Please Select Reason","Select reason, After selecting it click SUBMIT button"," ",R.drawable.ic_notest)
                                         mUiViewModel.showMessageDialog()
                                     }else{
+
+
                                         var a = mark
                                         mainViewModel.submitFailedPartInfo()
 //                                        mainViewModel.addWorkV2(0,a)

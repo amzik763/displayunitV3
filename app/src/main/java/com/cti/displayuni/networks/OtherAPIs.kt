@@ -157,4 +157,12 @@ interface OtherAPIs {
         @Field("station_id") station_id: String
     ): Response<FpaData_res>
 
+    @FormUrlEncoded
+    @POST("/operator/check_fpa_status")
+    suspend fun checkFPA(
+        @Field("precedency_no") precedency_no: String,
+        @Field("part_no") part_no: String,
+    ): Response<FpaData_res>
+
+
 }

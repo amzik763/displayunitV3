@@ -11,45 +11,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-/*interface TokenProvider {
-    fun getToken(): String?
-    fun setToken(token: String?)
-}
-
-class SharedPreferencesTokenProvider(context: Context) : TokenProvider {
-
-    private val sharedPreferences = context.getSharedPreferences("token_pref", Context.MODE_PRIVATE)
-
-    override fun getToken(): String? {
-        return sharedPreferences.getString("token", null)
-    }
-
-    override fun setToken(token: String?) {
-        sharedPreferences.edit().putString("token", token).apply()
-    }
-}
-
-class AuthInterceptor(private val tokenProvider: TokenProvider) : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val originalRequest = chain.request()
-        val token = tokenProvider.getToken()
-
-        if (token == null) {
-            // If token is not available, throw an exception indicating unauthorized access
-            throw IOException("Unauthorized access. Token is not available.")
-        }
-        val newRequest = originalRequest.newBuilder()
-            .header("Authorization", "Bearer $token")
-            .build()
-        return chain.proceed(newRequest)
-    }
-}
- */
-
 object RetrofitBuilder {
     // OLD BASE URL FOR PRODUCTION
     // private const val BASE_URL = "http://10.0.3.101:5000"
-    private const val BASE_URL = "http://192.168.1.5:5000"
+    private const val BASE_URL = "http://192.168.1.18:5000"
 
     // Define your logging interceptor
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -76,6 +41,10 @@ object RetrofitBuilder {
                 showLogs("GOT ERROR: ","error IO")
 
                 // Handle IOException
+
+
+
+
                 // For example, log the error
                 e.printStackTrace()
                 // Rethrow the exception to propagate it further if needed
