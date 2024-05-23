@@ -7,6 +7,8 @@ data class allDataV2(
     val process_params_info: List<ProcessParamsInfo>,
     val total_check_sheet_params: Int,
     val urls: String,
+    val precedency_no: String,
+    val temp_task_id: String,
     val work_operator_data: WorkOperatorData,
     val station_reading_data: readingData?,
     val station_fpa_data: List<StationFpaData>

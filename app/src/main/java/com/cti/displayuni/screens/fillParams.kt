@@ -505,6 +505,7 @@ fun Header(){
                             myComponents.mainViewModel.isFPATime = false
                             //show loading dialog
                             if(myComponents.mainViewModel.isReasonRetrieved)
+
                                 myComponents.mUiViewModel.showRejectReasonDialog()
                             else
                                 myComponents.mainViewModel.getReasonData()

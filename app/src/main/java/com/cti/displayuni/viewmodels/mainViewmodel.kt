@@ -60,6 +60,7 @@ class MainViewModel(context: Context) : ViewModel(){
     var mProcessName by mutableStateOf("")
     var mPartName by mutableStateOf("")
 
+
     //  var readingStatusList = mutableListOf<readingsStatusItems>()
     val readingStatusList = mutableStateListOf<readingsStatusItems>()
     val isCompleted1 = mutableStateListOf<Boolean>(false,false,false,false,false)
@@ -81,6 +82,9 @@ class MainViewModel(context: Context) : ViewModel(){
     var pass = mutableIntStateOf(0)
     var fail = mutableIntStateOf(0)
     var totalAssigned = mutableIntStateOf(0)
+
+    var temp_task_id = mutableStateOf("")
+    var precedency_no = mutableStateOf("")
 
     var showZoomableImage  by mutableStateOf(true)
     var tempParamID by mutableStateOf("")
@@ -418,6 +422,12 @@ class MainViewModel(context: Context) : ViewModel(){
         viewModelScope.launch {
         repository.getReasonData()
     }}
+
+    fun checkFPA(precedency_no: String, part_no: String, temp_task_id: String){
+        viewModelScope.launch {
+            repository.checkFPA(precedency_no, part_no, temp_task_id)
+        }
+    }
 }
 
 

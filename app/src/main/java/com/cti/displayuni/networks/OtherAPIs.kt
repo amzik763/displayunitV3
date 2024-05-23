@@ -1,5 +1,6 @@
 package com.cti.displayuni.networks
 
+import com.cti.displayuni.response.FpaCheck_Res
 import com.cti.displayuni.response.FpaData_res
 import com.cti.displayuni.response.addData_Response
 import com.cti.displayuni.response.allDataV2
@@ -162,7 +163,7 @@ interface OtherAPIs {
     suspend fun checkFPA(
         @Field("precedency_no") precedency_no: String,
         @Field("part_no") part_no: String,
-    ): Response<FpaData_res>
-
+        @Field("temp_task_id") temp_task_id: String
+    ): Response<FpaCheck_Res>
 
 }
