@@ -696,26 +696,28 @@ class Repository () {
                 ++mainViewModel.fail.intValue
                 mainViewModel.mark = ""
                 mUiViewModel.hideMessageDialog()
+                mUiViewModel.hideRejectReasonDialog()
+                mainViewModel.partID = ""
                 mainViewModel.mSelectedReason = ""
 
             }else{
                 showLogs("PROCESS FAILED INFO","Failed")
                 mUiViewModel.hideMessageDialog()
-                mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+                mUiViewModel.setDialogDetails("Try again!","","1. Check if Part ID entered is empty or duplicate",R.drawable.ic_notest)
                 mUiViewModel.showMessageDialog()
 
             }
         }catch (e:HttpException){
             showLogs("PROCESS FAILED INFO","Error http")
             mUiViewModel.hideMessageDialog()
-            mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+            mUiViewModel.setDialogDetails("Try again!","","Network error",R.drawable.ic_notest)
             mUiViewModel.showMessageDialog()
             e.printStackTrace()
 
         }catch (e:Exception){
             showLogs("PROCESS FAILED INFO","Error")
             mUiViewModel.hideMessageDialog()
-            mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
+            mUiViewModel.setDialogDetails("Try again!","","Submission failed. please try again...\n1. Check if Part ID entered is empty or duplicate",R.drawable.ic_notest)
             mUiViewModel.showMessageDialog()
             e.printStackTrace()
 
