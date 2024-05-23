@@ -102,9 +102,9 @@ class Repository () {
 
                 dataListtemp?.forEach{
                     if (it.FPA_status){
-                        mainViewModel.dataListSetting.add(Setting_Param(it.parameter_name, "", it.unit ?: "", it.min, it.max))
+                        mainViewModel.dataListSetting.add(Setting_Param(it.parameter_name,it.parameter_no, "", it.unit ?: "", it.min, it.max))
                     }else{
-                        mainViewModel.dataListActual.add(Actual_Param(it.parameter_name, "",  it.unit ?: "", it.min, it.max))
+                        mainViewModel.dataListActual.add(Actual_Param(it.parameter_name,it.parameter_no, "",  it.unit ?: "", it.min, it.max))
                     }
                 }
 
@@ -127,11 +127,11 @@ class Repository () {
 
                 //SHOULD BE SHIFTED TO OTHER API
                 val p1 =  mainViewModel.dataListSetting.joinToString(separator = ",") { setting ->
-                    "${setting.param_name} ::: ${setting.param_value}"
+                    "${setting.param_no} ::: ${setting.param_value}"
                 }
                 showLogs("TASK P1: ",p1)
                 val p2 =  mainViewModel.dataListActual.joinToString(separator = ",") { actual ->
-                    "${actual.param_name} ::: ${actual.param_value}"
+                    "${actual.param_no} ::: ${actual.param_value}"
                 }
                 showLogs("TASK P2: ",p2)
                 showLogs("SHIFT TIME", "mainViewModel.startShiftTime")
@@ -466,11 +466,11 @@ class Repository () {
             ++f
         //SHOULD BE SHIFTED TO OTHER API
         val p1 =  mainViewModel.dataListSetting.joinToString(separator = ","){ setting ->
-            "${setting.param_name} ::: ${setting.param_value}"
+            "${setting.param_no} ::: ${setting.param_value}"
         }
         showLogs("TASK P1: ",p1)
         val p2 =  mainViewModel.dataListActual.joinToString(separator = ","){ actual ->
-            "${actual.param_name} ::: ${actual.param_value}"
+            "${actual.param_no} ::: ${actual.param_value}"
         }
 
         showLogs("TASK P2: ",p2)
