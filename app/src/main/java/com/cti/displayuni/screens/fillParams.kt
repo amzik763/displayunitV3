@@ -422,8 +422,8 @@ fun Header(){
                             GlobalScope.launch {
 
                                 if(myComponents.mainViewModel.isFPATime){
-                                    myComponents.mainViewModel.submitPartInfoWithParams(1)
-
+//                                    myComponents.mainViewModel.submitPartInfoWithParams(1)
+                                      myComponents.mainViewModel.checkFPA(myComponents.mainViewModel.precedency_no.value, myComponents.mainViewModel.mPartName ,myComponents.mainViewModel.temp_task_id.value)
                                 }else{
                                     myComponents.mainViewModel.submitPartInfo(1)
                                 }

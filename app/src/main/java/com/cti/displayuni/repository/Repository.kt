@@ -3,7 +3,6 @@ package com.cti.displayuni.repository
 import android.util.Log
 import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.R
-import com.cti.displayuni.response.FpaCheck_Res
 import com.cti.displayuni.response.FpaData_res
 import com.cti.displayuni.response.reading_Response
 import com.cti.displayuni.utility.Actual_Param
@@ -25,9 +24,6 @@ import com.cti.displayuni.utility.responses.taskResponse
 import com.cti.displayuni.utility.showLogs
 import retrofit2.HttpException
 import retrofit2.Response
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class Repository () {
 
@@ -146,8 +142,11 @@ class Repository () {
                 mainViewModel.mProcessName = taskResponse.body()?.work_operator_data?.process_no.toString()
                 mainViewModel.mPartName = taskResponse.body()?.work_operator_data?.part_no.toString()
                 mainViewModel.totalAssigned.intValue = taskResponse.body()?.work_operator_data?.total_assigned_task?:0
-                mainViewModel.precedency_no.value = taskResponse.body()?.precedency_no.toString()
-                mainViewModel.temp_task_id.value = taskResponse.body()?.temp_task_id.toString()
+                mainViewModel.precedency_no.value = taskResponse.body()?.work_operator_data?.station_precidency.toString()
+                mainViewModel.temp_task_id.value = taskResponse.body()?.work_operator_data?.temp_task_id.toString()
+
+                showLogs("PRECEDENCY" , mainViewModel.precedency_no.value)
+                showLogs("TEMP TASK ID" , mainViewModel.temp_task_id.value)
 
                 if(mainViewModel.isShiftOver(mainViewModel.endShiftTime)){
                     mUiViewModel.showThanksDialog()
@@ -705,6 +704,9 @@ class Repository () {
                 mUiViewModel.hideMessageDialog()
                 mUiViewModel.setDialogDetails("Try again!","","1. Check if Part ID entered is empty or duplicate",R.drawable.ic_notest)
                 mUiViewModel.showMessageDialog()
+                mainViewModel.mark = ""
+                mainViewModel.partID = ""
+                mainViewModel.mSelectedReason = ""
 
             }
         }catch (e:HttpException){
@@ -712,6 +714,9 @@ class Repository () {
             mUiViewModel.hideMessageDialog()
             mUiViewModel.setDialogDetails("Try again!","","Network error",R.drawable.ic_notest)
             mUiViewModel.showMessageDialog()
+            mainViewModel.mark = ""
+            mainViewModel.partID = ""
+            mainViewModel.mSelectedReason = ""
             e.printStackTrace()
 
         }catch (e:Exception){
@@ -751,18 +756,57 @@ class Repository () {
     }
 
     suspend fun checkFPA(precedency_no: String, part_no: String, temp_task_id: String) {
+
         try {
+
+            showLogs("Precedency", precedency_no)
+            showLogs("Part No.", part_no)
+            showLogs("TempTaskId", temp_task_id)
+
             val fpaCheck_Res = otherAPIs.checkFPA(precedency_no, part_no, temp_task_id)
-            if (fpaCheck_Res.isSuccessful) {
+            if (fpaCheck_Res.code() == 200) {
 
                 showLogs("CHECK FPA STATUS: ", "FPA Successful")
-
                 showLogs( "FPA CHECK STATUS RESPONSE", fpaCheck_Res.body().toString())
+
+                if (mainViewModel.FPACounter == 1 && fpaCheck_Res.body()?.start_shift_1_parameters_values.isNullOrEmpty()){
+                    mUiViewModel.setDialogDetails("","Please wait for previous station to complete FPA","", R.drawable.ic_notest)
+                    return
+                }
+
+                if (mainViewModel.FPACounter == 2 && fpaCheck_Res.body()?.start_shift_2_parameters_values.isNullOrEmpty()){
+                    mUiViewModel.setDialogDetails("","Please wait for previous station to complete FPA","", R.drawable.ic_notest)
+                    return
+                }
+
+                if (mainViewModel.FPACounter == 3 && fpaCheck_Res.body()?.end_shift_1_parameters_values.isNullOrEmpty()){
+                    mUiViewModel.setDialogDetails("","Please wait for previous station to complete FPA","", R.drawable.ic_notest)
+                    return
+                }
+
+                if (mainViewModel.FPACounter == 4 && fpaCheck_Res.body()?.end_shift_2_parameters_values.isNullOrEmpty()){
+                    mUiViewModel.setDialogDetails("","Please wait for previous station to complete FPA","", R.drawable.ic_notest)
+                    return
+                }
+
+                mainViewModel.submitPartInfoWithParams(1)
 
             } else {
                 showLogs("CHECK FPA STATUS: ", "FPA Unsuccessful")
                 showLogs( "FPA CHECK STATUS RESPONSE", fpaCheck_Res.body().toString())
 
+            }
+
+            if (fpaCheck_Res.code() == 210){
+                mainViewModel.submitPartInfoWithParams(1)
+
+                showLogs("CHECK FPA STATUS: ", "210")
+
+            }
+
+            if (fpaCheck_Res.code() == 444){
+                mUiViewModel.setDialogDetails("FPA DETAILS", "", "FPA Failed or not done", R.drawable.ic_notest)
+                mUiViewModel.showMessageDialog()
             }
 
         } catch (e: Exception) {

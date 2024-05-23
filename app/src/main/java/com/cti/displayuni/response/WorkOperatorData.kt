@@ -16,5 +16,6 @@ data class WorkOperatorData(
     val station_id: String,
     val total_assigned_task: Int,
     val flrInchr_employee_id: String,
-
+    val station_precidency: String,
+    val temp_task_id: String
 )
