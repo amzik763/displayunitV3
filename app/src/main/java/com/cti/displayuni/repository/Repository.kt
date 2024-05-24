@@ -80,6 +80,7 @@ class Repository () {
 
             if (taskResponse.code() == 200) {
                 mainViewModel.mChecksheetData.value = taskResponse.let { it.body()?.check_sheet_datas }
+                mainViewModel.checkSheetList.clear()
                 mainViewModel.mChecksheetData.value?.forEach {
                     mainViewModel.checkSheetList.add("status")
                 }
@@ -95,8 +96,9 @@ class Repository () {
                 showLogs("FAIL", mainViewModel.fail.intValue.toString())
 
                 val dataListtemp = taskResponse.body()?.process_params_info
+                mainViewModel.dataListSetting.clear()
+                mainViewModel.dataListActual.clear()
                 showLogs("PARAMS", dataListtemp?.size.toString())
-
                 dataListtemp?.forEach{
                     if (it.FPA_status){
                         mainViewModel.dataListSetting.add(Setting_Param(it.parameter_name,it.parameter_no, "", it.unit ?: "", it.min, it.max))
@@ -112,6 +114,7 @@ class Repository () {
                         val parameterNo = it.parameter_no
                         val values = MutableList(5) { " " } // Initialize values list with default values
                         val chartParam = chart_parameter(parameterName, parameterNo, values)
+                        chartParameters.clear()
                         chartParameters.add(chartParam)
                         showLogs("DATA LIST ADDING", it.readings_is_available.toString() + " " + it.parameter_name)
 
@@ -232,7 +235,6 @@ class Repository () {
                     mainViewModel.isCompleted3[4] = true
                 }
 
-
                 if(mainViewModel.fpa4.isNullOrEmpty()){
                     mainViewModel.FPACounter = 4
                     showLogs("FPA44",mainViewModel.fpa4.toString())
@@ -254,7 +256,6 @@ class Repository () {
 
                 }
 
-
                 mainViewModel.imageUrl = taskResponse.body()?.urls.toString().split(",").map { it.trim() }.toMutableList()
 
                 showLogs("IMAGE URL", mainViewModel.imageUrl.toString())
@@ -266,8 +267,6 @@ class Repository () {
                     myComponents.navController.navigate(FILL_PARAMETERS)
                 else
                     myComponents.navController.navigate(CHECKSHEET)
-
-
             }
 
             else if (taskResponse.code() == 404) {
@@ -283,6 +282,7 @@ class Repository () {
             e.printStackTrace()
         }
     }
+
     private fun setReadingStatus(minutes: Int) {
 //        val currentTime = getCurrentTime()
         var eachTime = minutes/5
@@ -290,7 +290,7 @@ class Repository () {
         showLogs("TIME SET: ",eachTime.toString() + " out of " + minutes)
 //      val item:readingsStatusItems = readingsStatusItems(eachTime, eachPart, readingStatusEnum.notAvailable)
 //      mainViewModel.readingStatusList.add(item)
-
+        mainViewModel.readingStatusList.clear()
         mainViewModel.readingStatusList.add(readingsStatusItems(eachTime, eachPart, readingStatusEnum.notAvailable))
         mainViewModel.readingStatusList.add(readingsStatusItems(eachTime*2, eachPart?.times(2), readingStatusEnum.notAvailable))
         mainViewModel.readingStatusList.add(readingsStatusItems(eachTime*3, eachPart?.times(3), readingStatusEnum.notAvailable))
@@ -304,7 +304,6 @@ class Repository () {
         mainViewModel.readingStatusList.add(eachTime*5,eachPart?.times(5),readingStatusEnum.notAvailable)
 */
     }
-
 
     private fun calculateShiftData() {
         // Assuming startShiftTime and endShiftTime are in string format in the format "HH:MM:SS"
@@ -474,11 +473,12 @@ class Repository () {
 
         showLogs("TASK P2: ",p2)
         val p1p2 = "$p1, $p2".trim(',')
+
         showLogs("Combined String: ", p1p2)
         showLogs("Station ID: ", mainViewModel.getStationValue())
-//        showLogs("PASS: ", mainViewModel.pass.intValue.toString())
-//        showLogs("FAIL: ",  mainViewModel.fail.intValue.toString())
+
         lateinit var dataResponseWithParam:Response<FpaData_res>
+
         try{
             showLogs("FCENTER", mainViewModel.FPACounter.toString())
             showLogs("PASS FAIL", p.toString() + " " + f.toString())
@@ -513,11 +513,10 @@ class Repository () {
                 //show toast successful
                 showLogs("ADDWITHPARAM","successfull")
                 showLogs("ADDWITHPARAM FPA Counter","${mainViewModel.FPACounter}")
-                myComponents.mUiViewModel.clearFields.intValue++
+                mUiViewModel.clearFields.intValue++
 
-            }else{
+            } else{
                 mainViewModel.isFPATime = false
-
                 mUiViewModel.hideMessageDialog()
                 mUiViewModel.setDialogDetails("Try again!","Error in adding FPA data","",R.drawable.ic_notest)
                 mUiViewModel.showMessageDialog()
@@ -789,15 +788,15 @@ class Repository () {
                     mUiViewModel.setDialogDetails("","Please wait for previous station to complete FPA","", R.drawable.ic_notest)
                     return
                 }
+
                 mainViewModel.submitPartInfoWithParams(1)
+
             }
 
             if (fpaCheck_Res.code() == 210){
                 mainViewModel.submitPartInfoWithParams(1)
-
                 showLogs("CHECK FPA STATUS: ", "210")
-
-            }
+             }
 
             if (fpaCheck_Res.code() == 444){
                 mUiViewModel.setDialogDetails("FPA DETAILS", "", "FPA Failed or not done", R.drawable.ic_notest)
@@ -808,5 +807,6 @@ class Repository () {
             e.printStackTrace()
         }
     }
+
 }
 
