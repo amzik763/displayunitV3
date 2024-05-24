@@ -415,7 +415,7 @@ class Repository () {
                 showLogs("ADDWITHPARAM", p.toString() + " " + f.toString())
                 showLogs("ADD DATA:","Data Added Successfully")
                 mUiViewModel.hideMessageDialog()
-                myComponents.mUiViewModel.clearFields.intValue++
+                mUiViewModel.clearFields.intValue++
 
                 return true
             }else{
@@ -568,10 +568,7 @@ class Repository () {
                         reading1
                     )
                 }
-//210  first station
-                //444 -
-                //200
-                //404
+
                 1 -> {
                     showLogs(
                         "READING API RUN 2",
@@ -797,7 +794,9 @@ class Repository () {
 
             if (fpaCheck_Res.code() == 210){
                 mainViewModel.submitPartInfoWithParams(1)
+
                 showLogs("CHECK FPA STATUS: ", "210")
+
             }
 
             if (fpaCheck_Res.code() == 444){
