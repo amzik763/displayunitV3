@@ -568,7 +568,10 @@ class Repository () {
                         reading1
                     )
                 }
-
+//210  first station
+                //444 -
+                //200
+                //404
                 1 -> {
                     showLogs(
                         "READING API RUN 2",
@@ -769,39 +772,32 @@ class Repository () {
                 showLogs("CHECK FPA STATUS: ", "FPA Successful")
                 showLogs( "FPA CHECK STATUS RESPONSE", fpaCheck_Res.body().toString())
 
-                if (mainViewModel.FPACounter == 1 && fpaCheck_Res.body()?.start_shift_1_parameters_values.isNullOrEmpty()){
+
+                if (mainViewModel.FPACounter == 1 && fpaCheck_Res.body()?.before_station_fpa_status?.start_shift_1_parameters_values.toString().isNullOrEmpty()){
                     mUiViewModel.setDialogDetails("","Please wait for previous station to complete FPA","", R.drawable.ic_notest)
                     return
                 }
 
-                if (mainViewModel.FPACounter == 2 && fpaCheck_Res.body()?.start_shift_2_parameters_values.isNullOrEmpty()){
+                if (mainViewModel.FPACounter == 2 && fpaCheck_Res.body()?.before_station_fpa_status?.start_shift_2_parameters_values.toString().isNullOrEmpty()){
                     mUiViewModel.setDialogDetails("","Please wait for previous station to complete FPA","", R.drawable.ic_notest)
                     return
                 }
 
-                if (mainViewModel.FPACounter == 3 && fpaCheck_Res.body()?.end_shift_1_parameters_values.isNullOrEmpty()){
+                if (mainViewModel.FPACounter == 3 && fpaCheck_Res.body()?.before_station_fpa_status?.end_shift_1_parameters_values.toString().isNullOrEmpty()){
                     mUiViewModel.setDialogDetails("","Please wait for previous station to complete FPA","", R.drawable.ic_notest)
                     return
                 }
 
-                if (mainViewModel.FPACounter == 4 && fpaCheck_Res.body()?.end_shift_2_parameters_values.isNullOrEmpty()){
+                if (mainViewModel.FPACounter == 4 && fpaCheck_Res.body()?.before_station_fpa_status?.end_shift_2_parameters_values.toString().isNullOrEmpty()){
                     mUiViewModel.setDialogDetails("","Please wait for previous station to complete FPA","", R.drawable.ic_notest)
                     return
                 }
-
                 mainViewModel.submitPartInfoWithParams(1)
-
-            } else {
-                showLogs("CHECK FPA STATUS: ", "FPA Unsuccessful")
-                showLogs( "FPA CHECK STATUS RESPONSE", fpaCheck_Res.body().toString())
-
             }
 
             if (fpaCheck_Res.code() == 210){
                 mainViewModel.submitPartInfoWithParams(1)
-
                 showLogs("CHECK FPA STATUS: ", "210")
-
             }
 
             if (fpaCheck_Res.code() == 444){

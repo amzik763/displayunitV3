@@ -1,5 +1,6 @@
 package com.cti.displayuni.networks
 
+import com.cti.displayuni.response.FPAres
 import com.cti.displayuni.response.FpaCheck_Res
 import com.cti.displayuni.response.FpaData_res
 import com.cti.displayuni.response.addData_Response
@@ -164,6 +165,6 @@ interface OtherAPIs {
         @Field("precedency_no") precedency_no: String,
         @Field("part_no") part_no: String,
         @Field("temp_task_id") temp_task_id: String
-    ): Response<FpaCheck_Res>
+    ): Response<FPAres>
 
 }
