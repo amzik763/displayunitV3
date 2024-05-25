@@ -3,6 +3,7 @@ package com.cti.displayuni.screens
 import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -69,14 +70,15 @@ fun SubmitButton(text: String, onClick: () -> Unit) {
     Surface(
         modifier = Modifier
             .padding(start = 38.dp, top = 16.dp)
-            .size(width = 150.dp, height = 48.dp),
-//        .padding(start = 38.dp, top = 16.dp) uncomment later
-//    .size(width = 150.dp, height = 48.dp), uncomment later
+            .size(width = 150.dp, height = 48.dp)
+            .clickable {
+                onClick()
+               },
         color = green,
         shape = RoundedCornerShape(corner = CornerSize(36.dp)),
         border = BorderStroke(width = 1.dp, color = green)
     ) {
-        ClickableText(
+        Text(
             text = AnnotatedString(text),
             style = TextStyle(
                 color = pureWhite,
@@ -88,9 +90,7 @@ fun SubmitButton(text: String, onClick: () -> Unit) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(9.dp),
-            onClick = {
-                onClick()
-            }
+
         )
     }
 }
@@ -137,12 +137,16 @@ fun CustomPopupContent(
         Surface(
             modifier = Modifier
                 .padding(start = 16.dp)
-                .size(width = 150.dp, height = 46.dp),
+                .size(width = 150.dp, height = 46.dp)
+                .clickable {
+                    onCloseClicked()
+
+                },
             color = darkBlue,
             shape = RoundedCornerShape(corner = CornerSize(36.dp)),
             border = BorderStroke(width = 1.dp, color = green)
         ) {
-            ClickableText(
+            Text(
                 text = AnnotatedString("Close"),
                 style = TextStyle(
                     color = pureWhite,
@@ -154,9 +158,7 @@ fun CustomPopupContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(9.dp),
-                onClick = {
-                    onCloseClicked()
-                }
+
             )
         }
     }

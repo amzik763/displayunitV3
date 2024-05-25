@@ -156,12 +156,16 @@ fun Profile(){
             modifier = Modifier
                 .padding(top = 36.dp)
                 .size(width = width, height = height)
-                .align(Alignment.CenterHorizontally),
+                .align(Alignment.CenterHorizontally)
+                .clickable {
+                    myComponents.navController.navigate(CONFIGURE_NEW)
+
+                },
             color = darkBlue,
             shape = RoundedCornerShape(corner = CornerSize(24.dp)),
             border = BorderStroke(width = 1.dp, color = darkBlue)
         ) {
-            ClickableText(
+            Text(
                 text = AnnotatedString("Configure"),
                 style = TextStyle(
                     color = pureWhite,
@@ -174,9 +178,7 @@ fun Profile(){
                     .fillMaxWidth()
                     .padding(9.dp)
                     .align(Alignment.CenterHorizontally),
-                onClick = {
-                        myComponents.navController.navigate(CONFIGURE_NEW)
-                }
+
             )
         }
 

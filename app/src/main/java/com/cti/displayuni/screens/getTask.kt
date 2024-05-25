@@ -272,12 +272,16 @@ fun GetTask() {
               Surface(
                   modifier = Modifier
                       .padding(top = 16.dp)
-                      .size(width = width, height = height),
+                      .size(width = width, height = height)
+                      .clickable {
+                          myComponents.mainViewModel.getTask(myComponents.mainViewModel.getStationValue())
+
+                      },
                   color = darkBlue,
                   shape = RoundedCornerShape(corner = CornerSize(24.dp)),
                   border = BorderStroke(width = 1.dp, color = darkBlue)
               ) {
-                  ClickableText(
+                  Text(
                       text = AnnotatedString("Get Task"),
                       style = TextStyle(
                           color = pureWhite,
@@ -290,11 +294,7 @@ fun GetTask() {
                           .fillMaxWidth()
                           .padding(9.dp)
                           .align(Alignment.CenterHorizontally),
-                      onClick = {
 
-//                          myComponents.navController.navigate(CHECKSHEET)
-                          myComponents.mainViewModel.getTask(myComponents.mainViewModel.getStationValue())
-                      }
                   )
               }
           }

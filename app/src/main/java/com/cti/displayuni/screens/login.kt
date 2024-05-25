@@ -3,6 +3,7 @@ package com.cti.displayuni.screens
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -21,9 +22,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,11 +53,13 @@ import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.lightOrange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
+import com.cti.displayuni.ui.theme.red
 import com.cti.displayuni.utility.mFont.nk
 import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents.mainViewModel
+import kotlinx.coroutines.delay
 
 @Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -212,6 +218,7 @@ fun Login(){
                     modifier = Modifier.fillMaxWidth(0.4f),
                     horizontalAlignment = Alignment.End
                 ) {
+
                     Surface(
                         modifier = Modifier
                             .padding(top = 16.dp)

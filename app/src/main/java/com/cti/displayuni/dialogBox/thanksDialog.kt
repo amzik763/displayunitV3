@@ -6,6 +6,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -289,12 +290,26 @@ fun ThanksDialog(
                             Surface(
                                 modifier = Modifier
 //                                    .padding(top = 16.dp)
-                                    .size(width = width, height = height),
+                                    .size(width = width, height = height)
+                                    .clickable {
+                                        //close app or goto main screen
+                                        val a = ct as? Activity
+                                        a?.finishAffinity()
+                                        showLogs("GOING:","Just Going there")
+//                                        navController.navigate(SIGNING_SCREEN)
+
+                                        navController.popBackStack()
+                                        navController.navigate("Login")
+                                        myComponents.mUiViewModel.hideThanksDialog()
+//
+//                                        navController.popBackStack()
+//                                            myComponents.navController.popBackStack(SIGNING_SCREEN, inclusive = true)
+                                    },
                                 color = darkBlue,
                                 shape = RoundedCornerShape(corner = CornerSize(24.dp)),
                                 border = BorderStroke(width = 1.dp, color = darkBlue)
                             ) {
-                                ClickableText(
+                                Text(
                                     text = AnnotatedString("Logout"),
                                     style = TextStyle(
                                         color = pureWhite,
@@ -307,20 +322,7 @@ fun ThanksDialog(
                                         .fillMaxWidth()
                                         .padding(9.dp)
                                         .align(Alignment.CenterHorizontally),
-                                    onClick = {
-                                            //close app or goto main screen
-                                        val a = ct as? Activity
-                                        a?.finishAffinity()
-                                        showLogs("GOING:","Just Going there")
-//                                        navController.navigate(SIGNING_SCREEN)
 
-                                        navController.popBackStack()
-                                        navController.navigate("Login")
-                                        myComponents.mUiViewModel.hideThanksDialog()
-//
-//                                        navController.popBackStack()
-//                                            myComponents.navController.popBackStack(SIGNING_SCREEN, inclusive = true)
-                                    }
                                 )
                         }
                     }

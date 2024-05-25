@@ -5,6 +5,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -241,12 +242,23 @@ fun SupLoginDialog(
                             Surface(
                                 modifier = Modifier
                                     .padding(top = 24.dp)
-                                    .size(width = width, height = height),
+                                    .size(width = width, height = height)
+                                    .clickable {
+                                        CoroutineScope(Dispatchers.IO).launch {
+                                            val mRes = myComponents.otherAPIs.supLogin(name,password)
+                                            if(mRes.isSuccessful){
+                                                myComponents.mainViewModel.isSupLoginSuccessful = true
+                                                errorMsg = " "
+                                                showLogs("LOGIN","LOGIN SUCCESSFUL")
+
+                                            }
+                                        }
+                                    },
                                 color = darkBlue,
                                 shape = RoundedCornerShape(corner = CornerSize(24.dp)),
                                 border = BorderStroke(width = 1.dp, color = darkBlue)
                             ) {
-                                ClickableText(
+                                Text(
                                     text = AnnotatedString("LOGIN"),
                                     style = TextStyle(
                                         color = pureWhite,
@@ -259,17 +271,7 @@ fun SupLoginDialog(
                                         .fillMaxWidth()
                                         .padding(9.dp)
                                         .align(Alignment.CenterHorizontally),
-                                    onClick = {
-                                        CoroutineScope(Dispatchers.IO).launch {
-                                          val mRes = myComponents.otherAPIs.supLogin(name,password)
-                                            if(mRes.isSuccessful){
-                                                myComponents.mainViewModel.isSupLoginSuccessful = true
-                                                errorMsg = " "
-                                                showLogs("LOGIN","LOGIN SUCCESSFUL")
 
-                                            }
-                                        }
-                                    }
                                 )
                             }
                         }
@@ -306,25 +308,8 @@ fun SupLoginDialog(
                         ) {
                             Surface(
                                 modifier = Modifier
-                                    .size(width = width, height = height),
-                                color = darkBlue,
-                                shape = RoundedCornerShape(corner = CornerSize(24.dp)),
-                                border = BorderStroke(width = 1.dp, color = darkBlue)
-                            ) {
-                                ClickableText(
-                                    text = AnnotatedString("SUBMIT"),
-                                    style = TextStyle(
-                                        color = pureWhite,
-                                        fontSize = textFont1,
-                                        fontFamily = poppinsregular,
-                                        fontWeight = FontWeight.Bold,
-                                        textAlign = TextAlign.Center
-                                    ),
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(9.dp)
-                                        .align(Alignment.CenterHorizontally),
-                                    onClick = {
+                                    .size(width = width, height = height)
+                                    .clickable {
                                         if (myComponents.mainViewModel.isSupLoginSuccessful){
                                             errorMsg = ""
                                             myComponents.mainViewModel. addChecksheetData()
@@ -340,8 +325,25 @@ fun SupLoginDialog(
                                             showLogs("CHECKSHEET",errorMsg)
 
                                         }
+                                    },
+                                color = darkBlue,
+                                shape = RoundedCornerShape(corner = CornerSize(24.dp)),
+                                border = BorderStroke(width = 1.dp, color = darkBlue)
+                            ) {
+                                Text(
+                                    text = AnnotatedString("SUBMIT"),
+                                    style = TextStyle(
+                                        color = pureWhite,
+                                        fontSize = textFont1,
+                                        fontFamily = poppinsregular,
+                                        fontWeight = FontWeight.Bold,
+                                        textAlign = TextAlign.Center
+                                    ),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(9.dp)
+                                        .align(Alignment.CenterHorizontally),
 
-                                }
                             )
                         }
                     }
