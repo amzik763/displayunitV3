@@ -5,6 +5,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -210,12 +211,15 @@ fun NetworkErrorDialog(
                         Surface(
                             modifier = Modifier
                                 .padding(top = 16.dp)
-                                .size(width = width, height = height),
+                                .size(width = width, height = height)
+                                .clickable {
+                                    onRetry()
+                                },
                             color = darkBlue,
                             shape = RoundedCornerShape(corner = CornerSize(24.dp)),
                             border = BorderStroke(width = 1.dp, color = darkBlue)
                         ) {
-                            ClickableText(
+                            Text(
                                 text = AnnotatedString("Retry"),
                                 style = TextStyle(
                                     color = pureWhite,
@@ -228,9 +232,7 @@ fun NetworkErrorDialog(
                                     .fillMaxWidth()
                                     .padding(9.dp)
                                     .align(Alignment.CenterHorizontally),
-                                onClick = {
-                                            onRetry()
-                                }
+
                             )
                         }
                     }

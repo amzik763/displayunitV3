@@ -3,6 +3,7 @@ package com.cti.displayuni.screens
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -229,12 +230,22 @@ fun ConfigureNew(){
                     Surface(
                         modifier = Modifier
                             .padding(top = 40.dp)
-                            .size(width = width, height = height),
+                            .size(width = width, height = height)
+                            .clickable {
+                                mainViewModel.saveStationValue(G0F0L0S0Value)
+                                Log.d("Shared Value", G0F0L0S0Value)
+
+                                mainViewModel.floorNum =
+                                    G0F0L0S0Value.split(" ").take(2).joinToString(" ")
+                                Log.d("FLOOR VALUE", mainViewModel.floorNum)
+
+                                navController.navigate(GETTASK)
+                            },
                         color = darkBlue,
                         shape = RoundedCornerShape(corner = CornerSize(24.dp)),
                         border = BorderStroke(width = 1.dp, color = darkBlue)
                     ) {
-                        ClickableText(
+                        Text(
                             text = AnnotatedString("Configure"),
                             style = TextStyle(
                                 color = pureWhite,
@@ -247,16 +258,7 @@ fun ConfigureNew(){
                                 .fillMaxWidth()
                                 .padding(9.dp)
                                 .align(Alignment.CenterHorizontally),
-                            onClick = {
-                                mainViewModel.saveStationValue(G0F0L0S0Value)
-                                Log.d("Shared Value", G0F0L0S0Value)
 
-                                mainViewModel.floorNum =
-                                    G0F0L0S0Value.split(" ").take(2).joinToString(" ")
-                                Log.d("FLOOR VALUE", mainViewModel.floorNum)
-
-                                navController.navigate(GETTASK)
-                            }
                         )
                     }
                 }
