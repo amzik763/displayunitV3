@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
@@ -18,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,8 +38,13 @@ import com.cti.displayuni.utility.showLogs
 fun ParametersLazyList(
     dataListSetting: MutableList<Setting_Param>
 ) {
+
+    // Create a map to store enterValue for each item
+    // Map to store enterValue for each item
+    val enterValues = rememberSaveable { mutableStateOf(mutableMapOf<Int, String>()) }
+
     LazyColumn(modifier = Modifier.fillMaxHeight()) {
-        items(dataListSetting) { item ->
+        itemsIndexed(dataListSetting) {index, item ->
             Column {
                 Row(
                     modifier = Modifier
@@ -62,18 +69,22 @@ fun ParametersLazyList(
                     Spacer(modifier = Modifier.width(30.dp))
 
                     Row (verticalAlignment = Alignment.CenterVertically){
-                        var enterValue by remember { mutableStateOf("") }
-
-                        item.param_value = enterValue
+                        // Assigning the remembered enterValue to the item's param_value
+                        var enterValue by rememberSaveable { mutableStateOf(enterValues.value[index] ?: "") }
 
                         Row(modifier = Modifier.width(180.dp)){
                             EnterValue(
                                 text = enterValue,
                                 label = "Enter Value",
-                                onTextChange = { enterValue = it },
+                                onTextChange = { newValue ->
+                                    enterValue = newValue
+                                    enterValues.value = enterValues.value.toMutableMap().apply {
+                                        this[index] = newValue
+                                    }
+                                    item.param_value = newValue
+                                },
                                 color = pureBlack,
                                 maxLength = 15,
-//                    keyboardOptions = ,
                                 shape = RoundedCornerShape(8.dp)
                             )
                         }
@@ -92,7 +103,9 @@ fun ParametersLazyList(
                         )
 
                         LaunchedEffect(myComponents.mUiViewModel.clearFields.value) {
-                            enterValue = ""
+                            enterValues.value = enterValues.value.toMutableMap().apply {
+                                this[index] = ""
+                            }
                             showLogs("val","val cleared: ACTUAL")
 
                         }
