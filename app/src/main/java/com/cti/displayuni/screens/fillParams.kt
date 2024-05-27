@@ -59,6 +59,7 @@ import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
 import com.cti.displayuni.ui.theme.red
+import com.cti.displayuni.utility.mFont
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.showLogs
@@ -233,6 +234,8 @@ fun OrangeText(
 @Composable
 fun Header(){
 
+    val currentDateTime = myComponents.mUiViewModel.currentDateTime.observeAsState("")
+
     Column(modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight()
@@ -285,7 +288,20 @@ fun Header(){
                     )
                 }
 
-                OrangeText(name = "Device Id:", value = myComponents.mainViewModel.deviceId)
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Column {
+
+                    OrangeText(name = "Device Id:", value = myComponents.mainViewModel.deviceId)
+
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 4.dp)
+                            .width(65.dp)
+                            .height(4.dp)
+                            .background(color = lightOrange)
+                    )
+                }
 
                 Spacer(modifier = Modifier.width(48.dp))
                 //Shift Timings
@@ -295,6 +311,17 @@ fun Header(){
                         fontWeight = FontWeight.Bold,
                         fontSize = fontMedium,
                         color = orange
+                    )
+                )
+
+                Spacer(modifier = Modifier.width(38.dp))
+
+                Text(
+                    text = currentDateTime.value,
+                    style = TextStyle(
+                        fontSize = fontMedium,
+                        color = pureBlack,
+                        fontFamily = mFont.poppinsregular
                     )
                 )
             }
