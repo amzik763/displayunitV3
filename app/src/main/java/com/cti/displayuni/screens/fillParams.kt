@@ -284,6 +284,9 @@ fun Header(){
                             .background(color = lightOrange)
                     )
                 }
+
+                OrangeText(name = "Device Id:", value = myComponents.mainViewModel.deviceId)
+
                 Spacer(modifier = Modifier.width(48.dp))
                 //Shift Timings
                 Text(
@@ -312,13 +315,13 @@ fun Header(){
                 }
 
                 Spacer(Modifier.width(36.dp))
-                MyImageButton(R.drawable.ic_account) {
+              /*  MyImageButton(R.drawable.ic_account) {
                     //functionality
                 }
 
                 MyImageButton(R.drawable.ic_logout) {
                     //functionality
-                }
+                }*/
             }
         }
         //Second Row
