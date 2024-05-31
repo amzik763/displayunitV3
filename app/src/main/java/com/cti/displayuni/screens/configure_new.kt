@@ -235,6 +235,8 @@ fun ConfigureNew(){
                                 mainViewModel.saveStationValue(G0F0L0S0Value)
                                 Log.d("Shared Value", G0F0L0S0Value)
 
+                                mainViewModel.deviceId = G0F0L0S0Value
+
                                 mainViewModel.floorNum =
                                     G0F0L0S0Value.split(" ").take(2).joinToString(" ")
                                 Log.d("FLOOR VALUE", mainViewModel.floorNum)

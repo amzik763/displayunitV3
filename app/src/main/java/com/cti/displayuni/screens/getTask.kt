@@ -225,11 +225,7 @@ fun GetTask() {
               Row(modifier = Modifier.fillMaxWidth(0.37f),
                   horizontalArrangement = Arrangement.SpaceBetween)
               {
-                  Image(
-                      painter = painterResource(id = R.drawable.ic_hindi),
-                      contentDescription = "Hindi icon",
-                      modifier = Modifier.size(imgSize)
-                  )
+
                   Image(
                       painter = painterResource(id = R.drawable.ic_account),
                       contentDescription = "Account",
@@ -238,14 +234,7 @@ fun GetTask() {
                               myComponents.navController.navigate(PROFILE)
                           }
                   )
-                  Image(
-                      painter = painterResource(id = R.drawable.ic_logout),
-                      contentDescription = "Logout",
-                      modifier = Modifier
-                          .size(imgSize)
-                          .clickable {
-                          }
-                  )
+
               }
           }
       }
