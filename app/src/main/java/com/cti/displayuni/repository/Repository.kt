@@ -112,8 +112,10 @@ class Repository () {
                     if (it.readings_is_available){
                         val parameterName = it.parameter_name
                         val parameterNo = it.parameter_no
+                        val min = it.min
+                        val max = it.max
                         val values = MutableList(5) { " " } // Initialize values list with default values
-                        val chartParam = chart_parameter(parameterName, parameterNo, values)
+                        val chartParam = chart_parameter(parameterName, parameterNo,min, max, values)
                         chartParameters.clear()
                         chartParameters.add(chartParam)
                         showLogs("DATA LIST ADDING", it.readings_is_available.toString() + " " + it.parameter_name)

@@ -169,7 +169,11 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
 
     Column {
         var PN = ""
+        var min=""
+        var max = ""
         try{
+            min = myComponents.mainViewModel.dataListChart.value?.get(0)?.min ?: "none"
+            max = myComponents.mainViewModel.dataListChart.value?.get(0)?.max ?: "none"
             PN = myComponents.mainViewModel.dataListChart.value?.get(0)?.parameter_name ?: "none"
         }catch (_:Exception){
 
@@ -187,7 +191,7 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
             if(myComponents.mainViewModel.readingStatusList[0].readingStatusE != readingStatusEnum.notAvailable)
                 Column {
                     var reading1 by remember {
-                        mutableStateOf(dataListChart.value.get(0).values.get(0))
+                        mutableStateOf(dataListChart.value.get(0). values.get(0))
                     }
                     ReadingValue(
                         text =  reading1,
@@ -211,6 +215,8 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
                     )
                     if(!myComponents.mainViewModel.isCompleted1[0])
                         SubmitButton(text = "Submit", onClick = {
+
+                            if(myComponents.mainViewModel.readingInRange(min,max,reading1))
                             //runReadingAPI
                             myComponents.mainViewModel.runReadingAPI(0,reading1,0)
                         })
@@ -365,9 +371,12 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
 fun ReadingRow2nd(dataListChart: State<List<chart_parameter>>) {
     Column {
         var PN = ""
+        var min=""
+        var max = ""
         try{
-            PN = myComponents.mainViewModel.dataListChart.value?.get(1)?.parameter_name ?: "none"
-
+            min = myComponents.mainViewModel.dataListChart.value?.get(0)?.min ?: "none"
+            max = myComponents.mainViewModel.dataListChart.value?.get(0)?.max ?: "none"
+            PN = myComponents.mainViewModel.dataListChart.value?.get(0)?.parameter_name ?: "none"
         }catch (_:Exception){
 
         }
@@ -570,8 +579,12 @@ fun ReadingRow2nd(dataListChart: State<List<chart_parameter>>) {
 fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
     Column {
         var PN = ""
+        var min=""
+        var max = ""
         try{
-            PN = myComponents.mainViewModel.dataListChart.value?.get(2)?.parameter_name?:"none"
+            min = myComponents.mainViewModel.dataListChart.value?.get(0)?.min ?: "none"
+            max = myComponents.mainViewModel.dataListChart.value?.get(0)?.max ?: "none"
+            PN = myComponents.mainViewModel.dataListChart.value?.get(0)?.parameter_name ?: "none"
         }catch (_:Exception){
 
         }

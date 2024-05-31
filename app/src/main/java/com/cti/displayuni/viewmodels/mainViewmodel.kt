@@ -232,6 +232,28 @@ class MainViewModel(context: Context) : ViewModel(){
         showLogs("DIALOG","HIDE DIALOG")
     }
 
+
+    fun readingInRange(min:String,max:String,param_value:String):Boolean{
+
+        try {
+                    if (Integer.parseInt(param_value) > Integer.parseInt(max) || Integer.parseInt(
+                            param_value
+                        ) < Integer.parseInt(min)
+                    ) {
+                        mUiViewModel.setDialogDetails(
+                            "Not Eligible",
+                            "",
+                            "Value should be between ${min} and ${max}",
+                            R.drawable.ic_notest
+                        )
+                        mUiViewModel.showMessageDialog()
+                        return false
+                    }
+        }catch (_:Exception){
+            return false
+        }
+        return true
+    }
     fun itemsInRange():Boolean{
         dataListActual.forEach {
             try {
@@ -241,7 +263,7 @@ class MainViewModel(context: Context) : ViewModel(){
                                 it.param_value.toString()
                             ) < Integer.parseInt(it.min.toString())
                         ) {
-                            myComponents.mUiViewModel.setDialogDetails(
+                            mUiViewModel.setDialogDetails(
                                 "Not Eligible",
                                 "",
                                 "${it.param_name} value should be between ${it.min} and ${it.max}",
@@ -262,7 +284,7 @@ class MainViewModel(context: Context) : ViewModel(){
                             it.param_value.toString()
                         ) < Integer.parseInt(it.min.toString())
                     ) {
-                        myComponents.mUiViewModel.setDialogDetails(
+                        mUiViewModel.setDialogDetails(
                             "Not Eligible",
                             "",
                             "${it.param_name} value should be between ${it.min} and ${it.max}",
