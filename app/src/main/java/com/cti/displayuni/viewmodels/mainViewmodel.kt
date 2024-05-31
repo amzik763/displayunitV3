@@ -221,6 +221,12 @@ class MainViewModel(context: Context) : ViewModel(){
                 mUiViewModel.showLoginSupDialog()
                 return
             }
+
+            if( item == "status") {
+                mUiViewModel.setDialogDetails("EMPTY STATUS", "Please fill all the value..", "", R.drawable.ic_notest )
+                mUiViewModel.showMessageDialog()
+                return
+            }
         }
         mainViewModel.addChecksheetData()
         showLogs("DIALOG","HIDE DIALOG")

@@ -31,7 +31,7 @@ fun DropDown(paramId: String, index: Int) {
 
     var expanded by remember { mutableStateOf(false) }
 //  val selectedItem by rememberUpdatedState("Status")
-    var selectedItem by remember { mutableStateOf("Status") }
+    var selectedItem by remember { mutableStateOf("status") }
     val items = listOf("OK", "NG", "SUP_OK")
 
     LaunchedEffect(selectedItem) {

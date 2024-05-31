@@ -222,7 +222,7 @@ fun GetTask() {
                   )
               )
 
-              Row(modifier = Modifier.fillMaxWidth(0.37f),
+              Row(modifier = Modifier.fillMaxWidth(0.27f),
                   horizontalArrangement = Arrangement.SpaceBetween)
               {
 
