@@ -117,9 +117,7 @@ class Repository () {
                         chartParameters.clear()
                         chartParameters.add(chartParam)
                         showLogs("DATA LIST ADDING", it.readings_is_available.toString() + " " + it.parameter_name)
-
                     }
-
                 }
                 mainViewModel.dataListChart.value = chartParameters
                 showLogs("DATA LIST VALUES", mainViewModel.dataListChart.value.toString())

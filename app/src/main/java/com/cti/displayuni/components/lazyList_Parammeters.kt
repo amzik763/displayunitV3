@@ -72,6 +72,7 @@ fun ParametersLazyList(
                                 label = "Enter Value",
                                 onTextChange = { enterValue = it },
                                 color = pureBlack,
+
                                 maxLength = 15,
 //                    keyboardOptions = ,
                                 shape = RoundedCornerShape(8.dp)
