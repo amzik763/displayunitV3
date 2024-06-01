@@ -415,7 +415,7 @@ fun Header(){
                                 return@Button
                             }
                             else if(!actualParamsFilled || !settingParamsFilled){
-                                myComponents.mUiViewModel.setDialogDetails("Fill Values", "", "Please fill all the parameter values", R.drawable.ic_notest )
+                                myComponents.mUiViewModel.setDialogDetails("Fill Values - FPA", "", "Please fill all the parameter values", R.drawable.ic_notest )
                                 myComponents.mUiViewModel.showMessageDialog()
                                 return@Button
                             }
@@ -434,7 +434,7 @@ fun Header(){
                                     return@Button
                                 }
                                 else if(!actualParamsFilled || !settingParamsFilled){
-                                    myComponents.mUiViewModel.setDialogDetails("Fill Values", "", "Please fill all the parameter values", R.drawable.ic_notest )
+                                    myComponents.mUiViewModel.setDialogDetails("Fill Values - FPA", "", "Please fill all the parameter values", R.drawable.ic_notest )
                                     myComponents.mUiViewModel.showMessageDialog()
                                     showLogs("PASS FAIL 222", "FILL FPA")
 

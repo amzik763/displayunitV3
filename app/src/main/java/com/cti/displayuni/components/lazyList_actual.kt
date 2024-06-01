@@ -108,6 +108,16 @@ fun ActualLazyList(
                             enterValues.value = enterValues.value.toMutableMap().apply {
                                 this[index] = ""
                             }
+                            enterValue = ""
+
+                            myComponents.mainViewModel.dataListSetting.forEach {
+                                it.param_value = ""
+                            }
+
+                            myComponents.mainViewModel.dataListActual.forEach {
+                                it.param_value = ""
+                            }
+
                             showLogs("val","val cleared: ACTUAL")
 
                         }
