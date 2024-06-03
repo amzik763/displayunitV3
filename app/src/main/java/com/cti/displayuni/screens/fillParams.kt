@@ -1,5 +1,6 @@
 package com.cti.displayuni.screens
 
+import android.app.Activity
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -38,6 +39,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -97,7 +99,6 @@ fun ActualParams() {
     }
 }
 
-
 @Composable
 fun SettingParams() {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -111,7 +112,6 @@ fun SettingParams() {
 
         Spacer(modifier = Modifier.height(36.dp))
         ParametersLazyList(myComponents.mainViewModel.dataListSetting)
-
     }
 }
 
@@ -236,6 +236,8 @@ fun Header(){
 
     val currentDateTime = myComponents.mUiViewModel.currentDateTime.observeAsState("")
 
+    val ct = LocalContext.current
+
     Column(modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight()
@@ -341,14 +343,16 @@ fun Header(){
                     )
                 }
 
-                Spacer(Modifier.width(36.dp))
-              /*  MyImageButton(R.drawable.ic_account) {
-                    //functionality
-                }
+                Spacer(Modifier.width(30.dp))
 
                 MyImageButton(R.drawable.ic_logout) {
-                    //functionality
-                }*/
+                    val a = ct as? Activity
+                    a?.finishAffinity()
+                    showLogs("GOING:","Just Going there")
+
+                    myComponents.navController.popBackStack()
+                    myComponents.navController.navigate("Login")
+                }
             }
         }
         //Second Row

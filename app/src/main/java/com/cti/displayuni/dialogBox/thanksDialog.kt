@@ -289,21 +289,15 @@ fun ThanksDialog(
                         ) {
                             Surface(
                                 modifier = Modifier
-//                                    .padding(top = 16.dp)
                                     .size(width = width, height = height)
                                     .clickable {
-                                        //close app or goto main screen
                                         val a = ct as? Activity
                                         a?.finishAffinity()
                                         showLogs("GOING:","Just Going there")
-//                                        navController.navigate(SIGNING_SCREEN)
 
                                         navController.popBackStack()
                                         navController.navigate("Login")
                                         myComponents.mUiViewModel.hideThanksDialog()
-//
-//                                        navController.popBackStack()
-//                                            myComponents.navController.popBackStack(SIGNING_SCREEN, inclusive = true)
                                     },
                                 color = darkBlue,
                                 shape = RoundedCornerShape(corner = CornerSize(24.dp)),
@@ -322,7 +316,6 @@ fun ThanksDialog(
                                         .fillMaxWidth()
                                         .padding(9.dp)
                                         .align(Alignment.CenterHorizontally),
-
                                 )
                         }
                     }
