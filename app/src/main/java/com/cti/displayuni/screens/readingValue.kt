@@ -174,7 +174,7 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
         try{
             min = myComponents.mainViewModel.dataListChart.value?.get(0)?.min ?: "none"
             max = myComponents.mainViewModel.dataListChart.value?.get(0)?.max ?: "none"
-            PN = myComponents.mainViewModel.dataListChart.value?.get(0)?.parameter_name ?: "none"
+            PN = myComponents.mainViewModel.dataListChart.value?.get(0)?.parameter_name + " :" + myComponents.mainViewModel.dataListChart.value?.get(0)?.min + " - "+ myComponents.mainViewModel.dataListChart.value?.get(0)?.max
         }catch (_:Exception){
 
         }
@@ -248,7 +248,7 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
                     if(!myComponents.mainViewModel.isCompleted1[1])
                         SubmitButton(text = "Submit", onClick = {
                             if(myComponents.mainViewModel.readingInRange(min,max,reading2))
-                            myComponents.mainViewModel.runReadingAPI(0, reading2, 1)
+                             myComponents.mainViewModel.runReadingAPI(0, reading2, 1)
 
                         })
 
@@ -378,7 +378,8 @@ fun ReadingRow2nd(dataListChart: State<List<chart_parameter>>) {
         try{
             min = myComponents.mainViewModel.dataListChart.value?.get(0)?.min ?: "none"
             max = myComponents.mainViewModel.dataListChart.value?.get(0)?.max ?: "none"
-            PN = myComponents.mainViewModel.dataListChart.value?.get(0)?.parameter_name ?: "none"
+            PN = myComponents.mainViewModel.dataListChart.value?.get(0)?.parameter_name + " :" + myComponents.mainViewModel.dataListChart.value?.get(0)?.min + " - "+ myComponents.mainViewModel.dataListChart.value?.get(0)?.max
+
         }catch (_:Exception){
 
         }
@@ -591,7 +592,8 @@ fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
         try{
             min = myComponents.mainViewModel.dataListChart.value?.get(0)?.min ?: "none"
             max = myComponents.mainViewModel.dataListChart.value?.get(0)?.max ?: "none"
-            PN = myComponents.mainViewModel.dataListChart.value?.get(0)?.parameter_name ?: "none"
+            PN = myComponents.mainViewModel.dataListChart.value?.get(0)?.parameter_name + " :" + myComponents.mainViewModel.dataListChart.value?.get(0)?.min + " - "+ myComponents.mainViewModel.dataListChart.value?.get(0)?.max
+
         }catch (_:Exception){
 
         }

@@ -57,6 +57,7 @@ fun ActualLazyList(
                 ) {
                     Text(
                         text = item.param_name.toString(),
+
                         style = TextStyle(
                             fontSize = 15.sp,
                             color = pureBlack,
@@ -77,7 +78,7 @@ fun ActualLazyList(
                         Row(modifier = Modifier.width(180.dp)){
                             EnterValue(
                                 text = enterValue,
-                                label = "Enter Value",
+                                label = item.min + " - " + item.max,
                                 onTextChange = { newValue ->
                                     enterValue = newValue
                                     enterValues.value = enterValues.value.toMutableMap().apply {

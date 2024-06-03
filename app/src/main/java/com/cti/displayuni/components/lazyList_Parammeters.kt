@@ -75,7 +75,8 @@ fun ParametersLazyList(
                         Row(modifier = Modifier.width(180.dp)){
                             EnterValue(
                                 text = enterValue,
-                                label = "Enter Value",
+                                label = item.min + " - " + item.max,
+
                                 onTextChange = { newValue ->
                                     enterValue = newValue
                                     enterValues.value = enterValues.value.toMutableMap().apply {
