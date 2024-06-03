@@ -198,8 +198,10 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
                         label = "Enter Value",
                         onTextChange = {it ->
                             if(!myComponents.mainViewModel.isCompleted1[0]){
-                            val filteredValue = it.filter { it.isLetterOrDigit() }
-                            reading1 = filteredValue
+
+                                val filteredValue = it.filter { it.isLetterOrDigit() || it == '.' }
+
+                                reading1 = filteredValue
                             myComponents.mainViewModel.dataListChart.value?.get(0)?.values?.set(0,filteredValue)}
                         },
 
@@ -232,8 +234,9 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
                         onTextChange = { it ->
                             if(!myComponents.mainViewModel.isCompleted1[1]){
 
-                            val filteredValue = it.filter { it.isLetterOrDigit() }
-                            reading2 = filteredValue
+                                val filteredValue = it.filter { it.isLetterOrDigit() || it == '.' }
+
+                                reading2 = filteredValue
                             myComponents.mainViewModel.dataListChart.value?.get(0)?.values?.set(1,filteredValue)}
                         },
                         color = pureBlack,
@@ -267,8 +270,9 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
                         onTextChange = { it ->
                             if(!myComponents.mainViewModel.isCompleted1[2]){
 
-                            val filteredValue = it.filter { it.isLetterOrDigit() }
-                            reading3 = filteredValue
+                                val filteredValue = it.filter { it.isLetterOrDigit() || it == '.' }
+
+                                reading3 = filteredValue
                             myComponents.mainViewModel.dataListChart.value?.get(0)?.values?.set(2,filteredValue)}
 
                         },
@@ -304,8 +308,9 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted1[3]){
 
-                            val filteredValue = it.filter { it.isLetterOrDigit() }
-                            // Update the state with the filtered value
+                                val filteredValue = it.filter { it.isLetterOrDigit() || it == '.' }
+
+                                // Update the state with the filtered value
                             reading4 = filteredValue
                             myComponents.mainViewModel.dataListChart.value?.get(0)?.values?.set(3,filteredValue)}
 
@@ -341,8 +346,9 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
                         onTextChange = { it ->
                             if(!myComponents.mainViewModel.isCompleted1[4]){
 
-                            val filteredValue = it.filter { it.isLetterOrDigit() }
-                            reading5 = filteredValue
+                                val filteredValue = it.filter { it.isLetterOrDigit() || it == '.' }
+
+                                reading5 = filteredValue
                             myComponents.mainViewModel.dataListChart.value?.get(0)?.values?.set(4,filteredValue)}
 
                         },
@@ -407,8 +413,9 @@ fun ReadingRow2nd(dataListChart: State<List<chart_parameter>>) {
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted2[0]){
 
-                            val filteredValue = it.filter { it.isLetterOrDigit() }
-                            // Update the state with the filtered value
+                                val filteredValue = it.filter { it.isLetterOrDigit() || it == '.' }
+
+                                // Update the state with the filtered value
                             reading12 = filteredValue
                             myComponents.mainViewModel.dataListChart.value?.get(1)?.values?.set(0,filteredValue)}
 
@@ -445,8 +452,9 @@ fun ReadingRow2nd(dataListChart: State<List<chart_parameter>>) {
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted2[1]){
 
-                            val filteredValue = it.filter { it.isLetterOrDigit() }
-                            // Update the state with the filtered value
+                                val filteredValue = it.filter { it.isLetterOrDigit() || it == '.' }
+
+                                // Update the state with the filtered value
                             reading22 = filteredValue
                             myComponents.mainViewModel.dataListChart.value?.get(1)?.values?.set(1,filteredValue)}
 
@@ -482,8 +490,9 @@ fun ReadingRow2nd(dataListChart: State<List<chart_parameter>>) {
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted2[2]){
 
-                            val filteredValue = it.filter { it.isLetterOrDigit() }
-                            // Update the state with the filtered value
+                                val filteredValue = it.filter { it.isLetterOrDigit() || it == '.' }
+
+                                // Update the state with the filtered value
                             reading32 = filteredValue
                             myComponents.mainViewModel.dataListChart.value?.get(1)?.values?.set(2,filteredValue)}
 
@@ -519,8 +528,9 @@ fun ReadingRow2nd(dataListChart: State<List<chart_parameter>>) {
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted2[3]){
 
-                            val filteredValue = it.filter { it.isLetterOrDigit() }
-                            // Update the state with the filtered value
+                                val filteredValue = it.filter { it.isLetterOrDigit() || it == '.' }
+
+                                // Update the state with the filtered value
                             reading42 = filteredValue
                             myComponents.mainViewModel.dataListChart.value?.get(1)?.values?.set(3,filteredValue)}
 
@@ -556,8 +566,9 @@ fun ReadingRow2nd(dataListChart: State<List<chart_parameter>>) {
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted2[4]){
 
-                            val filteredValue = it.filter { it.isLetterOrDigit() }
-                            // Update the state with the filtered value
+                                val filteredValue = it.filter { it.isLetterOrDigit() || it == '.' }
+
+                                // Update the state with the filtered value
                             reading52 = filteredValue
                             myComponents.mainViewModel.dataListChart.value?.get(1)?.values?.set(4,filteredValue)}
 
@@ -620,8 +631,9 @@ fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted3[0]){
 
-                            val filteredValue = it.filter { it.isLetterOrDigit() }
-                            // Update the state with the filtered value
+                                val filteredValue = it.filter { it.isLetterOrDigit() || it == '.' }
+
+                                // Update the state with the filtered value
                             reading13 = filteredValue
                             myComponents.mainViewModel.dataListChart.value?.get(2)?.values?.set(0,filteredValue)}
 
@@ -635,6 +647,7 @@ fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
                         shape = RoundedCornerShape(8.dp),
 //                    enabled = if( myComponents.mainViewModel.r1.length==0)true else false
                     )
+
 
                     if (!myComponents.mainViewModel.isCompleted3[0])
                         SubmitButton(text = "Submit", onClick = {
@@ -659,7 +672,7 @@ fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted3[1]){
 
-                            val filteredValue = it.filter { it.isLetterOrDigit() }
+                            val filteredValue = it.filter { it.isLetterOrDigit() || it == '.' }
                             // Update the state with the filtered value
                             reading23 = filteredValue
                             myComponents.mainViewModel.dataListChart.value?.get(2)?.values?.set(1,filteredValue)}
@@ -697,8 +710,9 @@ fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted3[2]){
 
-                            val filteredValue = it.filter { it.isLetterOrDigit() }
-                            // Update the state with the filtered value
+                                val filteredValue = it.filter { it.isLetterOrDigit() || it == '.' }
+
+                                // Update the state with the filtered value
                             reading33 = filteredValue
                             myComponents.mainViewModel.dataListChart.value?.get(2)?.values?.set(2,filteredValue)}
 
@@ -735,8 +749,9 @@ fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted3[3]){
 
-                            val filteredValue = it.filter { it.isLetterOrDigit() }
-                            // Update the state with the filtered value
+                                val filteredValue = it.filter { it.isLetterOrDigit() || it == '.' }
+
+                                // Update the state with the filtered value
                             reading43 = filteredValue
                             myComponents.mainViewModel.dataListChart.value?.get(2)?.values?.set(3,filteredValue)}
 
@@ -771,8 +786,9 @@ fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted3[4]){
 
-                            val filteredValue = it.filter { it.isLetterOrDigit() }
-                            // Update the state with the filtered value
+                                val filteredValue = it.filter { it.isLetterOrDigit() || it == '.' }
+
+                                // Update the state with the filtered value
                             reading53 = filteredValue
                             myComponents.mainViewModel.dataListChart.value?.get(2)?.values?.set(4,filteredValue)}
 

@@ -463,6 +463,8 @@ class Repository () {
         else if(i==0)
             ++f
         //SHOULD BE SHIFTED TO OTHER API
+
+
         val p1 =  mainViewModel.dataListSetting.joinToString(separator = ","){ setting ->
             "${setting.param_no} ::: ${setting.param_value}"
         }
@@ -514,6 +516,7 @@ class Repository () {
                 showLogs("ADDWITHPARAM","successfull")
                 showLogs("ADDWITHPARAM FPA Counter","${mainViewModel.FPACounter}")
                 mUiViewModel.clearFields.intValue++
+
 
             } else{
                 mainViewModel.isFPATime = false

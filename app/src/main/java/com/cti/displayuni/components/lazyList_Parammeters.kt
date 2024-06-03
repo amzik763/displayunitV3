@@ -107,8 +107,17 @@ fun ParametersLazyList(
                         LaunchedEffect(myComponents.mUiViewModel.clearFields.value) {
                             enterValues.value = enterValues.value.toMutableMap().apply {
                                 this[index] = ""
+
                             }
+                            enterValue = ""
                             showLogs("val","val cleared: ACTUAL")
+                            myComponents.mainViewModel.dataListSetting.forEach {
+                                it.param_value = ""
+                            }
+
+                            myComponents.mainViewModel.dataListActual.forEach {
+                                it.param_value = ""
+                            }
 
                         }
                     }

@@ -235,23 +235,73 @@ class MainViewModel(context: Context) : ViewModel(){
 
     fun readingInRange(min:String,max:String,param_value:String):Boolean{
 
+
         try {
-                    if (Integer.parseInt(param_value) > Integer.parseInt(max) || Integer.parseInt(
-                            param_value
-                        ) < Integer.parseInt(min)
-                    ) {
-                        mUiViewModel.setDialogDetails(
-                            "Not Eligible",
-                            "",
-                            "Value should be between ${min} and ${max}",
-                            R.drawable.ic_notest
-                        )
-                        mUiViewModel.showMessageDialog()
-                        return false
-                    }
-        }catch (_:Exception){
+            if (Integer.parseInt(param_value) > Integer.parseInt(max) || Integer.parseInt(
+                    param_value
+                ) < Integer.parseInt(min)
+            ) {
+                mUiViewModel.setDialogDetails(
+                    "Not Eligible",
+                    "",
+                    "Value should be between ${min} and ${max}",
+                    R.drawable.ic_notest
+                )
+                mUiViewModel.showMessageDialog()
+
+                showLogs("Reading", "Reading in range")
+                return false
+
+
+            }
+
+        }
+        catch (e:NumberFormatException){
+
+
+            val paramValue = param_value.toFloat()
+            val maxValue = max.toFloat()
+            val minValue = min.toFloat()
+
+
+            try {
+                if (paramValue > maxValue || paramValue < minValue
+                ) {
+                    mUiViewModel.setDialogDetails(
+                        "Not Eligible",
+                        "",
+                        "Value should be between ${min} and ${max}",
+                        R.drawable.ic_notest
+                    )
+                    mUiViewModel.showMessageDialog()
+
+                    showLogs("Reading", "Reading in range")
+                    return false
+
+
+                }
+
+            }
+            catch (e:Exception){
+
+                showLogs("Reading exception", "Reading is not in range")
+
+            }
+
+
+
+        }catch (e:Exception){
+            println(e.printStackTrace())
+            showLogs("Reading exc", "Reading is not in range")
+
+
+
+
             return false
         }
+
+        showLogs("Reading not", "Reading is not in range")
+
         return true
     }
     fun itemsInRange():Boolean{
