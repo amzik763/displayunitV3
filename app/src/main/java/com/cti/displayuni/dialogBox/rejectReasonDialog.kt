@@ -48,6 +48,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.cti.displayuni.R
 import com.cti.displayuni.components.AddMark
+import com.cti.displayuni.components.PartId
 import com.cti.displayuni.components.ReasonDropdown
 import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.lightBlack
@@ -215,7 +216,12 @@ fun RejectReasonDialog(
                 }
                 Column(
                     modifier = Modifier
-                        .padding(top = topPadding, start = startPadding, end = endPadding, bottom = bottomPadding)
+                        .padding(
+                            top = topPadding,
+                            start = startPadding,
+                            end = endPadding,
+                            bottom = bottomPadding
+                        )
                         .fillMaxSize(),
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -230,17 +236,33 @@ fun RejectReasonDialog(
                             )
                         )
 
-                        Text(modifier = Modifier.padding(top = padding),
-                            text = "Please Select The Reason",
-                            style = TextStyle(
-                                fontSize = semiHeaderFont,
-                                color = lightBlack,
-                                textAlign = TextAlign.Center,
-                                fontFamily = nkmedium
-                            )
-                        )
-                    }
 
+                        Row ( modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween){
+
+                            Text(modifier = Modifier.padding(top = padding),
+                                text = "Please Select The Reason",
+                                style = TextStyle(
+                                    fontSize = semiHeaderFont,
+                                    color = lightBlack,
+                                    textAlign = TextAlign.Center,
+                                    fontFamily = nkmedium
+                                )
+                            )
+
+                            var partId by remember { mutableStateOf("") }
+                            PartId(
+                                text = partId,
+                                label = "Part ID",
+                                onTextChange = { partId = it
+                                    mainViewModel.partID = it},
+                                color = pureBlack,
+                                maxLength = 15,
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                        }
+
+                    }
 
                     Box(modifier = Modifier
                         .padding(start = startP)
@@ -266,7 +288,7 @@ fun RejectReasonDialog(
                                 text = mark,
                                 label = "Add Remark(Optional)",
                                 onTextChange = { mark = it
-                                               myComponents.mainViewModel.mark = it},
+                                               mainViewModel.mark = it},
                                 color = pureBlack,
                                 maxLength = 20,
                                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text) ,
@@ -283,23 +305,29 @@ fun RejectReasonDialog(
                                 .size(width = width, height = height)
                                 .clickable {
 
-                                    val passFail = myComponents.mainViewModel.pass.intValue + myComponents.mainViewModel.fail.intValue
-                                    if(passFail >= myComponents.mainViewModel.totalAssigned.intValue){
+                                    val passFail =
+                                        myComponents.mainViewModel.pass.intValue + myComponents.mainViewModel.fail.intValue
+                                    if (passFail >= myComponents.mainViewModel.totalAssigned.intValue) {
                                         myComponents.mUiViewModel.showThanksDialog()
                                         return@clickable
 //                                        return@Button
                                     }
 
-                                    if(myComponents.mainViewModel.isShiftOver(myComponents.mainViewModel.endShiftTime)){
+                                    if (myComponents.mainViewModel.isShiftOver(myComponents.mainViewModel.endShiftTime)) {
                                         myComponents.mUiViewModel.showThanksDialog()
 //                                        return@Button
                                         return@clickable
 
                                     }
-                                    if(mainViewModel.mSelectedReason.isNullOrEmpty()){
-                                        mUiViewModel.setDialogDetails("Please Select Reason","Select reason, After selecting it click SUBMIT button"," ",R.drawable.ic_notest)
+                                    if (mainViewModel.mSelectedReason.isNullOrEmpty()) {
+                                        mUiViewModel.setDialogDetails(
+                                            "Please Select Reason",
+                                            "Select reason, After selecting it click SUBMIT button",
+                                            " ",
+                                            R.drawable.ic_notest
+                                        )
                                         mUiViewModel.showMessageDialog()
-                                    }else{
+                                    } else {
 
                                         var a = mark
                                         mainViewModel.submitFailedPartInfo()

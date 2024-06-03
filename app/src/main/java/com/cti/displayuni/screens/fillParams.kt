@@ -126,32 +126,34 @@ fun ReadingUI(){
                 fontSize = fontLarge
             )
         )
-        ReadingCircles("r1")
-        ReadingCircles("r2")
-        ReadingCircles("r3")
-        ReadingCircles("r4")
-        ReadingCircles("r5")
+        ReadingCircles(myComponents.mainViewModel.isCompleted1.get(0))
+        ReadingCircles(myComponents.mainViewModel.isCompleted1.get(1))
+        ReadingCircles(myComponents.mainViewModel.isCompleted1.get(2))
+        ReadingCircles(myComponents.mainViewModel.isCompleted1.get(3))
+        ReadingCircles(myComponents.mainViewModel.isCompleted1.get(4))
     }
 }
 
 @Composable
-fun ReadingCircles(r: String) {
+fun ReadingCircles(r: Boolean) {
     Image(painter = painterResource(id = R.drawable.circle),
         contentDescription ="Circle1",
-        colorFilter = ColorFilter.tint(lightGrey),
+//        colorFilter = ColorFilter.tint(lightGrey),
         modifier = Modifier.clickable {
             myComponents.mUiViewModel.showCustomPopup.value = true
-        }
-        /*if(r.length==0||r.isNullOrEmpty()){
-            ColorFilter.tint(lightGrey)t
+        },
+        colorFilter = if(!r){
 
-        }else{
+            ColorFilter.tint(lightGrey)
+
+        }
+        else{
+
             ColorFilter.tint(green)
 
-        }*/
+        }
     )
     Spacer(modifier = Modifier.width(12.dp))
-
 }
 
 @Composable
@@ -373,17 +375,6 @@ fun Header(){
                 ReadingUI()
             }
 
-            var partId by remember { mutableStateOf("") }
-            PartId(
-                text = partId,
-                label = "Part ID",
-                onTextChange = { partId = it
-                    myComponents.mainViewModel.partID = it},
-                color = pureBlack,
-                maxLength = 15,
-//                    keyboardOptions = ,
-                shape = RoundedCornerShape(8.dp)
-            )
 
             //Pass fail buttons
             Row {
