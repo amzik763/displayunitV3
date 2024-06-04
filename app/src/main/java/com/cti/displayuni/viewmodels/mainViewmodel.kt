@@ -294,9 +294,6 @@ class MainViewModel(context: Context) : ViewModel(){
             println(e.printStackTrace())
             showLogs("Reading exc", "Reading is not in range")
 
-
-
-
             return false
         }
 

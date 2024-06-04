@@ -115,15 +115,56 @@ fun SettingParams() {
     }
 }
 
+@Composable
+fun FPACircles(fpa: String?) {
+    Image(painter = painterResource(id = R.drawable.circle),
+        contentDescription ="Circle1",
+//        colorFilter = ColorFilter.tint(lightGrey),
+        modifier = Modifier.clickable {
+//            myComponents.mUiViewModel.showCustomPopup.value = true
+        },
+        colorFilter = if(fpa.isNullOrEmpty()){
+
+            ColorFilter.tint(lightGrey)
+
+        }
+        else{
+
+            ColorFilter.tint(green)
+
+        }
+    )
+    Spacer(modifier = Modifier.width(12.dp))
+}
+
+@Composable
+fun FPADetailsUI(){
+    Row{
+        Text(
+            text = "FPA Details",
+            style = TextStyle(
+                fontWeight = FontWeight.Bold,
+                fontSize = fontLarge,
+                textAlign = TextAlign.Center
+            )
+        )
+        FPACircles(myComponents.mainViewModel.fpa1)
+        FPACircles(myComponents.mainViewModel.fpa2)
+        FPACircles(myComponents.mainViewModel.fpa3)
+        FPACircles(myComponents.mainViewModel.fpa4)
+    }
+}
+
 
 @Composable
 fun ReadingUI(){
     Row{
         Text(
-            text = "   Readings   ",
+            text = "Readings",
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
-                fontSize = fontLarge
+                fontSize = fontLarge,
+                textAlign = TextAlign.Center
             )
         )
         ReadingCircles(myComponents.mainViewModel.isCompleted1.get(0))
@@ -369,6 +410,7 @@ fun Header(){
 
             CheckingParts(checking = "Checking: ${myComponents.mainViewModel.pass.intValue + myComponents.mainViewModel.fail.intValue}", total = "Total: ${myComponents.mainViewModel.totalAssigned.intValue}", pass = "Pass: ${myComponents.mainViewModel.pass.intValue}", fail = "Fail: ${myComponents.mainViewModel.fail.intValue}")
 
+            FPADetailsUI()
 
             showLogs("DATA LIST CHART", myComponents.mainViewModel.dataListChart.value?.size.toString())
             if (myComponents.mainViewModel.dataListChart.value?.size  != 0){
