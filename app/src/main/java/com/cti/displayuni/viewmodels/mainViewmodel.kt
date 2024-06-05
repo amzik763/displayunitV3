@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,6 +32,8 @@ import java.util.Date
 import java.util.Locale
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import java.util.Calendar
 //
 class MainViewModel(context: Context) : ViewModel(){
@@ -104,10 +107,18 @@ class MainViewModel(context: Context) : ViewModel(){
 
     var partID = ""
 
-    var fpa1:String? = null
+    /*var fpa1:String? = null
     var fpa2:String? = null
     var fpa3:String? = null
-    var fpa4:String? = null
+    var fpa4:String? = null*/
+
+    var fpa1 =  mutableStateOf<String?>(null)
+    var fpa2 =  mutableStateOf<String?>(null)
+    var fpa3 =  mutableStateOf<String?>(null)
+    var fpa4 =  mutableStateOf<String?>(null)
+
+
+
 
     private val sharedPreferences: SharedPreferences
         get() = mContext.getSharedPreferences(PREFERNCES_NAME, Context.MODE_PRIVATE)

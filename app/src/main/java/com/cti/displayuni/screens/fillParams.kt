@@ -32,7 +32,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -51,7 +50,6 @@ import coil.compose.rememberAsyncImagePainter
 import com.cti.displayuni.R
 import com.cti.displayuni.components.ActualLazyList
 import com.cti.displayuni.components.ParametersLazyList
-import com.cti.displayuni.components.PartId
 import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.extraLightGrey
 import com.cti.displayuni.ui.theme.green
@@ -119,26 +117,23 @@ fun SettingParams() {
 fun FPACircles(fpa: String?) {
     Image(painter = painterResource(id = R.drawable.circle),
         contentDescription ="Circle1",
-//        colorFilter = ColorFilter.tint(lightGrey),
         modifier = Modifier.clickable {
-//            myComponents.mUiViewModel.showCustomPopup.value = true
         },
-        colorFilter = if(fpa.isNullOrEmpty()){
 
+        colorFilter = if (fpa.isNullOrEmpty()) {
+            showLogs("FPAFPAFPA: ","null")
             ColorFilter.tint(lightGrey)
-
-        }
-        else{
+        } else {
+            showLogs("FPAFPAFPA: ","not null")
 
             ColorFilter.tint(green)
-
         }
     )
     Spacer(modifier = Modifier.width(12.dp))
 }
 
 @Composable
-fun FPADetailsUI(){
+fun FPADetails(){
     Row{
         Text(
             text = "FPA Details",
@@ -148,13 +143,15 @@ fun FPADetailsUI(){
                 textAlign = TextAlign.Center
             )
         )
-        FPACircles(myComponents.mainViewModel.fpa1)
-        FPACircles(myComponents.mainViewModel.fpa2)
-        FPACircles(myComponents.mainViewModel.fpa3)
-        FPACircles(myComponents.mainViewModel.fpa4)
+
+        Spacer(modifier = Modifier.width(4.dp))
+
+        FPACircles(myComponents.mainViewModel.fpa1.value)
+        FPACircles(myComponents.mainViewModel.fpa2.value)
+        FPACircles(myComponents.mainViewModel.fpa3.value)
+        FPACircles(myComponents.mainViewModel.fpa4.value)
     }
 }
-
 
 @Composable
 fun ReadingUI(){
@@ -167,6 +164,9 @@ fun ReadingUI(){
                 textAlign = TextAlign.Center
             )
         )
+
+        Spacer(modifier = Modifier.width(4.dp))
+
         ReadingCircles(myComponents.mainViewModel.isCompleted1.get(0))
         ReadingCircles(myComponents.mainViewModel.isCompleted1.get(1))
         ReadingCircles(myComponents.mainViewModel.isCompleted1.get(2))
@@ -410,7 +410,7 @@ fun Header(){
 
             CheckingParts(checking = "Checking: ${myComponents.mainViewModel.pass.intValue + myComponents.mainViewModel.fail.intValue}", total = "Total: ${myComponents.mainViewModel.totalAssigned.intValue}", pass = "Pass: ${myComponents.mainViewModel.pass.intValue}", fail = "Fail: ${myComponents.mainViewModel.fail.intValue}")
 
-            FPADetailsUI()
+            FPADetails()
 
             showLogs("DATA LIST CHART", myComponents.mainViewModel.dataListChart.value?.size.toString())
             if (myComponents.mainViewModel.dataListChart.value?.size  != 0){
@@ -428,6 +428,7 @@ fun Header(){
 
                         val passFail = myComponents.mainViewModel.pass.intValue + myComponents.mainViewModel.fail.intValue
                         if(passFail >= myComponents.mainViewModel.totalAssigned.intValue){
+
                             myComponents.mUiViewModel.showThanksDialog()
                             return@Button
                         }
@@ -461,7 +462,7 @@ fun Header(){
 
                         }
                         else if(myComponents.mainViewModel.isCurrentTimeExceedsMidTime(myComponents.mainViewModel.startShiftTime,myComponents.mainViewModel.endShiftTime)){
-                            if(myComponents.mainViewModel.fpa3.isNullOrEmpty() || myComponents.mainViewModel.fpa4.isNullOrEmpty())
+                            if(myComponents.mainViewModel.fpa3.value.isNullOrEmpty() || myComponents.mainViewModel.fpa4.value.isNullOrEmpty())
                             {   myComponents.mainViewModel.isFPATime = true
 
                                 if(myComponents.mainViewModel.showZoomableImage){
@@ -557,7 +558,7 @@ fun Header(){
 
                                 }
                             }
-                            else if(myComponents.mainViewModel.fpa3.isNullOrEmpty() || myComponents.mainViewModel.fpa4.isNullOrEmpty())
+                            else if(myComponents.mainViewModel.fpa3.value.isNullOrEmpty() || myComponents.mainViewModel.fpa4.value.isNullOrEmpty())
                             {   myComponents.mainViewModel.isFPATime = true
 
                                 myComponents.mainViewModel.isFPATime = true

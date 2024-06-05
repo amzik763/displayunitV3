@@ -162,13 +162,13 @@ class Repository () {
                 }
 
                 try{
-                    mainViewModel.fpa1 =
+                    mainViewModel.fpa1.value =
                         taskResponse.body()?.station_fpa_data?.get(0)?.start_shift_1_parameters_values
-                    mainViewModel.fpa2 =
+                    mainViewModel.fpa2.value =
                         taskResponse.body()?.station_fpa_data?.get(0)?.start_shift_2_parameters_values
-                    mainViewModel.fpa3 =
+                    mainViewModel.fpa3.value =
                         taskResponse.body()?.station_fpa_data?.get(0)?.end_shift_1_parameters_values
-                    mainViewModel.fpa4 =
+                    mainViewModel.fpa4.value =
                         taskResponse.body()?.station_fpa_data?.get(0)?.end_shift_2_parameters_values
                 }catch (e:Exception){
                     showLogs("ERROR","error while assigning FPA")
@@ -235,22 +235,22 @@ class Repository () {
                     mainViewModel.isCompleted3[4] = true
                 }
 
-                if(mainViewModel.fpa4.isNullOrEmpty()){
+                if(mainViewModel.fpa4.value.isNullOrEmpty()){
                     mainViewModel.FPACounter = 4
                     showLogs("FPA44",mainViewModel.fpa4.toString())
 
                 }
-                if(mainViewModel.fpa3.isNullOrEmpty()){
+                if(mainViewModel.fpa3.value.isNullOrEmpty()){
                     mainViewModel.FPACounter = 3
                     showLogs("FPA33",mainViewModel.fpa3.toString())
 
                 }
-                if(mainViewModel.fpa2.isNullOrEmpty()){
+                if(mainViewModel.fpa2.value.isNullOrEmpty()){
                     mainViewModel.FPACounter = 2
                     showLogs("FPA22",mainViewModel.fpa2.toString())
 
                 }
-                if(mainViewModel.fpa1.isNullOrEmpty()){
+                if(mainViewModel.fpa1.value.isNullOrEmpty()){
                     mainViewModel.FPACounter = 1
                     showLogs("FPA11",mainViewModel.fpa1.toString())
 
@@ -501,6 +501,11 @@ class Repository () {
             }
 
             if(dataResponseWithParam.isSuccessful){
+
+
+                //updateCirclesColor
+
+
                 mainViewModel.isFPATime = false
                 mUiViewModel.hideMessageDialog()
                 mainViewModel.FPACounter++
@@ -516,6 +521,8 @@ class Repository () {
                 showLogs("ADDWITHPARAM","successfull")
                 showLogs("ADDWITHPARAM FPA Counter","${mainViewModel.FPACounter}")
                 mUiViewModel.clearFields.intValue++
+
+
 
 
             } else{
