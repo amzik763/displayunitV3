@@ -5,6 +5,7 @@ import com.cti.displayuni.response.FpaCheck_Res
 import com.cti.displayuni.response.FpaData_res
 import com.cti.displayuni.response.addData_Response
 import com.cti.displayuni.response.allDataV2
+import com.cti.displayuni.response.checksheetNotificationResponse
 import com.cti.displayuni.response.checksheet_Status
 import com.cti.displayuni.response.myReasons
 import com.cti.displayuni.response.notify_response
@@ -37,7 +38,7 @@ interface OtherAPIs {
         @Field("station_id") station_id: String,
         @Field("csp_id") csp_id: String,
         @Field("floor_no") floor_no: String
-    ): Response<notify_response>
+    ): Response<checksheetNotificationResponse>
 
     @FormUrlEncoded
     @POST("/operator/add_checksheet_data")
@@ -165,6 +166,14 @@ interface OtherAPIs {
         @Field("precedency_no") precedency_no: String,
         @Field("part_no") part_no: String,
         @Field("temp_task_id") temp_task_id: String
+    ): Response<FPAres>
+
+
+
+    @FormUrlEncoded
+    @POST("/operator/get_csp_status")
+    suspend fun checkSheetStatusBack(
+        @Field("notification_id") notification_id: String,
     ): Response<FPAres>
 
 }

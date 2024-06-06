@@ -227,14 +227,23 @@ class MainViewModel(context: Context) : ViewModel(){
     fun checkItemsInList() {
         val checkSheetList =  mainViewModel.checkSheetList
         for (item in checkSheetList) {
+
+
+            if( item == "status") {
+                mUiViewModel.setDialogDetails("EMPTY STATUS", "Please fill all the value..", "", R.drawable.ic_notest )
+                mUiViewModel.showMessageDialog()
+                return
+            }
+
             if (item == "SUP_OK") {
                 showLogs("DIALOG","SHOW DIALOG")
                 mUiViewModel.showLoginSupDialog()
                 return
             }
 
-            if( item == "status") {
-                mUiViewModel.setDialogDetails("EMPTY STATUS", "Please fill all the value..", "", R.drawable.ic_notest )
+            if (item == "NG") {
+                showLogs("DIALOG","SHOW DIALOG")
+                mUiViewModel.setDialogDetails("Not Eligible", "Please coordinate with floor-in-charge..", "", R.drawable.ic_notest )
                 mUiViewModel.showMessageDialog()
                 return
             }

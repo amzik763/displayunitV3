@@ -6,5 +6,6 @@ data class CheckSheetData(
     val csp_name: String,
     val csp_name_hindi: String,
     val frequency: String,
-    val specification: String
+    val specification: String,
+    val notificationId: Int = 0
 )

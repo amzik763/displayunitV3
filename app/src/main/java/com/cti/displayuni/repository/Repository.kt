@@ -383,6 +383,7 @@ class Repository () {
             val notifyResponse= otherAPIs.operatorNotify(stationValue,csp_id,floor_no)
             if (notifyResponse.code() == 200) {
                 showLogs("NOTIFICATION:","Notification sent")
+
                 mUiViewModel.hideMessageDialog()
             }else{
                 mUiViewModel.hideMessageDialog()
@@ -464,7 +465,6 @@ class Repository () {
         else if(i==0)
             ++f
         //SHOULD BE SHIFTED TO OTHER API
-
 
         val p1 =  mainViewModel.dataListSetting.joinToString(separator = ","){ setting ->
             "${setting.param_no} ::: ${setting.param_value}"

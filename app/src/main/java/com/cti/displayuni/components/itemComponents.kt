@@ -154,6 +154,16 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
 
          DropDown(item.csp_id, index)
 
+         Text(
+            modifier = Modifier
+               .fillMaxWidth(fillMaxWidth5)
+               .padding(start = startPadding2),
+            text = item.notificationId.toString(),
+            color = pureBlack,
+            fontFamily = nk,
+            fontSize = textFont,
+         )
+
          Surface {
             Image(
                painter = painterResource(id = R.drawable.ic_notification),

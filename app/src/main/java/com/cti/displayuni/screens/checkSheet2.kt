@@ -50,6 +50,8 @@ import com.cti.displayuni.utility.showLogs
 fun Checksheet2() {
     val conf = LocalConfiguration.current
 
+
+
     val currentDateTime = myComponents.mUiViewModel.currentDateTime.observeAsState("")
 
     var isSupOkPresent = false
@@ -227,7 +229,6 @@ fun Checksheet2() {
                 }
             }
         }
-
         Column(
             modifier = Modifier
                 .padding(top = 0.dp)
@@ -244,7 +245,6 @@ fun Checksheet2() {
                 ItemListScreen()
             }
         }
-
         Row(
             modifier = Modifier
                 .padding(start = startpadding2, end = endpadding2, top = 16.dp)
@@ -262,7 +262,6 @@ fun Checksheet2() {
                         fontFamily = mFont.nkmedium
                     )
                 )
-
             }
             Column(
                 modifier = Modifier.fillMaxWidth(),

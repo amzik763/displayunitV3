@@ -62,10 +62,26 @@ fun DropDown(paramId: String, index: Int) {
                         )
                     ) },
                     onClick = {
+
+                        if(selectedItem == "NG"){
+                            selectedItem = item
+                            myComponents.mainViewModel.checkSheetList.set(index, item)
+                            myComponents.mainViewModel.checkSheetList.forEach { println(it) }
+                            myComponents.mainViewModel.notify(
+                                myComponents.mainViewModel.getStationValue(),
+                                paramId,
+//                        myComponents.mainViewModel.floorNum
+                                myComponents.mainViewModel.getStationValue().split(" ").take(2).joinToString(" ")
+                            )
+                            expanded = false
+
+
+                        }else if(selectedItem == "OK"){
                             selectedItem = item
                             myComponents.mainViewModel.checkSheetList.set(index, item)
                             myComponents.mainViewModel.checkSheetList.forEach { println(it) }
                             expanded = false
+                        }
                     }
                 )
             }
