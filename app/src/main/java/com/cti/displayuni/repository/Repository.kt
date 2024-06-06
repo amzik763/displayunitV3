@@ -270,6 +270,7 @@ class Repository () {
             }
 
             else if (taskResponse.code() == 404) {
+                showLogs("TASK NOT FOUND", "404")
                 mUiViewModel.hideMessageDialog()
                 mUiViewModel.setDialogDetails("Task Not Found", "Ask floor-in-charge to provide task", "", R.drawable.ic_notest)
                 mUiViewModel.showMessageDialog()
@@ -502,8 +503,25 @@ class Repository () {
 
             if(dataResponseWithParam.isSuccessful){
 
-
                 //updateCirclesColor
+                when(mainViewModel.FPACounter){
+                    1 -> {
+                        mainViewModel.fpa1.value = p1p2
+
+                    }
+                    2 -> {
+                        mainViewModel.fpa2.value = p1p2
+
+                    }
+                    3 -> {
+                        mainViewModel.fpa3.value = p1p2
+
+                    }
+                    4 -> {
+                        mainViewModel.fpa4.value = p1p2
+
+                    }
+                }
 
 
                 mainViewModel.isFPATime = false

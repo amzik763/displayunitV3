@@ -269,13 +269,12 @@ class MainViewModel(context: Context) : ViewModel(){
         }
         catch (e:NumberFormatException){
 
-
-            val paramValue = param_value.toFloat()
-            val maxValue = max.toFloat()
-            val minValue = min.toFloat()
-
-
             try {
+
+                val paramValue = param_value.toFloat()
+                val maxValue = max.toFloat()
+                val minValue = min.toFloat()
+
                 if (paramValue > maxValue || paramValue < minValue
                 ) {
                     mUiViewModel.setDialogDetails(

@@ -118,6 +118,7 @@ fun FPACircles(fpa: String?) {
     Image(painter = painterResource(id = R.drawable.circle),
         contentDescription ="Circle1",
         modifier = Modifier.clickable {
+            myComponents.mUiViewModel.showFpaDetails.value = true
         },
 
         colorFilter = if (fpa.isNullOrEmpty()) {
@@ -179,7 +180,6 @@ fun ReadingUI(){
 fun ReadingCircles(r: Boolean) {
     Image(painter = painterResource(id = R.drawable.circle),
         contentDescription ="Circle1",
-//        colorFilter = ColorFilter.tint(lightGrey),
         modifier = Modifier.clickable {
             myComponents.mUiViewModel.showCustomPopup.value = true
         },
@@ -703,6 +703,8 @@ fun FillParam(){
 
     val shouldShowCustomPopup = myComponents.mUiViewModel.showCustomPopup.observeAsState()
 
+    val showFpaDetails = myComponents.mUiViewModel.showFpaDetails.observeAsState()
+
     if (mParameters.dnsty == 320) {
 
         fontSmall = 10.sp
@@ -746,6 +748,15 @@ fun FillParam(){
 //        Log.d("XDATA",(1+1)+"Android::")
         CustomPopupContent {
             myComponents.mUiViewModel.showCustomPopup.value = false
+        }
+    }
+
+    if (showFpaDetails.value == true){
+
+        showLogs("FPA Details",myComponents.mUiViewModel.showFpaDetails.value.toString())
+
+        FPA_Details {
+            myComponents.mUiViewModel.showFpaDetails.value = false
         }
     }
 }

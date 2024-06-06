@@ -16,14 +16,19 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.coroutines.cancellation.CancellationException
 
 class UiViewModel(context: Context) : ViewModel(){
 
 
     var showCustomPopup = MutableLiveData<Boolean>()
+
+    var showFpaDetails = MutableLiveData<Boolean>()
+
 
     var isActualParamEnables = mutableStateOf(false)
     var isSettingParamEnables = mutableStateOf(true)
@@ -72,10 +77,18 @@ class UiViewModel(context: Context) : ViewModel(){
     }
     fun showMessageDialog(){
         isMessageDialogShown = true
+
     }
 
-    fun hideMessageDialog(){
-        isMessageDialogShown = false
+    fun hideMessageDialog() {
+        viewModelScope.launch {
+            try {
+                delay(2000)
+                isMessageDialogShown = false
+            } catch (e: Exception) {
+                println("An error occurred: ${e.message}")
+            }
+        }
     }
 
     var isThanksDialogShown by mutableStateOf(false)
