@@ -54,6 +54,8 @@ fun Checksheet2() {
 
     var isSupOkPresent = false
 
+
+    var employeID = 7832
     val dnsty = conf.densityDpi
 
 //    Log.d("mdpi density: ", dnsty.toString())
