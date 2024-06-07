@@ -396,6 +396,12 @@ fun Header(){
                     myComponents.navController.popBackStack()
                     myComponents.navController.navigate("Login")
                 }
+
+                Spacer(Modifier.width(16.dp))
+
+                MyImageButton(icon = R.drawable.fullscreen) {
+                    myComponents.mUiViewModel.showFullImage.value = true
+                }
             }
         }
         //Second Row
@@ -705,6 +711,8 @@ fun FillParam(){
 
     val showFpaDetails = myComponents.mUiViewModel.showFpaDetails.observeAsState()
 
+    val showFullImage = myComponents.mUiViewModel.showFullImage.observeAsState()
+
     if (mParameters.dnsty == 320) {
 
         fontSmall = 10.sp
@@ -759,6 +767,17 @@ fun FillParam(){
             myComponents.mUiViewModel.showFpaDetails.value = false
         }
     }
+
+    if (showFullImage.value == true){
+
+        showLogs("Full Screen Image",myComponents.mUiViewModel.showFullImage.value.toString())
+
+        DisplayModeImage {
+            myComponents.mUiViewModel.showFullImage.value = false
+        }
+    }
+
+
 }
 
 @Preview(name = "Tablet", device = "spec:width=1920px, height=1080px, dpi=160, isRound=false, orientation=landscape", showBackground = true, showSystemUi = true)

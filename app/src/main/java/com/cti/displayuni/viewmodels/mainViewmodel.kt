@@ -245,11 +245,11 @@ class MainViewModel(context: Context) : ViewModel(){
                 return
             }
 
-            if (item == "SUP_OK") {
-                showLogs("DIALOG","SHOW DIALOG")
-                mUiViewModel.showLoginSupDialog()
-                return
-            }
+//            if (item == "SUP_OK") {
+//                showLogs("DIALOG","SHOW DIALOG")
+//                mUiViewModel.showLoginSupDialog()
+//                return
+//            }
 
             if (item == "NG") {
                 showLogs("DIALOG","SHOW DIALOG")
@@ -264,8 +264,6 @@ class MainViewModel(context: Context) : ViewModel(){
 
 
     fun readingInRange(min:String,max:String,param_value:String):Boolean{
-
-
         try {
             if (Integer.parseInt(param_value) > Integer.parseInt(max) || Integer.parseInt(
                     param_value

@@ -114,26 +114,23 @@ fun DropDown(paramId: String, index: Int) {
 
         IconButton(onClick = {
                 myComponents.mainViewModel.getCheckSheetStatusBack(myComponents.mainViewModel.myChecksheetNotificationMap[paramId]){ result ->
-
                     result.onSuccess {
                             if(it == "true"){
-                                showLogs("NONOTE: ","true")
+                                showLogs("NO NOTE: ","true")
                                 myComponents.mainViewModel.checkSheetList[index] = "SUP_OK"
                                 selectedItem = "SUP_OK"
 
                             }else{
-                                showLogs("NONOTE: ","false")
+                                showLogs("NO NOTE: ","false")
                                 myComponents.mainViewModel.checkSheetList[index] = "NG"
 
                                 selectedItem = "NOT_OK"
-
                             }
                     }.onFailure {
                         //show dialouge error
                         showLogs("NONOTE: ","failed")
                         selectedItem = "failed"
                     }
-
                 }
         }) {
             Icon(imageVector = Icons.Default.Refresh, contentDescription = "Refresh")

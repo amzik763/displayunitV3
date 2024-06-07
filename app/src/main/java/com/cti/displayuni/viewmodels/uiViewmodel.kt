@@ -29,6 +29,8 @@ class UiViewModel(context: Context) : ViewModel(){
 
     var showFpaDetails = MutableLiveData<Boolean>()
 
+    var showFullImage = MutableLiveData<Boolean>()
+
 
     var isActualParamEnables = mutableStateOf(false)
     var isSettingParamEnables = mutableStateOf(true)
