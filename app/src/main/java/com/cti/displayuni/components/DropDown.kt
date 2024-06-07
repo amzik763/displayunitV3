@@ -118,9 +118,13 @@ fun DropDown(paramId: String, index: Int) {
                     result.onSuccess {
                             if(it == "true"){
                                 showLogs("NONOTE: ","true")
+                                myComponents.mainViewModel.checkSheetList[index] = "SUP_OK"
                                 selectedItem = "SUP_OK"
+
                             }else{
                                 showLogs("NONOTE: ","false")
+                                myComponents.mainViewModel.checkSheetList[index] = "NG"
+
                                 selectedItem = "NOT_OK"
 
                             }

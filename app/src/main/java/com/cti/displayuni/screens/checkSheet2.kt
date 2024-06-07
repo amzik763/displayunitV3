@@ -50,12 +50,9 @@ import com.cti.displayuni.utility.showLogs
 fun Checksheet2() {
     val conf = LocalConfiguration.current
 
-
-
     val currentDateTime = myComponents.mUiViewModel.currentDateTime.observeAsState("")
 
     var isSupOkPresent = false
-
 
     val dnsty = conf.densityDpi
 
@@ -295,11 +292,8 @@ fun Checksheet2() {
                                     "LISTT",
                                     myComponents.mainViewModel.checkSheetList.size.toString()
                                 )
-
                                 myComponents.mainViewModel.checkItemsInList()
-
 //                                myComponents.navController.navigate(FILL_PARAMETERS)
-
                             }
                         )
                     }
@@ -307,5 +301,5 @@ fun Checksheet2() {
             }
         }
     }
-
 }
+

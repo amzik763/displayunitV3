@@ -858,10 +858,16 @@ class Repository () {
                 if (s != null) {
                     val response = otherAPIs.checkSheetStatusBack(s)
                     if (response.isSuccessful) {
+                        showLogs("NOTPI","gn ng + ${response.body()?.approvedStatus}")
+
                         response.body()?.let {
-                            if (it.approvedStatus == "true") {
+                            if (it.approvedStatus == "true"||it.approvedStatus == "True") {
+                                showLogs("NOTPI","g + ${it.approvedStatus}")
+
                                 Result.success("true")
                             } else {
+                                showLogs("NOTPI","n + ${it.approvedStatus}")
+
                                 Result.success("fail")
                             }
                         } ?: Result.failure(IOException("Response body is null"))

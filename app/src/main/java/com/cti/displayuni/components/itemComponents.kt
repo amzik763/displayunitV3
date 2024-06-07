@@ -121,17 +121,9 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
             fontSize = textFont,
          )
 
-         Text(
-            modifier = Modifier
-               .fillMaxWidth(fillMaxWidth2)
-               .padding(start = startPadding2),
-            text = if (myComponents.mUiViewModel.isHindi.value) item.csp_name_hindi else item.csp_name,
-            color = pureBlack,
-            fontFamily = nk,
-            fontSize = textFont,
-         )
 
-         Text(
+
+         /*Text(
             modifier = Modifier
                .fillMaxWidth(fillMaxWidth3)
                .padding(start = startPadding2),
@@ -139,9 +131,9 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
             color = pureBlack,
             fontFamily = nk,
             fontSize = textFont,
-         )
+         )*/
 
-         Text(
+         /*Text(
             modifier = Modifier
                .fillMaxWidth(fillMaxWidth4)
                .padding(start = startPadding2),
@@ -149,7 +141,7 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
             color = pureBlack,
             fontFamily = nk,
             fontSize = textFont,
-         )
+         )*/
 
          Text(
             modifier = Modifier
@@ -339,3 +331,4 @@ fun ItemListScreen() {
    val mChecksheetData by myComponents.mainViewModel.mChecksheetData.observeAsState()
    mChecksheetData?.let { ItemListColumn(it) }
 }
+
