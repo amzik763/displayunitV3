@@ -19,8 +19,12 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -39,6 +43,7 @@ import com.cti.displayuni.utility.mFont.nk
 import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
 fun ItemComponents(index:Int,item: CheckSheetData) {
@@ -47,6 +52,7 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
    val dnsty = conf.densityDpi
 
    Log.d("mdpi density: ", dnsty.toString())
+
 
    val wd = mParameters.mWidthinPx
    //myUI variables
@@ -95,6 +101,9 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
    }
 
    Column {
+//      val notificationIdState = remember { item.notificationId }
+//      val notificationIdState by myComponents.mainViewModel.myChecksheetNotificationMap.collectAsState()
+      val notificationIdState: SnapshotStateMap<String, String> = myComponents.mainViewModel.myChecksheetNotificationMap
       Row(
          modifier = Modifier
             .fillMaxWidth(),
@@ -157,8 +166,8 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
          Text(
             modifier = Modifier
                .fillMaxWidth(fillMaxWidth5)
-               .padding(start = startPadding2),
-            text = item.notificationId.toString(),
+               .padding(start = startPadding2, end = startPadding2),
+            text = notificationIdState[item.csp_id]?:"00" ,
             color = pureBlack,
             fontFamily = nk,
             fontSize = textFont,
@@ -172,12 +181,12 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
                   .size(imgSize)
                   .clickable
                   {
-                     myComponents.mainViewModel.notify(
+                     /*myComponents.mainViewModel.notify(
                         myComponents.mainViewModel.getStationValue(),
                         item.csp_id,
 //                        myComponents.mainViewModel.floorNum
                         myComponents.mainViewModel.getStationValue().split(" ").take(2).joinToString(" ")
-                     )
+                     )*/
                   }
             )
          }

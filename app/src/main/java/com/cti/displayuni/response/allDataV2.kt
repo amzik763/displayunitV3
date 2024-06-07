@@ -12,5 +12,5 @@ data class allDataV2(
     val work_operator_data: WorkOperatorData,
     val station_reading_data: readingData?,
     val station_fpa_data: List<StationFpaData>
-
 )
+

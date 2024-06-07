@@ -5,8 +5,8 @@ import android.content.SharedPreferences
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,7 +19,6 @@ import com.cti.displayuni.utility.KEY_TOKEN
 import com.cti.displayuni.utility.PREFERNCES_NAME
 import com.cti.displayuni.utility.Setting_Param
 import com.cti.displayuni.utility.chart_parameter
-import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.myComponents.mUiViewModel
 import com.cti.displayuni.utility.myComponents.mainViewModel
 import com.cti.displayuni.utility.myComponents.repository
@@ -32,8 +31,6 @@ import java.util.Date
 import java.util.Locale
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import java.util.Calendar
 //
 class MainViewModel(context: Context) : ViewModel(){
@@ -95,6 +92,10 @@ class MainViewModel(context: Context) : ViewModel(){
     val checkSheetList = mutableListOf<String>()
     //VARIABLE FOR NEW CHECKSHEETDATA
     val mChecksheetData = MutableLiveData<List<CheckSheetData>>()
+
+//    lateinit var mChecksheetNotification: MutableLiveData<MutableMap<String, String>>
+    val myChecksheetNotificationMap = mutableStateMapOf<String, String>()
+    val apiCheckSheetStatusBack = mutableStateOf(checkSheetStatusBack("none"))
     var ficID = "none"
 
     var FPACounter = 1;
@@ -208,9 +209,10 @@ class MainViewModel(context: Context) : ViewModel(){
         }
     }
 
-    fun notify(stationValue: String, csp_id: String, floor_no: String){
+    fun notify(stationValue: String, csp_id: String, floor_no: String, onResult: (Result<String>) -> Unit){
         viewModelScope.launch {
-            repository.notify(stationValue, csp_id, floor_no)
+            val result = repository.notify(stationValue, csp_id, floor_no)
+            onResult(result)
         }
     }
 
@@ -221,6 +223,14 @@ class MainViewModel(context: Context) : ViewModel(){
             showLogs("CHECKSHEET API: ",getStationValue())
             showLogs("CHECKSHEET API: ",employeeId)
             repository.checkSheetStatus(employeeId,ficID,getStationValue(),repository.fillChecksheet())
+        }
+    }
+
+    fun getCheckSheetStatusBack(s: String?,onResult: (Result<String>) -> Unit) {
+        viewModelScope.launch {
+            val result = repository.getCheckSheetStatusBack(s)
+            onResult(result)
+
         }
     }
 

@@ -47,13 +47,11 @@ fun CardComponent(
                     Text(
                         text = line,
                         fontSize = 20.sp,
-                        fontFamily = mFont.poppinsregular,
+                        fontFamily = mFont.poppinsregular
                     )
                 }
             }
         }
-
     }
 }
-
 

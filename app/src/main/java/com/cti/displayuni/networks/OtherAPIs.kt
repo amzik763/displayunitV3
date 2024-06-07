@@ -5,6 +5,7 @@ import com.cti.displayuni.response.FpaCheck_Res
 import com.cti.displayuni.response.FpaData_res
 import com.cti.displayuni.response.addData_Response
 import com.cti.displayuni.response.allDataV2
+import com.cti.displayuni.response.checkSheetStatusBack
 import com.cti.displayuni.response.checksheetNotificationResponse
 import com.cti.displayuni.response.checksheet_Status
 import com.cti.displayuni.response.myReasons
@@ -174,6 +175,6 @@ interface OtherAPIs {
     @POST("/operator/get_csp_status")
     suspend fun checkSheetStatusBack(
         @Field("notification_id") notification_id: String,
-    ): Response<FPAres>
+    ): Response<checkSheetStatusBack>
 
 }

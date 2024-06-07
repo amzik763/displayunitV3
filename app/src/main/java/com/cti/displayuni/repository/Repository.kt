@@ -4,6 +4,7 @@ import android.util.Log
 import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.R
 import com.cti.displayuni.response.FpaData_res
+import com.cti.displayuni.response.checkSheetStatusBack
 import com.cti.displayuni.response.reading_Response
 import com.cti.displayuni.utility.Actual_Param
 import com.cti.displayuni.utility.CHECKSHEET
@@ -24,6 +25,7 @@ import com.cti.displayuni.utility.responses.taskResponse
 import com.cti.displayuni.utility.showLogs
 import retrofit2.HttpException
 import retrofit2.Response
+import java.io.IOException
 
 class Repository () {
 
@@ -83,6 +85,7 @@ class Repository () {
                 mainViewModel.checkSheetList.clear()
                 mainViewModel.mChecksheetData.value?.forEach {
                     mainViewModel.checkSheetList.add("status")
+                    mainViewModel.myChecksheetNotificationMap[it.csp_id] = "0"
                 }
                 taskResponse.body()?.work_operator_data?.toString()?.let { showLogs("WORK OPERATOR Size", it) }
 
@@ -375,27 +378,30 @@ class Repository () {
         }
     }
 
-    suspend fun notify(stationValue: String, csp_id: String, floor_no: String) {
+    suspend fun notify(stationValue: String, csp_id: String, floor_no: String) : Result<String>{
         mUiViewModel.setDialogDetails("Notifying...","","hold on...",R.drawable.thanks)
         mUiViewModel.showMessageDialog()
-        try {
+        return try {
             showLogs("FLN",floor_no)
             val notifyResponse= otherAPIs.operatorNotify(stationValue,csp_id,floor_no)
             if (notifyResponse.code() == 200) {
-                showLogs("NOTIFICATION:","Notification sent")
-
+                showLogs("NOTIFICATION:","Notification sent: ${notifyResponse.body()?.Notification_id}")
                 mUiViewModel.hideMessageDialog()
+                val notificationId = notifyResponse.body()?.Notification_id ?: ""
+                Result.success(notificationId)
             }else{
                 mUiViewModel.hideMessageDialog()
                 mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
                 mUiViewModel.showMessageDialog()
                 showLogs("NOTIFICATION:","Notification not sent")
+                Result.failure(Exception("Notification not sent"))
             }
         } catch (e: Exception) {
             e.printStackTrace()
             mUiViewModel.hideMessageDialog()
             mUiViewModel.setDialogDetails("Try again!","","hold on...",R.drawable.ic_notest)
             mUiViewModel.showMessageDialog()
+            Result.failure(Exception("Notification not sent"))
         }
     }
 
@@ -846,5 +852,29 @@ class Repository () {
             e.printStackTrace()
         }
     }
-}
+
+        suspend fun getCheckSheetStatusBack(s: String?): Result<String> {
+            return try {
+                if (s != null) {
+                    val response = otherAPIs.checkSheetStatusBack(s)
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            if (it.approvedStatus == "true") {
+                                Result.success("true")
+                            } else {
+                                Result.success("fail")
+                            }
+                        } ?: Result.failure(IOException("Response body is null"))
+                    } else {
+                        Result.failure(IOException("Error: ${response.message()}"))
+                    }
+                } else {
+                    Result.failure(IOException("Invalid input"))
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
 
