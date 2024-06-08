@@ -651,7 +651,7 @@ fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
 
                     if (!myComponents.mainViewModel.isCompleted3[0])
                         SubmitButton(text = "Submit", onClick = {
-                            if(myComponents.mainViewModel.readingInRange(min,max,reading13))
+                           if(myComponents.mainViewModel.readingInRange(min,max,reading13))
                             myComponents.mainViewModel.runReadingAPI(2, reading13, 0)
 
                         })

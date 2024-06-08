@@ -119,7 +119,7 @@ interface OtherAPIs {
     @FormUrlEncoded
     @POST("/operator/get_reasons_for_items")
     suspend fun getReasons(
-        @Field("floor_no") floor_no: String
+        @Field("process_no") process_no: String
     ): Response<myReasons>
 
 
