@@ -101,7 +101,7 @@ class MainViewModel(context: Context) : ViewModel(){
     var FPACounter = 1;
     var isFPATime = false
     var shouldCheckTemporaryFPA = false
-    var checkTempFPA = false
+    var addDataNow = false
 
     var mSelectedReason = ""
     val mReasonList = MutableLiveData<myReasons>()
@@ -119,6 +119,11 @@ class MainViewModel(context: Context) : ViewModel(){
     var fpa2 =  mutableStateOf<String?>(null)
     var fpa3 =  mutableStateOf<String?>(null)
     var fpa4 =  mutableStateOf<String?>(null)
+
+    var otherfpa1 =  mutableStateOf<String?>(null)
+    var otherfpa2 =  mutableStateOf<String?>(null)
+    var otherfpa3 =  mutableStateOf<String?>(null)
+    var otherfpa4 =  mutableStateOf<String?>(null)
 
 
 
