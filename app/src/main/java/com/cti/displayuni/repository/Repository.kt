@@ -797,7 +797,11 @@ class Repository () {
             showLogs("Part No.", part_no)
             showLogs("TempTaskId", temp_task_id)
 
-            val fpaCheck_Res = otherAPIs.checkFPA(precedency_no, part_no, temp_task_id)
+            val fpa_check_count = if(mainViewModel.FPACounter == 1 || mainViewModel.FPACounter == 3) 1 else 2
+
+            showLogs("FPA CHECK COUNT", fpa_check_count.toString())
+
+            val fpaCheck_Res = otherAPIs.checkFPA(precedency_no, part_no, temp_task_id, fpa_check_count.toString())
             if (fpaCheck_Res.code() == 200) {
 
                 showLogs("CHECK FPA STATUS: ", "FPA Successful")

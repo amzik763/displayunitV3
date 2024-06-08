@@ -31,6 +31,7 @@ fun DisplayModeImage(
                 contentDescription = "cancel",
                 modifier = Modifier.clickable { onCloseClicked() })
         }
+
             ZoomableImage()
         }
 

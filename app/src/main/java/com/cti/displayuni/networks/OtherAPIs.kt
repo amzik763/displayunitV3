@@ -166,8 +166,9 @@ interface OtherAPIs {
     suspend fun checkFPA(
         @Field("precedency_no") precedency_no: String,
         @Field("part_no") part_no: String,
-        @Field("temp_task_id") temp_task_id: String
-    ): Response<FPAres>
+        @Field("temp_task_id") temp_task_id: String,
+        @Field("fpa_check_count") fpa_check_count: String
+        ): Response<FPAres>
 
     @FormUrlEncoded
     @POST("/operator/get_csp_status")

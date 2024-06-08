@@ -239,11 +239,11 @@ class MainViewModel(context: Context) : ViewModel(){
         for (item in checkSheetList) {
 
 
-            if( item == "status") {
-                mUiViewModel.setDialogDetails("EMPTY STATUS", "Please fill all the value..", "", R.drawable.ic_notest )
-                mUiViewModel.showMessageDialog()
-                return
-            }
+//            if( item == "status") {
+//                mUiViewModel.setDialogDetails("EMPTY STATUS", "Please fill all the value..", "", R.drawable.ic_notest )
+//                mUiViewModel.showMessageDialog()
+//                return
+//            }
 
 //            if (item == "SUP_OK") {
 //                showLogs("DIALOG","SHOW DIALOG")
@@ -287,7 +287,6 @@ class MainViewModel(context: Context) : ViewModel(){
         catch (e:NumberFormatException){
 
             try {
-
                 val paramValue = param_value.toFloat()
                 val maxValue = max.toFloat()
                 val minValue = min.toFloat()
@@ -301,31 +300,19 @@ class MainViewModel(context: Context) : ViewModel(){
                         R.drawable.ic_notest
                     )
                     mUiViewModel.showMessageDialog()
-
                     showLogs("Reading", "Reading in range")
                     return false
-
-
                 }
-
             }
             catch (e:Exception){
-
                 showLogs("Reading exception", "Reading is not in range")
-
             }
-
-
-
         }catch (e:Exception){
             println(e.printStackTrace())
             showLogs("Reading exc", "Reading is not in range")
-
             return false
         }
-
         showLogs("Reading not", "Reading is not in range")
-
         return true
     }
     fun itemsInRange():Boolean{

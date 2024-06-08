@@ -402,6 +402,9 @@ fun Header(){
                 MyImageButton(icon = R.drawable.fullscreen) {
                     myComponents.mUiViewModel.showFullImage.value = true
                 }
+
+                Spacer(Modifier.width(16.dp))
+
             }
         }
         //Second Row
