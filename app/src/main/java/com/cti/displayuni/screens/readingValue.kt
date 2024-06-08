@@ -195,7 +195,7 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
                     }
                     ReadingValue(
                         text =  reading1,
-                        label = "Enter Value",
+                        label = min + " - " + max,
                         onTextChange = {it ->
                             if(!myComponents.mainViewModel.isCompleted1[0]){
 
@@ -230,7 +230,7 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
                     }
                     ReadingValue(
                         text = reading2,
-                        label = "Enter Value",
+                        label = min + " - " + max,
                         onTextChange = { it ->
                             if(!myComponents.mainViewModel.isCompleted1[1]){
 
@@ -266,7 +266,7 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
 
                     ReadingValue(
                         text = reading3,
-                        label = "Enter Value",
+                        label = min + " - " + max,
                         onTextChange = { it ->
                             if(!myComponents.mainViewModel.isCompleted1[2]){
 
@@ -303,7 +303,7 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
 
                     ReadingValue(
                         text = reading4,
-                        label = "Enter Value",
+                        label = min + " - " + max,
                         onTextChange = { it ->
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted1[3]){
@@ -342,7 +342,7 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
 
                     ReadingValue(
                         text = reading5,
-                        label = "Enter Value",
+                        label = min + " - " + max,
                         onTextChange = { it ->
                             if(!myComponents.mainViewModel.isCompleted1[4]){
 
@@ -364,7 +364,7 @@ fun ReadingRow1st(dataListChart: State<List<chart_parameter>>) {
                     if(!myComponents.mainViewModel.isCompleted1[4])
                         SubmitButton(text = "Submit", onClick = {
                             if(myComponents.mainViewModel.readingInRange(min,max,reading5))
-                            myComponents.mainViewModel.runReadingAPI(0, reading5, 4)
+                             myComponents.mainViewModel.runReadingAPI(0, reading5, 4)
 
                         })
 
@@ -408,7 +408,7 @@ fun ReadingRow2nd(dataListChart: State<List<chart_parameter>>) {
 
                     ReadingValue(
                         text = reading12,
-                        label = "Enter Value",
+                        label = min + " - " + max,
                         onTextChange = { it ->
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted2[0]){
@@ -447,7 +447,7 @@ fun ReadingRow2nd(dataListChart: State<List<chart_parameter>>) {
                     }
                     ReadingValue(
                         text = reading22,
-                        label = "Enter Value",
+                        label = min + " - " + max,
                         onTextChange = {
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted2[1]){
@@ -485,7 +485,7 @@ fun ReadingRow2nd(dataListChart: State<List<chart_parameter>>) {
                     }
                     ReadingValue(
                         text = reading32,
-                        label = "Enter Value",
+                        label = min + " - " + max,
                         onTextChange = { it ->
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted2[2]){
@@ -523,7 +523,7 @@ fun ReadingRow2nd(dataListChart: State<List<chart_parameter>>) {
 
                     ReadingValue(
                         text = reading42,
-                        label = "Enter Value",
+                        label = min + " - " + max,
                         onTextChange = { it ->
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted2[3]){
@@ -561,7 +561,7 @@ fun ReadingRow2nd(dataListChart: State<List<chart_parameter>>) {
 
                     ReadingValue(
                         text = reading52,
-                        label = "Enter Value",
+                        label = min + " - " + max,
                         onTextChange = { it ->
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted2[4]){
@@ -626,7 +626,7 @@ fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
 
                     ReadingValue(
                         text = reading13,
-                        label = "Enter Value",
+                        label = min + " - " + max,
                         onTextChange = { it ->
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted3[0]){
@@ -667,7 +667,7 @@ fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
 
                     ReadingValue(
                         text = reading23,
-                        label = "Enter Value",
+                        label = min + " - " + max,
                         onTextChange = { it ->
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted3[1]){
@@ -705,7 +705,7 @@ fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
 
                     ReadingValue(
                         text = reading33,
-                        label = "Enter Value",
+                        label = min + " - " + max,
                         onTextChange = { it ->
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted3[2]){
@@ -744,7 +744,7 @@ fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
 
                      ReadingValue(
                         text = reading43,
-                        label = "Enter Value",
+                        label = min + " - " + max,
                         onTextChange = { it ->
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted3[3]){
@@ -781,7 +781,7 @@ fun ReadingRow3rd(dataListChart: State<List<chart_parameter>>) {
 
                     ReadingValue(
                         text = reading53,
-                        label = "Enter Value",
+                        label = min + " - " + max,
                         onTextChange = { it ->
                             // Filter out commas from the input text
                             if(!myComponents.mainViewModel.isCompleted3[4]){

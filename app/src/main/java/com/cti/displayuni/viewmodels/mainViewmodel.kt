@@ -329,6 +329,9 @@ class MainViewModel(context: Context) : ViewModel(){
         return true
     }
     fun itemsInRange():Boolean{
+
+
+
         dataListActual.forEach {
             try {
                 if (!it.param_value.isNullOrBlank())
@@ -346,7 +349,35 @@ class MainViewModel(context: Context) : ViewModel(){
                             mUiViewModel.showMessageDialog()
                             return false
                         }
-            }catch (_:Exception){
+            }catch (e:NumberFormatException){
+
+                val paramValue = it.param_value?.toFloat()
+                val maxValue = it.max?.toFloat()
+                val minValue = it.min?.toFloat()
+
+                if (paramValue != null && maxValue != null && minValue != null)
+                if ((paramValue > maxValue) || (paramValue < minValue))
+                {
+                    mUiViewModel.setDialogDetails(
+                        "Not Eligible",
+                        "",
+                        "Value should be between ${minValue} and ${maxValue}",
+                        R.drawable.ic_notest
+                    )
+                    mUiViewModel.showMessageDialog()
+
+                    showLogs("Reading", "Reading in range")
+                    return false
+
+
+                }
+
+
+            }
+
+
+
+            catch (_:Exception){
 
             }
         }
@@ -367,6 +398,33 @@ class MainViewModel(context: Context) : ViewModel(){
                         mUiViewModel.showMessageDialog()
                         return false
                     }
+
+            }
+
+            catch (e:NumberFormatException){
+
+                val paramValue = it.param_value?.toFloat()
+                val maxValue = it.max?.toFloat()
+                val minValue = it.min?.toFloat()
+
+                if (paramValue != null && maxValue != null && minValue != null)
+                    if ((paramValue > maxValue) || (paramValue < minValue))
+                    {
+                        mUiViewModel.setDialogDetails(
+                            "Not Eligible",
+                            "",
+                            "Value should be between ${minValue} and ${maxValue}",
+                            R.drawable.ic_notest
+                        )
+                        mUiViewModel.showMessageDialog()
+
+                        showLogs("Reading", "Reading in range")
+                        return false
+
+
+                    }
+
+
             }catch (_:Exception){
             }
         }
