@@ -406,6 +406,32 @@ class Repository () {
     }
 
     suspend fun addData(failed: String, passed: String, station_id: String,i:Int):Boolean {
+
+
+        if(mainViewModel.shouldCheckTemporaryFPA) {
+            checkFPA(
+                mainViewModel.precedency_no.value,
+                mainViewModel.mPartName,
+                mainViewModel.temp_task_id.value
+            )
+
+
+            if (mainViewModel.FPACounter == 2) {
+                if (mainViewModel.fpa2.value.isNullOrEmpty()) {
+                    //showdialog
+                    return false
+                }
+            }
+
+            if (mainViewModel.FPACounter == 4) {
+                if (mainViewModel.fpa4.value.isNullOrEmpty()) {
+                    //showdialog
+                    return false
+                }
+            }
+
+        }
+
         mUiViewModel.setDialogDetails("Submitting...","","hold on...",R.drawable.thanks)
         mUiViewModel.showMessageDialog()
         var p=mainViewModel.pass.intValue;var f=mainViewModel.fail.intValue
@@ -423,7 +449,8 @@ class Repository () {
                 showLogs("ADD DATA:","Data Added Successfully")
                 mUiViewModel.hideMessageDialog()
                 mUiViewModel.clearFields.intValue++
-
+                mainViewModel.checkTempFPA = false
+                mainViewModel.shouldCheckTemporaryFPA = false
                 return true
             }else{
                 mUiViewModel.hideMessageDialog()
@@ -438,6 +465,7 @@ class Repository () {
             mUiViewModel.setDialogDetails("Try again!","Error in adding data","",R.drawable.ic_notest)
             mUiViewModel.showMessageDialog()
             return false
+
         }
     }
 
@@ -796,12 +824,33 @@ class Repository () {
             showLogs("Part No.", part_no)
             showLogs("TempTaskId", temp_task_id)
 
-            val fpa_check_count = if(mainViewModel.FPACounter == 1 || mainViewModel.FPACounter == 3) 1 else 2
+            var fpa_check_count = 0
+
+            when(mainViewModel.FPACounter)
+            {
+                1 -> {
+                    fpa_check_count = 0
+                }
+                2 -> {
+                    fpa_check_count = 1
+                }
+                3 -> {
+                    fpa_check_count = 0
+                }
+                4 -> {
+                    fpa_check_count = 1
+                }
+            }
+
+
+            if(mainViewModel.shouldCheckTemporaryFPA){
+                fpa_check_count = 2
+            }
 
             showLogs("FPA CHECK COUNT", fpa_check_count.toString())
 
             val fpaCheck_Res = otherAPIs.checkFPA(precedency_no, part_no, temp_task_id, fpa_check_count.toString())
-            if (fpaCheck_Res.code() == 200) {
+            if (fpaCheck_Res.code() == 200 || fpaCheck_Res.code() == 210 ) {
 
                 showLogs("CHECK FPA STATUS: ", "FPA Successful")
                 showLogs( "FPA CHECK STATUS RESPONSE", fpaCheck_Res.body().toString())
@@ -821,6 +870,15 @@ class Repository () {
                 if (mainViewModel.FPACounter == 2 && fpaCheck_Res.body()?.before_station_fpa_status?.start_shift_2_parameters_values.toString() == "null"){
                     mUiViewModel.setDialogDetails("","Please wait for previous station to complete FPA","", R.drawable.ic_notest)
                     mUiViewModel.showMessageDialog()
+
+                    if(mainViewModel.shouldCheckTemporaryFPA){
+                        mainViewModel.shouldCheckTemporaryFPA = false
+                        mainViewModel.checkTempFPA = false
+                    }else{
+                        mainViewModel.shouldCheckTemporaryFPA = true
+                        mainViewModel.checkTempFPA = true
+                    }
+//                    mainViewModel.checkTempFPA = true
                     showLogs("CHECK FPA STATUS: ", "FPA 2 return")
                     return
                 }
@@ -835,16 +893,44 @@ class Repository () {
                 if (mainViewModel.FPACounter == 4 && fpaCheck_Res.body()?.before_station_fpa_status?.end_shift_2_parameters_values.toString() == "null"){
                     mUiViewModel.setDialogDetails("","Please wait for previous station to complete FPA","", R.drawable.ic_notest)
                     mUiViewModel.showMessageDialog()
+
+                    if(mainViewModel.shouldCheckTemporaryFPA){
+                        mainViewModel.shouldCheckTemporaryFPA = false
+                        mainViewModel.checkTempFPA = false
+                    }else{
+                        mainViewModel.shouldCheckTemporaryFPA = true
+                        mainViewModel.checkTempFPA = true
+                    }
+
                     showLogs("CHECK FPA STATUS: ", "FPA 4 return")
                     return
                 }
-                mainViewModel.submitPartInfoWithParams(1)
+                if(!mainViewModel.shouldCheckTemporaryFPA) {
+                    mainViewModel.submitPartInfoWithParams(1)
+                    mainViewModel.checkTempFPA = false
+
+                }else{
+                    mainViewModel.checkTempFPA = true
+                }
+
+                showLogs("CHECK CHECK TEMP: ", "${mainViewModel.shouldCheckTemporaryFPA}   ${mainViewModel.checkTempFPA}")
+
+
             }
 
-            if (fpaCheck_Res.code() == 210){
-                mainViewModel.submitPartInfoWithParams(1)
+            /*if (fpaCheck_Res.code() == 210){
+
+
+
+                if(!mainViewModel.shouldCheckTemporaryFPA) {
+                    mainViewModel.submitPartInfoWithParams(1)
+                    mainViewModel.checkTempFPA = false
+
+                }else{
+                    mainViewModel.checkTempFPA = true
+                }
                 showLogs("CHECK FPA STATUS: ", "210")
-            }
+            }*/
 
             if (fpaCheck_Res.code() == 444){
                 mUiViewModel.setDialogDetails("FPA DETAILS", "", "FPA Failed or not done", R.drawable.ic_notest)
@@ -856,7 +942,8 @@ class Repository () {
         }
     }
 
-        suspend fun getCheckSheetStatusBack(s: String?): Result<String> {
+
+    suspend fun getCheckSheetStatusBack(s: String?): Result<String> {
             return try {
                 if (s != null) {
                     val response = otherAPIs.checkSheetStatusBack(s)

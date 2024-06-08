@@ -100,6 +100,8 @@ class MainViewModel(context: Context) : ViewModel(){
 
     var FPACounter = 1;
     var isFPATime = false
+    var shouldCheckTemporaryFPA = false
+    var checkTempFPA = false
 
     var mSelectedReason = ""
     val mReasonList = MutableLiveData<myReasons>()
@@ -425,6 +427,13 @@ class MainViewModel(context: Context) : ViewModel(){
     }
 
     suspend fun submitPartInfo(i:Int) {
+
+        //If FPA DONE FOR LAST STATION
+
+
+
+
+
         val addData = mainViewModel.addData(mainViewModel.fail.intValue.toString(), mainViewModel.pass.intValue.toString(), station_id = mainViewModel.getStationValue(),i= i)
         if(addData){
             //set pass fail and checking part values
