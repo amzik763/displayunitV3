@@ -407,6 +407,9 @@ class Repository () {
 
     suspend fun addData(failed: String, passed: String, station_id: String,i:Int):Boolean {
 
+
+        showLogs("CHECK CHECK: ","${mainViewModel.shouldCheckTemporaryFPA}   ${mainViewModel.checkTempFPA}")
+
         if(mainViewModel.shouldCheckTemporaryFPA) {
             checkFPA(
                 mainViewModel.precedency_no.value,
@@ -427,7 +430,6 @@ class Repository () {
                     return false
                 }
             }
-
         }
 
         mUiViewModel.setDialogDetails("Submitting...","","hold on...",R.drawable.thanks)
@@ -463,7 +465,6 @@ class Repository () {
             mUiViewModel.setDialogDetails("Try again!","Error in adding data","",R.drawable.ic_notest)
             mUiViewModel.showMessageDialog()
             return false
-
         }
     }
 
