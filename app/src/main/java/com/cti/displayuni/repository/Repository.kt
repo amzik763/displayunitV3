@@ -765,8 +765,8 @@ class Repository () {
 
     suspend fun getReasonData() {
         try{
-            showLogs("REASON FLOOR", mainViewModel.floorNum)
-            val myReasonResponse = otherAPIs.getReasons(mainViewModel.floorNum)
+            showLogs("REASON FLOOR", mainViewModel.mProcessName)
+            val myReasonResponse = otherAPIs.getReasons(mainViewModel.mProcessName)
             if (myReasonResponse.isSuccessful){
                 mUiViewModel.showRejectReasonDialog()
                 myReasonResponse.body()?.reasons?.forEach {
