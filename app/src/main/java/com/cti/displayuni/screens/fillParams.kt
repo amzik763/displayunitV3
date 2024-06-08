@@ -426,7 +426,6 @@ fun Header(){
                 ReadingUI()
             }
 
-
             //Pass fail buttons
             Row {
                 Button(

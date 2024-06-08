@@ -123,8 +123,7 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
          )
 
 
-
-         /*Text(
+         Text(
             modifier = Modifier
                .fillMaxWidth(fillMaxWidth3)
                .padding(start = startPadding2),
@@ -132,9 +131,9 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
             color = pureBlack,
             fontFamily = nk,
             fontSize = textFont,
-         )*/
+         )
 
-         /*Text(
+         Text(
             modifier = Modifier
                .fillMaxWidth(fillMaxWidth4)
                .padding(start = startPadding2),
@@ -142,7 +141,7 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
             color = pureBlack,
             fontFamily = nk,
             fontSize = textFont,
-         )*/
+         )
 
          Text(
             modifier = Modifier

@@ -407,14 +407,12 @@ class Repository () {
 
     suspend fun addData(failed: String, passed: String, station_id: String,i:Int):Boolean {
 
-
         if(mainViewModel.shouldCheckTemporaryFPA) {
             checkFPA(
                 mainViewModel.precedency_no.value,
                 mainViewModel.mPartName,
                 mainViewModel.temp_task_id.value
             )
-
 
             if (mainViewModel.FPACounter == 2) {
                 if (mainViewModel.fpa2.value.isNullOrEmpty()) {
@@ -850,7 +848,7 @@ class Repository () {
             showLogs("FPA CHECK COUNT", fpa_check_count.toString())
 
             val fpaCheck_Res = otherAPIs.checkFPA(precedency_no, part_no, temp_task_id, fpa_check_count.toString())
-            if (fpaCheck_Res.code() == 200 || fpaCheck_Res.code() == 210 ) {
+            if (fpaCheck_Res.code() == 200 ) {
 
                 showLogs("CHECK FPA STATUS: ", "FPA Successful")
                 showLogs( "FPA CHECK STATUS RESPONSE", fpaCheck_Res.body().toString())
@@ -918,19 +916,19 @@ class Repository () {
 
             }
 
-            /*if (fpaCheck_Res.code() == 210){
+            if (fpaCheck_Res.code() == 210){
 
 
 
-                if(!mainViewModel.shouldCheckTemporaryFPA) {
+//                if(!mainViewModel.shouldCheckTemporaryFPA) {
                     mainViewModel.submitPartInfoWithParams(1)
-                    mainViewModel.checkTempFPA = false
+//                    mainViewModel.checkTempFPA = false
 
-                }else{
-                    mainViewModel.checkTempFPA = true
-                }
+//                }else{
+//                    mainViewModel.checkTempFPA = true
+//                }
                 showLogs("CHECK FPA STATUS: ", "210")
-            }*/
+            }
 
             if (fpaCheck_Res.code() == 444){
                 mUiViewModel.setDialogDetails("FPA DETAILS", "", "FPA Failed or not done", R.drawable.ic_notest)
