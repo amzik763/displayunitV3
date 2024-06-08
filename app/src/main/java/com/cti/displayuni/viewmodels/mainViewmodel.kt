@@ -435,6 +435,8 @@ class MainViewModel(context: Context) : ViewModel(){
 
 
         val addData = mainViewModel.addData(mainViewModel.fail.intValue.toString(), mainViewModel.pass.intValue.toString(), station_id = mainViewModel.getStationValue(),i= i)
+
+
         if(addData){
             //set pass fail and checking part values
             if(dataListChart.value?.size!=0) {

@@ -544,7 +544,8 @@ class Repository () {
                     }
                     2 -> {
                         mainViewModel.fpa2.value = p1p2
-
+                        mainViewModel.shouldCheckTemporaryFPA = true
+                        mainViewModel.checkTempFPA = true
                     }
                     3 -> {
                         mainViewModel.fpa3.value = p1p2
@@ -552,6 +553,8 @@ class Repository () {
                     }
                     4 -> {
                         mainViewModel.fpa4.value = p1p2
+                        mainViewModel.shouldCheckTemporaryFPA = true
+                        mainViewModel.checkTempFPA = true
 
                     }
                 }
@@ -596,7 +599,6 @@ class Repository () {
             mUiViewModel.showMessageDialog()
             showLogs("ADDWITHPARAM Error",e.printStackTrace().toString())
         }
-
 
     }
 
