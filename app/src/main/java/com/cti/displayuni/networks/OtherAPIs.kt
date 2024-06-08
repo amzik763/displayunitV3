@@ -1,7 +1,6 @@
 package com.cti.displayuni.networks
 
 import com.cti.displayuni.response.FPAres
-import com.cti.displayuni.response.FpaCheck_Res
 import com.cti.displayuni.response.FpaData_res
 import com.cti.displayuni.response.addData_Response
 import com.cti.displayuni.response.allDataV2
@@ -9,7 +8,6 @@ import com.cti.displayuni.response.checkSheetStatusBack
 import com.cti.displayuni.response.checksheetNotificationResponse
 import com.cti.displayuni.response.checksheet_Status
 import com.cti.displayuni.response.myReasons
-import com.cti.displayuni.response.notify_response
 import com.cti.displayuni.response.reading_Response
 import com.cti.displayuni.response.sup_response
 import retrofit2.Response
