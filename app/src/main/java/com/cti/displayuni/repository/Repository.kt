@@ -759,7 +759,6 @@ class Repository () {
             mUiViewModel.setDialogDetails("Try again!","","Submission failed. please try again...\n1. Check if Part ID entered is empty or duplicate",R.drawable.ic_notest)
             mUiViewModel.showMessageDialog()
             e.printStackTrace()
-
         }
     }
 
