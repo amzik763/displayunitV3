@@ -396,28 +396,29 @@ class MainViewModel(context: Context) : ViewModel(){
             }
 
             catch (e:NumberFormatException){
+try {
+    val paramValue = it.param_value?.toFloat()
+    val maxValue = it.max?.toFloat()
+    val minValue = it.min?.toFloat()
 
-                val paramValue = it.param_value?.toFloat()
-                val maxValue = it.max?.toFloat()
-                val minValue = it.min?.toFloat()
+    if (paramValue != null && maxValue != null && minValue != null)
+        if ((paramValue > maxValue) || (paramValue < minValue)) {
+            mUiViewModel.setDialogDetails(
+                "Not Eligible",
+                "",
+                "Value should be between ${minValue} and ${maxValue}",
+                R.drawable.ic_notest
+            )
+            mUiViewModel.showMessageDialog()
 
-                if (paramValue != null && maxValue != null && minValue != null)
-                    if ((paramValue > maxValue) || (paramValue < minValue))
-                    {
-                        mUiViewModel.setDialogDetails(
-                            "Not Eligible",
-                            "",
-                            "Value should be between ${minValue} and ${maxValue}",
-                            R.drawable.ic_notest
-                        )
-                        mUiViewModel.showMessageDialog()
-
-                        showLogs("Reading", "Reading in range")
-                        return false
+            showLogs("Reading", "Reading in range")
+            return false
 
 
-                    }
+        }
+}catch (e:Exception){
 
+}
 
             }catch (_:Exception){
             }
