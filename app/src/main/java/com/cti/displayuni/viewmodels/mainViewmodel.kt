@@ -98,10 +98,10 @@ class MainViewModel(context: Context) : ViewModel(){
     val apiCheckSheetStatusBack = mutableStateOf(checkSheetStatusBack("none"))
     var ficID = "none"
 
-    var FPACounter = 1;
+    var FPACounter = 5;
     var isFPATime = false
     var shouldCheckTemporaryFPA = false
-    var addDataNow = false
+    var dontAddData = true
 
     var mSelectedReason = ""
     val mReasonList = MutableLiveData<myReasons>()

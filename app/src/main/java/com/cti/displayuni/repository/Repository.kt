@@ -495,10 +495,9 @@ class Repository() {
 
     suspend fun addData(failed: String, passed: String, station_id: String, i: Int): Boolean {
 
-
         showLogs(
             "CHECK CHECK: ",
-            "${mainViewModel.shouldCheckTemporaryFPA}   ${mainViewModel.addDataNow}"
+            "${mainViewModel.shouldCheckTemporaryFPA}   ${mainViewModel.dontAddData}"
         )
 
         if (mainViewModel.shouldCheckTemporaryFPA) {
@@ -508,6 +507,11 @@ class Repository() {
                 mainViewModel.temp_task_id.value
             )
 
+            if (mainViewModel.dontAddData){
+                mUiViewModel.setDialogDetails("Waiting....", "", "Waiting for FPA to complete on other stations", R.drawable.thanks)
+                mUiViewModel.showMessageDialog()
+                return false
+            }
             if (mainViewModel.FPACounter == 2) {
 
             }
@@ -538,8 +542,9 @@ class Repository() {
                 showLogs("ADD DATA:", "Data Added Successfully")
                 mUiViewModel.hideMessageDialog()
                 mUiViewModel.clearFields.intValue++
-                mainViewModel.addDataNow = false
+//                mainViewModel.addDataNow = false
                 mainViewModel.shouldCheckTemporaryFPA = false
+                mainViewModel.dontAddData = true
                 return true
             } else {
                 mUiViewModel.hideMessageDialog()
@@ -1079,10 +1084,10 @@ class Repository() {
 
 
             if(mainViewModel.precedency_no.value == "1") {
-                if (fpaCheck_Res.code() == 210 && fpa_check_count == 0 && mainViewModel.FPACounter == 1) {
+                if (fpaCheck_Res.code() == 210  && mainViewModel.FPACounter == 1 && fpa_check_count == 0) {
                     mainViewModel.submitPartInfoWithParams(1)
-                }else
-                if (fpaCheck_Res.code() == 200 && mainViewModel.FPACounter == 2 && fpa_check_count == 1) {
+                }
+            else if (fpaCheck_Res.code() == 200 && mainViewModel.FPACounter == 2 && fpa_check_count == 1) {
                     if (mainViewModel.otherfpa1.value.toString() == "null"){
                         mUiViewModel.setDialogDetails("FPA DETAILS","","FPA Failed or not done",R.drawable.ic_notest)
                         mUiViewModel.showMessageDialog()
@@ -1090,23 +1095,92 @@ class Repository() {
                     }else{
                         mainViewModel.submitPartInfoWithParams(1)
                     }
-                }else
-                    if(fpaCheck_Res.code() == 200 && mainViewModel.FPACounter == 3 && fpa_check_count ==2){
+                }
+            else if(fpaCheck_Res.code() == 200 && mainViewModel.FPACounter == 3 && fpa_check_count ==2){
                         if(mainViewModel.otherfpa2.value.toString() == "null"){
                             mUiViewModel.setDialogDetails("FPA DETAILS","","FPA Failed or not done",R.drawable.ic_notest)
                             mUiViewModel.showMessageDialog()
                             return
+                        }else{
+                            mainViewModel.dontAddData = false
                         }
-                    }else
-                        if(fpaCheck_Res.code() == 200 && mainViewModel.FPACounter == 3 && fpa_check_count == 0){
-                            if(mainViewModel.otherfpa2.value.toString() == "null"){
-                                mUiViewModel.setDialogDetails("FPA DETAILS","","FPA Failed or not done",R.drawable.ic_notest)
-                                mUiViewModel.showMessageDialog()
-                                return
-                            }else{
+                    }
+            else if(fpaCheck_Res.code() == 210 && mainViewModel.FPACounter == 3 && fpa_check_count == 0){
                                 mainViewModel.submitPartInfoWithParams(1)
-                            }
                         }
+            else if(fpaCheck_Res.code() == 200 && mainViewModel.FPACounter == 4 && fpa_check_count == 1){
+                                if(mainViewModel.otherfpa3.value.toString() == "null"){
+                                    mUiViewModel.setDialogDetails("FPA DETAILS","","FPA Failed or not done",R.drawable.ic_notest)
+                                    mUiViewModel.showMessageDialog()
+                                    return
+                                }else{
+                                    mainViewModel.submitPartInfoWithParams(1)
+                                }
+                            }
+            else if(fpaCheck_Res.code() == 200 && mainViewModel.FPACounter == 5 && fpa_check_count == 2){
+                                    if(mainViewModel.otherfpa4.value.toString() == "null"){
+                                        mUiViewModel.setDialogDetails("FPA DETAILS","","FPA Failed or not done",R.drawable.ic_notest)
+                                        mUiViewModel.showMessageDialog()
+                                        return
+                                    }else{
+                                        mainViewModel.dontAddData = false
+                                    }
+                                }
+            }else{
+                if (fpaCheck_Res.code() == 200  && mainViewModel.FPACounter == 1 && fpa_check_count == 0) {
+                    if (mainViewModel.otherfpa1.value.toString() == "null"){
+                        mUiViewModel.setDialogDetails("FPA DETAILS","","FPA Failed or not done",R.drawable.ic_notest)
+                        mUiViewModel.showMessageDialog()
+                        return
+                    }else{
+                        mainViewModel.submitPartInfoWithParams(1)
+                    }
+                }
+                else if (fpaCheck_Res.code() == 200 && mainViewModel.FPACounter == 2 && fpa_check_count == 1) {
+                    if (mainViewModel.otherfpa2.value.toString() == "null"){
+                        mUiViewModel.setDialogDetails("FPA DETAILS","","FPA Failed or not done",R.drawable.ic_notest)
+                        mUiViewModel.showMessageDialog()
+                        return
+                    }else{
+                        mainViewModel.submitPartInfoWithParams(1)
+                    }
+                }
+                else if(fpaCheck_Res.code() == 200 && mainViewModel.FPACounter == 3 && fpa_check_count ==2){
+                    if(mainViewModel.otherfpa2.value.toString() == "null"){
+                        mUiViewModel.setDialogDetails("FPA DETAILS","","FPA Failed or not done",R.drawable.ic_notest)
+                        mUiViewModel.showMessageDialog()
+                        return
+                    }else{
+                        mainViewModel.dontAddData = false
+                    }
+                }
+                else if(fpaCheck_Res.code() == 200 && mainViewModel.FPACounter == 3 && fpa_check_count == 0){
+                    if (mainViewModel.otherfpa3.value.toString() == "null"){
+                        mUiViewModel.setDialogDetails("FPA DETAILS","","FPA Failed or not done",R.drawable.ic_notest)
+                        mUiViewModel.showMessageDialog()
+                        return
+                    }else{
+                        mainViewModel.submitPartInfoWithParams(1)
+                    }
+                }
+                else if(fpaCheck_Res.code() == 200 && mainViewModel.FPACounter == 4 && fpa_check_count == 1){
+                    if(mainViewModel.otherfpa4.value.toString() == "null"){
+                        mUiViewModel.setDialogDetails("FPA DETAILS","","FPA Failed or not done",R.drawable.ic_notest)
+                        mUiViewModel.showMessageDialog()
+                        return
+                    }else{
+                        mainViewModel.submitPartInfoWithParams(1)
+                    }
+                }
+                else if(fpaCheck_Res.code() == 200 && mainViewModel.FPACounter == 5 && fpa_check_count == 2){
+                    if(mainViewModel.otherfpa4.value.toString() == "null"){
+                        mUiViewModel.setDialogDetails("FPA DETAILS","","FPA Failed or not done",R.drawable.ic_notest)
+                        mUiViewModel.showMessageDialog()
+                        return
+                    }else{
+                        mainViewModel.dontAddData = false
+                    }
+                }
             }
 
 
@@ -1248,7 +1322,7 @@ class Repository() {
 
                     if (mainViewModel.shouldCheckTemporaryFPA) {
                         mainViewModel.shouldCheckTemporaryFPA = false
-                        mainViewModel.addDataNow = false
+//                        mainViewModel.addDataNow = false
                     } else {
                         mainViewModel.shouldCheckTemporaryFPA = true
 //                        mainViewModel.addDataNow = true
@@ -1259,26 +1333,26 @@ class Repository() {
                 }
                 if (!mainViewModel.shouldCheckTemporaryFPA) {
                     mainViewModel.submitPartInfoWithParams(1)
-                    mainViewModel.addDataNow = false
+//                    mainViewModel.addDataNow = false
 
                 } else {
 //                    mainViewModel.addDataNow = true
                 }
-
-                showLogs(
-                    "CHECK CHECK TEMP: ",
-                    "${mainViewModel.shouldCheckTemporaryFPA}   ${mainViewModel.addDataNow}"
-                )
+//
+//                showLogs(
+//                    "CHECK CHECK TEMP: ",
+//                    "${mainViewModel.shouldCheckTemporaryFPA}   ${mainViewModel.addDataNow}"
+//                )
 
 
             }
 
             if (fpaCheck_Res.code() == 210) {
                 mainViewModel.submitPartInfoWithParams(1)
-                showLogs(
-                    "CHECK CHECK TEMP: ",
-                    "${mainViewModel.shouldCheckTemporaryFPA}   ${mainViewModel.addDataNow}"
-                )
+//                showLogs(
+//                    "CHECK CHECK TEMP: ",
+//                    "${mainViewModel.shouldCheckTemporaryFPA}   ${mainViewModel.addDataNow}"
+//                )
             }
 
 
