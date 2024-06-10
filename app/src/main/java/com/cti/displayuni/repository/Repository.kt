@@ -501,6 +501,8 @@ class Repository() {
         )
 
         if (mainViewModel.shouldCheckTemporaryFPA) {
+
+            showLogs("NEWFPA: ","INSIDE addDATA : temporary FPA CHECK")
             checkFPA(
                 mainViewModel.precedency_no.value,
                 mainViewModel.mPartName,
@@ -510,6 +512,8 @@ class Repository() {
             if (mainViewModel.dontAddData){
                 mUiViewModel.setDialogDetails("Waiting....", "", "Waiting for FPA to complete on other stations", R.drawable.thanks)
                 mUiViewModel.showMessageDialog()
+                showLogs("NEWFPA: ","INSIDE addDATA : Don't add data ")
+
                 return false
             }
             if (mainViewModel.FPACounter == 2) {
@@ -1016,6 +1020,8 @@ class Repository() {
 
 
             if (mainViewModel.shouldCheckTemporaryFPA) {
+                showLogs("NEWFPA: ","INSIDE checkFPA : FPA COUNT IS 2 ")
+
                 fpa_check_count = 2
             }
 
@@ -1033,8 +1039,11 @@ class Repository() {
                     R.drawable.ic_notest
                 )
                 mUiViewModel.showMessageDialog()
+                showLogs("NEWFPA: ","INSIDE checkFPA : Response is 444 ")
+
                 return
             }
+            showLogs("NEWFPA: ","INSIDE checkFPA : Response code is ${fpaCheck_Res.code()}")
 
             if (fpaCheck_Res.code() == 200 || fpaCheck_Res.code() == 210) {
 
@@ -1082,8 +1091,14 @@ class Repository() {
                 )
             }
 
+            showLogs("NEWFPA: ","INSIDE checkFPA : FPA COUNTER ${mainViewModel.FPACounter} ")
+            showLogs("NEWFPA: ","INSIDE checkFPA : FPA CHECK COUNT ${fpa_check_count} ")
+            showLogs("NEWFPA: ","INSIDE checkFPA : SHOULD TEMP FPA ${mainViewModel.shouldCheckTemporaryFPA} ")
+            showLogs("NEWFPA: ","INSIDE checkFPA : NOT ADD DATA ${mainViewModel.dontAddData} ")
 
             if(mainViewModel.precedency_no.value == "1") {
+                showLogs("NEWFPA: ","INSIDE checkFPA : Precdency 1")
+
                 if (fpaCheck_Res.code() == 210  && mainViewModel.FPACounter == 1 && fpa_check_count == 0) {
                     mainViewModel.submitPartInfoWithParams(1)
                 }
@@ -1127,6 +1142,8 @@ class Repository() {
                                     }
                                 }
             }else{
+                showLogs("NEWFPA: ","INSIDE checkFPA : Precdency is greater than 1")
+
                 if (fpaCheck_Res.code() == 200  && mainViewModel.FPACounter == 1 && fpa_check_count == 0) {
                     if (mainViewModel.otherfpa1.value.toString() == "null"){
                         mUiViewModel.setDialogDetails("FPA DETAILS","","FPA Failed or not done",R.drawable.ic_notest)
