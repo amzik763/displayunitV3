@@ -8,11 +8,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
@@ -141,6 +143,7 @@ fun Checksheet2() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Row {
+
                     Text(
                         text = "Name: ",
                         style = TextStyle(
@@ -158,7 +161,32 @@ fun Checksheet2() {
                             fontFamily = mFont.poppinsbold
                         )
                     )
+
                 }
+
+                Row {
+                    Text(
+                        text = "Skill: ",
+                        style = TextStyle(
+                            fontSize = textFont2,
+                            color = pureBlack,
+                            fontFamily = poppinsregular
+                        )
+                    )
+                    Text(
+                        text = myComponents.mainViewModel.skill,
+                        style = TextStyle(
+                            fontSize = textFont2,
+                            color = pureBlack,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = mFont.poppinsbold
+                        )
+                    )
+
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Skills()
+                }
+
                 Row {
                     Text(
                         text = "Device Id: ",

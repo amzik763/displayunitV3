@@ -113,13 +113,9 @@ fun FPA_Details(
                         fontSize = 16.sp,
                         fontFamily = mFont.poppinsbold,
                         textAlign = TextAlign.Center
-                    )
-                )
+                )   )
             }
         }
-
     }
 }
-
-
 

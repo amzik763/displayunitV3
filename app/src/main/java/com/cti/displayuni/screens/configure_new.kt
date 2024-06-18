@@ -115,12 +115,10 @@ fun ConfigureNew(){
                     .padding(start = 36.dp, top = 48.dp, bottom = 36.dp),
                     verticalArrangement = Arrangement.SpaceBetween){
                     Column {
-                        Text(text = "INTERFACE",
-                            style = TextStyle(
-                                fontSize = mainHeaderFont,
-                                fontWeight = FontWeight.Bold,
-                                color = pureWhite,
-                                fontFamily = nkbold)
+
+                         Image(painter = painterResource(id = R.drawable.interfacelogo),
+                        contentDescription = "Interface Logo",
+                        modifier = Modifier.size(300.dp, 70.dp),
                         )
 
                     }

@@ -1,6 +1,7 @@
 package com.cti.displayuni.repository
 
 import android.util.Log
+import androidx.compose.runtime.Composable
 import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.R
 import com.cti.displayuni.response.FpaData_res
@@ -489,6 +490,7 @@ class Repository() {
             mUiViewModel.hideMessageDialog()
             mUiViewModel.setDialogDetails("Try again!", "", "hold on...", R.drawable.ic_notest)
             mUiViewModel.showMessageDialog()
+
             Result.failure(Exception("Notification not sent"))
         }
     }
@@ -1050,19 +1052,19 @@ class Repository() {
                 showLogs("CHECK FPA STATUS: ", "FPA Successful")
                 showLogs("FPA CHECK STATUS RESPONSE", fpaCheck_Res.body().toString())
                 showLogs(
-                    "FPA RESPONSE",
+                    "FPA RESPONSE 1",
                     fpaCheck_Res.body()?.before_station_fpa_status?.start_shift_1_parameters_values.toString()
                 )
                 showLogs(
-                    "FPA RESPONSE",
+                    "FPA RESPONSE 2",
                     fpaCheck_Res.body()?.before_station_fpa_status?.start_shift_2_parameters_values.toString()
                 )
                 showLogs(
-                    "FPA RESPONSE",
+                    "FPA RESPONSE 3",
                     fpaCheck_Res.body()?.before_station_fpa_status?.end_shift_1_parameters_values.toString()
                 )
                 showLogs(
-                    "FPA RESPONSE",
+                    "FPA RESPONSE 4",
                     fpaCheck_Res.body()?.before_station_fpa_status?.end_shift_2_parameters_values.toString()
                 )
                 mainViewModel.otherfpa1.value =
@@ -1074,19 +1076,19 @@ class Repository() {
                 mainViewModel.otherfpa4.value =
                     fpaCheck_Res.body()?.before_station_fpa_status?.end_shift_2_parameters_values.toString()
                 showLogs(
-                    "FPA RESPONSE OTHERS",
+                    "FPA RESPONSE OTHERS 1",
                     mainViewModel.otherfpa1.value.toString()
                 )
                 showLogs(
-                    "FPA RESPONSE OTHERS",
+                    "FPA RESPONSE OTHERS 2",
                     mainViewModel.otherfpa2.value.toString()
                 )
                 showLogs(
-                    "FPA RESPONSE OTHERS",
+                    "FPA RESPONSE OTHERS 3",
                     mainViewModel.otherfpa3.value.toString()
                 )
                 showLogs(
-                    "FPA RESPONSE OTHERS",
+                    "FPA RESPONSE OTHERS 4",
                     mainViewModel.otherfpa4.value.toString()
                 )
             }

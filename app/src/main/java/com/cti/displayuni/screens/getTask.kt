@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,7 +43,6 @@ import com.cti.displayuni.ui.theme.lightGrey
 import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
-import com.cti.displayuni.utility.CHECKSHEET
 import com.cti.displayuni.utility.PROFILE
 import com.cti.displayuni.utility.mFont
 import com.cti.displayuni.utility.mFont.nkbold
@@ -59,7 +57,6 @@ import com.cti.displayuni.utility.myComponents
 fun GetTask() {
     val conf = LocalConfiguration.current
     val widthDP = conf.screenWidthDp.dp
-
 
     val currentDateTime = myComponents.mUiViewModel.currentDateTime.observeAsState("")
 
@@ -129,13 +126,10 @@ fun GetTask() {
           verticalArrangement = Arrangement.SpaceBetween){
 
        Column {
-           Text(text = "INTERFACE",
-               style = TextStyle(fontSize = mainHeaderFont,
-                   fontWeight = FontWeight.Bold,
-                   color = pureWhite,
-                   fontFamily = nkbold)
+           Image(painter = painterResource(id = R.drawable.interfacelogo),
+               contentDescription = "Interface Logo",
+               modifier = Modifier.size(300.dp, 70.dp),
            )
-
        }
           Text(
               text = "Developed by Cellus Tech India",
@@ -175,6 +169,30 @@ fun GetTask() {
                       )
                   )
               }
+
+              Row {
+                  Text(
+                      text = "Skill: ",
+                      style = TextStyle(
+                          fontSize = textFont2,
+                          color = pureBlack,
+                          fontFamily = poppinsregular
+                      )
+                  )
+                  Text(
+                      text = myComponents.mainViewModel.skill,
+                      style = TextStyle(
+                          fontSize = textFont2,
+                          color = pureBlack,
+                          fontWeight = FontWeight.Bold,
+                          fontFamily = poppinsbold
+                      )
+                  )
+
+                  Spacer(modifier = Modifier.width(16.dp))
+                  Skills()
+              }
+
               Row {
                   Text(
                       text = "Device Id: ",
@@ -184,6 +202,7 @@ fun GetTask() {
                           fontFamily = poppinsregular
                       )
                   )
+
                   Text(
                       text = myComponents.mainViewModel.deviceId,
                       style = TextStyle(
@@ -229,7 +248,8 @@ fun GetTask() {
                   Image(
                       painter = painterResource(id = R.drawable.ic_account),
                       contentDescription = "Account",
-                      modifier = Modifier.size(imgSize)
+                      modifier = Modifier
+                          .size(imgSize)
                           .clickable {
                               myComponents.navController.navigate(PROFILE)
                           }

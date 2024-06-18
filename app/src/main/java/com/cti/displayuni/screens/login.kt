@@ -122,36 +122,34 @@ fun Login(){
     }
 
     Row {
-      Box(modifier = Modifier.width(maxWidth)){
-      Image(painter = painterResource(id = R.drawable.bg_background),
-          contentDescription = "Blue Background",
-          contentScale = ContentScale.Crop,
-      )
-      Column(modifier = Modifier
-          .fillMaxHeight()
-          .fillMaxSize()
-          .padding(start = 36.dp, top = 48.dp, bottom = 36.dp),
-          verticalArrangement = Arrangement.SpaceBetween){
-      Column {
-          Text(text = "INTERFACE",
-              style = TextStyle(
-                  fontSize = mainHeaderFont,
-                  fontWeight = FontWeight.Bold,
-                  color = pureWhite,
-                  fontFamily = nkbold)
-          )
+        Box(modifier = Modifier.width(maxWidth)){
+            Image(painter = painterResource(id = R.drawable.bg_background),
+                contentDescription = "Blue Background",
+                contentScale = ContentScale.Crop,
+            )
+            Column(modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxSize()
+                .padding(start = 36.dp, top = 48.dp, bottom = 36.dp),
+                verticalArrangement = Arrangement.SpaceBetween){
+                Column {
 
-      }
-          Text(
-              text = "Developed by Cellus Tech India",
-              style = TextStyle(
-                  fontSize = textFont,
-                  fontWeight = FontWeight.Bold,
-                  color = pureWhite,
-                  fontFamily = nk)
-          )
-      }
-    }
+                    Image(painter = painterResource(id = R.drawable.interfacelogo),
+                        contentDescription = "Interface Logo",
+                        modifier = Modifier.size(300.dp, 70.dp),
+                    )
+
+                }
+                Text(
+                    text = "Developed by Cellus Tech India",
+                    style = TextStyle(
+                        fontSize = textFont,
+                        fontWeight = FontWeight.Bold,
+                        color = pureWhite,
+                        fontFamily = nk)
+                )
+            }
+        }
         Column(verticalArrangement = Arrangement.SpaceBetween) {
 
             Column(
@@ -167,7 +165,6 @@ fun Login(){
                             fontWeight = FontWeight.Bold,
                             color = lightBlack,
                             fontFamily = nk
-
                         )
                     )
 
@@ -251,3 +248,4 @@ fun Login(){
         }
     }
 }
+
