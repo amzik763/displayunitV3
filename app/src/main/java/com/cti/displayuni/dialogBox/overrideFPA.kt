@@ -232,7 +232,6 @@ fun overrideFPA(
                                         .fillMaxWidth()
                                         .padding(9.dp)
 //                                        .align(Alignment.CenterHorizontally)
-
                                 )
                             }
 
