@@ -477,6 +477,7 @@ fun Header(){
                                     myComponents.mUiViewModel.setDialogDetails("PENDING FPA", "", "Click on FPA button and then fill all parameter values", R.drawable.ic_notest)
                                     myComponents.mUiViewModel.showMessageDialog()
                                     showLogs("PASS FAIL 2", "FILL FPA")
+                                    myComponents.mainViewModel.overrideDontAddData = false
                                     return@Button
                                 }
                                 else if(!actualParamsFilled || !settingParamsFilled){

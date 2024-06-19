@@ -102,6 +102,7 @@ class MainViewModel(context: Context) : ViewModel(){
     var isFPATime = false
     var shouldCheckTemporaryFPA = false
     var dontAddData = true
+    var overrideDontAddData = false
 
     var mSelectedReason = ""
     val mReasonList = MutableLiveData<myReasons>()
@@ -124,9 +125,6 @@ class MainViewModel(context: Context) : ViewModel(){
     var otherfpa2 =  mutableStateOf<String?>(null)
     var otherfpa3 =  mutableStateOf<String?>(null)
     var otherfpa4 =  mutableStateOf<String?>(null)
-
-
-
 
     private val sharedPreferences: SharedPreferences
         get() = mContext.getSharedPreferences(PREFERNCES_NAME, Context.MODE_PRIVATE)
@@ -287,9 +285,7 @@ class MainViewModel(context: Context) : ViewModel(){
                 showLogs("Reading", "Reading in range")
                 return false
 
-
             }
-
         }
         catch (e:NumberFormatException){
 
@@ -323,8 +319,6 @@ class MainViewModel(context: Context) : ViewModel(){
         return true
     }
     fun itemsInRange():Boolean{
-
-
 
         dataListActual.forEach {
             try {
@@ -362,14 +356,8 @@ class MainViewModel(context: Context) : ViewModel(){
 
                     showLogs("Reading", "Reading in range")
                     return false
-
-
                 }
-
-
             }
-
-
 
             catch (_:Exception){
 

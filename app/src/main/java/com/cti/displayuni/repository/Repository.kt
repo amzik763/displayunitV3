@@ -33,20 +33,15 @@ class Repository() {
         Log.d("Repository:", "Created")
     }
 
-
     suspend fun loginUser(username: String, password: String) {
         try {
             loginResponse = authAPI.login(username, password)
             if (loginResponse.isSuccessful) {
-
                 showLogs("AUTH: ", "Login Successful")
-
                 myComponents.navController.popBackStack()
                 myComponents.navController.navigate(GETTASK)
-
                 mainViewModel.saveToken(loginResponse.body()?.token.toString())
-                mainViewModel.name =
-                    loginResponse.body()?.fName.toString() + " " + loginResponse.body()?.lName.toString()
+                mainViewModel.name = loginResponse.body()?.fName.toString() + " " + loginResponse.body()?.lName.toString()
                 mainViewModel.employeeId = loginResponse.body()?.employee_id.toString()
                 mainViewModel.dob = loginResponse.body()?.dob.toString()
                 mainViewModel.password = loginResponse.body()?.password.toString()
@@ -60,7 +55,6 @@ class Repository() {
                 showLogs("AUTH: ", "Login Unsuccessful")
             }
             if (loginResponse.code() == 401) {
-
                 mUiViewModel.setDialogDetails(
                     "Incorrect Password",
                     "Please enter correct password!",
@@ -421,10 +415,7 @@ class Repository() {
     }
 
     suspend fun checkSheetStatus(
-        employeeId: String,
-        ficID: String,
-        stationValue: String,
-        fillChecksheet: String
+        employeeId: String, ficID: String, stationValue: String, fillChecksheet: String
     ) {
         mUiViewModel.setDialogDetails(
             "Submitting...",
@@ -512,10 +503,22 @@ class Repository() {
             )
 
             if (mainViewModel.dontAddData){
-                mUiViewModel.setDialogDetails("Waiting....", "", "Waiting for FPA to complete on other stations", R.drawable.thanks)
-                mUiViewModel.showMessageDialog()
-                showLogs("NEWFPA: ","INSIDE addDATA : Don't add data ")
-                return false
+
+                if(mainViewModel.overrideDontAddData){
+
+                }else {
+
+
+                    mUiViewModel.setDialogDetails(
+                        "Waiting....",
+                        "",
+                        "Waiting for FPA to complete on other stations",
+                        R.drawable.thanks
+                    )
+                    mUiViewModel.showOverrideDialog()
+                    showLogs("NEWFPA: ", "INSIDE addDATA : Don't add data ")
+                    return false
+                }
             }
             if (mainViewModel.FPACounter == 2) {
 
@@ -964,7 +967,6 @@ class Repository() {
             e.printStackTrace()
         }
     }
-
     suspend fun getReasonData() {
         try {
             showLogs("REASON FLOOR", mainViewModel.mProcessName)
@@ -990,7 +992,6 @@ class Repository() {
             mUiViewModel.showMessageDialog()
         }
     }
-
     suspend fun checkFPA(precedency_no: String, part_no: String, temp_task_id: String) {
 
         try {
@@ -1200,16 +1201,10 @@ class Repository() {
                     }
                 }
             }
-
-
-
-
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
-
-
     suspend fun checkFPA2(precedency_no: String, part_no: String, temp_task_id: String) {
 
         try {
@@ -1389,8 +1384,6 @@ class Repository() {
             e.printStackTrace()
         }
     }
-
-
     suspend fun getCheckSheetStatusBack(s: String?): Result<String> {
         return try {
             if (s != null) {

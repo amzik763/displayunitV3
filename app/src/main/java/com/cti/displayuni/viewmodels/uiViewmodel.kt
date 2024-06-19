@@ -47,6 +47,9 @@ class UiViewModel(context: Context) : ViewModel(){
     var isMessageDialogShown by mutableStateOf(false)
         private set
 
+    var isOverrideDialogShown by mutableStateOf(false)
+        private set
+
     var dialogText by mutableStateOf("Network error...")
         private set
 
@@ -56,6 +59,13 @@ class UiViewModel(context: Context) : ViewModel(){
         isNetworkDialogShown = true
     }
     fun hideNetworkDialog(){
+        isNetworkDialogShown = false
+    }
+
+    fun showOverrideDialog(){
+        isNetworkDialogShown = true
+    }
+    fun hideOverrideDialog(){
         isNetworkDialogShown = false
     }
 
