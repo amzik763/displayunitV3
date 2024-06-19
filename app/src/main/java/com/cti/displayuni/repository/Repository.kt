@@ -515,7 +515,6 @@ class Repository() {
                 mUiViewModel.setDialogDetails("Waiting....", "", "Waiting for FPA to complete on other stations", R.drawable.thanks)
                 mUiViewModel.showMessageDialog()
                 showLogs("NEWFPA: ","INSIDE addDATA : Don't add data ")
-
                 return false
             }
             if (mainViewModel.FPACounter == 2) {
