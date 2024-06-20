@@ -7,6 +7,7 @@ import com.cti.displayuni.response.allDataV2
 import com.cti.displayuni.response.checkSheetStatusBack
 import com.cti.displayuni.response.checksheetNotificationResponse
 import com.cti.displayuni.response.checksheet_Status
+import com.cti.displayuni.response.fpa_failed
 import com.cti.displayuni.response.myReasons
 import com.cti.displayuni.response.reading_Response
 import com.cti.displayuni.response.sup_response
@@ -173,5 +174,15 @@ interface OtherAPIs {
     suspend fun checkSheetStatusBack(
         @Field("notification_id") notification_id: String,
     ): Response<checkSheetStatusBack>
+
+    @FormUrlEncoded
+    @POST("/operator/add_fpa_failed")
+    suspend fun fpaFailed(
+        @Field("item_id") item_id: String,
+        @Field("station_id") station_id: String,
+        @Field("fpa_failed_count") fpa_failed_count: String,
+        @Field("fpa_shift") fpa_shift: String,
+        @Field("shift") shift: String,
+    ): Response<fpa_failed>
 
 }

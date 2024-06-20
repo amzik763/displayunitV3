@@ -103,12 +103,15 @@ class MainViewModel(context: Context) : ViewModel(){
     var shouldCheckTemporaryFPA = false
     var dontAddData = true
 
+    var shift = mutableStateOf("")
+
     var mSelectedReason = ""
     val mReasonList = MutableLiveData<myReasons>()
     var isReasonRetrieved = false
     var mark = ""
 
     var partID = ""
+    var itemId = ""
 
     /*var fpa1:String? = null
     var fpa2:String? = null
@@ -590,6 +593,12 @@ try {
     fun checkFPA(precedency_no: String, part_no: String, temp_task_id: String){
         viewModelScope.launch {
             repository.checkFPA(precedency_no, part_no, temp_task_id)
+        }
+    }
+
+    fun FailedFPA(){
+        viewModelScope.launch {
+            repository.FailedFpa()
         }
     }
 }

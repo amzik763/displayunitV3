@@ -50,6 +50,9 @@ class UiViewModel(context: Context) : ViewModel(){
     var dialogText by mutableStateOf("Network error...")
         private set
 
+    var isFailedDialogShown by mutableStateOf(false)
+        private set
+
     var isHindi = mutableStateOf(false)
 
     fun showNetworkDialog(){
@@ -58,14 +61,20 @@ class UiViewModel(context: Context) : ViewModel(){
     fun hideNetworkDialog(){
         isNetworkDialogShown = false
     }
-
-
     fun showRejectReasonDialog() {
         isRejectReasonDialogShown = true
     }
 
     fun hideRejectReasonDialog() {
         isRejectReasonDialogShown = false
+    }
+
+    fun showFailedDialog(){
+        isFailedDialogShown = true
+    }
+
+    fun hideFailedDialog(){
+        isFailedDialogShown = false
     }
 
 

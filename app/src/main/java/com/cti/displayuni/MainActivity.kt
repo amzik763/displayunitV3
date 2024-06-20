@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.cti.displayuni.dialogBox.FailedFPADialog
 import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.dialogBox.MessageDialog
 import com.cti.displayuni.dialogBox.NetworkErrorDialog
@@ -97,6 +98,7 @@ class MainActivity : ComponentActivity() {
               SupLoginDia(mUiViewModel)
               mRejectReasonDialog()
               mThanksDialog()
+              mFailedDialog()
         }
     }
 
@@ -119,6 +121,16 @@ fun NetworkDialog(mUiViewModel: UiViewModel, applicationContext: Context) {
         }
     }
 
+    @Composable
+    fun mFailedDialog() {
+        if (mUiViewModel.isFailedDialogShown) {
+            FailedFPADialog(
+                onDismiss = {
+                    mUiViewModel.hideFailedDialog()
+                },
+            )
+        }
+    }
 
     @Composable
     fun mThanksDialog() {

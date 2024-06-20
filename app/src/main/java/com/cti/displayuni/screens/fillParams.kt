@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -287,7 +288,9 @@ fun Header(){
 //        .scale(0.75f)
     ) {
 
-        //First Row
+        TopHeader()
+
+        //First Row4
         Row(modifier = Modifier
             .background(color = extraLightGrey)
             .fillMaxWidth()
@@ -545,8 +548,11 @@ fun Header(){
                             myComponents.mainViewModel.isFPATime = true
                             showLogs("FPA FAILED: ","FPA SHOULD BE PASS TO PROCEED")
                             //show DIALOG BOX
-                            myComponents.mUiViewModel.setDialogDetails("FPA FAILED", "FPA SHOULD BE PASS TO PROCEED", "Ask Floor-In-Charge for necessary help", R.drawable.ic_notest )
-                            myComponents.mUiViewModel.showMessageDialog()
+//                            myComponents.mUiViewModel.setDialogDetails("FPA FAILED", "FPA SHOULD BE PASS TO PROCEED", "Ask Floor-In-Charge for necessary help", R.drawable.ic_notest )
+//                            myComponents.mUiViewModel.showMessageDialog()
+
+                            myComponents.mUiViewModel.showFailedDialog()
+
                         }else if(myComponents.mainViewModel.isCurrentTimeExceedsMidTime(myComponents.mainViewModel.startShiftTime,myComponents.mainViewModel.endShiftTime)){
                             showLogs("FAILED: ","time exceed")
 
@@ -571,9 +577,11 @@ fun Header(){
 
                                 myComponents.mainViewModel.isFPATime = true
                                 showLogs("FPA FAILED: ","FPA SHOULD BE PASS TO PROCEED")
-                                //show DIALOG BOX
-                                myComponents.mUiViewModel.setDialogDetails("FPA FAILED", "FPA SHOULD BE PASS TO PROCEED", "Ask Floor-In-Charge for necessary help", R.drawable.ic_notest )
-                                myComponents.mUiViewModel.showMessageDialog()
+                                //show DIALOG BOX WITH BUTTON
+//                                myComponents.mUiViewModel.setDialogDetails("FPA FAILED", "FPA SHOULD BE PASS TO PROCEED", "Ask Floor-In-Charge for necessary help", R.drawable.ic_notest )
+//                                myComponents.mUiViewModel.showMessageDialog()
+
+                                myComponents.mUiViewModel.showFailedDialog()
 
                             }
                         }
@@ -778,8 +786,152 @@ fun FillParam(){
             myComponents.mUiViewModel.showFullImage.value = false
         }
     }
+}
+
+@Composable
+fun TopHeader(){
+
+    val wd = mParameters.mWidthinPx
+    //myUI variables
+    var textFont2 = 18.sp
+    var topPadding = 64.dp
+    var startPadding = 36.dp
+    var endPadding = 48.dp
+    var bottomPadding = 48.dp
+
+    showLogs("dwinsize: ", wd.toString())
 
 
+    if (wd <= 2048 && mParameters.dnsty == 320) {
+
+
+        endPadding = 36.dp
+        bottomPadding = 0.dp
+        startPadding = 0.dp
+        textFont2 = 12.sp
+        topPadding = 0.dp
+
+
+        showLogs("lwinsize: ", wd.toString())
+
+    } else if (wd <= 2048 && mParameters.dnsty == 160) {
+
+        topPadding = 0.dp
+        endPadding = 36.dp
+        bottomPadding = 0.dp
+        startPadding = 0.dp
+        textFont2 = 20.sp
+
+
+        showLogs("Desktop: ", wd.toString())
+    }
+
+    Box(
+        modifier = Modifier
+            .background(color = lightGrey)
+            .padding(
+                top = topPadding,
+                end = endPadding,
+                start = startPadding,
+                bottom = bottomPadding
+            )
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Image(painter = painterResource(id = R.drawable.interfaceblue),
+                contentDescription = "Interface Logo",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.size(200.dp, 70.dp),
+            )
+
+            Row {
+                Text(
+                    text = "Name: ",
+                    style = TextStyle(
+                        fontSize = textFont2,
+                        color = pureBlack,
+                        fontFamily = mFont.poppinsregular
+                    )
+                )
+                Text(
+                    text = myComponents.mainViewModel.name,
+                    style = TextStyle(
+                        fontSize = textFont2,
+                        color = pureBlack,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = mFont.poppinsbold
+                    )
+                )
+
+            }
+
+            Row {
+                Text(
+                    text = "Skill: ",
+                    style = TextStyle(
+                        fontSize = textFont2,
+                        color = pureBlack,
+                        fontFamily = mFont.poppinsregular
+                    )
+                )
+                Text(
+                    text = myComponents.mainViewModel.skill,
+                    style = TextStyle(
+                        fontSize = textFont2,
+                        color = pureBlack,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = mFont.poppinsbold
+                    )
+                )
+
+                Spacer(modifier = Modifier.width(16.dp))
+                Skills()
+            }
+
+            Row {
+                Text(
+                    text = "Device Id: ",
+                    style = TextStyle(
+                        fontSize = textFont2,
+                        color = pureBlack,
+                        fontFamily = mFont.poppinsregular
+                    )
+                )
+                Text(
+                    text = myComponents.mainViewModel.deviceId,
+                    style = TextStyle(
+                        fontSize = textFont2,
+                        color = pureBlack,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = mFont.poppinsbold
+                    )
+                )
+            }
+            Row {
+                Text(
+                    text = "Employee Id: ",
+                    style = TextStyle(
+                        fontSize = textFont2,
+                        color = pureBlack,
+                        fontFamily = mFont.poppinsregular
+                    )
+                )
+                Text(
+                    text = myComponents.mainViewModel.employeeId,
+                    style = TextStyle(
+                        fontSize = textFont2,
+                        color = pureBlack,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = mFont.poppinsbold
+                    )
+                )
+            }
+        }
+    }
 }
 
 @Preview(name = "Tablet", device = "spec:width=1920px, height=1080px, dpi=160, isRound=false, orientation=landscape", showBackground = true, showSystemUi = true)

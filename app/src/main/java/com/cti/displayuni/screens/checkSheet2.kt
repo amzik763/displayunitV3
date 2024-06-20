@@ -131,9 +131,9 @@ fun Checksheet2() {
             modifier = Modifier
                 .background(color = lightGrey)
                 .padding(
-                    top = topPadding,
+//                    top = topPadding,
                     end = endPadding,
-                    start = startPadding,
+//                    start = startPadding,
                     bottom = bottomPadding
                 )
         ) {
@@ -142,8 +142,13 @@ fun Checksheet2() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Row {
 
+                Image(painter = painterResource(id = R.drawable.interfaceblue),
+                    contentDescription = "Interface Logo",
+                    modifier = Modifier.size(200.dp, 70.dp),
+                )
+
+                Row {
                     Text(
                         text = "Name: ",
                         style = TextStyle(

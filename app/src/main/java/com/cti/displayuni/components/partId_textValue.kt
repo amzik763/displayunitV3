@@ -24,7 +24,7 @@ import com.cti.displayuni.utility.mParameters
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PartId(
+fun IDTextField(
     modifier: Modifier = Modifier,
     text: String,
     label: String,

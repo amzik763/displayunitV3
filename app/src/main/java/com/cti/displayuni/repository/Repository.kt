@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.runtime.Composable
 import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.R
+import com.cti.displayuni.networks.OtherAPIs
 import com.cti.displayuni.response.FpaData_res
 import com.cti.displayuni.response.reading_Response
 import com.cti.displayuni.utility.Actual_Param
@@ -105,6 +106,9 @@ class Repository() {
 
                 mainViewModel.fail.intValue = taskResponse.body()?.work_operator_data?.failed ?: -1
                 showLogs("FAIL", mainViewModel.fail.intValue.toString())
+
+                mainViewModel.shift.value = taskResponse.body()?.work_operator_data?.shift ?: ""
+                showLogs("Shift", mainViewModel.shift.value)
 
                 val dataListtemp = taskResponse.body()?.process_params_info
                 mainViewModel.dataListSetting.clear()
@@ -1419,6 +1423,40 @@ class Repository() {
             Result.failure(e)
         }
     }
+
+        suspend fun FailedFpa() {
+            try {
+
+                val FPA_Shift = when(mainViewModel.FPACounter) {
+
+                    1 ->  { "start_shift_1" }
+
+                    2 -> { "start_shift_2" }
+
+                    3 -> { "start_shift_3" }
+
+                    4 -> { "start_shift_3" }
+
+                    else -> {""}
+                }
+
+                val fpaFailedResponse = otherAPIs.fpaFailed(mainViewModel.itemId, mainViewModel.getStationValue(), "1", FPA_Shift, mainViewModel.shift.value)
+
+                if (fpaFailedResponse.code() == 201){
+
+                    showLogs("Failed FPA ADD: " , "Add Fail FPA successful")
+
+                }
+                else{
+                    showLogs("Failed FPA ADD: " , "Add Fail FPA unsuccessful")
+
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
 }
 
 

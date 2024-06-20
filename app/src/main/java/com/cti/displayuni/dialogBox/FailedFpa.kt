@@ -1,26 +1,24 @@
 package com.cti.displayuni.dialogBox
 
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Surface
@@ -34,47 +32,36 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.cti.displayuni.R
-import com.cti.displayuni.components.AddMark
 import com.cti.displayuni.components.IDTextField
-import com.cti.displayuni.components.ReasonDropdown
 import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.lightBlack
-import com.cti.displayuni.ui.theme.lightGrey
 import com.cti.displayuni.ui.theme.lightOrange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
+import com.cti.displayuni.utility.mFont.nk
 import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mFont.nkmedium
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
-import com.cti.displayuni.utility.myComponents.mUiViewModel
-import com.cti.displayuni.utility.myComponents.mainViewModel
+import com.cti.displayuni.utility.showLogs
 
 //@Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun RejectReasonDialog(
-//    uiviewModel: UiViewModel,
+fun FailedFPADialog(
     onDismiss: () -> Unit,
-//    onConfirm: () -> Unit,
-//    onRetry: () -> Unit,
-//    dialogText: String,
-//    onClick() -> Unit
 ){
-    val context = LocalContext.current
+
     val conf = LocalConfiguration.current
     val dnsty = conf.densityDpi
 
@@ -87,21 +74,14 @@ fun RejectReasonDialog(
     var mainHeaderFont = 58.sp
     var semiHeaderFont = 36.sp
     var textFont1 = 18.sp
-    var textFont2 = 18.sp
     var maxWidth = 0.3f
     var width = 180.dp
-    var maxHeight = 0.3f
     var topPadding = 64.dp
     var startPadding = 36.dp
     var endPadding = 48.dp
     var bottomPadding = 48.dp
     var height = 40.dp
-    var startP = 8.dp
     var imgSize = 50.dp
-    var padding = 24.dp
-    var topPadding2 = 64.dp
-    var startPadding2 = 36.dp
-
 
     Log.d("dwinsize: ", wd.toString())
 
@@ -114,23 +94,17 @@ fun RejectReasonDialog(
         startPadding = 20.dp
         endPadding = 20.dp
         bottomPadding = 16.dp
-        fillMaxWidth = 0.63f
+        fillMaxWidth = 0.6f
         fillMaxHeight = 0.45f
-        maxWidth = 0.2f
+        maxWidth = 0.24f
         startPadding = 16.dp
-        mainHeaderFont = 25.sp
-        semiHeaderFont = 16.sp
+        mainHeaderFont = 30.sp
+        semiHeaderFont = 20.sp
         textFont1 = 15.sp
-        textFont2 = 12.sp
         topPadding = 20.dp
         width = 180.dp
         height = 40.dp
-        imgSize = 60.dp
-        startP = 4.dp
-        maxHeight = 0.18f
-        padding = 12.dp
-        topPadding2 = 8.dp
-        startPadding2 = 16.dp
+        imgSize = 80.dp
 
         Log.d("lwinsize: ", wd.toString())
 
@@ -147,30 +121,16 @@ fun RejectReasonDialog(
         mainHeaderFont = 56.sp
         semiHeaderFont = 36.sp
         textFont1 = 24.sp
-        textFont2 = 20.sp
         topPadding = 24.dp
-        width = 248.dp
+        width = 210.dp
         height = 50.dp
         imgSize =200.dp
-        startP = 4.dp
-        maxHeight = 0.3f
-        padding = 24.dp
-        topPadding2 = 16.dp
-        startPadding2 = 36.dp
-
-
-
-
         Log.d("Desktop: ", wd.toString())
     }
 
-    var mark by remember { mutableStateOf("") }
-
-
-//    val isConnected by rememberUpdatedState(newValue = isNetworkAvailable(context))
     Dialog(
         onDismissRequest = {
-            onDismiss()
+                           onDismiss()
         },
         properties = DialogProperties(
             usePlatformDefaultWidth = false
@@ -193,9 +153,8 @@ fun RejectReasonDialog(
                     verticalAlignment = Alignment.CenterVertically
 
                 ) {
-                    Image(painter = painterResource(id = R.drawable.ic_notest),
-                        contentDescription = "wifiOff",
-//                        contentScale = ContentScale.Crop,
+                    Image(painter = painterResource(id = R.drawable.thanks),
+                        contentDescription = "thanks",
                         modifier = Modifier.size(imgSize)
                     )
                 }
@@ -225,7 +184,7 @@ fun RejectReasonDialog(
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column {
-                        Text(text = "REJECT REASON",
+                        Text(text = "FPA FAILED",
                             style = TextStyle(
                                 fontSize = mainHeaderFont,
                                 color = lightBlack,
@@ -235,114 +194,61 @@ fun RejectReasonDialog(
                             )
                         )
 
-
-                        Row ( modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween){
-
-                            Text(modifier = Modifier.padding(top = padding),
-                                text = "Please Select The Reason",
-                                style = TextStyle(
-                                    fontSize = semiHeaderFont,
-                                    color = lightBlack,
-                                    textAlign = TextAlign.Center,
-                                    fontFamily = nkmedium
-                                )
+                        Text(modifier = Modifier.padding(
+                            top = 36.dp),
+                            text = "FPA SHOULD BE PASS TO PROCEED",
+                            style = TextStyle(
+                                fontSize = semiHeaderFont,
+                                color = lightBlack,
+                                textAlign = TextAlign.Center,
+                                fontFamily = nkmedium
                             )
-
-                            var partId by remember { mutableStateOf("") }
-                            IDTextField(
-                                text = partId,
-                                label = "Part ID",
-                                onTextChange = { partId = it
-                                    mainViewModel.partID = it},
-                                color = pureBlack,
-                                maxLength = 15,
-                                shape = RoundedCornerShape(8.dp)
+                        )
+                        Text(modifier = Modifier.padding(top = 16.dp),
+                            text = "Ask Floor-In-Charge for necessary help",
+                            style = TextStyle(
+                                fontSize = textFont1,
+                                color = lightBlack,
+                                textAlign = TextAlign.Center,
+                                fontFamily = nk
                             )
-                        }
+                        )
 
-                    }
+                        Spacer(modifier = Modifier.height(36.dp))
 
-                    Box(modifier = Modifier
-                        .padding(start = startP)
-                        .border(width = 3.dp, color = lightGrey, shape = RoundedCornerShape(8.dp))){
-                        Row(modifier = Modifier
-                            .padding(padding)){
-                            ReasonDropdown()
+                        var itemId by remember { mutableStateOf("") }
+                        IDTextField(
+                            text = itemId,
+                            label = "Item ID",
+                            onTextChange = { itemId = it
+                                myComponents.mainViewModel.itemId = it},
+                            color = pureBlack,
+                            maxLength = 15,
+                            shape = RoundedCornerShape(8.dp)
+                        )
 
-                            Column(modifier = Modifier
-                                .padding(start = startPadding2)
-                                .width(2.dp)) {
-                                Divider(
-                                    Modifier
-                                        .fillMaxHeight(maxHeight)
-                                        .padding(
-                                            top = 2.dp,
-                                        ),
-                                    color = lightGrey
-                                )
-                            }
-
-                            AddMark(
-                                text = mark,
-                                label = "Add Remark(Optional)",
-                                onTextChange = { mark = it
-                                               mainViewModel.mark = it},
-                                color = pureBlack,
-                                maxLength = 20,
-                                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text) ,
-                                shape = RoundedCornerShape(8.dp)
-                            )
-                        }
                     }
 
                     Column(modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.End){
+
                         Surface(
                             modifier = Modifier
-                                .padding(top = topPadding2)
+                                .padding(top = 16.dp)
                                 .size(width = width, height = height)
                                 .clickable {
-
-                                    val passFail =
-                                        myComponents.mainViewModel.pass.intValue + myComponents.mainViewModel.fail.intValue
-                                    if (passFail >= myComponents.mainViewModel.totalAssigned.intValue) {
-                                        myComponents.mUiViewModel.showThanksDialog()
-                                        return@clickable
-//                                        return@Button
-                                    }
-
-                                    if (myComponents.mainViewModel.isShiftOver(myComponents.mainViewModel.endShiftTime)) {
-                                        myComponents.mUiViewModel.showThanksDialog()
-//                                        return@Button
-                                        return@clickable
-
-                                    }
-                                    if (mainViewModel.mSelectedReason.isNullOrEmpty()) {
-                                        mUiViewModel.setDialogDetails(
-                                            "Please Select Reason",
-                                            "Select reason, After selecting it click SUBMIT button",
-                                            " ",
-                                            R.drawable.ic_notest
-                                        )
-                                        mUiViewModel.showMessageDialog()
-                                    } else {
-
-                                        var a = mark
-                                        mainViewModel.submitFailedPartInfo()
-//                                        mainViewModel.addWorkV2(0,a)
-                                        mark = ""
-                                    }
+                                    myComponents.mainViewModel.FailedFPA()
+                                    showLogs("FPA FAILED:", "ADDED")
                                 },
                             color = darkBlue,
                             shape = RoundedCornerShape(corner = CornerSize(24.dp)),
                             border = BorderStroke(width = 1.dp, color = darkBlue)
                         ) {
                             Text(
-                                text = AnnotatedString("Submit"),
+                                text = AnnotatedString("SUBMIT"),
                                 style = TextStyle(
                                     color = pureWhite,
-                                    fontSize = textFont2,
+                                    fontSize = textFont1,
                                     fontFamily = poppinsregular,
                                     fontWeight = FontWeight.Bold,
                                     textAlign = TextAlign.Center
@@ -350,15 +256,12 @@ fun RejectReasonDialog(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(9.dp)
-                                    .align(Alignment.CenterHorizontally),
-
+                                    .align(Alignment.CenterHorizontally)
                             )
                         }
                     }
-
                 }
             }
         }
     }
 }
-
