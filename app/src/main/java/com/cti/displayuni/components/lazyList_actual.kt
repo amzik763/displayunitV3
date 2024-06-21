@@ -38,8 +38,6 @@ fun ActualLazyList(
     dataListActual: MutableList<Actual_Param>
 ) {
 
-    // Create a map to store enterValue for each item
-    // Map to store enterValue for each item
     val enterValues = rememberSaveable { mutableStateOf(mutableMapOf<Int, String>()) }
 
     LazyColumn(modifier = Modifier.fillMaxHeight()) {
@@ -122,10 +120,7 @@ fun ActualLazyList(
                     }
                 }
 
-                Divider(
-                    modifier = Modifier.padding(top = 16.dp),
-
-                )
+                Divider(modifier = Modifier.padding(top = 16.dp))
             }
         }
     }

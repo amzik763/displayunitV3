@@ -1432,7 +1432,7 @@ class Repository() {
 
                     showLogs("Failed FPA ADD: " , "Add Fail FPA successful")
 
-                    mUiViewModel.showFailedDialog()
+                    mUiViewModel.hideFailedDialog()
 
                 }
                 else{

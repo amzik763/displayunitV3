@@ -22,7 +22,7 @@ import com.cti.displayuni.utility.showLogs
 @Preview
 @Composable
 fun Skills(){
-    Row(modifier = Modifier.padding(top = 6.dp),
+    Row(modifier = Modifier.padding(top = 0.dp),
         verticalAlignment = Alignment.CenterVertically) {
         if (myComponents.mainViewModel.skill >= "1"){
             showLogs("Skill 1", myComponents.mainViewModel.skill)
