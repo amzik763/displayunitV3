@@ -238,6 +238,7 @@ fun FailedFPADialog(
                                 .size(width = width, height = height)
                                 .clickable {
                                     myComponents.mainViewModel.FailedFPA()
+
                                     showLogs("FPA FAILED:", "ADDED")
                                 },
                             color = darkBlue,

@@ -51,10 +51,8 @@ import com.cti.displayuni.utility.myComponents.mainViewModel
 
 //@Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
 @Composable
-fun overrideFPA(
-    dialogModel: DialogModel,
+fun OverrideFPA(
     onDismiss: () -> Unit,
-    onConfirm: () -> Unit,
 ){
 
     val conf = LocalConfiguration.current
@@ -125,6 +123,7 @@ fun overrideFPA(
 
     Dialog(
         onDismissRequest = {
+            onDismiss()
         },
         properties = DialogProperties(
             usePlatformDefaultWidth = false
@@ -174,7 +173,7 @@ fun overrideFPA(
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column {
-                        Text(text = dialogModel.dialogHeaderText,
+                        Text(text = "Continue Task?",
                             style = TextStyle(
                                 fontSize = mainHeaderFont,
                                 color = lightBlack,
@@ -186,7 +185,7 @@ fun overrideFPA(
 
                         Text(modifier = Modifier.padding(
                             top = 36.dp),
-                            text = dialogModel.dialogSubHeaderText,
+                            text = "Click submit button to Still Continue",
                             style = TextStyle(
                                 fontSize = semiHeaderFont,
                                 color = lightBlack,
@@ -194,27 +193,19 @@ fun overrideFPA(
                                 fontFamily = nkmedium
                             )
                         )
-                        Text(modifier = Modifier.padding(top = 16.dp),
-                            text = dialogModel.dialogText,
-                            style = TextStyle(
-                                fontSize = textFont1,
-                                color = lightBlack,
-                                textAlign = TextAlign.Center,
-                                fontFamily = nk
-                            )
-                        )
+
                     }
 
                     Column(modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.End){
 
-                        Row() {
+                        Row {
 
                             Surface(
                                 modifier = Modifier
                                     .padding(top = 16.dp)
                                     .size(width = width, height = height)
-                                    .clickable { myComponents.mUiViewModel.hideMessageDialog() },
+                                    .clickable { myComponents.mUiViewModel.hideOverrideDialog() },
                                 color = darkBlue,
                                 shape = RoundedCornerShape(corner = CornerSize(24.dp)),
                                 border = BorderStroke(width = 1.dp, color = darkBlue)
@@ -240,7 +231,7 @@ fun overrideFPA(
                                     .padding(top = 16.dp)
                                     .size(width = width, height = height)
                                     .clickable {
-                                        myComponents.mUiViewModel.hideMessageDialog()
+                                        myComponents.mUiViewModel.hideOverrideDialog()
                                         myComponents.mainViewModel.overrideDontAddData = true
                                                },
                                 color = darkBlue,
@@ -248,7 +239,7 @@ fun overrideFPA(
                                 border = BorderStroke(width = 1.dp, color = darkBlue)
                             ) {
                                 Text(
-                                    text = AnnotatedString("OK"),
+                                    text = AnnotatedString("Submit"),
                                     style = TextStyle(
                                         color = pureWhite,
                                         fontSize = textFont1,

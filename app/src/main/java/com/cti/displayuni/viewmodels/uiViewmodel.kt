@@ -66,10 +66,10 @@ class UiViewModel(context: Context) : ViewModel(){
     }
 
     fun showOverrideDialog(){
-        isNetworkDialogShown = true
+        isOverrideDialogShown = true
     }
     fun hideOverrideDialog(){
-        isNetworkDialogShown = false
+        isOverrideDialogShown = false
     }
 
 

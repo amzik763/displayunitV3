@@ -512,13 +512,6 @@ class Repository() {
 
                 }else {
 
-
-                    mUiViewModel.setDialogDetails(
-                        "Waiting....",
-                        "",
-                        "Waiting for FPA to complete on other stations",
-                        R.drawable.thanks
-                    )
                     mUiViewModel.showOverrideDialog()
                     showLogs("NEWFPA: ", "INSIDE addDATA : Don't add data ")
                     return false
@@ -1439,10 +1432,14 @@ class Repository() {
 
                     showLogs("Failed FPA ADD: " , "Add Fail FPA successful")
 
+                    mUiViewModel.showFailedDialog()
+
                 }
                 else{
                     showLogs("Failed FPA ADD: " , "Add Fail FPA unsuccessful")
 
+                    mUiViewModel.setDialogDetails("Error", "","Please try again", R.drawable.ic_notest)
+                    mUiViewModel.showMessageDialog()
                 }
 
             } catch (e: Exception) {

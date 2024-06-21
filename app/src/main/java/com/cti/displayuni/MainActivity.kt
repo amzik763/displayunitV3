@@ -26,6 +26,7 @@ import com.cti.displayuni.dialogBox.FailedFPADialog
 import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.dialogBox.MessageDialog
 import com.cti.displayuni.dialogBox.NetworkErrorDialog
+import com.cti.displayuni.dialogBox.OverrideFPA
 import com.cti.displayuni.dialogBox.RejectReasonDialog
 import com.cti.displayuni.dialogBox.SupLoginDialog
 import com.cti.displayuni.dialogBox.TaskNotApproved
@@ -99,6 +100,7 @@ class MainActivity : ComponentActivity() {
               mRejectReasonDialog()
               mThanksDialog()
               mFailedDialog()
+              OverrideDialog()
         }
     }
 
@@ -118,6 +120,16 @@ fun NetworkDialog(mUiViewModel: UiViewModel, applicationContext: Context) {
                 dialogText = mUiViewModel.dialogText,
                 uiviewModel = mUiViewModel
             )
+        }
+    }
+
+    @Composable
+    fun OverrideDialog() {
+        if (mUiViewModel.isOverrideDialogShown) {
+            OverrideFPA(onDismiss = {
+                mUiViewModel.hideOverrideDialog()
+            })
+
         }
     }
 
