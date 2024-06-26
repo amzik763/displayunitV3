@@ -1143,7 +1143,9 @@ class Repository() {
             }else{
                 showLogs("NEWFPA: ","INSIDE checkFPA : Precdency is greater than 1")
 
-                if (fpaCheck_Res.code() == 200  && mainViewModel.FPACounter == 1 && fpa_check_count == 0) {
+                if (fpaCheck_Res.code() == 210  && mainViewModel.FPACounter != 5) {
+                    mainViewModel.submitPartInfoWithParams(1)
+                }else if (fpaCheck_Res.code() == 200  && mainViewModel.FPACounter == 1 && fpa_check_count == 0) {
                     if (mainViewModel.otherfpa1.value.toString() == "null"){
                         mUiViewModel.setDialogDetails("FPA DETAILS","","FPA Failed or not done",R.drawable.ic_notest)
                         mUiViewModel.showMessageDialog()
