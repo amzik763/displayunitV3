@@ -68,22 +68,22 @@ fun FPA_Details(
             horizontalArrangement = Arrangement.SpaceBetween){
 
             CardComponent(
-                title = "FPA 1",
+                title = "Start Shift 1",
                 description = myComponents.mainViewModel.fpa1.value.toString(),
                 backgroundColor = Color.White
             )
             CardComponent(
-                title = "FPA 2",
+                title = "Start Shift 2",
                 description = myComponents.mainViewModel.fpa2.value.toString(),
                 backgroundColor = Color.White
             )
             CardComponent(
-                title = "FPA 3",
+                title = "Mid Shift 1",
                 description = myComponents.mainViewModel.fpa3.value.toString(),
                 backgroundColor = Color.White
             )
             CardComponent(
-                title = "FPA 4",
+                title = "Mid Shift 2",
                 description = myComponents.mainViewModel.fpa4.value.toString(),
                 backgroundColor = Color.White
             )

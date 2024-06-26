@@ -32,7 +32,6 @@ import com.cti.displayuni.utility.mFont
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.showLogs
 
-
 @Composable
 fun ActualLazyList(
     dataListActual: MutableList<Actual_Param>
@@ -69,7 +68,6 @@ fun ActualLazyList(
                     Row (verticalAlignment = Alignment.CenterVertically){
                         // Assigning the remembered enterValue to the item's param_value
                         var enterValue by rememberSaveable { mutableStateOf(enterValues.value[index] ?: "") }
-
 
                         Row(modifier = Modifier.width(180.dp)){
                             EnterValue(
