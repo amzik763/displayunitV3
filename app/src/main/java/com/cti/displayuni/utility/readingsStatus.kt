@@ -5,7 +5,6 @@ enum class readingStatusEnum {
     notAvailable,
     available,
     completed
-
 }
 
 

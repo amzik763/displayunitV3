@@ -43,7 +43,7 @@ fun FPA_Details(
 ){
 
     Column (modifier = Modifier
-        .padding(16.dp)
+        .padding(24.dp)
         .fillMaxSize()
         .fillMaxHeight()
         .fillMaxWidth()

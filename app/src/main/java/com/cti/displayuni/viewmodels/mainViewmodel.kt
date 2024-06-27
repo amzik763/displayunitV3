@@ -479,33 +479,39 @@ try {
 
 
     private fun updateReadingStatus(){
-
         val timeDifferenceInMinutes = calculateTimeDifferenceInMinutes(startShiftTime, getCurrentTime())
         val timeDifferenceOfShift = calculateTimeDifferenceInMinutes(startShiftTime, endShiftTime)
+
+        val currentPart = pass.intValue + fail.intValue
 
         // Now you have the time difference in minutes, you can use it as needed
         println("Time difference in minutes: $timeDifferenceInMinutes")
         println("Time difference in minutes: $timeDifferenceOfShift")
         timeDifferMid = timeDifferenceOfShift.toString()
-        if(timeDifferenceInMinutes>=readingStatusList[0].readingTime && readingStatusList[0].readingStatusE != readingStatusEnum.completed){
+        if((timeDifferenceInMinutes>=readingStatusList[0].readingTime && readingStatusList[0].readingStatusE != readingStatusEnum.completed)
+            || (currentPart>= readingStatusList[0].readingParts!! && readingStatusList[0].readingStatusE != readingStatusEnum.completed)){
             readingStatusList[0].readingStatusE = readingStatusEnum.available
             showLogs("READING STATUS 1",readingStatusList[0].readingStatusE.name)
         }else
-            if(timeDifferenceInMinutes>=readingStatusList[1].readingTime && readingStatusList[1].readingStatusE != readingStatusEnum.completed){
+            if((timeDifferenceInMinutes>=readingStatusList[1].readingTime && readingStatusList[1].readingStatusE != readingStatusEnum.completed)
+                || (currentPart>= readingStatusList[1].readingParts!! && readingStatusList[1].readingStatusE != readingStatusEnum.completed)  ){
                 readingStatusList[1].readingStatusE = readingStatusEnum.available
                 showLogs("READING STATUS 2",readingStatusList[1].readingStatusE.name)
 
             }else
-                if(timeDifferenceInMinutes>=readingStatusList[2].readingTime && readingStatusList[2].readingStatusE != readingStatusEnum.completed){
+                if((timeDifferenceInMinutes>=readingStatusList[2].readingTime && readingStatusList[2].readingStatusE != readingStatusEnum.completed)
+                  || (currentPart>= readingStatusList[2].readingParts!! && readingStatusList[2].readingStatusE != readingStatusEnum.completed)  ){
                     readingStatusList[2].readingStatusE = readingStatusEnum.available
                     showLogs("READING STATUS 3",readingStatusList[2].readingStatusE.name)
 
                 }else
-                    if(timeDifferenceInMinutes>=readingStatusList[3].readingTime && readingStatusList[3].readingStatusE != readingStatusEnum.completed){
+                    if((timeDifferenceInMinutes>=readingStatusList[3].readingTime && readingStatusList[3].readingStatusE != readingStatusEnum.completed)
+                        || (currentPart>= readingStatusList[3].readingParts!! && readingStatusList[3].readingStatusE != readingStatusEnum.completed)){
                         readingStatusList[3].readingStatusE = readingStatusEnum.available
                         showLogs("READING STATUS 4",readingStatusList[3].readingStatusE.name)
                     }else
-                        if(timeDifferenceInMinutes>=readingStatusList[4].readingTime && readingStatusList[4].readingStatusE != readingStatusEnum.completed){
+                        if((timeDifferenceInMinutes>=readingStatusList[4].readingTime && readingStatusList[4].readingStatusE != readingStatusEnum.completed)
+                            || (currentPart>= readingStatusList[4].readingParts!! && readingStatusList[4].readingStatusE != readingStatusEnum.completed)){
                             readingStatusList[4].readingStatusE = readingStatusEnum.available
                             showLogs("READING STATUS 5",readingStatusList[4].readingStatusE.name)
                         }
@@ -516,7 +522,7 @@ try {
         showLogs("READING STATUS ALL",readingStatusList[3].readingStatusE.name + " " + readingStatusList[3].readingTime)
         showLogs("READING STATUS ALL",readingStatusList[4].readingStatusE.name + " " + readingStatusList[4].readingTime)
 
-    }
+    }   
 
     fun calculateTimeDifferenceInMinutes(time1: String, time2: String): Long {
         val format = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
@@ -590,5 +596,3 @@ try {
         }
     }
 }
-
-
