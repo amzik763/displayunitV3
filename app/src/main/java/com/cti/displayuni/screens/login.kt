@@ -82,6 +82,13 @@ fun Login(){
     var height = 40.dp
     var padding = 24.dp
     var imgSize = 50.dp
+    var interfaceW = 300.dp
+    var interfaceH = 70.dp
+    var widthdp = widthDP/3f
+    var start = 36.dp
+    var top = 48.dp
+    var bottom = 36.dp
+    var btnpadding = 9.dp
 
     Log.d("dwinsize: ", wd.toString())
 
@@ -89,15 +96,23 @@ fun Login(){
     Log.d("mparam density: ", mParameters.dnsty.toString())
 
     if (wd <= 2048 && mParameters.dnsty == 320) {
-        mainHeaderFont = 40.sp
+        mainHeaderFont = 34.sp
         maxWidth = widthDP/3.5f
         semiHeaderFont = 20.sp
-        textFont = 16.sp
-        width = 180.dp
-        height = 40.dp
+        textFont = 12.sp
+        width = 120.dp
+        height = 30.dp
         textFont1 = 16.sp
         textFont2 = 12.sp
         padding = 20.dp
+        interfaceW = 180.dp
+        interfaceH = 50.dp
+        widthdp = widthDP/3.7f
+        start = 28.dp
+        top = 36.dp
+        bottom = 28.dp
+        btnpadding = 6.dp
+
 
         Log.d("lwinsize: ", wd.toString())
 
@@ -111,11 +126,18 @@ fun Login(){
         textFont1 = 24.sp
         textFont2 = 20.sp
         padding = 24.dp
+        interfaceW = 300.dp
+        interfaceH = 70.dp
+        widthdp = widthDP/3f
+        start = 36.dp
+        top = 48.dp
+        bottom = 36.dp
+        btnpadding = 9.dp
         Log.d("Desktop: ", wd.toString())
     }
 
     Row {
-        Box(modifier = Modifier.width(maxWidth)){
+        Box(modifier = Modifier.width(widthdp)){
             Image(painter = painterResource(id = R.drawable.bg_background),
                 contentDescription = "Blue Background",
                 contentScale = ContentScale.Crop,
@@ -123,20 +145,20 @@ fun Login(){
             Column(modifier = Modifier
                 .fillMaxHeight()
                 .fillMaxSize()
-                .padding(start = 36.dp, top = 48.dp, bottom = 36.dp),
+                .padding(start = start, top = top, bottom = bottom),
                 verticalArrangement = Arrangement.SpaceBetween){
                 Column {
 
                     Image(painter = painterResource(id = R.drawable.interfacelogo),
                         contentDescription = "Interface Logo",
-                        modifier = Modifier.size(300.dp, 70.dp),
+                        modifier = Modifier.size(interfaceW, interfaceH),
                     )
 
                 }
                 Text(
                     text = "Developed by Cellus Tech India",
                     style = TextStyle(
-                        fontSize = textFont,
+                        fontSize = textFont1,
                         fontWeight = FontWeight.Bold,
                         color = pureWhite,
                         fontFamily = nk)
@@ -232,7 +254,7 @@ fun Login(){
                             ),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(9.dp)
+                                .padding(btnpadding)
                                 .align(Alignment.CenterHorizontally)
                         )
                     }

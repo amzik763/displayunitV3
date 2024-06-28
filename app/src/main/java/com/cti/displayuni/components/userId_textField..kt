@@ -1,5 +1,6 @@
 package com.cti.displayuni.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,12 +20,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.lightGrey
 import com.cti.displayuni.ui.theme.pureWhite
+import com.cti.displayuni.utility.mParameters
 
 //abc
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,11 +48,48 @@ fun UserIdInputTextField(
 ) {
     val limitedText = text.take(maxLength)
     val conf = LocalConfiguration.current
-    val widthdp = conf.screenWidthDp.dp
+    val widthDP = conf.screenWidthDp.dp
+
+    val wd = mParameters.mWidthinPx
+
+    //myUI variables
+    var textFont = 24.sp
+    var widthdp = widthDP/8.5f
+    var start = 36.dp
+    var labelFont = 12.sp
+    var iconSize = 24.dp
+    Log.d("dwinsize: ", wd.toString())
+
+    val dnsty = conf.densityDpi
+
+    mParameters.dnsty = dnsty
+    Log.d("mparam density: ", mParameters.dnsty.toString())
+
+    if (wd <= 2048 && mParameters.dnsty == 320) {
+
+        textFont = 14.sp
+        widthdp = widthDP/4.1f
+        start = 28.dp
+        labelFont = 12.sp
+        iconSize = 20.dp
+
+        Log.d("lwinsize: ", wd.toString())
+
+    } else if (wd <= 2048 && mParameters.dnsty == 160) {
+
+        textFont = 24.sp
+        widthdp = widthDP/4f
+        start = 36.dp
+        labelFont = 12.sp
+        iconSize = 24.dp
+
+        Log.d("Desktop: ", wd.toString())
+    }
+
 
     Box(
         modifier = modifier
-            .padding(start = 36.dp, top = 12.dp),
+            .padding(start = start, top = 12.dp),
         contentAlignment = Alignment.CenterStart,
 
         ) {
@@ -68,22 +108,26 @@ fun UserIdInputTextField(
             shape= shape,
             maxLines = maxLine,
             label = {
-                    Text(text = label,modifier = Modifier.padding(2.dp))
+                    Text(text = label,
+                            style = TextStyle(
+                                fontSize = labelFont
+                            ),
+                        modifier = Modifier.padding(0.dp))
                      },
             keyboardOptions = keyboardOptions,
             modifier = Modifier
-                .width(widthdp/4),
+                .width(widthdp),
             textStyle = LocalTextStyle.current.copy(
                 fontWeight = FontWeight.SemiBold,
                 color = color,
-                fontSize = 24.sp
+                fontSize = textFont
             ),
             leadingIcon = {
                 Icon(
                     painter = painterResource(id = iconResId),
                     contentDescription = "User Icon",
                     modifier = Modifier
-                        .size(24.dp)
+                        .size(iconSize)
                         .fillMaxWidth()
                 )
             }

@@ -62,26 +62,44 @@ import com.cti.displayuni.utility.myComponents.navController
 @Composable
 fun ConfigureNew(){
     val wd = mParameters.mWidthinPx
+
+    val conf = LocalConfiguration.current
+    val widthDP = conf.screenWidthDp.dp
     //myUI variables
     var mainHeaderFont = 58.sp
     var semiHeaderFont = 36.sp
+    var stationText = 36.sp
     var textFont = 18.sp
     var width = 180.dp
     var height = 40.dp
+    var interfaceW = 300.dp
+    var interfaceH = 70.dp
+    var widthdp = widthDP/3f
+    var start = 36.dp
+    var top = 48.dp
+    var bottom = 36.dp
+    var btnpadding = 9.dp
     Log.d("dwinsize: ", wd.toString())
 
-    val conf = LocalConfiguration.current
     val dnsty = conf.densityDpi
 
     mParameters.dnsty = dnsty
     Log.d("mparam density: ", mParameters.dnsty.toString())
 
     if (wd <= 2048 && mParameters.dnsty == 320) {
-        mainHeaderFont = 40.sp
-        semiHeaderFont = 24.sp
-        textFont = 16.sp
-        width = 180.dp
-        height = 40.dp
+        mainHeaderFont = 32.sp
+        semiHeaderFont = 16.sp
+        textFont = 12.sp
+        width = 120.dp
+        height = 30.dp
+        interfaceW = 180.dp
+        interfaceH = 50.dp
+        widthdp = widthDP/3.7f
+        start = 28.dp
+        top = 36.dp
+        bottom = 28.dp
+        stationText = 24.sp
+        btnpadding = 6.dp
 
         Log.d("lwinsize: ", wd.toString())
 
@@ -91,9 +109,17 @@ fun ConfigureNew(){
         textFont = 24.sp
         width = 210.dp
         height = 50.dp
+        interfaceW = 300.dp
+        interfaceH = 70.dp
+        widthdp = widthDP/3f
+        start = 36.dp
+        top = 48.dp
+        bottom = 36.dp
+        stationText = 36.sp
+        btnpadding = 9.dp
+
         Log.d("Desktop: ", wd.toString())
     }
-
     var location by remember { mutableStateOf("") }
     var floorValue by remember { mutableStateOf("") }
     var lineValue by remember { mutableStateOf("") }
@@ -101,10 +127,8 @@ fun ConfigureNew(){
     var G0F0L0S0Value by remember { mutableStateOf(" F L S") }
 
 
-
-        val widthDP = conf.screenWidthDp.dp
-        Row {
-            Box(modifier = Modifier.width(widthDP/3f)){
+     Row {
+            Box(modifier = Modifier.width(widthdp)){
                 Image(painter = painterResource(id = R.drawable.bg_background),
                     contentDescription = "Blue Background",
                     contentScale = ContentScale.Crop,
@@ -112,13 +136,13 @@ fun ConfigureNew(){
                 Column(modifier = Modifier
                     .fillMaxHeight()
                     .fillMaxSize()
-                    .padding(start = 36.dp, top = 48.dp, bottom = 36.dp),
+                    .padding(start = start, top = top, bottom = bottom),
                     verticalArrangement = Arrangement.SpaceBetween){
                     Column {
 
                          Image(painter = painterResource(id = R.drawable.interfacelogo),
                         contentDescription = "Interface Logo",
-                        modifier = Modifier.size(300.dp, 70.dp),
+                        modifier = Modifier.size(interfaceW, interfaceH),
                         )
 
                     }
@@ -162,7 +186,7 @@ fun ConfigureNew(){
                 Text(
                     text = G0F0L0S0Value,
                     style = TextStyle(
-                        fontSize = semiHeaderFont,
+                        fontSize = stationText,
                         fontWeight = FontWeight.Bold,
                         color = orange,
                         fontFamily = nk
@@ -256,7 +280,7 @@ fun ConfigureNew(){
                             ),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(9.dp)
+                                .padding(btnpadding)
                                 .align(Alignment.CenterHorizontally),
 
                         )
