@@ -70,6 +70,7 @@ fun GetTask() {
     var semiHeaderFont = 36.sp
     var textFont1 = 18.sp
     var textFont2 = 18.sp
+    var textFont3 = 18.sp
     var maxWidth = widthDP/3f
     var startPadding = 24.dp
     var width = 180.dp
@@ -77,6 +78,13 @@ fun GetTask() {
     var height = 40.dp
     var spacerHeight = 56.dp
     var imgSize = 50.dp
+    var interfaceW = 180.dp
+    var interfaceH = 50.dp
+    var start = 36.dp
+    var top = 48.dp
+    var bottom = 36.dp
+    var btnpadding = 9.dp
+    var sWidth = 16.dp
 
     Log.d("dwinsize: ", wd.toString())
 
@@ -84,17 +92,25 @@ fun GetTask() {
     Log.d("mparam density: ", mParameters.dnsty.toString())
 
     if (wd <= 2048 && mParameters.dnsty == 320) {
-        maxWidth = widthDP/4.4f
+        maxWidth = widthDP/4.3f
         startPadding = 16.dp
-        mainHeaderFont = 36.sp
+        mainHeaderFont = 32.sp
         semiHeaderFont = 20.sp
-        textFont1 = 16.sp
-        textFont2 = 12.sp
-        padding = 20.dp
-        width = 180.dp
-        height = 40.dp
-        imgSize = 30.dp
-        spacerHeight = 40.dp
+        textFont1 = 12.sp
+        textFont3 = 14.sp
+        textFont2 = 11.sp
+        padding = 14.dp
+        width = 120.dp
+        height = 30.dp
+        imgSize = 26.dp
+        spacerHeight = 20.dp
+        interfaceW = 180.dp
+        interfaceH = 50.dp
+        start = 28.dp
+        top = 36.dp
+        bottom = 28.dp
+        btnpadding = 6.dp
+        sWidth = 12.dp
 
         Log.d("lwinsize: ", wd.toString())
 
@@ -105,11 +121,20 @@ fun GetTask() {
         semiHeaderFont = 36.sp
         textFont1 = 24.sp
         textFont2 = 20.sp
+        textFont3 = 18.sp
         padding = 24.dp
         width = 210.dp
         height = 50.dp
         imgSize = 50.dp
         spacerHeight = 56.dp
+        interfaceW = 180.dp
+        interfaceH = 50.dp
+        start = 36.dp
+        top = 48.dp
+        bottom = 36.dp
+        btnpadding = 9.dp
+        sWidth = 16.dp
+
         Log.d("Desktop: ", wd.toString())
     }
 
@@ -122,18 +147,18 @@ fun GetTask() {
       Column(modifier = Modifier
           .fillMaxHeight()
           .fillMaxSize()
-          .padding(start = startPadding, top = 48.dp, bottom = 36.dp),
+          .padding(start = start, top = top, bottom = bottom),
           verticalArrangement = Arrangement.SpaceBetween){
 
        Column {
            Image(painter = painterResource(id = R.drawable.interfacelogo),
                contentDescription = "Interface Logo",
-               modifier = Modifier.size(300.dp, 70.dp),
+               modifier = Modifier.size(interfaceW, interfaceH),
            )
        }
           Text(
               text = "Developed by Cellus Tech India",
-              style = TextStyle(fontSize = textFont2,
+              style = TextStyle(fontSize = textFont3,
                   fontWeight = FontWeight.Bold,
                   color = pureWhite,
                   fontFamily = mFont.nk
@@ -189,7 +214,7 @@ fun GetTask() {
                       )
                   )
 
-                  Spacer(modifier = Modifier.width(16.dp))
+                  Spacer(modifier = Modifier.width(sWidth))
                   Skills()
               }
 
@@ -301,7 +326,7 @@ fun GetTask() {
                       ),
                       modifier = Modifier
                           .fillMaxWidth()
-                          .padding(9.dp)
+                          .padding(btnpadding)
                           .align(Alignment.CenterHorizontally),
 
                   )

@@ -102,7 +102,7 @@ fun Login(){
         textFont = 12.sp
         width = 120.dp
         height = 30.dp
-        textFont1 = 16.sp
+        textFont1 = 14.sp
         textFont2 = 12.sp
         padding = 20.dp
         interfaceW = 180.dp

@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
@@ -68,15 +69,20 @@ fun Checksheet2() {
     var textFont2 = 18.sp
     var width = 180.dp
     var topPadding = 64.dp
-    var startPadding = 36.dp
+    var padding = 24.dp
     var endPadding = 48.dp
     var bottomPadding = 48.dp
     var height = 40.dp
     var imgSize = 50.dp
-    var toppadding2 = 52.dp
+    var toppadding2 = 16.dp
     var startpadding2 = 52.dp
     var endpadding2 = 52.dp
     var textFont3 = 20.sp
+    var interfaceW = 180.dp
+    var interfaceH = 50.dp
+    var btnpadding = 9.dp
+    var sWidth = 16.dp
+
     showLogs("dwinsize: ", wd.toString())
 
     mParameters.dnsty = dnsty
@@ -85,30 +91,32 @@ fun Checksheet2() {
     if (wd <= 2048 && mParameters.dnsty == 320) {
 
         topPadding = 20.dp
-        startPadding = 20.dp
-        endPadding = 20.dp
-        bottomPadding = 20.dp
-        startPadding = 16.dp
-        textFont1 = 17.sp
-        textFont2 = 12.sp
+        endPadding = 6.dp
+        bottomPadding = 12.dp
+        padding = 16.dp
+        textFont1 = 15.sp
+        textFont2 = 11.sp
         textFont3 = 12.sp
         topPadding = 20.dp
-        width = 185.dp
-        height = 40.dp
-        imgSize = 30.dp
+        width = 120.dp
+        height = 30.dp
+        imgSize = 26.dp
         toppadding2 = 10.dp
         startpadding2 = 40.dp
         endpadding2 = 30.dp
+        interfaceW = 140.dp
+        interfaceH = 45.dp
+        btnpadding = 6.dp
+        sWidth = 12.dp
 
         showLogs("lwinsize: ", wd.toString())
 
     } else if (wd <= 2048 && mParameters.dnsty == 160) {
 
         topPadding = 24.dp
-        startPadding = 48.dp
         endPadding = 48.dp
         bottomPadding = 24.dp
-        startPadding = 36.dp
+        padding = 24.dp
         textFont1 = 30.sp
         textFont2 = 20.sp
         textFont3 = 22.sp
@@ -118,7 +126,11 @@ fun Checksheet2() {
         width = 240.dp
         height = 52.dp
         imgSize = 50.dp
-        toppadding2 = 52.dp
+        toppadding2 = 16.dp
+        interfaceW = 180.dp
+        interfaceH = 50.dp
+        btnpadding = 9.dp
+        sWidth = 16.dp
 
         showLogs("Desktop: ", wd.toString())
     }
@@ -131,9 +143,7 @@ fun Checksheet2() {
             modifier = Modifier
                 .background(color = lightGrey)
                 .padding(
-//                    top = topPadding,
                     end = endPadding,
-//                    start = startPadding,
                     bottom = bottomPadding
                 )
         ) {
@@ -145,7 +155,8 @@ fun Checksheet2() {
 
                 Image(painter = painterResource(id = R.drawable.interfaceblue),
                     contentDescription = "Interface Logo",
-                    modifier = Modifier.size(200.dp, 70.dp),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.size(interfaceW, interfaceH),
                 )
 
                 Row {
@@ -188,7 +199,7 @@ fun Checksheet2() {
                         )
                     )
 
-                    Spacer(modifier = Modifier.width(16.dp))
+                    Spacer(modifier = Modifier.width(sWidth))
                     Skills()
                 }
 
@@ -239,15 +250,11 @@ fun Checksheet2() {
                     )
                 )
                 Row(
-                    modifier = Modifier.fillMaxWidth(0.2f),
+                    modifier = Modifier.fillMaxWidth(0.18f),
                     horizontalArrangement = Arrangement.SpaceBetween
                 )
                 {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_account),
-                        contentDescription = "Account",
-                        modifier = Modifier.size(imgSize)
-                    )
+
                     Image(
                         painter = painterResource(id = R.drawable.ic_logout),
                         contentDescription = "Logout",
@@ -272,14 +279,14 @@ fun Checksheet2() {
                     .background(color = lightGrey)
                     .fillMaxWidth()
                     .fillMaxHeight()
-                    .padding(24.dp)
+                    .padding(padding)
             ) {
                 ItemListScreen()
             }
         }
         Row(
             modifier = Modifier
-                .padding(start = startpadding2, end = endpadding2, top = 16.dp)
+                .padding(start = startpadding2, end = endpadding2, top = toppadding2)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -320,7 +327,7 @@ fun Checksheet2() {
                             ),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(9.dp),
+                                .padding(btnpadding),
                             onClick = {
 
                                 showLogs(

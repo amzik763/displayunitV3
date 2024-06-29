@@ -87,7 +87,7 @@ fun Configure(){
 
     if (wd <= 2048 && mParameters.dnsty == 320) {
         mainHeaderFont = 32.sp
-        semiHeaderFont = 16.sp
+        semiHeaderFont = 14.sp
         textFont = 12.sp
         width = 120.dp
         height = 30.dp

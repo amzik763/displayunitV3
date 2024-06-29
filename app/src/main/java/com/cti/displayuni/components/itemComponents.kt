@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
@@ -64,6 +65,7 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
    var fillMaxWidth5 = 0.65f
    var startPadding1 = 8.dp
    var startPadding2 = 16.dp
+   var startPadding3 = 18.dp
    var textFont = 16.sp
    var imgSize = 50.dp
 
@@ -74,15 +76,16 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
 
    if (wd <= 2048 && mParameters.dnsty == 320) {
 
-      fillMaxWidth = 0.05f
-      fillMaxWidth2 = 0.35f
-      fillMaxWidth3 = 0.3f
-      fillMaxWidth4 = 0.34f
-      fillMaxWidth5 = 0.3f
+      fillMaxWidth = 0.045f
+      fillMaxWidth2 = 0.3f
+      fillMaxWidth3 = 0.25f
+      fillMaxWidth4 = 0.3f
+      fillMaxWidth5 = 0.25f
       textFont = 12.sp
-      startPadding1 = 6.dp
+      startPadding1 = 4.dp
       startPadding2 = 12.dp
-      imgSize = 30.dp
+      startPadding3 = 16.dp
+      imgSize = 20.dp
 
       Log.d("lwinsize: ", wd.toString())
 
@@ -96,6 +99,7 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
       textFont = 17.sp
       startPadding1 = 8.dp
       startPadding2 = 16.dp
+      startPadding3 = 18.dp
       imgSize = 40.dp
 
       Log.d("Desktop: ", wd.toString())
@@ -125,8 +129,18 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
 
          Text(
             modifier = Modifier
-               .fillMaxWidth(fillMaxWidth3)
+               .fillMaxWidth(fillMaxWidth2)
                .padding(start = startPadding2),
+            text = item.csp_name,
+            color = pureBlack,
+            fontFamily = nk,
+            fontSize = textFont,
+         )
+
+         Text(
+            modifier = Modifier
+               .fillMaxWidth(fillMaxWidth3)
+               .padding(start = startPadding3),
             text = item.specification,
             color = pureBlack,
             fontFamily = nk,
@@ -136,7 +150,7 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
          Text(
             modifier = Modifier
                .fillMaxWidth(fillMaxWidth4)
-               .padding(start = startPadding2),
+               .padding(start = startPadding3),
             text = item.control_method,
             color = pureBlack,
             fontFamily = nk,
@@ -158,13 +172,14 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
          Text(
             modifier = Modifier
                .fillMaxWidth(fillMaxWidth5)
-               .padding(start = startPadding2, end = startPadding2),
+               .padding(start = startPadding1, end = startPadding1),
             text = notificationIdState[item.csp_id]?:"00" ,
             color = pureBlack,
             fontFamily = nk,
             fontSize = textFont,
          )
 
+         Spacer(modifier = Modifier.width(startPadding2))
          Surface {
             Image(
                painter = painterResource(id = R.drawable.ic_notification),
@@ -208,6 +223,8 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
    var startPadding2 = 16.dp
    var startPadding22 = 16.dp
    var maintextFont = 14.sp
+   var startPadding3 = 18.dp
+   var statusMaxW = 0.65f
 
 
 
@@ -218,15 +235,17 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
 
    if (wd <= 2048 && mParameters.dnsty == 320) {
 
-      fillMaxWidth = 0.05f
-      fillMaxWidth2 = 0.35f
-      fillMaxWidth3 = 0.3f
-      fillMaxWidth4 = 0.34f
-      fillMaxWidth5 = 0.3f
-      maintextFont = 14.sp
-      startPadding1 = 6.dp
+      fillMaxWidth = 0.045f
+      fillMaxWidth2 = 0.3f
+      fillMaxWidth3 = 0.25f
+      fillMaxWidth4 = 0.3f
+      fillMaxWidth5 = 0.25f
+      maintextFont = 13.sp
+      startPadding1 = 5.dp
       startPadding2 = 12.dp
-      startPadding22 = 14.dp
+      startPadding22 = 1.dp
+      startPadding3 = 16.dp
+      statusMaxW = 0.58f
 
       Log.d("lwinsize: ", wd.toString())
 
@@ -241,6 +260,8 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
       startPadding1 = 8.dp
       startPadding2 = 16.dp
       startPadding22 = 24.dp
+      startPadding3 = 18.dp
+      statusMaxW = 0.65f
 
       Log.d("Desktop: ", wd.toString())
    }
@@ -275,7 +296,7 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
 
             Text(modifier = Modifier
                .fillMaxWidth(fillMaxWidth3)
-               .padding(start = startPadding2),
+               .padding(start = startPadding3),
                text = "Specification",
                fontWeight = FontWeight.Bold,
                color = pureBlack,
@@ -285,7 +306,7 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
 
             Text(modifier = Modifier
                .fillMaxWidth(fillMaxWidth4)
-               .padding(start = startPadding2),
+               .padding(start = startPadding3),
                text = "Control Method",
                fontWeight = FontWeight.Bold,
                color = pureBlack,
@@ -304,7 +325,7 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
             )
 
          Text(modifier = Modifier
-            .fillMaxWidth(0.65f)
+            .fillMaxWidth(statusMaxW)
             .padding(start = startPadding22),
             text = "Status",
             fontWeight = FontWeight.Bold,
@@ -313,6 +334,17 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
             fontSize = maintextFont,
             textAlign = TextAlign.Center
          )
+
+         Text(modifier = Modifier
+//            .fillMaxWidth(fillMaxWidth5)
+            .padding(start = startPadding2),
+            text = "Notification",
+            fontWeight = FontWeight.Bold,
+            color = pureBlack,
+            fontFamily = nkbold,
+            fontSize = maintextFont,
+         )
+
          }
       Spacer(modifier = Modifier.height(24.dp))
          LazyColumn {

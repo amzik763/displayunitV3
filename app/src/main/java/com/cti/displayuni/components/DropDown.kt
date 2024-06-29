@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -25,14 +26,44 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cti.displayuni.ui.theme.pureBlack
+import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.showLogs
 
 @Composable
 fun DropDown(paramId: String, index: Int) {
     Log.d("abc", myComponents.mainViewModel.checkSheetList.size.toString())
+
+    val wd = mParameters.mWidthinPx
+    //myUI variables
+
+    var textFont1 = 16.sp
+    var imgSize = 30.dp
+    var maxWidth = 0.65f
+
+    Log.d("dwinsize: ", wd.toString())
+
+    Log.d("mparam density: ", mParameters.dnsty.toString())
+
+    if (wd <= 2048 && mParameters.dnsty == 320) {
+
+        textFont1 = 10.sp
+        imgSize = 16.dp
+        maxWidth = 0.412f
+
+        Log.d("lwinsize: ", wd.toString())
+
+    } else if (wd <= 2048 && mParameters.dnsty == 160) {
+
+        textFont1 = 16.sp
+        imgSize = 30.dp
+        maxWidth = 0.65f
+
+        Log.d("Desktop: ", wd.toString())
+    }
 
     var expanded by remember { mutableStateOf(false) }
 //  val selectedItem by rememberUpdatedState("Status")
@@ -49,7 +80,7 @@ fun DropDown(paramId: String, index: Int) {
             OutlinedButton(
                 onClick = { expanded = true },
                 modifier = Modifier
-                    .fillMaxWidth(0.65f)
+                    .fillMaxWidth(maxWidth)
                     .wrapContentSize()
             ) {
                 Text(selectedItem)
@@ -66,7 +97,7 @@ fun DropDown(paramId: String, index: Int) {
                             Text(
                                 text = item,
                                 style = TextStyle(
-                                    fontSize = 16.sp,
+                                    fontSize = textFont1,
                                     color = pureBlack,
                                     textAlign = TextAlign.Center
                                 )
@@ -133,7 +164,9 @@ fun DropDown(paramId: String, index: Int) {
                     }
                 }
         }) {
-            Icon(imageVector = Icons.Default.Refresh, contentDescription = "Refresh")
+            Icon(imageVector = Icons.Default.Refresh,
+                modifier = Modifier.size(imgSize),
+                contentDescription = "Refresh")
         }
     }
 }
