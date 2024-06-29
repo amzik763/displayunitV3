@@ -10,6 +10,7 @@ import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -67,8 +68,8 @@ import com.cti.displayuni.utility.showLogs
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-var fontSmall = 12.sp
-var fontMedium = 18.sp
+var fontSmall = 11.sp
+var fontMedium = 12.sp
 var fontLarge = 22.sp
 var paddingSmall = 4.dp
 var paddingMedium = 8.dp
@@ -116,9 +117,31 @@ fun SettingParams() {
 
 @Composable
 fun FPACircles(fpa: String?) {
+    val wd = mParameters.mWidthinPx
+
+    var width = 12.dp
+    var size = 30.dp
+    showLogs("dwinsize: ", wd.toString())
+    showLogs("mparam density: ", mParameters.dnsty.toString())
+
+    if (wd <= 2048 && mParameters.dnsty == 320) {
+
+        width = 6.dp
+        size = 16.dp
+        showLogs("lwinsize: ", wd.toString())
+
+    } else if (wd <= 2048 && mParameters.dnsty == 160) {
+
+        size = 30.dp
+        width = 12.dp
+        showLogs("Desktop: ", wd.toString())
+    }
+
     Image(painter = painterResource(id = R.drawable.circle),
         contentDescription ="Circle1",
-        modifier = Modifier.clickable {
+        modifier = Modifier
+            .size(size)
+        .clickable {
             myComponents.mUiViewModel.showFpaDetails.value = true
         },
 
@@ -131,17 +154,37 @@ fun FPACircles(fpa: String?) {
             ColorFilter.tint(green)
         }
     )
-    Spacer(modifier = Modifier.width(12.dp))
+    Spacer(modifier = Modifier.width(width))
 }
 
 @Composable
 fun FPADetails(){
+
+    val wd = mParameters.mWidthinPx
+    //myUI variables
+
+    var textFont2 = 24.sp
+    showLogs("dwinsize: ", wd.toString())
+    showLogs("mparam density: ", mParameters.dnsty.toString())
+
+    if (wd <= 2048 && mParameters.dnsty == 320) {
+
+        textFont2 = 14.sp
+        showLogs("lwinsize: ", wd.toString())
+
+    } else if (wd <= 2048 && mParameters.dnsty == 160) {
+
+        textFont2 = 24.sp
+        showLogs("Desktop: ", wd.toString())
+    }
+
+
     Row{
         Text(
             text = "FPA Details",
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
-                fontSize = fontLarge,
+                fontSize = textFont2,
                 textAlign = TextAlign.Center
             )
         )
@@ -157,12 +200,31 @@ fun FPADetails(){
 
 @Composable
 fun ReadingUI(){
+
+    val wd = mParameters.mWidthinPx
+    //myUI variables
+
+    var textFont2 = 24.sp
+    showLogs("dwinsize: ", wd.toString())
+    showLogs("mparam density: ", mParameters.dnsty.toString())
+
+    if (wd <= 2048 && mParameters.dnsty == 320) {
+
+        textFont2 = 14.sp
+        showLogs("lwinsize: ", wd.toString())
+
+    } else if (wd <= 2048 && mParameters.dnsty == 160) {
+
+        textFont2 = 24.sp
+        showLogs("Desktop: ", wd.toString())
+    }
+
     Row{
         Text(
             text = "Readings",
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
-                fontSize = fontLarge,
+                fontSize = textFont2,
                 textAlign = TextAlign.Center
             )
         )
@@ -179,9 +241,30 @@ fun ReadingUI(){
 
 @Composable
 fun ReadingCircles(r: Boolean) {
+    val wd = mParameters.mWidthinPx
+
+    var width = 12.dp
+    var size = 30.dp
+    showLogs("dwinsize: ", wd.toString())
+    showLogs("mparam density: ", mParameters.dnsty.toString())
+
+    if (wd <= 2048 && mParameters.dnsty == 320) {
+
+        width = 6.dp
+        size = 16.dp
+        showLogs("lwinsize: ", wd.toString())
+
+    } else if (wd <= 2048 && mParameters.dnsty == 160) {
+
+        size = 30.dp
+        width = 12.dp
+        showLogs("Desktop: ", wd.toString())
+    }
+
     Image(painter = painterResource(id = R.drawable.circle),
         contentDescription ="Circle1",
-        modifier = Modifier.clickable {
+        modifier = Modifier.size(size)
+        .clickable {
             myComponents.mUiViewModel.showCustomPopup.value = true
         },
         colorFilter = if(!r){
@@ -195,7 +278,7 @@ fun ReadingCircles(r: Boolean) {
 
         }
     )
-    Spacer(modifier = Modifier.width(12.dp))
+    Spacer(modifier = Modifier.width(width))
 }
 
 @Composable
@@ -242,9 +325,29 @@ fun CheckingParts(checking:String, total:String, pass:String, fail:String){
 
 @Composable
 fun MyImageButton(icon: Int, onClick: () -> Unit) {
+
+    val wd = mParameters.mWidthinPx
+    //myUI variables
+
+    var size = 48.dp
+    showLogs("dwinsize: ", wd.toString())
+    showLogs("mparam density: ", mParameters.dnsty.toString())
+
+    if (wd <= 2048 && mParameters.dnsty == 320) {
+
+        size = 24.dp
+        showLogs("lwinsize: ", wd.toString())
+
+    } else if (wd <= 2048 && mParameters.dnsty == 160) {
+
+        size = 48.dp
+        showLogs("Desktop: ", wd.toString())
+    }
+
+
     IconButton(
         onClick = onClick,
-        modifier = Modifier.size(48.dp),
+        modifier = Modifier.size(size),
     ) {
         Image(
             painter = painterResource(id = icon),
@@ -255,19 +358,39 @@ fun MyImageButton(icon: Int, onClick: () -> Unit) {
 @Composable
 fun OrangeText(
     name: String,
-    value:String
+    value:String = "",
+    style: TextStyle = TextStyle.Default
 ){
+
+    val wd = mParameters.mWidthinPx
+    //myUI variables
+
+    var textFont2 = 18.sp
+    showLogs("dwinsize: ", wd.toString())
+    showLogs("mparam density: ", mParameters.dnsty.toString())
+
+    if (wd <= 2048 && mParameters.dnsty == 320) {
+
+        textFont2 = 11.sp
+        showLogs("lwinsize: ", wd.toString())
+
+    } else if (wd <= 2048 && mParameters.dnsty == 160) {
+
+        textFont2 = 20.sp
+        showLogs("Desktop: ", wd.toString())
+    }
+
     Column(verticalArrangement = Arrangement.SpaceAround) {
         Row {
             Text( text = name,
-                style = TextStyle(
-                    fontSize = fontMedium
+                style = style.copy(
+                    fontSize = textFont2
                 )
             )
             Text( text = value,
-                style = TextStyle(
+                style = style.copy(
                     fontWeight = FontWeight.Bold,
-                    fontSize = fontMedium
+                    fontSize = textFont2
                 )
             )
         }
@@ -282,6 +405,95 @@ fun Header(){
 
     val ct = LocalContext.current
 
+    val wd = mParameters.mWidthinPx
+    //myUI variables
+    var textFont1 = 18.sp
+    var textFont2 = 18.sp
+    var width = 180.dp
+    var topPadding = 4.dp
+    var padding = 24.dp
+    var endPadding = 48.dp
+    var bottomPadding = 48.dp
+    var height = 40.dp
+    var imgSize = 50.dp
+    var toppadding2 = 16.dp
+    var startpadding2 = 52.dp
+    var endpadding2 = 52.dp
+    var textFont3 = 20.sp
+    var interfaceW = 180.dp
+    var interfaceH = 50.dp
+    var btnpadding = 9.dp
+    var sWidth = 16.dp
+    var sWidth2 = 48.dp
+    var rowHeight = 0.07f
+    var rowHeight2 = 0.073f
+    var padding1 = 16.dp
+    var hPadding = 30.dp
+    var fpa = "First Part Approval"
+
+    showLogs("dwinsize: ", wd.toString())
+
+    showLogs("mparam density: ", mParameters.dnsty.toString())
+
+    if (wd <= 2048 && mParameters.dnsty == 320) {
+
+        topPadding = 2.dp
+        endPadding = 6.dp
+        bottomPadding = 12.dp
+        padding = 16.dp
+        textFont1 = 15.sp
+        textFont2 = 11.sp
+        textFont3 = 12.sp
+        topPadding = 20.dp
+        width = 120.dp
+        height = 30.dp
+        imgSize = 26.dp
+        toppadding2 = 10.dp
+        startpadding2 = 40.dp
+        endpadding2 = 30.dp
+        interfaceW = 140.dp
+        interfaceH = 45.dp
+        btnpadding = 6.dp
+        sWidth = 14.dp
+        rowHeight = 0.05f
+        rowHeight2 = 0.063f
+        padding1 = 4.dp
+        sWidth2 = 16.dp
+        hPadding = 16.dp
+        fpa = "FPA"
+
+        showLogs("lwinsize: ", wd.toString())
+
+    } else if (wd <= 2048 && mParameters.dnsty == 160) {
+
+        topPadding = 4.dp
+        endPadding = 48.dp
+        bottomPadding = 24.dp
+        padding = 24.dp
+        textFont1 = 30.sp
+        textFont2 = 20.sp
+        textFont3 = 22.sp
+        toppadding2 = 14.dp
+        startpadding2 = 64.dp
+        endpadding2 = 52.dp
+        width = 240.dp
+        height = 52.dp
+        imgSize = 50.dp
+        toppadding2 = 16.dp
+        interfaceW = 180.dp
+        interfaceH = 50.dp
+        btnpadding = 9.dp
+        sWidth = 16.dp
+        rowHeight = 0.07f
+        rowHeight2 = 0.073f
+        padding1 = 16.dp
+        sWidth2 = 48.dp
+        hPadding = 30.dp
+        fpa = "First Part Approval"
+
+        showLogs("Desktop: ", wd.toString())
+    }
+
     Column(modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight()
@@ -294,7 +506,7 @@ fun Header(){
         Row(modifier = Modifier
             .background(color = extraLightGrey)
             .fillMaxWidth()
-            .fillMaxHeight(0.07f)
+            .fillMaxHeight(rowHeight)
 //            .padding(paddingSmall)
             ,
             verticalAlignment = Alignment.CenterVertically,
@@ -304,75 +516,79 @@ fun Header(){
             //subRow
             Row(modifier = Modifier
                 .fillMaxHeight()
-                .padding(16.dp),
+                .padding(padding1),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Column(
-                    modifier = Modifier
-//                        .fillMaxHeight()
-                ) {
+//                Column(
+//                    modifier = Modifier
+//                        .padding(padding1)
+////                        .fillMaxHeight()
+//                ) {
                     OrangeText(name = "Process Name: ", value = myComponents.mainViewModel.mProcessName)
-                    Box(
+                    /*Box(
                         modifier = Modifier
-                            .padding(top = 4.dp)
+                            .padding(top = topPadding)
                             .width(65.dp)
                             .height(4.dp)
                             .background(color = lightOrange)
-                    )
-                }
-                Spacer(modifier = Modifier.width(16.dp))
-                Column(
+                    )*/
+//                }
+
+                Spacer(modifier = Modifier.width(sWidth))
+                /*Column(
                     modifier = Modifier
+                        .padding(padding1)
 //                        .fillMaxHeight()
-                ) {
+                ) {*/
                     OrangeText(name = "Part Name: ", value = myComponents.mainViewModel.mPartName)
-                    Box(
+                   /* Box(
                         modifier = Modifier
-                            .padding(top = 4.dp)
+                            .padding(top = topPadding)
                             .width(65.dp)
                             .height(4.dp)
                             .background(color = lightOrange)
-                    )
-                }
+                    )*/
+//                }
 
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(sWidth))
 
-                Column {
+               /* Column (
+                    modifier = Modifier
+                        .padding(padding1)
+//                        .fillMaxHeight()
+                ){*/
 
-                    OrangeText(name = "Device Id:", value = myComponents.mainViewModel.deviceId)
+                    OrangeText(name = "Device Id: ", value = myComponents.mainViewModel.deviceId)
 
-                    Box(
+                   /* Box(
                         modifier = Modifier
-                            .padding(top = 4.dp)
+                            .padding(top = topPadding)
                             .width(65.dp)
                             .height(4.dp)
                             .background(color = lightOrange)
-                    )
-                }
+                    )*/
+//                }
 
-                Spacer(modifier = Modifier.width(48.dp))
-                //Shift Timings
-                Text(
-                    text = "${myComponents.mainViewModel.startShiftTime} to ${myComponents.mainViewModel.endShiftTime}",
+                Spacer(modifier = Modifier.width(sWidth2))
+
+                OrangeText(name = "${myComponents.mainViewModel.startShiftTime} to ${myComponents.mainViewModel.endShiftTime}",
                     style = TextStyle(
                         fontWeight = FontWeight.Bold,
-                        fontSize = fontMedium,
                         color = orange
-                    )
-                )
+                    ))
 
-                Spacer(modifier = Modifier.width(38.dp))
+                Spacer(modifier = Modifier.width(sWidth2))
 
-                Text(
-                    text = currentDateTime.value,
+                OrangeText(name = currentDateTime.value,
                     style = TextStyle(
-                        fontSize = fontMedium,
-                        color = pureBlack,
-                        fontFamily = mFont.poppinsregular
+                        color = pureBlack
                     )
                 )
             }
+
+            Spacer(Modifier.width(sWidth))
+
             //secondSubRow
             Row {
                 Button(
@@ -380,16 +596,16 @@ fun Header(){
                     shape = RoundedCornerShape(9.dp),
                     border = BorderStroke(3.dp, darkBlue),
                     colors = ButtonDefaults.buttonColors(contentColor = pureWhite, containerColor =  darkBlue),
-
+                    contentPadding = PaddingValues(0.dp),
                     ) {
                     Text(
-                        text = "First Part Approval",
+                        text = fpa,
                         fontSize = fontMedium,
-                        modifier = Modifier.padding(horizontal = 30.dp)
+//                        modifier = Modifier.padding(horizontal = hPadding)
                     )
                 }
 
-                Spacer(Modifier.width(30.dp))
+                Spacer(Modifier.width(sWidth))
 
                 MyImageButton(R.drawable.ic_logout) {
                     val a = ct as? Activity
@@ -400,13 +616,13 @@ fun Header(){
                     myComponents.navController.navigate("Login")
                 }
 
-                Spacer(Modifier.width(16.dp))
+                Spacer(Modifier.width(sWidth))
 
                 MyImageButton(icon = R.drawable.fullscreen) {
                     myComponents.mUiViewModel.showFullImage.value = true
                 }
 
-                Spacer(Modifier.width(16.dp))
+                Spacer(Modifier.width(sWidth))
 
             }
         }
@@ -414,7 +630,7 @@ fun Header(){
         Row(modifier = Modifier
             .background(color = Color.White)
             .fillMaxWidth()
-            .fillMaxHeight(0.073f)
+            .fillMaxHeight(rowHeight2)
             .padding(2.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -514,6 +730,7 @@ fun Header(){
                         }
 
                     },
+                    contentPadding = PaddingValues(0.dp),
                     shape = RoundedCornerShape(29.dp),
                     border = BorderStroke(3.dp, green),
                     colors = ButtonDefaults.buttonColors(
@@ -526,11 +743,12 @@ fun Header(){
                         text = "PASS",
                         fontSize = fontMedium,
                         modifier = Modifier
-                            .padding(horizontal = 30.dp)
+//                            .padding(horizontal = 30.dp)
 
                     )
                 }
-                Spacer(modifier = Modifier.width(24.dp))
+                Spacer(modifier = Modifier.width(sWidth))
+
                 Button(
                     onClick = {
                         showLogs("PASS", myComponents.mainViewModel.pass.intValue.toString())
@@ -598,6 +816,7 @@ fun Header(){
                     },
                     shape = RoundedCornerShape(29.dp),
                     border = BorderStroke(3.dp, red),
+                    contentPadding = PaddingValues(0.dp),
                     colors = ButtonDefaults.buttonColors(
                         contentColor = pureWhite,
                         containerColor = red
@@ -606,10 +825,10 @@ fun Header(){
                     Text(
                         text = "FAIL",
                         fontSize = fontMedium,
-                        modifier = Modifier.padding(horizontal = 30.dp)
+//                        modifier = Modifier.padding(horizontal = 30.dp)
                     )
                 }
-                Spacer(modifier = Modifier.width(24.dp))
+                Spacer(modifier = Modifier.width(sWidth))
             }
         }
         if (myComponents.mainViewModel.showZoomableImage) {
@@ -794,35 +1013,36 @@ fun TopHeader(){
 
     val wd = mParameters.mWidthinPx
     //myUI variables
+
     var textFont2 = 18.sp
-    var topPadding = 64.dp
-    var startPadding = 36.dp
-    var endPadding = 48.dp
-    var bottomPadding = 48.dp
+    var interfaceW = 180.dp
+    var interfaceH = 50.dp
+    var sWidth = 16.dp
+    var endpadding = 36.dp
 
     showLogs("dwinsize: ", wd.toString())
 
 
+    showLogs("mparam density: ", mParameters.dnsty.toString())
+
     if (wd <= 2048 && mParameters.dnsty == 320) {
 
 
-        endPadding = 36.dp
-        bottomPadding = 0.dp
-        startPadding = 0.dp
-        textFont2 = 12.sp
-        topPadding = 0.dp
-
+        textFont2 = 11.sp
+        interfaceW = 140.dp
+        interfaceH = 38.dp
+        sWidth = 12.dp
+        endpadding = 12.dp
 
         showLogs("lwinsize: ", wd.toString())
 
     } else if (wd <= 2048 && mParameters.dnsty == 160) {
 
-        topPadding = 0.dp
-        endPadding = 36.dp
-        bottomPadding = 0.dp
-        startPadding = 0.dp
         textFont2 = 20.sp
-
+        interfaceW = 180.dp
+        interfaceH = 50.dp
+        sWidth = 16.dp
+        endpadding = 36.dp
 
         showLogs("Desktop: ", wd.toString())
     }
@@ -831,10 +1051,7 @@ fun TopHeader(){
         modifier = Modifier
             .background(color = lightGrey)
             .padding(
-                top = topPadding,
-                end = endPadding,
-                start = startPadding,
-                bottom = bottomPadding
+                end = endpadding,
             )
     ) {
         Row(
@@ -846,7 +1063,7 @@ fun TopHeader(){
             Image(painter = painterResource(id = R.drawable.interfaceblue),
                 contentDescription = "Interface Logo",
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.size(200.dp, 70.dp),
+                modifier = Modifier.size(interfaceW, interfaceH),
             )
 
             Row {
@@ -889,7 +1106,7 @@ fun TopHeader(){
                     )
                 )
 
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(sWidth))
                 Skills()
             }
 
