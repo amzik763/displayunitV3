@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -59,6 +60,8 @@ class MainViewModel(context: Context) : ViewModel(){
 
     var mProcessName by mutableStateOf("")
     var mPartName by mutableStateOf("")
+
+    val isReplacementChecked =   mutableStateOf(false)
 
 
     //  var readingStatusList = mutableListOf<readingsStatusItems>()

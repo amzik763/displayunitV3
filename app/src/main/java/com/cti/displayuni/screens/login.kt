@@ -22,6 +22,8 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,8 +46,10 @@ import androidx.compose.ui.unit.sp
 import com.cti.displayuni.R
 import com.cti.displayuni.components.PasswordInputTextField
 import com.cti.displayuni.components.UserIdInputTextField
+import com.cti.displayuni.ui.theme.blue
 import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.lightBlack
+import com.cti.displayuni.ui.theme.lightGrey
 import com.cti.displayuni.ui.theme.lightOrange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
@@ -53,6 +57,7 @@ import com.cti.displayuni.utility.mFont.nk
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents.mainViewModel
+import com.cti.displayuni.utility.showLogs
 
 @Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -89,7 +94,7 @@ fun Login(){
     var top = 48.dp
     var bottom = 36.dp
     var btnpadding = 9.dp
-
+    var sHeight = 54.dp
     Log.d("dwinsize: ", wd.toString())
 
     mParameters.dnsty = dnsty
@@ -112,6 +117,7 @@ fun Login(){
         top = 36.dp
         bottom = 28.dp
         btnpadding = 6.dp
+        sHeight = 36.dp
 
 
         Log.d("lwinsize: ", wd.toString())
@@ -133,6 +139,7 @@ fun Login(){
         top = 48.dp
         bottom = 36.dp
         btnpadding = 9.dp
+        sHeight = 54.dp
         Log.d("Desktop: ", wd.toString())
     }
 
@@ -259,8 +266,70 @@ fun Login(){
                         )
                     }
                 }
+
+                Spacer(modifier = Modifier.height(sHeight))
+
+//                ToggleButton()
             }
         }
     }
 }
 
+//@Preview
+@Composable
+fun ToggleButton() {
+
+    val wd = mParameters.mWidthinPx
+    //myUI variables
+
+    var textFont = 25.sp
+    var sWidth = 26.dp
+    var endpadding = 36.dp
+
+    showLogs("dwinsize: ", wd.toString())
+
+
+    showLogs("mparam density: ", mParameters.dnsty.toString())
+
+    if (wd <= 2048 && mParameters.dnsty == 320) {
+
+
+        textFont = 14.sp
+        sWidth = 16.dp
+        endpadding = 12.dp
+
+        showLogs("lwinsize: ", wd.toString())
+
+    } else if (wd <= 2048 && mParameters.dnsty == 160) {
+
+        textFont = 25.sp
+        sWidth = 26.dp
+        endpadding = 36.dp
+
+        showLogs("Desktop: ", wd.toString())
+    }
+
+
+
+    Row (verticalAlignment = Alignment.CenterVertically) {
+        Text(text = "Replacement Login",
+            style = TextStyle(
+                fontFamily = poppinsregular,
+                fontSize = textFont
+            )
+        )
+
+        Spacer(modifier = Modifier.width(sWidth))
+
+        Switch(
+            checked = mainViewModel.isReplacementChecked.value,
+            onCheckedChange = { mainViewModel.isReplacementChecked.value = it },
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = blue,
+                uncheckedThumbColor = blue,
+                checkedTrackColor = lightGrey,
+                uncheckedTrackColor = lightGrey
+            )
+        )
+    }
+}

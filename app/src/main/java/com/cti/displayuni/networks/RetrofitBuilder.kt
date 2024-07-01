@@ -41,10 +41,6 @@ object RetrofitBuilder {
             } catch (e: IOException) {
                 showLogs("GOT ERROR: ","error IO")
 
-                // Handle IOException
-
-
-
 
                 // For example, log the error
                 e.printStackTrace()
