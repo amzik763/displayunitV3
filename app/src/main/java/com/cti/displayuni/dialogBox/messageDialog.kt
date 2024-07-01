@@ -76,6 +76,10 @@ fun MessageDialog(
     var bottomPadding = 48.dp
     var height = 40.dp
     var imgSize = 50.dp
+    var fpaTopPadding = 36.dp
+    var floorTopPadding = 16.dp
+    var btnpadding = 9.dp
+
 
     Log.d("dwinsize: ", wd.toString())
 
@@ -84,21 +88,24 @@ fun MessageDialog(
 
     if (wd <= 2048 && mParameters.dnsty == 320) {
 
-        topPadding = 40.dp
+        topPadding = 34.dp
         startPadding = 20.dp
         endPadding = 20.dp
-        bottomPadding = 16.dp
+        bottomPadding = 10.dp
         fillMaxWidth = 0.6f
         fillMaxHeight = 0.45f
         maxWidth = 0.24f
         startPadding = 16.dp
-        mainHeaderFont = 30.sp
-        semiHeaderFont = 20.sp
-        textFont1 = 15.sp
-        topPadding = 20.dp
-        width = 180.dp
-        height = 40.dp
+        mainHeaderFont = 26.sp
+        semiHeaderFont = 14.sp
+        textFont1 = 11.sp
+        topPadding = 16.dp
+        width = 100.dp
+        height = 28.dp
         imgSize = 80.dp
+        fpaTopPadding = 20.dp
+        floorTopPadding = 7.dp
+        btnpadding = 4.dp
 
         Log.d("lwinsize: ", wd.toString())
 
@@ -119,8 +126,13 @@ fun MessageDialog(
         width = 210.dp
         height = 50.dp
         imgSize =200.dp
+        fpaTopPadding = 36.dp
+        floorTopPadding = 16.dp
+        btnpadding = 9.dp
+
         Log.d("Desktop: ", wd.toString())
     }
+
 
     Dialog(
         onDismissRequest = {
@@ -148,7 +160,6 @@ fun MessageDialog(
                 ) {
                     Image(painter = painterResource(id = myComponents.mUiViewModel.dialogModel.imageResource),
                         contentDescription = "message",
-//                        contentScale = ContentScale.Crop,
                         modifier = Modifier.size(imgSize)
                     )
                 }
@@ -184,7 +195,7 @@ fun MessageDialog(
                         )
 
                         Text(modifier = Modifier.padding(
-                            top = 36.dp),
+                            top = fpaTopPadding),
                             text = dialogModel.dialogSubHeaderText,
                             style = TextStyle(
                                 fontSize = semiHeaderFont,
@@ -193,7 +204,7 @@ fun MessageDialog(
                                 fontFamily = nkmedium
                             )
                         )
-                        Text(modifier = Modifier.padding(top = 16.dp),
+                        Text(modifier = Modifier.padding(top = floorTopPadding),
                             text = dialogModel.dialogText,
                             style = TextStyle(
                                 fontSize = textFont1,
@@ -209,7 +220,7 @@ fun MessageDialog(
 
                         Surface(
                             modifier = Modifier
-                                .padding(top = 16.dp)
+                                .padding(top = floorTopPadding)
                                 .size(width = width, height = height)
                                 .clickable { myComponents.mUiViewModel.hideMessageDialog() },
                             color = darkBlue,
@@ -227,7 +238,7 @@ fun MessageDialog(
                                 ),
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(9.dp)
+                                    .padding(btnpadding)
                                     .align(Alignment.CenterHorizontally)
                             )
                         }

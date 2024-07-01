@@ -41,10 +41,10 @@ fun IDTextField(
     val widthdp = conf.screenWidthDp.dp
 
     Box(
-        modifier = modifier
-            .padding(start = if(mParameters.dnsty == 320) {
-                14.dp
-            } else 28.dp, top = if(mParameters.dnsty == 320) 8.dp else 8.dp),
+//        modifier = modifier
+//            .padding(start = if(mParameters.dnsty == 320) {
+////                6.dp
+//            } else 28.dp, top = if(mParameters.dnsty == 320) 4.dp else 8.dp),
         contentAlignment = Alignment.CenterStart,
 
         ) {
@@ -64,14 +64,15 @@ fun IDTextField(
             shape= shape,
             maxLines = maxLine,
             label = {
-                    Text(text = label)
+                    Text(text = label,
+                        fontSize = if(mParameters.dnsty == 320) 10.sp else 16.sp)
                      },
             modifier = Modifier
-                .size(width = if(mParameters.dnsty == 320) 180.dp else 180.dp, height = if(mParameters.dnsty == 320) 64.dp else 64.dp ),
+                .size(width = if(mParameters.dnsty == 320) 140.dp else 180.dp, height = if(mParameters.dnsty == 320) 54.dp else 64.dp ),
             textStyle = LocalTextStyle.current.copy(
                 fontWeight = FontWeight.Bold,
                 color = color,
-                fontSize =  if(mParameters.dnsty == 320) 12.sp else 16.sp,
+                fontSize =  if(mParameters.dnsty == 320) 10.sp else 16.sp,
 
             )
         )

@@ -48,27 +48,16 @@ fun ActualLazyList(
 
     val wd = mParameters.mWidthinPx
     //myUI variables
-    var mainHeaderFont = 52.sp
-    var semiHeaderFont = 36.sp
-    var maxWidth = widthDP/3f
+
     var textFont = 15.sp
-    var width = 180.dp
-    var textFont1 = 18.sp
-    var textFont2 = 18.sp
-    var height = 40.dp
-    var padding = 24.dp
-    var imgSize = 50.dp
-    var interfaceW = 300.dp
-    var interfaceH = 70.dp
-    var widthdp = widthDP/3f
-    var start = 36.dp
+    var textFont1 = 15.sp
     var top = 8.dp
-    var bottom = 36.dp
-    var btnpadding = 9.dp
     var paddingEndSmall = 10.dp
     var gap = 30.dp
     var unitWidth = 60.dp
     var enterValueWidth = 180.dp
+    var unitstart = 4.dp
+    var paramnamewidth = 0.7f
 
     Log.d("dwinsize: ", wd.toString())
 
@@ -76,46 +65,26 @@ fun ActualLazyList(
     Log.d("mparam density: ", mParameters.dnsty.toString())
 
     if (wd <= 2048 && mParameters.dnsty == 320) {
-        mainHeaderFont = 34.sp
-        maxWidth = widthDP/3.5f
-        semiHeaderFont = 20.sp
+
         textFont = 12.sp
-        width = 120.dp
-        height = 30.dp
-        textFont1 = 14.sp
-        textFont2 = 12.sp
-        padding = 20.dp
-        interfaceW = 180.dp
-        interfaceH = 50.dp
-        widthdp = widthDP/3.7f
-        start = 28.dp
+        textFont1 = 10.sp
         top = 4.dp
-        bottom = 28.dp
-        btnpadding = 6.dp
         paddingEndSmall = 4.dp
-        gap = 20.dp
+        gap = 10.dp
         unitWidth = 40.dp
-        enterValueWidth = 160.dp
+        enterValueWidth = 87.dp
+        unitstart = 1.dp
+        paramnamewidth = 0.6f
 
 
 
     } else if (wd <= 2048 && mParameters.dnsty == 160) {
-        maxWidth = widthDP/3f
-        mainHeaderFont = 58.sp
-        semiHeaderFont = 36.sp
+
         textFont = 15.sp
-        width = 210.dp
-        height = 50.dp
-        textFont1 = 24.sp
-        textFont2 = 20.sp
-        padding = 24.dp
-        interfaceW = 300.dp
-        interfaceH = 70.dp
-        widthdp = widthDP/3f
-        start = 36.dp
+        textFont1 = 15.sp
         top = 8.dp
-        bottom = 36.dp
-        btnpadding = 9.dp
+        unitstart = 4.dp
+        paramnamewidth = 0.7f
         Log.d("Desktop: ", wd.toString())
     }
 
@@ -141,7 +110,7 @@ fun ActualLazyList(
                             fontFamily = mFont.nkbold,
                         ),
                         modifier = Modifier.padding(top = top)
-                            .fillMaxWidth(0.7f),
+                            .fillMaxWidth(paramnamewidth),
                         color = Color.Black
                     )
 
@@ -169,12 +138,12 @@ fun ActualLazyList(
                         Text(
                             text = item.param_unit.toString(),
                             style = TextStyle(
-                                fontSize = textFont,
+                                fontSize = textFont1,
                                 color = pureBlack,
                                 fontFamily = mFont.nk,
                             ),
                             modifier = Modifier
-                                .padding(top = top, start = 4.dp)
+                                .padding(top = top, start = unitstart)
                                 .width(unitWidth),
                             color = Color.Black,
                             textAlign = TextAlign.Center

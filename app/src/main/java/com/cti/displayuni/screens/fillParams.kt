@@ -56,7 +56,6 @@ import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.extraLightGrey
 import com.cti.displayuni.ui.theme.green
 import com.cti.displayuni.ui.theme.lightGrey
-import com.cti.displayuni.ui.theme.lightOrange
 import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
@@ -83,6 +82,22 @@ var heightinFLarge = 80.dp
 
 @Composable
 fun ActualParams() {
+    val wd = mParameters.mWidthinPx
+
+    var height = 36.dp
+    showLogs("dwinsize: ", wd.toString())
+    showLogs("mparam density: ", mParameters.dnsty.toString())
+
+    if (wd <= 2048 && mParameters.dnsty == 320) {
+
+        height = 20.dp
+        showLogs("lwinsize: ", wd.toString())
+
+    } else if (wd <= 2048 && mParameters.dnsty == 160) {
+
+        height = 36.dp
+        showLogs("Desktop: ", wd.toString())
+    }
     Column(modifier = Modifier.fillMaxWidth(0.5f)) {
         Text(
             text = "Actual Parameters",
@@ -92,7 +107,7 @@ fun ActualParams() {
             )
         )
 
-        Spacer(modifier = Modifier.height(36.dp))
+        Spacer(modifier = Modifier.height(height))
         ActualLazyList(
             myComponents.mainViewModel.dataListActual
         )
@@ -101,6 +116,24 @@ fun ActualParams() {
 
 @Composable
 fun SettingParams() {
+
+    val wd = mParameters.mWidthinPx
+
+    var height = 36.dp
+    showLogs("dwinsize: ", wd.toString())
+    showLogs("mparam density: ", mParameters.dnsty.toString())
+
+    if (wd <= 2048 && mParameters.dnsty == 320) {
+
+        height = 20.dp
+        showLogs("lwinsize: ", wd.toString())
+
+    } else if (wd <= 2048 && mParameters.dnsty == 160) {
+
+        height = 36.dp
+        showLogs("Desktop: ", wd.toString())
+    }
+
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
             text = "Process Setting Parameters",
@@ -110,7 +143,7 @@ fun SettingParams() {
             )
         )
 
-        Spacer(modifier = Modifier.height(36.dp))
+        Spacer(modifier = Modifier.height(height))
         ParametersLazyList(myComponents.mainViewModel.dataListSetting)
     }
 }
@@ -407,29 +440,14 @@ fun Header(){
 
     val wd = mParameters.mWidthinPx
     //myUI variables
-    var textFont1 = 18.sp
-    var textFont2 = 18.sp
-    var width = 180.dp
-    var topPadding = 4.dp
-    var padding = 24.dp
-    var endPadding = 48.dp
-    var bottomPadding = 48.dp
-    var height = 40.dp
-    var imgSize = 50.dp
-    var toppadding2 = 16.dp
-    var startpadding2 = 52.dp
-    var endpadding2 = 52.dp
-    var textFont3 = 20.sp
-    var interfaceW = 180.dp
-    var interfaceH = 50.dp
-    var btnpadding = 9.dp
+
     var sWidth = 16.dp
     var sWidth2 = 48.dp
     var rowHeight = 0.07f
     var rowHeight2 = 0.073f
     var padding1 = 16.dp
-    var hPadding = 30.dp
     var fpa = "First Part Approval"
+    var paramWidth = 36.dp
 
     showLogs("dwinsize: ", wd.toString())
 
@@ -437,58 +455,24 @@ fun Header(){
 
     if (wd <= 2048 && mParameters.dnsty == 320) {
 
-        topPadding = 2.dp
-        endPadding = 6.dp
-        bottomPadding = 12.dp
-        padding = 16.dp
-        textFont1 = 15.sp
-        textFont2 = 11.sp
-        textFont3 = 12.sp
-        topPadding = 20.dp
-        width = 120.dp
-        height = 30.dp
-        imgSize = 26.dp
-        toppadding2 = 10.dp
-        startpadding2 = 40.dp
-        endpadding2 = 30.dp
-        interfaceW = 140.dp
-        interfaceH = 45.dp
-        btnpadding = 6.dp
         sWidth = 14.dp
         rowHeight = 0.05f
         rowHeight2 = 0.063f
         padding1 = 4.dp
         sWidth2 = 16.dp
-        hPadding = 16.dp
         fpa = "FPA"
+        paramWidth = 16.dp
 
         showLogs("lwinsize: ", wd.toString())
 
     } else if (wd <= 2048 && mParameters.dnsty == 160) {
 
-        topPadding = 4.dp
-        endPadding = 48.dp
-        bottomPadding = 24.dp
-        padding = 24.dp
-        textFont1 = 30.sp
-        textFont2 = 20.sp
-        textFont3 = 22.sp
-        toppadding2 = 14.dp
-        startpadding2 = 64.dp
-        endpadding2 = 52.dp
-        width = 240.dp
-        height = 52.dp
-        imgSize = 50.dp
-        toppadding2 = 16.dp
-        interfaceW = 180.dp
-        interfaceH = 50.dp
-        btnpadding = 9.dp
+        paramWidth = 36.dp
         sWidth = 16.dp
         rowHeight = 0.07f
         rowHeight2 = 0.073f
         padding1 = 16.dp
         sWidth2 = 48.dp
-        hPadding = 30.dp
         fpa = "First Part Approval"
 
         showLogs("Desktop: ", wd.toString())
@@ -853,7 +837,7 @@ fun Header(){
                 Row(modifier = Modifier.padding(24.dp)) {
                     //1.actual param list
                     ActualParams()
-                    Spacer(modifier = Modifier.width(36.dp))
+                    Spacer(modifier = Modifier.width(paramWidth))
                     //2.settings param list
                     SettingParams()
                 }

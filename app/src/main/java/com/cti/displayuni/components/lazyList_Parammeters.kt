@@ -1,5 +1,6 @@
 package com.cti.displayuni.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.utility.Setting_Param
 import com.cti.displayuni.utility.mFont
+import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.showLogs
 
@@ -38,6 +40,48 @@ import com.cti.displayuni.utility.showLogs
 fun ParametersLazyList(
     dataListSetting: MutableList<Setting_Param>
 ) {
+
+
+    val wd = mParameters.mWidthinPx
+    //myUI variables
+    var textFont = 15.sp
+    var textFont1 = 15.sp
+    var top = 8.dp
+    var paddingEndSmall = 10.dp
+    var gap = 30.dp
+    var unitWidth = 60.dp
+    var enterValueWidth = 180.dp
+    var unitstart = 4.dp
+    var paramnamewidth = 0.7f
+
+    Log.d("dwinsize: ", wd.toString())
+
+    Log.d("mparam density: ", mParameters.dnsty.toString())
+
+    if (wd <= 2048 && mParameters.dnsty == 320) {
+
+        textFont = 12.sp
+        textFont1 = 10.sp
+        top = 4.dp
+        paddingEndSmall = 4.dp
+        gap = 10.dp
+        unitWidth = 40.dp
+        enterValueWidth = 87.dp
+        unitstart = 1.dp
+        paramnamewidth = 0.6f
+
+
+
+    } else if (wd <= 2048 && mParameters.dnsty == 160) {
+
+        textFont = 15.sp
+        textFont1 = 15.sp
+        top = 8.dp
+        unitstart = 4.dp
+        paramnamewidth = 0.7f
+        Log.d("Desktop: ", wd.toString())
+    }
+
 
     // Create a map to store enterValue for each item
     // Map to store enterValue for each item
@@ -49,30 +93,30 @@ fun ParametersLazyList(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 10.dp),
+                        .padding(start = paddingEndSmall),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         text = item.param_name.toString(),
                         style = TextStyle(
-                            fontSize = 15.sp,
+                            fontSize = textFont,
                             color = pureBlack,
                             fontFamily = mFont.nkbold,
                         ),
                         modifier = Modifier
-                            .padding(top = 8.dp)
-                            .fillMaxWidth(0.7f),
+                            .padding(top = top)
+                            .fillMaxWidth(paramnamewidth),
                         color = Color.Black
                     )
 
-                    Spacer(modifier = Modifier.width(30.dp))
+                    Spacer(modifier = Modifier.width(gap))
 
                     Row (verticalAlignment = Alignment.CenterVertically){
                         // Assigning the remembered enterValue to the item's param_value
                         var enterValue by rememberSaveable { mutableStateOf(enterValues.value[index] ?: "") }
 
-                        Row(modifier = Modifier.width(180.dp)){
+                        Row(modifier = Modifier.width(enterValueWidth)){
                             CustomOutlinedTextField(
                                 text = enterValue,
                                 label = item.min + " - " + item.max,
@@ -93,13 +137,13 @@ fun ParametersLazyList(
                         Text(
                             text = item.param_unit.toString(),
                             style = TextStyle(
-                                fontSize = 15.sp,
+                                fontSize = textFont1,
                                 color = pureBlack,
                                 fontFamily = mFont.nk,
                             ),
                             modifier = Modifier
-                                .padding(top = 8.dp, start = 4.dp)
-                                .width(60.dp),
+                                .padding(top = top, start = unitstart)
+                                .width(unitWidth),
                             color = Color.Black,
                             textAlign = TextAlign.Center
                         )
