@@ -73,7 +73,7 @@ fun ParametersLazyList(
                         var enterValue by rememberSaveable { mutableStateOf(enterValues.value[index] ?: "") }
 
                         Row(modifier = Modifier.width(180.dp)){
-                            EnterValue(
+                            CustomOutlinedTextField(
                                 text = enterValue,
                                 label = item.min + " - " + item.max,
 
@@ -104,7 +104,7 @@ fun ParametersLazyList(
                             textAlign = TextAlign.Center
                         )
 
-                        LaunchedEffect(myComponents.mUiViewModel.clearFields.value) {
+                        /*LaunchedEffect(myComponents.mUiViewModel.clearFields.value) {
                             enterValues.value = enterValues.value.toMutableMap().apply {
                                 this[index] = ""
 
@@ -119,7 +119,7 @@ fun ParametersLazyList(
                                 it.param_value = ""
                             }
 
-                        }
+                        }*/
                     }
                 }
                 Divider(
@@ -127,6 +127,21 @@ fun ParametersLazyList(
                 )
             }
         }
+    }
+
+    LaunchedEffect(myComponents.mUiViewModel.clearFields.value) {
+        enterValues.value =  mutableMapOf()
+//        enterValue = ""
+
+        myComponents.mainViewModel.dataListSetting.forEach {
+            it.param_value = ""
+        }
+
+        myComponents.mainViewModel.dataListActual.forEach {
+            it.param_value = ""
+        }
+
+        showLogs("val","val cleared: ACTUAL")
     }
 }
 

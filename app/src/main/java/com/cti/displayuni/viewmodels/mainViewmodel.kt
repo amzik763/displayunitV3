@@ -80,6 +80,7 @@ class MainViewModel(context: Context) : ViewModel(){
     val mState = MutableLiveData<Boolean>()
 
     var floorNum by mutableStateOf("")
+    var lineNum by mutableStateOf("")
     var errorMsg by mutableStateOf("")
 
     var pass = mutableIntStateOf(0)
@@ -145,6 +146,21 @@ class MainViewModel(context: Context) : ViewModel(){
         return sharedPreferences.getString(KEY_TEXT_VALUE, "") ?: ""
     }
 
+    fun extractPattern(input: String): String {
+        try {
+            // Define the regular expression pattern
+            val pattern = """(\w+\d+ F\d+ L\d+)""".toRegex()
+
+            // Find the match in the input string
+            val matchResult = pattern.find(input)
+
+            // Return the matched group or an empty string if no match found
+            return matchResult?.value ?: ""
+        }catch (e:Exception){
+            return ""
+        }
+    }
+
     fun saveToken(token: String) {
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
         editor.putString(KEY_TOKEN, token)
@@ -170,6 +186,7 @@ class MainViewModel(context: Context) : ViewModel(){
         }
 
         viewModelScope.launch {
+            mainViewModel.lineNum = extractPattern(getStationValue())
             repository.loginUser(username,password)
         }
     }

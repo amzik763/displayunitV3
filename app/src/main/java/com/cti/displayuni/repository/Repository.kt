@@ -1427,8 +1427,8 @@ class Repository() {
 
                     else -> {""}
                 }
-
-                val fpaFailedResponse = otherAPIs.fpaFailed(mainViewModel.itemId, mainViewModel.getStationValue(), "1", FPA_Shift, mainViewModel.shift.value)
+                showLogs("FAILED FPA DATA: ","${mainViewModel.itemId} ${mainViewModel.getStationValue()} ${mainViewModel.lineNum}   ${FPA_Shift} ${mainViewModel.shift.value}")
+                val fpaFailedResponse = otherAPIs.fpaFailed(mainViewModel.itemId, mainViewModel.getStationValue(), mainViewModel.lineNum ,"1", FPA_Shift, mainViewModel.shift.value)
 
                 if (fpaFailedResponse.code() == 201){
 

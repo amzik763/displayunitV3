@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="smallPadding">4dp</dimen>
+    <dimen name="mediumPadding">16dp</dimen>
+    <dimen name="largePadding">24dp</dimen>
+
+
+    <dimen name="largeTitle">36sp</dimen>
+    <dimen name="mediumTitle">30sp</dimen>
+    <dimen name="smallTitle">24sp</dimen>
+
+    <dimen name="largeSubTitle">20sp</dimen>
+    <dimen name="mediumSubTitle">18sp</dimen>
+    <dimen name="smallSubTitle">15sp</dimen>
+
+    <dimen name="largeText">12sp</dimen>
+    <dimen name="mediumText">10sp</dimen>
+    <dimen name="smallText">8sp</dimen>
+
+
+    <!--    UI TEXT FIELD HEIGHT AND WIDTH-->
+    <dimen name="largeTextField">200dp</dimen>
+    <dimen name="mediumTextField">150dp</dimen>
+    <dimen name="smallTextField">100dp</dimen>
+</resources>

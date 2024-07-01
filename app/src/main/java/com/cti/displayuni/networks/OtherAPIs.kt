@@ -180,6 +180,7 @@ interface OtherAPIs {
     suspend fun fpaFailed(
         @Field("item_id") item_id: String,
         @Field("station_id") station_id: String,
+        @Field("line_no") line_no: String,
         @Field("fpa_failed_count") fpa_failed_count: String,
         @Field("fpa_shift") fpa_shift: String,
         @Field("shift") shift: String,
