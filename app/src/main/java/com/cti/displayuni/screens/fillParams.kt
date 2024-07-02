@@ -448,6 +448,7 @@ fun Header(){
     var padding1 = 16.dp
     var fpa = "First Part Approval"
     var paramWidth = 36.dp
+    var hPadding = 12.dp
 
     showLogs("dwinsize: ", wd.toString())
 
@@ -462,6 +463,7 @@ fun Header(){
         sWidth2 = 16.dp
         fpa = "FPA"
         paramWidth = 16.dp
+        hPadding = 2.dp
 
         showLogs("lwinsize: ", wd.toString())
 
@@ -473,6 +475,7 @@ fun Header(){
         rowHeight2 = 0.073f
         padding1 = 16.dp
         sWidth2 = 48.dp
+        hPadding = 12.dp
         fpa = "First Part Approval"
 
         showLogs("Desktop: ", wd.toString())
@@ -585,7 +588,7 @@ fun Header(){
                     Text(
                         text = fpa,
                         fontSize = fontMedium,
-//                        modifier = Modifier.padding(horizontal = hPadding)
+                        modifier = Modifier.padding(horizontal = hPadding)
                     )
                 }
 

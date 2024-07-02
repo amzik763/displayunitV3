@@ -13,8 +13,8 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitBuilder {
     // OLD BASE URL FOR PRODUCTION
-    // private const val BASE_URL = "http://10.0.3.101:5000"
-    private const val BASE_URL = "http://192.168.1.56:5000"
+    // private const val BASE_URL = "http://10.0.3.101:5000"0...0.
+    private const val BASE_URL = "http://3.111.0.59:5000"
 //    private const val BASE_URL = "http://10.0.2.2:5000"
 
     // Define your logging interceptor

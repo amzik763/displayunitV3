@@ -71,15 +71,15 @@ fun GetTask() {
     var textFont1 = 18.sp
     var textFont2 = 18.sp
     var textFont3 = 18.sp
-    var maxWidth = widthDP/3f
+    var maxWidth = widthDP/3.5f
     var startPadding = 24.dp
     var width = 180.dp
     var padding = 24.dp
     var height = 40.dp
     var spacerHeight = 56.dp
     var imgSize = 50.dp
-    var interfaceW = 180.dp
-    var interfaceH = 50.dp
+    var interfaceW = 300.dp
+    var interfaceH = 70.dp
     var start = 36.dp
     var top = 48.dp
     var bottom = 36.dp
@@ -115,7 +115,7 @@ fun GetTask() {
         Log.d("lwinsize: ", wd.toString())
 
     } else if (wd <= 2048 && mParameters.dnsty == 160) {
-        maxWidth = widthDP/3f
+        maxWidth = widthDP/3.5f
         startPadding = 36.dp
         mainHeaderFont = 56.sp
         semiHeaderFont = 36.sp

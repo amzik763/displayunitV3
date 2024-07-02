@@ -229,6 +229,6 @@ fun CustomOutlinedTextField(
             },
             modifier = Modifier.padding(horizontal = 4.dp, vertical = 8.dp).size(width = width, height = height), // Adjust this padding as needed
 
-            )
+        )
     }
 }
