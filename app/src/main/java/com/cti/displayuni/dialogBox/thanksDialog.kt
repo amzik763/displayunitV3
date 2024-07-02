@@ -243,7 +243,6 @@ fun ThanksDialog(
                                 )
                                 Spacer(modifier = Modifier.width(spacerWidth))
                                 Text(
-//                                    text = (Integer.parseInt(myComponents.mainViewModel.mPass.value)).toString() + " Passed",
                                     text = "PASS: ${myComponents.mainViewModel.pass.value}",
 
                                     style = TextStyle(

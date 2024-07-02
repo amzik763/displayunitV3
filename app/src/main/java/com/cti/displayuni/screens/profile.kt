@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,7 +33,6 @@ import androidx.compose.ui.unit.sp
 import com.cti.displayuni.R
 import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.pureWhite
-import com.cti.displayuni.utility.CONFIGURE
 import com.cti.displayuni.utility.CONFIGURE_NEW
 import com.cti.displayuni.utility.mFont
 import com.cti.displayuni.utility.mParameters
@@ -43,17 +41,40 @@ import com.cti.displayuni.utility.myComponents
 @Composable
 fun ProfileText(name:String,value:String){
 
-    Spacer(modifier = Modifier.height(36.dp))
+    val wd = mParameters.mWidthinPx
+    //myUI variables
+
+    var textFont1 = 18.sp
+    var height = 36.dp
+
+
+    Log.d("dwinsize: ", wd.toString())
+
+    Log.d("mparam density: ", mParameters.dnsty.toString())
+
+    if (wd <= 2048 && mParameters.dnsty == 320) {
+        textFont1 = 14.sp
+        height = 20.dp
+
+        Log.d("lwinsize: ", wd.toString())
+
+    } else if (wd <= 2048 && mParameters.dnsty == 160) {
+        textFont1 = 24.sp
+        height = 36.dp
+        Log.d("Desktop: ", wd.toString())
+    }
+
+    Spacer(modifier = Modifier.height(height))
         Row {
             Text(text = name,
                 style = TextStyle(
-                    fontSize = 24.sp,
+                    fontSize = textFont1,
                     fontFamily = mFont.nk
                 )
             )
             Text(text = value,
                 style = TextStyle(
-                    fontSize = 24.sp,
+                    fontSize = textFont1,
                     fontWeight = FontWeight.Bold,
                     fontFamily = mFont.nkbold
                 )
