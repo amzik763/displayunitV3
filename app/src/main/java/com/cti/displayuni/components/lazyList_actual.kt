@@ -33,7 +33,9 @@ import com.cti.displayuni.utility.Actual_Param
 import com.cti.displayuni.utility.mFont
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
+import com.cti.displayuni.utility.myComponents.mainViewModel
 import com.cti.displayuni.utility.showLogs
+import kotlinx.coroutines.delay
 
 @Composable
 fun ActualLazyList(
@@ -200,7 +202,9 @@ fun ActualLazyList(
         myComponents.mainViewModel.dataListActual.forEach {
             it.param_value = ""
         }
-
+        mainViewModel.showZoomableImage = !mainViewModel.showZoomableImage
+        delay(1500)
+        mainViewModel.showZoomableImage = !mainViewModel.showZoomableImage
         showLogs("val","val cleared: ACTUAL")
     }
 }

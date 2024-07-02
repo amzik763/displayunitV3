@@ -29,11 +29,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -142,6 +145,8 @@ fun CustomOutlinedTextField(
     paddingValues: PaddingValues = PaddingValues(horizontal = 4.dp, vertical = 2.dp)
 ) {
 
+    val focusManager = LocalFocusManager.current
+
     val conf = LocalConfiguration.current
     val widthDP = conf.screenWidthDp.dp
     val dnsty = conf.densityDpi
@@ -198,6 +203,16 @@ fun CustomOutlinedTextField(
                 color = color,
                 fontSize =  fontSize,
             ),
+            keyboardOptions = KeyboardOptions.Default.copy(
+                imeAction = ImeAction.Next
+            ),
+            keyboardActions = KeyboardActions(
+                onNext = {
+                    // Handle the IME action here
+//                    println("IME Action Done pressed")
+                    focusManager.moveFocus(focusDirection = FocusDirection.Down)
+                }
+            ),
             decorationBox = @Composable { innerTextField ->
                 if (text.isEmpty()) {
                     Text(
@@ -212,7 +227,8 @@ fun CustomOutlinedTextField(
                 }
                 innerTextField()
             },
-            modifier = Modifier.padding(horizontal = 4.dp, vertical = 8.dp).size(width = width, height = height) // Adjust this padding as needed
-        )
+            modifier = Modifier.padding(horizontal = 4.dp, vertical = 8.dp).size(width = width, height = height), // Adjust this padding as needed
+
+            )
     }
 }
