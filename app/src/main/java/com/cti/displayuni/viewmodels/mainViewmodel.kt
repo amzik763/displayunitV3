@@ -553,7 +553,7 @@ try {
             return differenceInMillis / (1000 * 60)
         } catch (e: Exception) {
             e.printStackTrace()
-            return -1 // Return a negative value to indicate error
+            return -1
         }
     }
 
@@ -569,10 +569,10 @@ try {
     fun areActualParamsFilled(dataListActual: MutableList<Actual_Param>): Boolean {
         for (item in dataListActual) {
             if (item.param_value?.isBlank() == true) {
-                return false // Return false if any param_value is blank
+                return false
             }
         }
-        return true // Return true if all param_values are filled
+        return true
     }
 
     fun areSettingParamsFilled(dataListSetting: MutableList<Setting_Param>): Boolean {

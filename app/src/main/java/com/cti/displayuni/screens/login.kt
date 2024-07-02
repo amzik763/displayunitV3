@@ -38,6 +38,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -118,7 +119,6 @@ fun Login(){
         bottom = 28.dp
         btnpadding = 6.dp
         sHeight = 36.dp
-
 
         Log.d("lwinsize: ", wd.toString())
 
@@ -218,7 +218,7 @@ fun Login(){
                     color = pureBlack,
                     iconResId = R.drawable.usericon,
                     maxLength = 40,
-                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text),
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text).copy(imeAction = ImeAction.Next),
                     shape = RoundedCornerShape(8.dp)
                 )
                 Spacer(modifier = Modifier.height(10.dp))
@@ -229,7 +229,7 @@ fun Login(){
                     color = pureBlack,
                     iconResId = R.drawable.ic_lock,
                     maxLength = 20,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password).copy(imeAction = ImeAction.Done),
                     shape = RoundedCornerShape(8.dp)
                 )
 
@@ -237,7 +237,6 @@ fun Login(){
                     modifier = Modifier.fillMaxWidth(0.4f),
                     horizontalAlignment = Alignment.End
                 ) {
-
                     Surface(
                         modifier = Modifier
                             .padding(top = 16.dp)
@@ -248,7 +247,6 @@ fun Login(){
                         color = darkBlue,
                         shape = RoundedCornerShape(corner = CornerSize(24.dp)),
                         border = BorderStroke(width = 1.dp, color = darkBlue)
-
                     ) {
                         Text(
                             text = AnnotatedString("Login"),
@@ -281,35 +279,24 @@ fun ToggleButton() {
 
     val wd = mParameters.mWidthinPx
     //myUI variables
-
     var textFont = 25.sp
     var sWidth = 26.dp
     var endpadding = 36.dp
-
     showLogs("dwinsize: ", wd.toString())
-
-
     showLogs("mparam density: ", mParameters.dnsty.toString())
 
     if (wd <= 2048 && mParameters.dnsty == 320) {
-
-
         textFont = 14.sp
         sWidth = 16.dp
         endpadding = 12.dp
-
         showLogs("lwinsize: ", wd.toString())
 
     } else if (wd <= 2048 && mParameters.dnsty == 160) {
-
         textFont = 25.sp
         sWidth = 26.dp
         endpadding = 36.dp
-
         showLogs("Desktop: ", wd.toString())
     }
-
-
 
     Row (verticalAlignment = Alignment.CenterVertically) {
         Text(text = "Replacement Login",
@@ -320,7 +307,6 @@ fun ToggleButton() {
         )
 
         Spacer(modifier = Modifier.width(sWidth))
-
         Switch(
             checked = mainViewModel.isReplacementChecked.value,
             onCheckedChange = { mainViewModel.isReplacementChecked.value = it },
