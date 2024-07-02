@@ -53,7 +53,7 @@ fun ReasonDropdown() {
 
     var textFont1 = 18.sp
     var width = 180.dp
-    var height = 48.dp
+    var height = 58.dp
 
     Log.d("dwinsize: ", wd.toString())
     mParameters.dnsty = dnsty
@@ -61,16 +61,16 @@ fun ReasonDropdown() {
 
     if (wd <= 2048 && mParameters.dnsty == 320) {
 
-        textFont1 = 12.sp
+        textFont1 = 11.sp
         width = 180.dp
-        height = 48.dp
+        height = 58.dp
         Log.d("lwinsize: ", wd.toString())
 
     } else if (wd <= 2048 && mParameters.dnsty == 160) {
 
         textFont1 = 16.sp
         width = 230.dp
-        height = 48.dp
+        height = 58.dp
         Log.d("Desktop: ", wd.toString())
     }
 

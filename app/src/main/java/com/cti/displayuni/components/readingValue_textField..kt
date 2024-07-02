@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.sp
 import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.lightGrey
 import com.cti.displayuni.ui.theme.orange
+import com.cti.displayuni.utility.mParameters
+import com.cti.displayuni.utility.showLogs
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,10 +42,49 @@ fun ReadingValue(
     val conf = LocalConfiguration.current
     val widthdp = conf.screenWidthDp.dp
 
+    val wd = mParameters.mWidthinPx
+    //myUI variables
+
+
+    var textFont2 = 16.sp
+    var textFont3 = 16.sp
+    var startpadding = 36.dp
+    var width = 150.dp
+    var height = 64.dp
+
+    showLogs("dwinsize: ", wd.toString())
+
+
+    showLogs("mparam density: ", mParameters.dnsty.toString())
+
+    if (wd <= 2048 && mParameters.dnsty == 320) {
+
+        height = 4.dp
+        textFont2 = 12.sp
+        textFont3 = 10.sp
+        startpadding = 18.dp
+        width = 100.dp
+        height = 60.dp
+
+        showLogs("lwinsize: ", wd.toString())
+
+    } else if (wd <= 2048 && mParameters.dnsty == 160) {
+
+        textFont2 = 16.sp
+        height = 8.dp
+        startpadding = 36.dp
+        width = 150.dp
+        height = 64.dp
+        textFont3 = 16.sp
+
+        showLogs("Desktop: ", wd.toString())
+    }
+
+
     Box(
         modifier = modifier
 //            .padding(start = 36.dp, top = 12.dp), uncomment later
-        .padding(start = 36.dp, top = 2.dp),
+        .padding(start = startpadding),
         contentAlignment = Alignment.CenterStart,
 
         ) {
@@ -63,16 +104,16 @@ fun ReadingValue(
             shape= shape,
             maxLines = maxLine,
             label = {
-                    Text(text = label)
+                    Text(text = label,
+                        fontSize = textFont3)
                      },
             modifier = Modifier
-                .size(width = 150.dp, height = 64.dp ),
+                    .size(width = width, height = height ),
             textStyle = LocalTextStyle.current.copy(
                 fontWeight = FontWeight.Bold,
                 color = color,
-                fontSize = 16.sp,
+                fontSize = textFont2,
             ),
-//            enabled = enabled
         )
     }
 }

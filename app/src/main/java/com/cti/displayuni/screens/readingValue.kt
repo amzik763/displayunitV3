@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,7 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -43,6 +41,7 @@ import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
 import com.cti.displayuni.utility.chart_parameter
 import com.cti.displayuni.utility.mFont
+import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.readingStatusEnum
 import com.cti.displayuni.utility.showLogs
@@ -67,10 +66,49 @@ fun ParamName(heading: String) {
 
 @Composable
 fun SubmitButton(text: String, onClick: () -> Unit) {
+    val wd = mParameters.mWidthinPx
+    //myUI variables
+
+    var textFont2 = 16.sp
+    var toppadding = 16.dp
+    var startpadding = 38.dp
+    var btnWidth = 140.dp
+    var btnHeight = 40.dp
+    var btnPadding = 9.dp
+
+    showLogs("dwinsize: ", wd.toString())
+
+
+    showLogs("mparam density: ", mParameters.dnsty.toString())
+
+    if (wd <= 2048 && mParameters.dnsty == 320) {
+
+        textFont2 = 11.sp
+        toppadding = 10.dp
+        startpadding = 20.dp
+        btnWidth = 100.dp
+        btnHeight = 28.dp
+        btnPadding = 4.dp
+
+
+        showLogs("lwinsize: ", wd.toString())
+
+    } else if (wd <= 2048 && mParameters.dnsty == 160) {
+
+        textFont2 = 16.sp
+        toppadding = 16.dp
+        startpadding = 38.dp
+        btnWidth = 140.dp
+        btnHeight = 40.dp
+        btnPadding = 9.dp
+
+        showLogs("Desktop: ", wd.toString())
+    }
+
     Surface(
         modifier = Modifier
-            .padding(start = 38.dp, top = 16.dp)
-            .size(width = 150.dp, height = 48.dp)
+            .padding(start = startpadding, top = toppadding)
+            .size(width = btnWidth, height = btnHeight)
             .clickable {
                 onClick()
                },
@@ -82,14 +120,14 @@ fun SubmitButton(text: String, onClick: () -> Unit) {
             text = AnnotatedString(text),
             style = TextStyle(
                 color = pureWhite,
-                fontSize = 16.sp,
+                fontSize = textFont2,
                 fontFamily = mFont.poppinsregular,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(9.dp),
+                .padding(btnPadding),
 
         )
     }
@@ -102,6 +140,47 @@ fun CustomPopupContent(
     onCloseClicked: () -> Unit,
 ) {
 
+    val wd = mParameters.mWidthinPx
+    //myUI variables
+
+    var textFont2 = 16.sp
+    var toppadding = 20.dp
+    var bottompadding = 16.dp
+    var btnWidth = 140.dp
+    var btnHeight = 40.dp
+    var btnPadding = 9.dp
+
+    showLogs("dwinsize: ", wd.toString())
+
+
+    showLogs("mparam density: ", mParameters.dnsty.toString())
+
+    if (wd <= 2048 && mParameters.dnsty == 320) {
+
+
+        textFont2 = 11.sp
+        toppadding = 10.dp
+        bottompadding = 6.dp
+        btnWidth = 100.dp
+        btnHeight = 28.dp
+        btnPadding = 4.dp
+
+
+        showLogs("lwinsize: ", wd.toString())
+
+    } else if (wd <= 2048 && mParameters.dnsty == 160) {
+
+        textFont2 = 16.sp
+        toppadding = 20.dp
+        bottompadding = 16.dp
+        btnWidth = 140.dp
+        btnHeight = 40.dp
+        btnPadding = 9.dp
+
+        showLogs("Desktop: ", wd.toString())
+    }
+
+
     val mState = myComponents.mainViewModel.mState.observeAsState(false)
 
     val dataListChart = myComponents.mainViewModel.dataListChart.observeAsState(emptyList())
@@ -110,7 +189,7 @@ fun CustomPopupContent(
         .fillMaxSize()
         .background(color = Color.White)
 //        .scale(0.75f)
-        .padding(top = 20.dp, bottom = 16.dp),
+        .padding(top = toppadding, bottom = bottompadding),
 //        .padding(top = 50.dp, bottom = 36.dp), uncomment later
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
@@ -137,7 +216,7 @@ fun CustomPopupContent(
         Surface(
             modifier = Modifier
                 .padding(start = 16.dp)
-                .size(width = 150.dp, height = 46.dp)
+                .size(width = btnWidth, height = btnHeight)
                 .clickable {
                     onCloseClicked()
 
@@ -150,14 +229,14 @@ fun CustomPopupContent(
                 text = AnnotatedString("Close"),
                 style = TextStyle(
                     color = pureWhite,
-                    fontSize = 16.sp,
+                    fontSize = textFont2,
                     fontFamily = mFont.poppinsregular,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(9.dp),
+                    .padding(btnPadding),
 
             )
         }

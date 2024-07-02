@@ -62,7 +62,8 @@ fun AddMark(
 
     var textFont1 = 18.sp
     var width = 180.dp
-    var height = 40.dp
+    var height = 64.dp
+    var startPadding = 16.dp
 
 
     Log.d("dwinsize: ", wd.toString())
@@ -74,8 +75,9 @@ fun AddMark(
 
 
         textFont1 = 10.sp
-        width = 280.dp
-        height = 50.dp
+        width = 180.dp
+        height = 64.dp
+        startPadding = 8.dp
 
 
         Log.d("lwinsize: ", wd.toString())
@@ -83,15 +85,16 @@ fun AddMark(
     } else if (wd <= 2048 && mParameters.dnsty == 160) {
 
         textFont1 = 16.sp
-        width = 310.dp
-        height = 56.dp
+        width = 180.dp
+        height = 64.dp
+        startPadding = 16.dp
 
         Log.d("Desktop: ", wd.toString())
     }
 
     Box(
         modifier = modifier
-            .padding(start = 16.dp),
+            .padding(start = startPadding),
         contentAlignment = Alignment.CenterStart,
 
         ) {
@@ -110,7 +113,8 @@ fun AddMark(
             shape= shape,
             maxLines = maxLine,
             label = {
-                    Text(text = label)
+                    Text(text = label,
+                        fontSize = textFont1)
                      },
             keyboardOptions = keyboardOptions,
             modifier = Modifier

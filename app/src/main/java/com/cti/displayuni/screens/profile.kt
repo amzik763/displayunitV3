@@ -95,10 +95,14 @@ fun Profile(){
     val wd = mParameters.mWidthinPx
     //myUI variables
 
+    var textFont = 36.sp
     var textFont1 = 18.sp
     var width = 180.dp
     var height = 40.dp
-
+    var paddingTop = 56.dp
+    var paddingStart = 36.dp
+    var btnPadding = 9.dp
+    var textFont2 = 24.sp
 
     Log.d("dwinsize: ", wd.toString())
 
@@ -106,24 +110,37 @@ fun Profile(){
     Log.d("mparam density: ", mParameters.dnsty.toString())
 
     if (wd <= 2048 && mParameters.dnsty == 320) {
-        textFont1 = 16.sp
-        width = 180.dp
-        height = 40.dp
+
+        textFont = 22.sp
+        textFont1 = 11.sp
+        width = 130.dp
+        height = 30.dp
+        paddingTop = 36.dp
+        paddingStart = 20.dp
+        btnPadding = 4.dp
+        textFont2 = 12.sp
 
         Log.d("lwinsize: ", wd.toString())
 
     } else if (wd <= 2048 && mParameters.dnsty == 160) {
+
+        textFont = 36.sp
         textFont1 = 24.sp
         width = 210.dp
         height = 50.dp
+        paddingTop = 56.dp
+        paddingStart = 36.dp
+        btnPadding = 9.dp
+        textFont2 = 24.sp
+
         Log.d("Desktop: ", wd.toString())
     }
 
-    Column (modifier = Modifier.padding(top = 56.dp, start = 36.dp)
+    Column (modifier = Modifier.padding(top = paddingTop, start = paddingStart)
         .fillMaxWidth()){
     Text(text = "Profile Information",
         style = TextStyle(
-            fontSize = 36.sp,
+            fontSize = textFont,
             fontWeight = FontWeight.Bold,
             fontFamily = mFont.nkbold
         )
@@ -135,7 +152,7 @@ fun Profile(){
         ProfileText(name = "Skill:  ", value = myComponents.mainViewModel.skill)
         ProfileText(name = "Mobile Number:  ", value = myComponents.mainViewModel.mobileNum)
 
-        Spacer(modifier = Modifier.height(36.dp))
+        Spacer(modifier = Modifier.height(paddingStart))
 
         var passwordVisible by remember { mutableStateOf(false) }
         val password = myComponents.mainViewModel.password
@@ -143,7 +160,7 @@ fun Profile(){
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(text = "Password:  ",
                 style = TextStyle(
-                    fontSize = 24.sp,
+                    fontSize = textFont2,
                     fontFamily = mFont.nk
                 )
             )
@@ -156,7 +173,7 @@ fun Profile(){
 
             Text(text = if (passwordVisible) password else "*".repeat(password.length),
                 style = TextStyle(
-                    fontSize = 24.sp,
+                    fontSize = textFont2,
                     fontWeight = FontWeight.Bold,
                     fontFamily = mFont.nkbold
                 ),
@@ -175,7 +192,7 @@ fun Profile(){
 
         Surface(
             modifier = Modifier
-                .padding(top = 36.dp)
+                .padding(top = paddingStart)
                 .size(width = width, height = height)
                 .align(Alignment.CenterHorizontally)
                 .clickable {
@@ -197,7 +214,7 @@ fun Profile(){
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(9.dp)
+                    .padding(btnPadding)
                     .align(Alignment.CenterHorizontally),
 
             )

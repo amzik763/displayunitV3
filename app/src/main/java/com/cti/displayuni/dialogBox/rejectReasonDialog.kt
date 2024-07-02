@@ -101,7 +101,7 @@ fun RejectReasonDialog(
     var padding = 24.dp
     var topPadding2 = 64.dp
     var startPadding2 = 36.dp
-
+    var btnpadding = 9.dp
 
     Log.d("dwinsize: ", wd.toString())
 
@@ -123,14 +123,15 @@ fun RejectReasonDialog(
         textFont1 = 15.sp
         textFont2 = 12.sp
         topPadding = 20.dp
-        width = 180.dp
-        height = 40.dp
+        width = 100.dp
+        height = 28.dp
         imgSize = 60.dp
         startP = 4.dp
-        maxHeight = 0.18f
-        padding = 12.dp
+        maxHeight = 0.52f
+        padding = 8.dp
         topPadding2 = 8.dp
-        startPadding2 = 16.dp
+        startPadding2 = 12.dp
+        btnpadding = 4.dp
 
         Log.d("lwinsize: ", wd.toString())
 
@@ -157,9 +158,7 @@ fun RejectReasonDialog(
         padding = 24.dp
         topPadding2 = 16.dp
         startPadding2 = 36.dp
-
-
-
+        btnpadding = 9.dp
 
         Log.d("Desktop: ", wd.toString())
     }
@@ -349,7 +348,7 @@ fun RejectReasonDialog(
                                 ),
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(9.dp)
+                                    .padding(btnpadding)
                                     .align(Alignment.CenterHorizontally),
 
                             )
