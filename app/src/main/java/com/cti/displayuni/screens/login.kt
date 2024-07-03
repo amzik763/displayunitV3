@@ -214,7 +214,9 @@ fun Login(){
                 UserIdInputTextField(
                     text = name,
                     label = "Username",
-                    onTextChange = { name = it },
+                    onTextChange = { val filteredText = it.filter { char -> char.isLetterOrDigit() }
+                        name = filteredText
+                                   },
                     color = pureBlack,
                     iconResId = R.drawable.usericon,
                     maxLength = 40,
