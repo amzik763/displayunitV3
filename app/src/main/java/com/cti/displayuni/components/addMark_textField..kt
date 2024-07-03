@@ -61,7 +61,7 @@ fun AddMark(
     //myUI variables
 
     var textFont1 = 18.sp
-    var width = 180.dp
+    var width = 240.dp
     var height = 64.dp
     var startPadding = 16.dp
 
@@ -85,7 +85,7 @@ fun AddMark(
     } else if (wd <= 2048 && mParameters.dnsty == 160) {
 
         textFont1 = 16.sp
-        width = 180.dp
+        width = 240.dp
         height = 64.dp
         startPadding = 16.dp
 

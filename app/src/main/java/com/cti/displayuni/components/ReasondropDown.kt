@@ -63,7 +63,7 @@ fun ReasonDropdown() {
 
         textFont1 = 11.sp
         width = 180.dp
-        height = 58.dp
+        height = 64.dp
         Log.d("lwinsize: ", wd.toString())
 
     } else if (wd <= 2048 && mParameters.dnsty == 160) {

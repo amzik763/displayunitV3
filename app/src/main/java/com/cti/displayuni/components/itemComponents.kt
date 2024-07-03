@@ -59,12 +59,12 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
    val wd = mParameters.mWidthinPx
    //myUI variables
    var fillMaxWidth = 0.05f
-   var fillMaxWidth2 = 0.65f
+   var fillMaxWidth2 = 0.63f
    var fillMaxWidth3 = 0.65f
    var fillMaxWidth4 = 0.65f
    var fillMaxWidth5 = 0.65f
    var startPadding1 = 8.dp
-   var startPadding2 = 16.dp
+   var startPadding2 = 12.dp
    var startPadding3 = 18.dp
    var textFont = 16.sp
    var imgSize = 50.dp
@@ -98,7 +98,7 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
       fillMaxWidth5 = 0.3f
       textFont = 17.sp
       startPadding1 = 8.dp
-      startPadding2 = 16.dp
+      startPadding2 = 12.dp
       startPadding3 = 18.dp
       imgSize = 40.dp
 
@@ -215,12 +215,12 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
    val wd = mParameters.mWidthinPx
    //myUI variables
    var fillMaxWidth = 0.05f
-   var fillMaxWidth2 = 0.65f
+   var fillMaxWidth2 = 0.63f
    var fillMaxWidth3 = 0.65f
    var fillMaxWidth4 = 0.65f
    var fillMaxWidth5 = 0.65f
    var startPadding1 = 8.dp
-   var startPadding2 = 16.dp
+   var startPadding2 = 12.dp
    var startPadding22 = 16.dp
    var maintextFont = 14.sp
    var startPadding3 = 18.dp
@@ -258,7 +258,7 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
       fillMaxWidth5 = 0.3f
       maintextFont = 20.sp
       startPadding1 = 8.dp
-      startPadding2 = 16.dp
+      startPadding2 = 12.dp
       startPadding22 = 24.dp
       startPadding3 = 18.dp
       statusMaxW = 0.65f

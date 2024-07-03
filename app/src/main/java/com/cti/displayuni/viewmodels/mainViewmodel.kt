@@ -267,11 +267,11 @@ class MainViewModel(context: Context) : ViewModel(){
         for (item in checkSheetList) {
 
 
-//            if( item == "status") {
-//                mUiViewModel.setDialogDetails("EMPTY STATUS", "Please fill all the value..", "", R.drawable.ic_notest )
-//                mUiViewModel.showMessageDialog()
-//                return
-//            }
+            if( item == "status") {
+                mUiViewModel.setDialogDetails("EMPTY STATUS", "Please fill all the value..", "", R.drawable.ic_notest )
+                mUiViewModel.showMessageDialog()
+                return
+            }
 
 //            if (item == "SUP_OK") {
 //                showLogs("DIALOG","SHOW DIALOG")

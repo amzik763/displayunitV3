@@ -98,7 +98,7 @@ fun RejectReasonDialog(
     var height = 40.dp
     var startP = 8.dp
     var imgSize = 50.dp
-    var padding = 24.dp
+    var padding = 20.dp
     var topPadding2 = 64.dp
     var startPadding2 = 36.dp
     var btnpadding = 9.dp
@@ -155,7 +155,7 @@ fun RejectReasonDialog(
         imgSize =200.dp
         startP = 4.dp
         maxHeight = 0.3f
-        padding = 24.dp
+        padding = 20.dp
         topPadding2 = 16.dp
         startPadding2 = 36.dp
         btnpadding = 9.dp
