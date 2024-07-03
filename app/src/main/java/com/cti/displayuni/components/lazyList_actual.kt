@@ -101,7 +101,7 @@ fun ActualLazyList(
                         .fillMaxWidth()
                         .padding(end = paddingEndSmall),
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.Top
                 ) {
                     Text(
                         text = item.param_name.toString(),
@@ -124,7 +124,7 @@ fun ActualLazyList(
                         Row(modifier = Modifier.width(enterValueWidth)){
                             CustomOutlinedTextField(
                                 text = enterValue,
-                                label = item.min + " - " + item.max,
+                                label =  if(item.min == item.max) {item.min + ""} else {item.min + " - " + item.max},
                                 onTextChange = { newValue ->
                                     enterValue = newValue
                                     enterValues.value = enterValues.value.toMutableMap().apply {

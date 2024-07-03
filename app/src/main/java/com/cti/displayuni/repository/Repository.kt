@@ -514,6 +514,7 @@ class Repository() {
                 }else {
 
                     mUiViewModel.showOverrideDialog()
+                    mUiViewModel.hideMessageDialog()
                     showLogs("NEWFPA: ", "INSIDE addDATA : Don't add data ")
                     return false
                 }
@@ -608,7 +609,6 @@ class Repository() {
         else if (i == 0)
             ++f
         //SHOULD BE SHIFTED TO OTHER API
-
         val p1 = mainViewModel.dataListSetting.joinToString(separator = ",") { setting ->
             "${setting.param_no} ::: ${setting.param_value}"
         }
@@ -616,7 +616,6 @@ class Repository() {
         val p2 = mainViewModel.dataListActual.joinToString(separator = ",") { actual ->
             "${actual.param_no} ::: ${actual.param_value}"
         }
-
         showLogs("TASK P2: ", p2)
         val p1p2 = "$p1, $p2".trim(',')
 
@@ -716,6 +715,14 @@ class Repository() {
                 showLogs("ADDWITHPARAM FPA Counter", "${mainViewModel.FPACounter}")
                 mUiViewModel.clearFields.intValue++
 
+                try {
+                    mainViewModel.showZoomableImage = true
+                    delay(800)
+                    mainViewModel.showZoomableImage = false
+                }catch (e:Exception)
+                {
+
+                }
 
 
 
