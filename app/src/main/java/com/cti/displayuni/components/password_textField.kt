@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -19,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -47,6 +49,7 @@ fun PasswordInputTextField(
     shape: RoundedCornerShape
 
 ) {
+    val focusManager = LocalFocusManager.current
     val limitedText = text.take(maxLength)
     val conf = LocalConfiguration.current
     val widthDP = conf.screenWidthDp.dp
@@ -131,7 +134,10 @@ fun PasswordInputTextField(
                         .size(iconSize)
                         .fillMaxWidth()
                 )
-            }
+            },
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus()
+                onImeAction()})
+
         )
     }
 }
