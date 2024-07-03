@@ -62,12 +62,14 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
    var fillMaxWidth2 = 0.63f
    var fillMaxWidth3 = 0.65f
    var fillMaxWidth4 = 0.65f
-   var fillMaxWidth5 = 0.65f
+   var fillMaxWidth5 = 0.6f
    var startPadding1 = 8.dp
-   var startPadding2 = 12.dp
-   var startPadding3 = 18.dp
+   var endPadding = 12.dp
+   var startPadding2 = 10.dp
+   var startPadding3 = 12.dp
    var textFont = 16.sp
-   var imgSize = 50.dp
+   var imgSize = 40.dp
+
 
    Log.d("dwinsize: ", wd.toString())
 
@@ -83,6 +85,7 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
       fillMaxWidth5 = 0.25f
       textFont = 12.sp
       startPadding1 = 4.dp
+      endPadding = 4.dp
       startPadding2 = 12.dp
       startPadding3 = 16.dp
       imgSize = 20.dp
@@ -92,17 +95,18 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
    } else if (wd <= 2048 && mParameters.dnsty == 160) {
 
       fillMaxWidth = 0.05f
-      fillMaxWidth2 = 0.4f
+      fillMaxWidth2 = 0.38f
       fillMaxWidth3 = 0.32f
       fillMaxWidth4 = 0.35f
-      fillMaxWidth5 = 0.3f
+      fillMaxWidth5 = 0.25f
       textFont = 17.sp
       startPadding1 = 8.dp
-      startPadding2 = 12.dp
-      startPadding3 = 18.dp
+      startPadding2 = 10.dp
+      startPadding3 = 12.dp
       imgSize = 40.dp
+      endPadding = 12.dp
 
-      Log.d("Desktop: ", wd.toString())
+      Log.d("Desktop: db ", wd.toString())
    }
 
    Column {
@@ -172,7 +176,7 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
          Text(
             modifier = Modifier
                .fillMaxWidth(fillMaxWidth5)
-               .padding(start = startPadding1, end = startPadding1),
+               .padding(start = startPadding1, end = endPadding),
             text = notificationIdState[item.csp_id]?:"00" ,
             color = pureBlack,
             fontFamily = nk,
@@ -218,12 +222,12 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
    var fillMaxWidth2 = 0.63f
    var fillMaxWidth3 = 0.65f
    var fillMaxWidth4 = 0.65f
-   var fillMaxWidth5 = 0.65f
+   var fillMaxWidth5 = 0.6f
    var startPadding1 = 8.dp
-   var startPadding2 = 12.dp
+   var startPadding2 = 10.dp
    var startPadding22 = 16.dp
    var maintextFont = 14.sp
-   var startPadding3 = 18.dp
+   var startPadding3 = 12.dp
    var statusMaxW = 0.65f
 
 
@@ -252,15 +256,15 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
    } else if (wd <= 2048 && mParameters.dnsty == 160) {
 
       fillMaxWidth = 0.05f
-      fillMaxWidth2 = 0.4f
+      fillMaxWidth2 = 0.38f
       fillMaxWidth3 = 0.32f
       fillMaxWidth4 = 0.35f
-      fillMaxWidth5 = 0.3f
+      fillMaxWidth5 = 0.25f
       maintextFont = 20.sp
       startPadding1 = 8.dp
-      startPadding2 = 12.dp
+      startPadding2 = 10.dp
       startPadding22 = 24.dp
-      startPadding3 = 18.dp
+      startPadding3 = 12.dp
       statusMaxW = 0.65f
 
       Log.d("Desktop: ", wd.toString())

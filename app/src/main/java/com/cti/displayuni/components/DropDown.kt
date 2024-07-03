@@ -42,7 +42,7 @@ fun DropDown(paramId: String, index: Int) {
 
     var textFont1 = 16.sp
     var imgSize = 30.dp
-    var maxWidth = 0.65f
+    var maxWidth = 0.6f
 
     Log.d("dwinsize: ", wd.toString())
 
@@ -60,7 +60,7 @@ fun DropDown(paramId: String, index: Int) {
 
         textFont1 = 16.sp
         imgSize = 30.dp
-        maxWidth = 0.65f
+        maxWidth = 0.6f
 
         Log.d("Desktop: ", wd.toString())
     }

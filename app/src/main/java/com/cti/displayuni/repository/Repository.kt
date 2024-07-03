@@ -1418,6 +1418,9 @@ class Repository() {
         suspend fun FailedFpa() {
             try {
 
+                mUiViewModel.setDialogDetails("SUBMITTING....", "", "", R.drawable.thanks)
+                mUiViewModel.showMessageDialog()
+
                 val FPA_Shift = when(mainViewModel.FPACounter) {
 
                     1 ->  { "start_shift_1" }
@@ -1445,10 +1448,18 @@ class Repository() {
 
                     mUiViewModel.setDialogDetails("Error", "","Please try again", R.drawable.ic_notest)
                     mUiViewModel.showMessageDialog()
+
+                    mUiViewModel.hideFailedDialog()
+
                 }
 
             } catch (e: Exception) {
                 e.printStackTrace()
+
+                mUiViewModel.setDialogDetails("Error", "","Please try again", R.drawable.ic_notest)
+                mUiViewModel.showMessageDialog()
+                mUiViewModel.hideFailedDialog()
+
             }
         }
 
