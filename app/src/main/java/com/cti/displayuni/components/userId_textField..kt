@@ -92,8 +92,8 @@ fun UserIdInputTextField(
     val focusManager = LocalFocusManager.current
 
     Box(
-        modifier = modifier
-            .padding(start = start, top = 12.dp),
+//        modifier = modifier
+//            .padding(start = start, top = 12.dp),
         contentAlignment = Alignment.CenterStart,
 
         ) {

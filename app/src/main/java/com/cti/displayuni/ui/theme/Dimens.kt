@@ -29,10 +29,11 @@ val SmallDimens = Dimens(
     buttonHeight = 30.dp,
     interfaceW = 180.dp,
     interfaceH = 50.dp,
-    startPadding = 28.dp,
-    topPadding = 36.dp,
-    bottomPadding = 28.dp,
-    btnPadding = 6.dp
+    startPadding = 12.dp,
+    topPadding = 12.dp,
+    bottomPadding = 12.dp,
+    btnPadding = 6.dp,
+    padding = 6.dp
 )
 
 val MediumDimens = Dimens(

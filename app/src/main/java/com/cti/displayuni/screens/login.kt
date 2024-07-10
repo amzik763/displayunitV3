@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -49,12 +50,14 @@ import com.cti.displayuni.components.PasswordInputTextField
 import com.cti.displayuni.components.UserIdInputTextField
 import com.cti.displayuni.ui.theme.blue
 import com.cti.displayuni.ui.theme.darkBlue
+import com.cti.displayuni.ui.theme.dimens
 import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.lightGrey
 import com.cti.displayuni.ui.theme.lightOrange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
 import com.cti.displayuni.utility.mFont.nk
+import com.cti.displayuni.utility.mFont.poppinsbold
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents.mainViewModel
@@ -152,20 +155,21 @@ fun Login(){
             Column(modifier = Modifier
                 .fillMaxHeight()
                 .fillMaxSize()
-                .padding(start = start, top = top, bottom = bottom),
+                .padding(MaterialTheme.dimens.padding),
                 verticalArrangement = Arrangement.SpaceBetween){
                 Column {
 
                     Image(painter = painterResource(id = R.drawable.interfacelogo),
                         contentDescription = "Interface Logo",
-                        modifier = Modifier.size(interfaceW, interfaceH),
+                        modifier = Modifier.width(widthDP/6),
+                        contentScale = ContentScale.FillWidth
                     )
 
                 }
                 Text(
                     text = "Developed by Cellus Tech India",
                     style = TextStyle(
-                        fontSize = textFont1,
+                        fontSize = MaterialTheme.typography.labelMedium.fontSize,
                         fontWeight = FontWeight.Bold,
                         color = pureWhite,
                         fontFamily = nk)
@@ -183,7 +187,7 @@ fun Login(){
                     Text(
                         text = "Login To ",
                         style = TextStyle(
-                            fontSize = mainHeaderFont,
+                            fontSize = MaterialTheme.typography.headlineLarge.fontSize,
                             fontWeight = FontWeight.Bold,
                             color = lightBlack,
                             fontFamily = nk
@@ -193,7 +197,7 @@ fun Login(){
                     Text(
                         text = "Continue",
                         style = TextStyle(
-                            fontSize = mainHeaderFont,
+                            fontSize = MaterialTheme.typography.headlineLarge.fontSize,
                             fontWeight = FontWeight.Bold,
                             color = lightOrange,
                             fontFamily = nk
@@ -201,12 +205,13 @@ fun Login(){
                     )
                 }
 
-                Spacer(modifier = Modifier.height(48.dp))
+                Spacer(modifier = Modifier.height(MaterialTheme.dimens.largePadding))
                 Text(
-                    modifier = Modifier.fillMaxWidth(0.4f),
-                    text = "     Enter Your Password",
+//                    modifier = Modifier.fillMaxWidth(0.4f),
+                    text = "Enter Your Password",
+
                     style = TextStyle(
-                        fontSize = semiHeaderFont,
+                        fontSize = MaterialTheme.typography.titleMedium.fontSize,
                         color = pureBlack,
                         fontFamily = poppinsregular
                     )
@@ -241,7 +246,7 @@ fun Login(){
                 ) {
                     Surface(
                         modifier = Modifier
-                            .padding(top = 16.dp)
+                            .padding(top = MaterialTheme.dimens.topPadding)
                             .size(width = width, height = height)
                             .clickable {
                                 mainViewModel.loginUser(name, password)
