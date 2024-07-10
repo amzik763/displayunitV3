@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,7 +33,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -42,8 +46,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cti.displayuni.R
+import com.cti.displayuni.components.CustomRoundedButton
 import com.cti.displayuni.components.EnterHereTextField
 import com.cti.displayuni.ui.theme.darkBlue
+import com.cti.displayuni.ui.theme.dimens
 import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
@@ -120,6 +126,16 @@ fun Configure(){
         Log.d("Desktop: ", wd.toString())
     }
 
+    val heightDP = LocalConfiguration.current.screenHeightDp.dp
+    val focusManager = LocalFocusManager.current
+    val densityDpi = LocalConfiguration.current.densityDpi
+
+
+    Log.d("SCREEN WIDTH", "Configure:$widthDP")
+    Log.d("SCREEN HEIGHT", "Configure:$heightDP")
+    Log.d("SCREEN DPI", "Configure:$densityDpi")
+
+
     var location by remember { mutableStateOf("") }
     var floorValue by remember { mutableStateOf("") }
     var lineValue by remember { mutableStateOf("") }
@@ -146,18 +162,28 @@ fun Configure(){
                 Column(modifier = Modifier
                     .fillMaxHeight()
                     .fillMaxSize()
-                    .padding(start = start,top=  top, bottom = bottom),
+                    .padding(MaterialTheme.dimens.padding
+                    /*start = MaterialTheme.dimens.startPadding,
+                        top = MaterialTheme.dimens.topPadding,
+                        bottom = MaterialTheme.dimens.bottomPadding*/),
                     verticalArrangement = Arrangement.SpaceBetween){
                     Column {
-                        Image(painter = painterResource(id = R.drawable.interfacelogo),
-                            contentDescription = "Interface Logo",
-                            modifier = Modifier.size(interfaceW,interfaceH),
+                        Image(
+                            modifier = Modifier
+//                                .padding(
+//                                    top = dimensionResource(id = R.dimen.smallPadding),
+//                                    start = dimensionResource(id = R.dimen.smallPadding)
+//                                )
+                                .width(widthDP / 6f),
+                            contentScale = ContentScale.FillWidth,
+                            painter = painterResource(id = R.drawable.interfacelogo),
+                            contentDescription = "Interface Logo"
                         )
 
                     }
                     Text(
                         text = "Developed by Cellus Tech India",
-                        style = TextStyle(fontSize = semiHeaderFont,
+                        style = TextStyle(fontSize = MaterialTheme.typography.labelMedium.fontSize,
                             fontWeight = FontWeight.Bold,
                             color = pureWhite,
                             fontFamily = nk)
@@ -249,7 +275,20 @@ fun Configure(){
 
                 Column(modifier = Modifier.fillMaxWidth(0.4f),
                     horizontalAlignment = Alignment.End){
-                    Surface(
+
+                    CustomRoundedButton(onClick = {
+
+                        mainViewModel.saveStationValue(G0F0L0S0Value)
+                        Log.d("Shared Value", G0F0L0S0Value)
+
+                        mainViewModel.floorNum = G0F0L0S0Value.split(" ").take(2).joinToString(" ")
+                        Log.d("FLOOR VALUE", mainViewModel.floorNum)
+
+                        navController.navigate(LOGIN)
+
+                    }, text = "Continue")
+
+/*                    Surface(
                         modifier = Modifier
                             .padding(top = 40.dp)
                             .size(width = width, height = height)
@@ -281,7 +320,7 @@ fun Configure(){
                                 .align(Alignment.CenterHorizontally),
 
                         )
-                    }
+                    }*/
                 }
             }
         }

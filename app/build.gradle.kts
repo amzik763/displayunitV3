@@ -115,4 +115,7 @@ dependencies {
 
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+
+    //Window size
+    implementation("androidx.compose.material3:material3-window-size-class-android:1.2.1")
 }
