@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.sp
 import com.cti.displayuni.R
 import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.pureWhite
-import com.cti.displayuni.utility.CONFIGURE_NEW
+import com.cti.displayuni.utility.CONFIGURE
 import com.cti.displayuni.utility.mFont
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
@@ -196,7 +196,7 @@ fun Profile(){
                 .size(width = width, height = height)
                 .align(Alignment.CenterHorizontally)
                 .clickable {
-                    myComponents.navController.navigate(CONFIGURE_NEW)
+                    myComponents.navController.navigate(CONFIGURE)
 
                 },
             color = darkBlue,

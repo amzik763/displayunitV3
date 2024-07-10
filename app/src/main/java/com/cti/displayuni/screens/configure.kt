@@ -111,16 +111,6 @@ fun Configure(){
     var G0F0L0S0Value by remember { mutableStateOf(" F L S") }
 
 
-    val existingTextValue = mainViewModel.getStationValue()
-
-    if (existingTextValue.isNotEmpty()) {
-
-        navController.popBackStack()
-        navController.navigate(LOGIN)
-
-    }
-    else{
-
         Row {
             Box(modifier = Modifier.width(widthdp)){
                 Image(painter = painterResource(id = R.drawable.bg_background),
@@ -253,4 +243,4 @@ fun Configure(){
             }
         }
     }
-}
+

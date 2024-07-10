@@ -8,18 +8,18 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cti.displayuni.screens.Checksheet2
 import com.cti.displayuni.screens.Configure
-import com.cti.displayuni.screens.ConfigureNew
 import com.cti.displayuni.screens.FillParam
 import com.cti.displayuni.screens.GetTask
 import com.cti.displayuni.screens.Login
 import com.cti.displayuni.screens.Profile
+import com.cti.displayuni.screens.SplashScreen
 import com.cti.displayuni.utility.CHECKSHEET
 import com.cti.displayuni.utility.CONFIGURE
-import com.cti.displayuni.utility.CONFIGURE_NEW
 import com.cti.displayuni.utility.FILL_PARAMETERS
 import com.cti.displayuni.utility.GETTASK
 import com.cti.displayuni.utility.LOGIN
 import com.cti.displayuni.utility.PROFILE
+import com.cti.displayuni.utility.SPLASH
 import com.cti.displayuni.utility.myComponents.navController
 
 
@@ -31,16 +31,16 @@ fun Navigate() {
 
     NavHost(
         navController =  navController,
-        startDestination = CONFIGURE,
+        startDestination = SPLASH,
     )
 
     {
-        composable(CONFIGURE) {
-            Configure()
+        composable(SPLASH) {
+            SplashScreen()
         }
 
-        composable(CONFIGURE_NEW) {
-            ConfigureNew()
+        composable(CONFIGURE) {
+            Configure()
         }
 
         composable(LOGIN){

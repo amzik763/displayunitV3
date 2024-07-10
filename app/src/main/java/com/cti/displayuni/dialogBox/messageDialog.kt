@@ -41,6 +41,7 @@ import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.lightOrange
 import com.cti.displayuni.ui.theme.pureWhite
 import com.cti.displayuni.utility.DialogModel
+import com.cti.displayuni.utility.animateDPInfinite
 import com.cti.displayuni.utility.mFont.nk
 import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mFont.nkmedium
@@ -158,9 +159,12 @@ fun MessageDialog(
                     verticalAlignment = Alignment.CenterVertically
 
                 ) {
+                    val animatedOffset = animateDPInfinite(finalOffset = 20.dp, duration = 1000)
+
                     Image(painter = painterResource(id = myComponents.mUiViewModel.dialogModel.imageResource),
                         contentDescription = "message",
                         modifier = Modifier.size(imgSize)
+                            .padding(animatedOffset)
                     )
                 }
 

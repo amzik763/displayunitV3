@@ -23,9 +23,11 @@ data class Dimens(
     val padding: Dp = 36.dp,
     val btnPadding: Dp = 9.dp,
     val textFieldWidth: Float = 1f,
-    val fractionalHeight: Float = 1f
+    val fractionalHeight: Float = 1f,
+    val btnWidth: Dp = 180.dp,
+    val btnHeight: Dp = 40.dp,
 
-)
+    )
 
 val SmallDimens = Dimens(
     buttonWidth = 120.dp,
@@ -39,9 +41,9 @@ val SmallDimens = Dimens(
     padding = 6.dp,
     mediumPadding = 12.dp,
     iconSize = 18.dp,
-    textFieldWidth = 4.1f
-
-
+    textFieldWidth = 4.1f,
+    btnWidth = 120.dp,
+    btnHeight = 30.dp
     )
 
 val MediumDimens = Dimens(
@@ -55,7 +57,9 @@ val MediumDimens = Dimens(
     mediumTextField = 150.dp,
     smallTextField = 100.dp,
     iconSize = 20.dp,
-    textFieldWidth = 5f
+    textFieldWidth = 5f,
+    btnWidth = 180.dp,
+    btnHeight = 40.dp
 )
 
 val LargeDimens = Dimens(

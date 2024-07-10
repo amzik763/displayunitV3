@@ -9,9 +9,8 @@ package com.cti.displayuni.utility
  val KEY_TEXT_VALUE = "textValue"
 
 
-
+val SPLASH = "splash"
 val CONFIGURE = "configure"
-val CONFIGURE_NEW = "configure_new"
 val LOGIN = "Login"
 val GETTASK = "getTask"
 val CHECKSHEET = "Checksheet"

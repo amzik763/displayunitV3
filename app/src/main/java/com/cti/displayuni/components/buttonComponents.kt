@@ -3,6 +3,7 @@ package com.cti.displayuni.components
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.cti.displayuni.R
 import com.cti.displayuni.ui.theme.blue
 import com.cti.displayuni.ui.theme.darkBlue
+import com.cti.displayuni.ui.theme.dimens
 import com.cti.displayuni.ui.theme.paleWhite
 import com.cti.displayuni.ui.theme.poppinsFontFamily
 
@@ -29,7 +31,6 @@ fun CustomRoundedButton(
     backgroundColor: Color = darkBlue,
     contentColor: Color = paleWhite,
     padding: Dp = 16.dp,
-    height: Dp = 40.dp
 ) {
     Button(
         onClick = onClick,
@@ -39,12 +40,13 @@ fun CustomRoundedButton(
 
         modifier = modifier
             .padding(top = padding)
-            .height(height)
+            .size(width = MaterialTheme.dimens.buttonWidth, height = MaterialTheme.dimens.buttonHeight)
     ) {
         Text(text = text,
             fontSize = MaterialTheme.typography.labelMedium.fontSize,
             fontFamily = poppinsFontFamily,
             color = paleWhite,
-        modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.mediumPadding)))
+        modifier = Modifier
+            .padding(horizontal = dimensionResource(id = R.dimen.mediumPadding)))
     }
 }
