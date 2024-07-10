@@ -85,19 +85,19 @@ val  MediumTypography = Typography(
     headlineMedium = TextStyle(
         fontFamily = nkFontFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 34.sp,
+        fontSize = 32.sp,
     ),
 
     bodySmall = TextStyle(
         fontFamily = poppinsFontFamily,
         fontWeight = FontWeight.Medium,
-        fontSize = 26.sp
+        fontSize = 18.sp
     ),
 
     labelMedium = TextStyle(
         fontFamily = poppinsFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 46.sp,
+        fontSize = 18.sp,
     )
 )
 

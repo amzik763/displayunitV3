@@ -1,4 +1,4 @@
-package com.cti.interfaceassembly.ui.theme
+package com.cti.displayuni.ui.theme
 
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -12,7 +12,7 @@ data class Dimens(
     val mediumTextField: Dp = 150.dp,
     val smallTextField: Dp = 100.dp,
     val largeSize: Dp = 42.dp,
-    val logoSize: Dp = 42.dp,
+    val iconSize: Dp = 24.dp,
     val buttonWidth: Dp = 180.dp,
     val buttonHeight: Dp = 40.dp,
     val interfaceW:Dp = 300.dp,
@@ -21,7 +21,10 @@ data class Dimens(
     val topPadding: Dp = 48.dp,
     val bottomPadding: Dp = 36.dp,
     val padding: Dp = 36.dp,
-    val btnPadding: Dp = 9.dp
+    val btnPadding: Dp = 9.dp,
+    val textFieldWidth: Float = 1f,
+    val fractionalHeight: Float = 1f
+
 )
 
 val SmallDimens = Dimens(
@@ -33,8 +36,13 @@ val SmallDimens = Dimens(
     topPadding = 12.dp,
     bottomPadding = 12.dp,
     btnPadding = 6.dp,
-    padding = 6.dp
-)
+    padding = 6.dp,
+    mediumPadding = 12.dp,
+    iconSize = 18.dp,
+    textFieldWidth = 4.1f
+
+
+    )
 
 val MediumDimens = Dimens(
     startPadding = 16.dp,
@@ -45,7 +53,9 @@ val MediumDimens = Dimens(
     largePadding = 24.dp,
     largeTextField = 200.dp,
     mediumTextField = 150.dp,
-    smallTextField = 100.dp
+    smallTextField = 100.dp,
+    iconSize = 20.dp,
+    textFieldWidth = 5f
 )
 
 val LargeDimens = Dimens(

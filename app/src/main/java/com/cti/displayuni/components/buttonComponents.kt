@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.cti.displayuni.R
 import com.cti.displayuni.ui.theme.blue
+import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.paleWhite
 import com.cti.displayuni.ui.theme.poppinsFontFamily
 
@@ -25,7 +26,7 @@ fun CustomRoundedButton(
     text: String,
     modifier: Modifier = Modifier,
     cornerRadius: Dp = 50.dp,
-    backgroundColor: Color = blue,
+    backgroundColor: Color = darkBlue,
     contentColor: Color = paleWhite,
     padding: Dp = 16.dp,
     height: Dp = 40.dp

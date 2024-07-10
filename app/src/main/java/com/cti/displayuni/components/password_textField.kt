@@ -1,6 +1,5 @@
 package com.cti.displayuni.components
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,6 +11,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -26,11 +26,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.cti.displayuni.ui.theme.dimens
 import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.lightGrey
+import com.cti.displayuni.ui.theme.lightOrange
 import com.cti.displayuni.ui.theme.pureWhite
-import com.cti.displayuni.utility.mParameters
 
 //abc
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,58 +50,20 @@ fun PasswordInputTextField(
 
 ) {
     val focusManager = LocalFocusManager.current
-    val limitedText = text.take(maxLength)
-    val conf = LocalConfiguration.current
-    val widthDP = conf.screenWidthDp.dp
-
-    val wd = mParameters.mWidthinPx
-
-    //myUI variables
-    var textFont = 24.sp
-    var widthdp = widthDP/8.5f
-    var start = 36.dp
-    var labelFont = 12.sp
-    var iconSize = 24.dp
-    Log.d("dwinsize: ", wd.toString())
-
-    val dnsty = conf.densityDpi
-
-    mParameters.dnsty = dnsty
-    Log.d("mparam density: ", mParameters.dnsty.toString())
-
-    if (wd <= 2048 && mParameters.dnsty == 320) {
-
-        textFont = 14.sp
-        widthdp = widthDP/4.1f
-        start = 28.dp
-        labelFont = 12.sp
-        iconSize = 20.dp
-
-        Log.d("lwinsize: ", wd.toString())
-
-    } else if (wd <= 2048 && mParameters.dnsty == 160) {
-
-        textFont = 24.sp
-        widthdp = widthDP/4f
-        start = 36.dp
-        labelFont = 12.sp
-        iconSize = 24.dp
-
-        Log.d("Desktop: ", wd.toString())
-    }
+    val widthDP = LocalConfiguration.current.screenWidthDp.dp
 
     Box(
-        /*modifier = modifier
-            .padding(start = start, top = 12.dp),*/
+
         contentAlignment = Alignment.CenterStart,
 
         ) {
         OutlinedTextField(
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = lightBlack,
+                focusedBorderColor = lightOrange,
                 unfocusedBorderColor = lightGrey,
                 containerColor = pureWhite,
-                focusedLabelColor = lightBlack                ),
+                focusedLabelColor = lightBlack
+            ),
             value = text,
             onValueChange = {
                 val newText = it.take(maxLength)
@@ -114,24 +76,24 @@ fun PasswordInputTextField(
             label = {
                     Text(text = label,
                         style = TextStyle(
-                            fontSize = labelFont
+                            fontSize = MaterialTheme.typography.bodySmall.fontSize
                         ),
                         modifier = Modifier.padding(0.dp))
                     },
             keyboardOptions = keyboardOptions,
             modifier = Modifier
-                .width(widthdp),
+                .width(widthDP/ MaterialTheme.dimens.textFieldWidth),
             textStyle = LocalTextStyle.current.copy(
                 fontWeight = FontWeight.SemiBold,
                 color = color,
-                fontSize = textFont
+                fontSize = MaterialTheme.typography.bodySmall.fontSize
             ),
             leadingIcon = {
                 Icon(
                     painter = painterResource(id = iconResId),
                     contentDescription = "Password Icon",
                     modifier = Modifier
-                        .size(iconSize)
+                        .size(MaterialTheme.dimens.iconSize)
                         .fillMaxWidth()
                 )
             },

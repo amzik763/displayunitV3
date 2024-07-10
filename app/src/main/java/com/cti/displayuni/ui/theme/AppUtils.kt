@@ -1,4 +1,4 @@
-package com.cti.interfaceassembly.ui.theme
+package com.cti.displayuni.ui.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider

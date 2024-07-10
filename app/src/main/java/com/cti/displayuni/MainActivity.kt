@@ -33,6 +33,7 @@ import com.cti.displayuni.dialogBox.TaskNotApproved
 import com.cti.displayuni.dialogBox.ThanksDialog
 import com.cti.displayuni.navigation.Navigate
 import com.cti.displayuni.repository.Repository
+import com.cti.displayuni.ui.theme.DisplayunitTheme
 import com.cti.displayuni.ui.theme.blue
 import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.utility.NetworkMonitor
@@ -92,15 +93,18 @@ class MainActivity : ComponentActivity() {
 
 
         setContent {
-              Navigate()
-              NetworkDialog(mUiViewModel , applicationContext)
-              MessageDia(mUiViewModel)
-              NoTaskDia(mUiViewModel = mUiViewModel)
-              SupLoginDia(mUiViewModel)
-              mRejectReasonDialog()
-              mThanksDialog()
-              mFailedDialog()
-              OverrideDialog()
+            DisplayunitTheme {
+                Navigate()
+                NetworkDialog(mUiViewModel , applicationContext)
+                MessageDia(mUiViewModel)
+                NoTaskDia(mUiViewModel = mUiViewModel)
+                SupLoginDia(mUiViewModel)
+                mRejectReasonDialog()
+                mThanksDialog()
+                mFailedDialog()
+                OverrideDialog()
+            }
+
         }
     }
 

@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,8 +43,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cti.displayuni.R
+import com.cti.displayuni.components.CustomRoundedButton
 import com.cti.displayuni.components.EnterHereTextField
 import com.cti.displayuni.ui.theme.darkBlue
+import com.cti.displayuni.ui.theme.dimens
 import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
@@ -65,20 +68,9 @@ fun ConfigureNew(){
 
     val conf = LocalConfiguration.current
     val widthDP = conf.screenWidthDp.dp
-    //myUI variables
-    var mainHeaderFont = 58.sp
-    var semiHeaderFont = 36.sp
-    var stationText = 36.sp
-    var textFont = 18.sp
-    var width = 180.dp
-    var height = 40.dp
-    var interfaceW = 300.dp
-    var interfaceH = 70.dp
+
     var widthdp = widthDP/3f
-    var start = 36.dp
-    var top = 48.dp
-    var bottom = 36.dp
-    var btnpadding = 9.dp
+
     Log.d("dwinsize: ", wd.toString())
 
     val dnsty = conf.densityDpi
@@ -87,36 +79,14 @@ fun ConfigureNew(){
     Log.d("mparam density: ", mParameters.dnsty.toString())
 
     if (wd <= 2048 && mParameters.dnsty == 320) {
-        mainHeaderFont = 32.sp
-        semiHeaderFont = 14.sp
-        textFont = 12.sp
-        width = 120.dp
-        height = 30.dp
-        interfaceW = 180.dp
-        interfaceH = 50.dp
+
         widthdp = widthDP/3.7f
-        start = 28.dp
-        top = 36.dp
-        bottom = 28.dp
-        stationText = 24.sp
-        btnpadding = 6.dp
 
         Log.d("lwinsize: ", wd.toString())
 
     } else if (wd <= 2048 && mParameters.dnsty == 160) {
-        mainHeaderFont = 56.sp
-        semiHeaderFont = 40.sp
-        textFont = 24.sp
-        width = 210.dp
-        height = 50.dp
-        interfaceW = 300.dp
-        interfaceH = 70.dp
+
         widthdp = widthDP/3f
-        start = 36.dp
-        top = 48.dp
-        bottom = 36.dp
-        stationText = 36.sp
-        btnpadding = 9.dp
 
         Log.d("Desktop: ", wd.toString())
     }
@@ -136,19 +106,19 @@ fun ConfigureNew(){
                 Column(modifier = Modifier
                     .fillMaxHeight()
                     .fillMaxSize()
-                    .padding(start = start, top = top, bottom = bottom),
+                    .padding(MaterialTheme.dimens.padding),
                     verticalArrangement = Arrangement.SpaceBetween){
-                    Column {
+                    Image(
+                        modifier = Modifier
+                            .width(widthDP / 6f),
+                        contentScale = ContentScale.FillWidth,
+                        painter = painterResource(id = R.drawable.interfacelogo),
+                        contentDescription = "Interface Logo"
+                    )
 
-                         Image(painter = painterResource(id = R.drawable.interfacelogo),
-                        contentDescription = "Interface Logo",
-                        modifier = Modifier.size(interfaceW, interfaceH),
-                        )
-
-                    }
                     Text(
                         text = "Developed by Cellus Tech India",
-                        style = TextStyle(fontSize = semiHeaderFont,
+                        style = TextStyle(fontSize = MaterialTheme.typography.labelMedium.fontSize,
                             fontWeight = FontWeight.Bold,
                             color = pureWhite,
                             fontFamily = nk)
@@ -163,7 +133,7 @@ fun ConfigureNew(){
                     Text(
                         text = "Enter Station ID",
                         style = TextStyle(
-                            fontSize = mainHeaderFont,
+                            fontSize = MaterialTheme.typography.headlineLarge.fontSize,
                             fontWeight = FontWeight.Bold,
                             color = lightBlack,
                             fontFamily = nkbold
@@ -186,7 +156,7 @@ fun ConfigureNew(){
                 Text(
                     text = G0F0L0S0Value,
                     style = TextStyle(
-                        fontSize = stationText,
+                        fontSize = MaterialTheme.typography.headlineMedium.fontSize,
                         fontWeight = FontWeight.Bold,
                         color = orange,
                         fontFamily = nk
@@ -249,42 +219,21 @@ fun ConfigureNew(){
                     modifier = Modifier.fillMaxWidth(0.4f),
                     horizontalAlignment = Alignment.End
                 ) {
-                    Surface(
-                        modifier = Modifier
-                            .padding(top = 40.dp)
-                            .size(width = width, height = height)
-                            .clickable {
-                                mainViewModel.saveStationValue(G0F0L0S0Value)
-                                Log.d("Shared Value", G0F0L0S0Value)
 
-                                mainViewModel.deviceId = G0F0L0S0Value
+                    CustomRoundedButton(onClick = {
 
-                                mainViewModel.floorNum =
-                                    G0F0L0S0Value.split(" ").take(2).joinToString(" ")
-                                Log.d("FLOOR VALUE", mainViewModel.floorNum)
+                        mainViewModel.saveStationValue(G0F0L0S0Value)
+                        Log.d("Shared Value", G0F0L0S0Value)
 
-                                navController.navigate(GETTASK)
-                            },
-                        color = darkBlue,
-                        shape = RoundedCornerShape(corner = CornerSize(24.dp)),
-                        border = BorderStroke(width = 1.dp, color = darkBlue)
-                    ) {
-                        Text(
-                            text = AnnotatedString("Configure"),
-                            style = TextStyle(
-                                color = pureWhite,
-                                fontSize = textFont,
-                                fontFamily = poppinsregular,
-                                fontWeight = FontWeight.Bold,
-                                textAlign = TextAlign.Center
-                            ),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(btnpadding)
-                                .align(Alignment.CenterHorizontally),
+                        mainViewModel.deviceId = G0F0L0S0Value
 
-                        )
-                    }
+                        mainViewModel.floorNum =
+                            G0F0L0S0Value.split(" ").take(2).joinToString(" ")
+                        Log.d("FLOOR VALUE", mainViewModel.floorNum)
+
+                        navController.navigate(GETTASK)
+                    }, text = "Continue")
+
                 }
             }
         }

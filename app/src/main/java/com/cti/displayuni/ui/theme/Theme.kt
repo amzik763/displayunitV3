@@ -19,12 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import com.cti.displayuni.MainActivity
-import com.cti.interfaceassembly.ui.theme.AppUtils
-import com.cti.interfaceassembly.ui.theme.ExpandedDimens
-import com.cti.interfaceassembly.ui.theme.LargeDimens
-import com.cti.interfaceassembly.ui.theme.LocalAppDimens
-import com.cti.interfaceassembly.ui.theme.MediumDimens
-import com.cti.interfaceassembly.ui.theme.SmallDimens
+import com.cti.displayuni.utility.showLogs
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -86,18 +81,25 @@ fun DisplayunitTheme(
             if (config.screenWidthDp <= 960){
                 appDimens = SmallDimens
                 typography = SmallTypography
+                showLogs("SCREEN SIZE", "SMALL")
             }
             else if (config.screenWidthDp <= 1470){
                 appDimens = MediumDimens
                 typography = MediumTypography
+                showLogs("SCREEN SIZE", "MEDIUM")
+
             }
             else if (config.screenWidthDp <= 1920){
                 appDimens = LargeDimens
                 typography = LargeTypography
+                showLogs("SCREEN SIZE", "LARGE")
+
             }
             else{
                 appDimens = ExpandedDimens
                 typography = ExpandedTypography
+                showLogs("SCREEN SIZE", "EXPANDED")
+
             }
         }
     }

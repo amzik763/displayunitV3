@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -96,7 +97,7 @@ fun EnterHereTextField(
                 ),
             value = text,
             onValueChange = {
-                val newText = it.take(maxLength)
+                val newText = it.take(maxLength).uppercase()
                 onTextChange(newText)
             },
             shape= shape,
@@ -104,7 +105,7 @@ fun EnterHereTextField(
             label = {
                     Text(text = label,
                         style = TextStyle(
-                            fontSize = labelFont
+                            fontSize = MaterialTheme.typography.bodySmall.fontSize
                         ),
                         modifier = Modifier.padding(0.dp))
                      },
@@ -114,7 +115,7 @@ fun EnterHereTextField(
             textStyle = LocalTextStyle.current.copy(
                 fontWeight = FontWeight.SemiBold,
                 color = color,
-                fontSize = textFont
+                fontSize = MaterialTheme.typography.bodySmall.fontSize
             ),
 
         )

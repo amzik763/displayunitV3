@@ -46,6 +46,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cti.displayuni.R
+import com.cti.displayuni.components.CustomRoundedButton
 import com.cti.displayuni.components.PasswordInputTextField
 import com.cti.displayuni.components.UserIdInputTextField
 import com.cti.displayuni.ui.theme.blue
@@ -56,11 +57,14 @@ import com.cti.displayuni.ui.theme.lightGrey
 import com.cti.displayuni.ui.theme.lightOrange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
+import com.cti.displayuni.utility.GETTASK
 import com.cti.displayuni.utility.mFont.nk
+import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mFont.poppinsbold
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents.mainViewModel
+import com.cti.displayuni.utility.myComponents.navController
 import com.cti.displayuni.utility.showLogs
 
 @Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
@@ -80,24 +84,8 @@ fun Login(){
     Log.d("mdpi density: ", dnsty.toString())
 
     val wd = mParameters.mWidthinPx
-    //myUI variables
-    var mainHeaderFont = 52.sp
-    var semiHeaderFont = 36.sp
-    var maxWidth = widthDP/3f
-    var textFont = 18.sp
-    var width = 180.dp
-    var textFont1 = 18.sp
-    var textFont2 = 18.sp
-    var height = 40.dp
-    var padding = 24.dp
-    var imgSize = 50.dp
-    var interfaceW = 300.dp
-    var interfaceH = 70.dp
+
     var widthdp = widthDP/3f
-    var start = 36.dp
-    var top = 48.dp
-    var bottom = 36.dp
-    var btnpadding = 9.dp
     var sHeight = 54.dp
     Log.d("dwinsize: ", wd.toString())
 
@@ -105,43 +93,15 @@ fun Login(){
     Log.d("mparam density: ", mParameters.dnsty.toString())
 
     if (wd <= 2048 && mParameters.dnsty == 320) {
-        mainHeaderFont = 34.sp
-        maxWidth = widthDP/3.5f
-        semiHeaderFont = 20.sp
-        textFont = 12.sp
-        width = 120.dp
-        height = 30.dp
-        textFont1 = 14.sp
-        textFont2 = 12.sp
-        padding = 20.dp
-        interfaceW = 180.dp
-        interfaceH = 50.dp
+
         widthdp = widthDP/3.7f
-        start = 28.dp
-        top = 36.dp
-        bottom = 28.dp
-        btnpadding = 6.dp
         sHeight = 36.dp
 
         Log.d("lwinsize: ", wd.toString())
 
     } else if (wd <= 2048 && mParameters.dnsty == 160) {
-        maxWidth = widthDP/3f
-        mainHeaderFont = 58.sp
-        semiHeaderFont = 36.sp
-        textFont = 24.sp
-        width = 210.dp
-        height = 50.dp
-        textFont1 = 24.sp
-        textFont2 = 20.sp
-        padding = 24.dp
-        interfaceW = 300.dp
-        interfaceH = 70.dp
+
         widthdp = widthDP/3f
-        start = 36.dp
-        top = 48.dp
-        bottom = 36.dp
-        btnpadding = 9.dp
         sHeight = 54.dp
         Log.d("Desktop: ", wd.toString())
     }
@@ -190,7 +150,7 @@ fun Login(){
                             fontSize = MaterialTheme.typography.headlineLarge.fontSize,
                             fontWeight = FontWeight.Bold,
                             color = lightBlack,
-                            fontFamily = nk
+                            fontFamily = nkbold
                         )
                     )
 
@@ -200,22 +160,23 @@ fun Login(){
                             fontSize = MaterialTheme.typography.headlineLarge.fontSize,
                             fontWeight = FontWeight.Bold,
                             color = lightOrange,
-                            fontFamily = nk
+                            fontFamily = nkbold
                         )
                     )
                 }
 
                 Spacer(modifier = Modifier.height(MaterialTheme.dimens.largePadding))
                 Text(
-//                    modifier = Modifier.fillMaxWidth(0.4f),
                     text = "Enter Your Password",
-
                     style = TextStyle(
-                        fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                        fontSize = MaterialTheme.typography.headlineMedium.fontSize,
                         color = pureBlack,
                         fontFamily = poppinsregular
                     )
                 )
+
+                Spacer(modifier = Modifier.height(MaterialTheme.dimens.mediumPadding))
+
                 UserIdInputTextField(
                     text = name,
                     label = "Username",
@@ -241,35 +202,16 @@ fun Login(){
                 )
 
                 Column(
-                    modifier = Modifier.fillMaxWidth(0.4f),
+                    modifier = Modifier.fillMaxWidth(0.3f),
                     horizontalAlignment = Alignment.End
                 ) {
-                    Surface(
-                        modifier = Modifier
-                            .padding(top = MaterialTheme.dimens.topPadding)
-                            .size(width = width, height = height)
-                            .clickable {
-                                mainViewModel.loginUser(name, password)
-                            },
-                        color = darkBlue,
-                        shape = RoundedCornerShape(corner = CornerSize(24.dp)),
-                        border = BorderStroke(width = 1.dp, color = darkBlue)
-                    ) {
-                        Text(
-                            text = AnnotatedString("Login"),
-                            style = TextStyle(
-                                color = pureWhite,
-                                fontSize = textFont,
-                                fontFamily = poppinsregular,
-                                fontWeight = FontWeight.Bold,
-                                textAlign = TextAlign.Center
-                            ),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(btnpadding)
-                                .align(Alignment.CenterHorizontally)
-                        )
-                    }
+
+                    CustomRoundedButton(onClick = {
+
+                        mainViewModel.loginUser(name, password)
+
+                    }, text = "Login")
+
                 }
 
                 Spacer(modifier = Modifier.height(sHeight))
