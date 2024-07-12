@@ -216,16 +216,11 @@ fun Login(){
                     modifier = Modifier.fillMaxWidth(0.3f)
                         .padding(top = MaterialTheme.dimens.topPadding),
                     horizontalAlignment = Alignment.End
-                ) {
-
+                ){
                     CustomRoundedButton(onClick = {
-
                         mainViewModel.loginUser(name, password)
-
                     }, text = "Login")
-
                 }
-
                 Spacer(modifier = Modifier.height(sHeight))
 
 //                ToggleButton()

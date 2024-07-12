@@ -222,13 +222,13 @@ class Repository() {
                 showLogs("FPA3", mainViewModel.fpa3.toString())
                 showLogs("FPA4", mainViewModel.fpa4.toString())
 
-                showLogs("RDATA", taskResponse.body()?.station_reading_data?.reading_1.toString())
+          /*      showLogs("RDATA", taskResponse.body()?.station_reading_data?.reading_1.toString())
                 showLogs("RDATA", taskResponse.body()?.station_reading_data?.reading_2.toString())
                 showLogs("RDATA", taskResponse.body()?.station_reading_data?.reading_3.toString())
                 showLogs("RDATA", taskResponse.body()?.station_reading_data?.reading_4.toString())
-                showLogs("RDATA", taskResponse.body()?.station_reading_data?.reading_5.toString())
+                showLogs("RDATA", taskResponse.body()?.station_reading_data?.reading_5.toString())*/
 
-
+/*
                 if (taskResponse.body()?.station_reading_data?.reading_1.toString() == "null") {
                     showLogs("RDATA2", "1 is null")
 
@@ -276,7 +276,7 @@ class Repository() {
                     mainViewModel.isCompleted1[4] = true
                     mainViewModel.isCompleted2[4] = true
                     mainViewModel.isCompleted3[4] = true
-                }
+                }*/
 
                 if (mainViewModel.fpa4.value.isNullOrEmpty()) {
                     mainViewModel.FPACounter = 4

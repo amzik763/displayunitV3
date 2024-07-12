@@ -65,7 +65,6 @@ class MainViewModel(context: Context) : ViewModel() {
 
     val isReplacementChecked = mutableStateOf(false)
 
-
     //  var readingStatusList = mutableListOf<readingsStatusItems>()
     val readingStatusList = mutableStateListOf<readingsStatusItems>()
     val isCompleted1 = mutableStateListOf<Boolean>(false, false, false, false, false)

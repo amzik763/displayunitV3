@@ -67,15 +67,11 @@ class MainActivity : ComponentActivity() {
         val networkCallback = object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 Log.d("Network: ", "Connected")
-                Log.d("Network: ", "Connected")
-                Log.d("Network: ", "Connected")
                 mUiViewModel.hideNetworkDialog()
 
             }
 
             override fun onLost(network: Network) {
-                Log.d("Network: ", "Disconnected")
-                Log.d("Network: ", "Disconnected")
                 Log.d("Network: ", "Disconnected")
                 mUiViewModel.showNetworkDialog()
             }
@@ -86,7 +82,6 @@ class MainActivity : ComponentActivity() {
         mainViewModelFactory = MainViewModelFactory(context)
         mainViewModel = mainViewModelFactory.create(MainViewModel::class.java)
         networkMonitor = NetworkMonitor(applicationContext)
-        Log.d("temp", networkMonitor.isNetworkAvailable(applicationContext).toString())
         mUiViewModelFactory = UiViewModelFactory(context)
         mUiViewModel = mUiViewModelFactory.create(UiViewModel::class.java)
         networkMonitor.registerNetworkCallback(networkCallback)
