@@ -55,6 +55,7 @@ import com.cti.displayuni.ui.theme.dimens
 import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.lightGrey
 import com.cti.displayuni.ui.theme.lightOrange
+import com.cti.displayuni.ui.theme.paleWhite
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
 import com.cti.displayuni.utility.GETTASK
@@ -125,6 +126,16 @@ fun Login(){
                         contentScale = ContentScale.FillWidth
                     )
 
+                    Text(
+                        modifier = Modifier.padding(MaterialTheme.dimens.topPadding),
+                        text = "Digital Display",
+                        style = TextStyle(
+                            fontSize = MaterialTheme.typography.headlineSmall.fontSize,
+                            color = paleWhite,
+                            fontWeight = FontWeight.SemiBold,
+                            fontFamily = poppinsregular
+                        )
+                    )
                 }
                 Text(
                     text = "Developed by Cellus Tech India",

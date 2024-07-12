@@ -13,6 +13,7 @@ data class Dimens(
     val smallTextField: Dp = 100.dp,
     val largeSize: Dp = 42.dp,
     val iconSize: Dp = 24.dp,
+    val logoSize: Dp = 24.dp,
     val buttonWidth: Dp = 180.dp,
     val buttonHeight: Dp = 40.dp,
     val interfaceW:Dp = 300.dp,
@@ -21,13 +22,23 @@ data class Dimens(
     val topPadding: Dp = 48.dp,
     val bottomPadding: Dp = 36.dp,
     val padding: Dp = 36.dp,
+    val headerPadding: Dp = 16.dp,
     val btnPadding: Dp = 9.dp,
     val textFieldWidth: Float = 1f,
     val fractionalHeight: Float = 1f,
     val btnWidth: Dp = 180.dp,
     val btnHeight: Dp = 40.dp,
+    val fillMaxWidth : Float = 0.045f,
+    val fillMaxWidth2 : Float = 0.3f,
+    val fillMaxWidth3 : Float = 0.25f,
+    val fillMaxWidth4 : Float = 0.3f,
+    val fillMaxWidth5 : Float = 0.25f,
+    val fillMaxWidth6 : Float = 0.25f,
+    val dropdownMaxW : Float = 0.412f,
+    val statusMaxW : Float = 0.58f,
+    val endPadding: Dp  = 30.dp
 
-    )
+)
 
 val SmallDimens = Dimens(
     buttonWidth = 120.dp,
@@ -43,11 +54,24 @@ val SmallDimens = Dimens(
     iconSize = 18.dp,
     textFieldWidth = 4.1f,
     btnWidth = 120.dp,
-    btnHeight = 30.dp
-    )
+    btnHeight = 30.dp,
+    headerPadding = 14.dp,
+    logoSize = 26.dp,
+    fillMaxWidth = 0.045f,
+    fillMaxWidth2 = 0.3f,
+    fillMaxWidth3 = 0.25f,
+    fillMaxWidth4 = 0.3f,
+    fillMaxWidth5 = 0.25f,
+    fillMaxWidth6 = 0.25f,
+    dropdownMaxW  = 0.412f,
+    statusMaxW  = 0.58f,
+    endPadding = 30.dp
+
+)
+
 
 val MediumDimens = Dimens(
-    startPadding = 16.dp,
+    startPadding = 36.dp,
     topPadding = 16.dp,
     padding = 10.dp,
     smallPadding = 4.dp,
@@ -59,7 +83,19 @@ val MediumDimens = Dimens(
     iconSize = 20.dp,
     textFieldWidth = 5f,
     btnWidth = 180.dp,
-    btnHeight = 40.dp
+    btnHeight = 40.dp,
+    headerPadding = 14.dp,
+    logoSize = 30.dp,
+    fillMaxWidth = 0.04f,
+    fillMaxWidth2 = 0.31f,
+    fillMaxWidth3 = 0.3f,
+    fillMaxWidth4 = 0.25f,
+    fillMaxWidth5 = 0.29f,
+    fillMaxWidth6 = 0.4f,
+    dropdownMaxW  = 0.32f,
+    statusMaxW  = 0.36f,
+    endPadding = 30.dp
+
 )
 
 val LargeDimens = Dimens(

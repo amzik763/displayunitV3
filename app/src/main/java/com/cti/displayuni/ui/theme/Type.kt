@@ -53,25 +53,32 @@ val SmallTypography = Typography(
     headlineLarge = TextStyle(
         fontFamily = nkFontFamily,
         fontWeight = FontWeight.ExtraBold,
-        fontSize = 22.sp,
+        fontSize = 24.sp,
     ),
 
     headlineMedium = TextStyle(
         fontFamily = nkFontFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 16.sp,
+        fontSize = 18.sp,
     ),
+
+    headlineSmall = TextStyle(
+        fontFamily = poppinsFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+    ),
+
 
     bodySmall = TextStyle(
         fontFamily = poppinsFontFamily,
         fontWeight = FontWeight.Medium,
-        fontSize = 10.sp,
+        fontSize = 11.sp,
     ),
 
     labelMedium = TextStyle(
         fontFamily = poppinsFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 10.sp,
+        fontSize = 11.sp,
     )
 )
 
@@ -87,6 +94,13 @@ val  MediumTypography = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 32.sp,
     ),
+
+    headlineSmall = TextStyle(
+        fontFamily = poppinsFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 24.sp,
+    ),
+
 
     bodySmall = TextStyle(
         fontFamily = poppinsFontFamily,
@@ -105,25 +119,31 @@ val LargeTypography = Typography(
     headlineLarge = TextStyle(
         fontFamily = nkFontFamily,
         fontWeight = FontWeight.ExtraBold,
-        fontSize = 32.sp,
+        fontSize = 54.sp,
     ),
 
     headlineMedium = TextStyle(
         fontFamily = nkFontFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 28.sp,
+        fontSize = 46.sp,
+    ),
+
+    headlineSmall = TextStyle(
+        fontFamily = poppinsFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 26.sp,
     ),
 
     bodySmall = TextStyle(
         fontFamily = poppinsFontFamily,
         fontWeight = FontWeight.Medium,
-        fontSize = 15.sp,
+        fontSize = 20.sp,
     ),
 
     labelMedium = TextStyle(
         fontFamily = poppinsFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 15.sp,
+        fontSize = 20.sp,
     )
 )
 
@@ -131,24 +151,30 @@ val ExpandedTypography = Typography(
     headlineLarge = TextStyle(
         fontFamily = nkFontFamily,
         fontWeight = FontWeight.ExtraBold,
-        fontSize = 36.sp,
+        fontSize = 58.sp,
     ),
 
     headlineMedium = TextStyle(
         fontFamily = nkFontFamily,
         fontWeight = FontWeight.Bold,
+        fontSize = 50.sp,
+    ),
+
+    headlineSmall = TextStyle(
+        fontFamily = poppinsFontFamily,
+        fontWeight = FontWeight.Normal,
         fontSize = 30.sp,
     ),
 
     bodySmall = TextStyle(
         fontFamily = poppinsFontFamily,
         fontWeight = FontWeight.Medium,
-        fontSize = 16.sp,
+        fontSize = 24.sp,
     ),
 
     labelMedium = TextStyle(
         fontFamily = poppinsFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
+        fontSize = 24.sp,
     )
 )

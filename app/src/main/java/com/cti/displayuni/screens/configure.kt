@@ -52,6 +52,7 @@ import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.dimens
 import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.orange
+import com.cti.displayuni.ui.theme.paleWhite
 import com.cti.displayuni.ui.theme.poppinsFontFamily
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
@@ -123,6 +124,8 @@ fun Configure(){
                     .fillMaxSize()
                     .padding(MaterialTheme.dimens.padding),
                     verticalArrangement = Arrangement.SpaceBetween){
+
+                    Column {
                         Image(
                             modifier = Modifier
                                 .width(widthDP / 6f),
@@ -130,6 +133,18 @@ fun Configure(){
                             painter = painterResource(id = R.drawable.interfacelogo),
                             contentDescription = "Interface Logo"
                         )
+
+                        Text(
+                            modifier = Modifier.padding(MaterialTheme.dimens.topPadding),
+                            text = "Digital Display",
+                            style = TextStyle(
+                                fontSize = MaterialTheme.typography.headlineSmall.fontSize,
+                                color = paleWhite,
+                                fontWeight = FontWeight.SemiBold,
+                                fontFamily = poppinsregular
+                            )
+                        )
+                    }
 
                     Text(
                         text = "Developed by Cellus Tech India",

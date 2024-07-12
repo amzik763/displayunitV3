@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -30,7 +31,6 @@ class UiViewModel(context: Context) : ViewModel(){
     var showFpaDetails = MutableLiveData<Boolean>()
 
     var showFullImage = MutableLiveData<Boolean>()
-
 
     var isActualParamEnables = mutableStateOf(false)
     var isSettingParamEnables = mutableStateOf(true)

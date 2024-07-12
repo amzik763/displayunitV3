@@ -1,11 +1,15 @@
 package com.cti.displayuni.components
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -14,6 +18,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,19 +27,25 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.cti.displayuni.response.CheckSheetData
+import com.cti.displayuni.ui.theme.dimens
+import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
+import com.cti.displayuni.utility.CircularProgressBar
+import com.cti.displayuni.utility.mFont.nk
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.showLogs
 
 @Composable
-fun DropDown(paramId: String, index: Int) {
+fun DropDown(paramId: String, index: Int,notificationIDState:String) {
     Log.d("abc", myComponents.mainViewModel.checkSheetList.size.toString())
 
     val wd = mParameters.mWidthinPx
@@ -71,17 +82,23 @@ fun DropDown(paramId: String, index: Int) {
     val items = listOf("OK", "NG")
 //    val items = listOf("OK", "NG", "SUP_OK")
 
+    val showProgressBar = remember { mutableStateOf(false) }
+    
     LaunchedEffect(selectedItem) {
         selectedItem = myComponents.mainViewModel.checkSheetList[index]
     }
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row  (modifier = Modifier.fillMaxWidth(),
 
-        Column(verticalArrangement = Arrangement.Center) {
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically) {
+
+        Column(
+            verticalArrangement = Arrangement.Center,
+        ) {
             OutlinedButton(
                 onClick = { expanded = true },
                 modifier = Modifier
-                    .fillMaxWidth(maxWidth)
-                    .wrapContentSize()
+                    .fillMaxWidth(MaterialTheme.dimens.dropdownMaxW)
             ) {
                 Text(selectedItem)
                 //Display the selected item
@@ -97,7 +114,7 @@ fun DropDown(paramId: String, index: Int) {
                             Text(
                                 text = item,
                                 style = TextStyle(
-                                    fontSize = textFont1,
+                                    fontSize = MaterialTheme.typography.bodySmall.fontSize,
                                     color = pureBlack,
                                     textAlign = TextAlign.Center
                                 )
@@ -106,6 +123,8 @@ fun DropDown(paramId: String, index: Int) {
                         onClick = {
                             selectedItem = item
                             if (selectedItem == "NG") {
+
+                                showProgressBar.value = true
 
                                 myComponents.mainViewModel.checkSheetList.set(index, item)
                                 myComponents.mainViewModel.checkSheetList.forEach { println(it) }
@@ -132,6 +151,7 @@ fun DropDown(paramId: String, index: Int) {
                                 expanded = false
 
 
+
                             } else if (selectedItem == "OK") {
                                 myComponents.mainViewModel.checkSheetList.set(index, item)
                                 myComponents.mainViewModel.checkSheetList.forEach { println(it) }
@@ -143,7 +163,20 @@ fun DropDown(paramId: String, index: Int) {
             }
         }
 
-        IconButton(onClick = {
+        Text(
+            modifier = Modifier
+                .width(70.dp)
+                .padding(start = MaterialTheme.dimens.startPadding),
+            text = notificationIDState?:"00" ,
+            color = pureBlack,
+            fontFamily = nk,
+            textAlign = TextAlign.Start,
+            fontSize = MaterialTheme.typography.bodySmall.fontSize,
+        )
+
+
+        IconButton(modifier = Modifier
+            .padding(start = MaterialTheme.dimens.startPadding), onClick = {
                 myComponents.mainViewModel.getCheckSheetStatusBack(myComponents.mainViewModel.myChecksheetNotificationMap[paramId]){ result ->
                     result.onSuccess {
                             if(it == "true"){
@@ -163,10 +196,21 @@ fun DropDown(paramId: String, index: Int) {
                         selectedItem = "failed"
                     }
                 }
-        }) {
+        },
+            ) {
             Icon(imageVector = Icons.Default.Refresh,
                 modifier = Modifier.size(imgSize),
-                contentDescription = "Refresh")
+                contentDescription = "Refresh"
+            )
+
         }
+
+        // Conditionally show the CircularProgressBar
+        if (showProgressBar.value) {
+            CircularProgressBar(percentage = 1f, duration = 10)
+        }
+
     }
+
+
 }

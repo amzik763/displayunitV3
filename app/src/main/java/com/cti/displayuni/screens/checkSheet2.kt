@@ -1,5 +1,6 @@
 package com.cti.displayuni.screens
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,17 +37,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cti.displayuni.R
+import com.cti.displayuni.components.CustomRoundedButton
 import com.cti.displayuni.components.ItemListScreen
 import com.cti.displayuni.ui.theme.darkBlue
+import com.cti.displayuni.ui.theme.dimens
 import com.cti.displayuni.ui.theme.lightGrey
 import com.cti.displayuni.ui.theme.lightOrange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
 import com.cti.displayuni.utility.FILL_PARAMETERS
+import com.cti.displayuni.utility.LOGIN
 import com.cti.displayuni.utility.mFont
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
+import com.cti.displayuni.utility.myComponents.mainViewModel
+import com.cti.displayuni.utility.myComponents.navController
 import com.cti.displayuni.utility.showLogs
 
 @Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
@@ -143,8 +150,8 @@ fun Checksheet2() {
             modifier = Modifier
                 .background(color = lightGrey)
                 .padding(
-                    end = endPadding,
-                    bottom = bottomPadding
+                    end = MaterialTheme.dimens.smallPadding,  //headerpadding
+                    bottom = MaterialTheme.dimens.smallPadding
                 )
         ) {
             Row(
@@ -163,7 +170,7 @@ fun Checksheet2() {
                     Text(
                         text = "Name: ",
                         style = TextStyle(
-                            fontSize = textFont2,
+                            fontSize = MaterialTheme.typography.bodySmall.fontSize,
                             color = pureBlack,
                             fontFamily = poppinsregular
                         )
@@ -171,7 +178,7 @@ fun Checksheet2() {
                     Text(
                         text = myComponents.mainViewModel.name,
                         style = TextStyle(
-                            fontSize = textFont2,
+                            fontSize = MaterialTheme.typography.bodySmall.fontSize,
                             color = pureBlack,
                             fontWeight = FontWeight.Bold,
                             fontFamily = mFont.poppinsbold
@@ -184,7 +191,7 @@ fun Checksheet2() {
                     Text(
                         text = "Skill: ",
                         style = TextStyle(
-                            fontSize = textFont2,
+                            fontSize = MaterialTheme.typography.bodySmall.fontSize,
                             color = pureBlack,
                             fontFamily = poppinsregular
                         )
@@ -192,7 +199,7 @@ fun Checksheet2() {
                     Text(
                         text = myComponents.mainViewModel.skill,
                         style = TextStyle(
-                            fontSize = textFont2,
+                            fontSize = MaterialTheme.typography.bodySmall.fontSize,
                             color = pureBlack,
                             fontWeight = FontWeight.Bold,
                             fontFamily = mFont.poppinsbold
@@ -207,7 +214,7 @@ fun Checksheet2() {
                     Text(
                         text = "Device Id: ",
                         style = TextStyle(
-                            fontSize = textFont2,
+                            fontSize = MaterialTheme.typography.bodySmall.fontSize,
                             color = pureBlack,
                             fontFamily = poppinsregular
                         )
@@ -215,7 +222,7 @@ fun Checksheet2() {
                     Text(
                         text = myComponents.mainViewModel.deviceId,
                         style = TextStyle(
-                            fontSize = textFont2,
+                            fontSize = MaterialTheme.typography.bodySmall.fontSize,
                             color = pureBlack,
                             fontWeight = FontWeight.Bold,
                             fontFamily = mFont.poppinsbold
@@ -226,7 +233,7 @@ fun Checksheet2() {
                     Text(
                         text = "Employee Id: ",
                         style = TextStyle(
-                            fontSize = textFont2,
+                            fontSize = MaterialTheme.typography.bodySmall.fontSize,
                             color = pureBlack,
                             fontFamily = poppinsregular
                         )
@@ -234,7 +241,7 @@ fun Checksheet2() {
                     Text(
                         text = myComponents.mainViewModel.employeeId,
                         style = TextStyle(
-                            fontSize = textFont2,
+                            fontSize = MaterialTheme.typography.bodySmall.fontSize,
                             color = pureBlack,
                             fontWeight = FontWeight.Bold,
                             fontFamily = mFont.poppinsbold
@@ -244,30 +251,27 @@ fun Checksheet2() {
                 Text(
                     text = currentDateTime.value,
                     style = TextStyle(
-                        fontSize = textFont2,
+                        fontSize = MaterialTheme.typography.bodySmall.fontSize,
                         color = pureBlack,
                         fontFamily = poppinsregular
                     )
                 )
-                Row(
-                    modifier = Modifier.fillMaxWidth(0.18f),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                )
-                {
+
 
                     Image(
                         painter = painterResource(id = R.drawable.ic_logout),
                         contentDescription = "Logout",
                         modifier = Modifier
-                            .size(imgSize)
+                            .size(MaterialTheme.dimens.logoSize)
                             .clickable {
-                                myComponents.navController.popBackStack()
-                                myComponents.navController.navigate("Login")
+                                navController.popBackStack()
+                                navController.navigate("Login")
                             }
                     )
-                }
+
             }
         }
+
         Column(
             modifier = Modifier
                 .padding(top = 0.dp)
@@ -279,67 +283,41 @@ fun Checksheet2() {
                     .background(color = lightGrey)
                     .fillMaxWidth()
                     .fillMaxHeight()
-                    .padding(padding)
+//                    .padding(padding)
             ) {
                 ItemListScreen()
             }
         }
         Row(
             modifier = Modifier
-                .padding(start = startpadding2, end = endpadding2, top = toppadding2)
+                .padding(start = MaterialTheme.dimens.endPadding,
+                    end = MaterialTheme.dimens.endPadding, top = toppadding2)
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
+            Row(modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
                 Text(
                     text = "Fill Up The Start Up Check Sheet To Start Testing",
                     style = TextStyle(
-                        fontSize = textFont1,
+                        fontSize = MaterialTheme.typography.headlineSmall.fontSize,
                         color = lightOrange,
                         fontFamily = mFont.nkmedium
                     )
                 )
-            }
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.End
-            ) {
-                Row {
 
-                    Surface(
-                        modifier = Modifier
-                            .padding(start = 16.dp)
-                            .size(width = width, height = height),
-                        color = darkBlue,
-                        shape = RoundedCornerShape(corner = CornerSize(36.dp)),
-                        border = BorderStroke(width = 1.dp, color = darkBlue),
-                    ) {
-                        ClickableText(
-                            text = AnnotatedString("Submit"),
-                            style = TextStyle(
-                                color = pureWhite,
-                                fontSize = textFont3,
-                                fontFamily = poppinsregular,
-                                fontWeight = FontWeight.Bold,
-                                textAlign = TextAlign.Center
-                            ),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(btnpadding),
-                            onClick = {
+                    CustomRoundedButton(onClick = {
 
-                                showLogs(
-                                    "LISTT",
-                                    myComponents.mainViewModel.checkSheetList.size.toString()
-                                )
-                                myComponents.mainViewModel.checkItemsInList()
+                        showLogs("LISTT", mainViewModel.checkSheetList.size.toString())
+
+                        mainViewModel.checkItemsInList()
 //                                myComponents.navController.navigate(FILL_PARAMETERS)
-                            }
-                        )
-                    }
-                }
+
+                    }, text = "Submit")
+
+
             }
         }
     }
