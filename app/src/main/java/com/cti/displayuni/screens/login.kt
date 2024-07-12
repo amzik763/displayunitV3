@@ -213,7 +213,8 @@ fun Login(){
                 )
 
                 Column(
-                    modifier = Modifier.fillMaxWidth(0.3f),
+                    modifier = Modifier.fillMaxWidth(0.3f)
+                        .padding(top = MaterialTheme.dimens.topPadding),
                     horizontalAlignment = Alignment.End
                 ) {
 

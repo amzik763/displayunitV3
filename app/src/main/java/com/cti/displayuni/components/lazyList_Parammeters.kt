@@ -186,11 +186,11 @@ fun ParametersLazyList(
         enterValues.value =  mutableMapOf()
 //        enterValue = ""
 
-        myComponents.mainViewModel.dataListSetting.forEach {
+        mainViewModel.dataListSetting.forEach {
             it.param_value = ""
         }
 
-        myComponents.mainViewModel.dataListActual.forEach {
+        mainViewModel.dataListActual.forEach {
             it.param_value = ""
         }
 

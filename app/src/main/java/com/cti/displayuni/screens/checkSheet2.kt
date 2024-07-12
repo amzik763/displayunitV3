@@ -293,8 +293,7 @@ fun Checksheet2() {
                 .padding(start = MaterialTheme.dimens.endPadding,
                     end = MaterialTheme.dimens.endPadding, top = toppadding2)
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Row(modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
@@ -308,6 +307,10 @@ fun Checksheet2() {
                     )
                 )
 
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.End
+                ) {
                     CustomRoundedButton(onClick = {
 
                         showLogs("LISTT", mainViewModel.checkSheetList.size.toString())
@@ -318,6 +321,7 @@ fun Checksheet2() {
                     }, text = "Submit")
 
 
+                }
             }
         }
     }

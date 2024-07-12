@@ -1,6 +1,7 @@
 package com.cti.displayuni.viewmodels
 
 import android.content.Context
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -11,17 +12,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cti.displayuni.R
-import com.cti.displayuni.response.CheckSheetData
 import com.cti.displayuni.utility.DialogModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlin.coroutines.cancellation.CancellationException
 
 class UiViewModel(context: Context) : ViewModel(){
 
@@ -31,6 +29,8 @@ class UiViewModel(context: Context) : ViewModel(){
     var showFpaDetails = MutableLiveData<Boolean>()
 
     var showFullImage = MutableLiveData<Boolean>()
+
+//    val showProgressBar =   mutableStateOf(false)
 
     var isActualParamEnables = mutableStateOf(false)
     var isSettingParamEnables = mutableStateOf(true)

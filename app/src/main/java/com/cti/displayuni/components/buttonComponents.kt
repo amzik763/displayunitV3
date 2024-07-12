@@ -30,7 +30,6 @@ fun CustomRoundedButton(
     cornerRadius: Dp = 50.dp,
     backgroundColor: Color = darkBlue,
     contentColor: Color = paleWhite,
-    padding: Dp = 16.dp,
 ) {
     Button(
         onClick = onClick,
@@ -39,7 +38,6 @@ fun CustomRoundedButton(
         contentPadding = PaddingValues(0.dp),
 
         modifier = modifier
-            .padding(top = padding)
             .size(width = MaterialTheme.dimens.buttonWidth, height = MaterialTheme.dimens.buttonHeight)
     ) {
         Text(text = text,

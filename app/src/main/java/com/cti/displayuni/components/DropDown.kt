@@ -48,42 +48,15 @@ import com.cti.displayuni.utility.showLogs
 fun DropDown(paramId: String, index: Int,notificationIDState:String) {
     Log.d("abc", myComponents.mainViewModel.checkSheetList.size.toString())
 
-    val wd = mParameters.mWidthinPx
-    //myUI variables
-
-    var textFont1 = 16.sp
-    var imgSize = 30.dp
-    var maxWidth = 0.6f
-
-    Log.d("dwinsize: ", wd.toString())
-
-    Log.d("mparam density: ", mParameters.dnsty.toString())
-
-    if (wd <= 2048 && mParameters.dnsty == 320) {
-
-        textFont1 = 10.sp
-        imgSize = 16.dp
-        maxWidth = 0.412f
-
-        Log.d("lwinsize: ", wd.toString())
-
-    } else if (wd <= 2048 && mParameters.dnsty == 160) {
-
-        textFont1 = 16.sp
-        imgSize = 30.dp
-        maxWidth = 0.6f
-
-        Log.d("Desktop: ", wd.toString())
-    }
-
     var expanded by remember { mutableStateOf(false) }
-//  val selectedItem by rememberUpdatedState("Status")
     var selectedItem by remember { mutableStateOf("status") }
     val items = listOf("OK", "NG")
-//    val items = listOf("OK", "NG", "SUP_OK")
+    val showProgressBar =  remember {
+        mutableStateOf(false)
 
-    val showProgressBar = remember { mutableStateOf(false) }
-    
+    }
+
+
     LaunchedEffect(selectedItem) {
         selectedItem = myComponents.mainViewModel.checkSheetList[index]
     }
@@ -123,6 +96,8 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String) {
                         onClick = {
                             selectedItem = item
                             if (selectedItem == "NG") {
+
+//                                myComponents.mUiViewModel.showProgressBar.value = true
 
                                 showProgressBar.value = true
 
@@ -199,18 +174,18 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String) {
         },
             ) {
             Icon(imageVector = Icons.Default.Refresh,
-                modifier = Modifier.size(imgSize),
+                modifier = Modifier.size(MaterialTheme.dimens.logoSize),
                 contentDescription = "Refresh"
             )
 
         }
 
         // Conditionally show the CircularProgressBar
-        if (showProgressBar.value) {
+        if (showProgressBar.value
+//            myComponents.mUiViewModel.showProgressBar.value
+            ) {
             CircularProgressBar(percentage = 1f, duration = 10)
         }
 
     }
-
-
 }

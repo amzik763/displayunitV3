@@ -239,7 +239,8 @@ fun Configure(){
                     )
                 }
 
-                Column(modifier = Modifier.fillMaxWidth(0.4f),
+                Column(modifier = Modifier.fillMaxWidth(0.4f)
+                    .padding(top = MaterialTheme.dimens.topPadding),
                     horizontalAlignment = Alignment.End){
 
                     CustomRoundedButton(onClick = {
