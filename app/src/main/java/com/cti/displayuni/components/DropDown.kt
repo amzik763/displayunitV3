@@ -56,13 +56,14 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressS
     var expanded by remember { mutableStateOf(false) }
     var selectedItem by remember { mutableStateOf("status") }
     val items = listOf("OK", "NG")
-    val showProgressBar =  remember { mutableStateOf(false) }
+
+    val progressState by progressTimer.getProgress(paramId).collectAsState()
 
 
     LaunchedEffect(selectedItem) {
         selectedItem = myComponents.mainViewModel.checkSheetList[index]
     }
-    Row  (modifier = Modifier.fillMaxWidth(MaterialTheme.dimens.dropdownRow),
+    Row  (modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically) {
 
@@ -98,18 +99,14 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressS
                             selectedItem = item
                             if (selectedItem == "NG") {
 
-//                                progressState[paramId] = true
-
-                                progressTimer.startTimer(paramId) {
-                                    // Timer finished callback
-                                    showLogs("Timer finished for paramId:", paramId)
+//                               progressState[paramId] = true
+                               /* progressTimer.startTimer(paramId) {
+                                       showLogs("Timer finished for paramId:", paramId)
                                 }
 
                                 myComponents.mainViewModel.checkSheetList.set(index, item)
                                 myComponents.mainViewModel.checkSheetList.forEach { println(it) }
-                                myComponents.mainViewModel.notify(
-                                    myComponents.mainViewModel.getStationValue(),
-                                    paramId,
+                                myComponents.mainViewModel.notify(myComponents.mainViewModel.getStationValue(), paramId,
 //                        myComponents.mainViewModel.floorNum
                                     myComponents.mainViewModel.getStationValue().split(" ").take(2)
                                         .joinToString(" ")
@@ -126,10 +123,27 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressS
                                         println("Notification failed: ${exception.message}")
                                         // Update UI or state here
                                     }
+                                }*/
+
+                                progressTimer.startTimer(paramId) {
+                                    showLogs("Timer finished for paramId:", paramId)
+                                    myComponents.mainViewModel.notify(
+                                        myComponents.mainViewModel.getStationValue(),
+                                        paramId,
+                                        myComponents.mainViewModel.getStationValue().split(" ").take(2).joinToString(" ")
+                                    ) { result ->
+                                        result.onSuccess { notificationId ->
+                                            println("Notification ID ID: $notificationId")
+
+                                            myComponents.mainViewModel.myChecksheetNotificationMap[paramId] = notificationId
+                                        }.onFailure { exception ->
+                                            println("Notification failed: ${exception.message}")
+                                        }
+                                    }
                                 }
+
+                                myComponents.mainViewModel.checkSheetList.set(index, item)
                                 expanded = false
-
-
 
                             } else if (selectedItem == "OK") {
 //                                progressState[paramId] = false
@@ -155,9 +169,6 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressS
             textAlign = TextAlign.Start,
             fontSize = MaterialTheme.typography.bodySmall.fontSize,
         )
-
-
-
 
         IconButton(modifier = Modifier
             .padding(start = MaterialTheme.dimens.startPadding), onClick = {
@@ -188,6 +199,21 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressS
             )
 
         }
+
+        // Display CircularProgressBar if progressState is greater than 0
+
+        Spacer(modifier = Modifier.width(MaterialTheme.dimens.topPadding))
+
+        if (progressState > 0) {
+            CircularProgressBar(
+                percentage = progressState,
+                duration = (progressState * 10_000).toInt() / 1000,
+                onTimeEnd = {
+                    // Handle completion actions here if needed
+                }
+            )
+        }
+
 
 /*        // Conditionally show the CircularProgressBar
         if (progressState[paramId] == true

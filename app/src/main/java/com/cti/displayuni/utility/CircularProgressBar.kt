@@ -28,7 +28,7 @@ import com.cti.displayuni.ui.theme.dimens
 import kotlinx.coroutines.delay
 
 
-@Composable
+/*@Composable
 fun CircularProgressBar(
     percentage: Float,
     duration: Int,
@@ -73,5 +73,40 @@ fun CircularProgressBar(
             fontSize = MaterialTheme.typography.bodySmall.fontSize,
             fontWeight = FontWeight.Bold
         )
+    }
+}*/
+
+@Composable
+fun CircularProgressBar(
+    percentage: Float,
+    duration: Int,
+    radius: Dp = 30.dp,
+    color: Color = Color.Blue,
+    strokeWidth: Dp = 2.dp,
+    onTimeEnd: () -> Unit
+) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.size(radius)
+    ) {
+        Canvas(modifier = Modifier.size(radius)) {
+            drawArc(
+                color = color,
+                startAngle = -90f,
+                sweepAngle = 360 * (1 - percentage) ,
+                useCenter = false,
+                style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round)
+            )
+        }
+        Text(
+            text = "${(duration * percentage).toInt()}s",
+            color = Color.Black,
+            fontSize = MaterialTheme.typography.bodySmall.fontSize,
+            fontWeight = MaterialTheme.typography.bodySmall.fontWeight
+        )
+    }
+
+    LaunchedEffect(percentage) {
+        if (percentage == 0f) onTimeEnd()
     }
 }

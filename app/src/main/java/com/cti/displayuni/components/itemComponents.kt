@@ -138,15 +138,15 @@ fun ItemComponents(index:Int,item: CheckSheetData,
 
          DropDown(item.csp_id, index, notificationIdState[item.csp_id].toString(), progressTimer)
 
-         Spacer(modifier = Modifier.width(MaterialTheme.dimens.topPadding))
-
-         if (progressState > 0) {
-            CircularProgressBar(
-               percentage = progressState,
-               duration = (progressState * 10_000).toInt() / 1000,
-               onTimeEnd = {}
-            )
-         }
+//         Spacer(modifier = Modifier.width(MaterialTheme.dimens.topPadding))
+//
+//         if (progressState > 0) {
+//            CircularProgressBar(
+//               percentage = progressState,
+//               duration = (progressState * 10_000).toInt() / 1000,
+//               onTimeEnd = {}
+//            )
+//         }
 
       }
       Divider(
