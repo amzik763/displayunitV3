@@ -15,6 +15,9 @@ import com.cti.displayuni.R
 import com.cti.displayuni.utility.DialogModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -30,7 +33,14 @@ class UiViewModel(context: Context) : ViewModel(){
 
     var showFullImage = MutableLiveData<Boolean>()
 
-//    val showProgressBar =   mutableStateOf(false)
+    private val _progressState = MutableStateFlow(mapOf<String, Float>())
+    val progressState: StateFlow<Map<String, Float>> = _progressState.asStateFlow()
+
+    fun updateProgress(id: String, progress: Float) {
+        _progressState.value = _progressState.value.toMutableMap().apply {
+            put(id, progress)
+        }
+    }
 
     var isActualParamEnables = mutableStateOf(false)
     var isSettingParamEnables = mutableStateOf(true)

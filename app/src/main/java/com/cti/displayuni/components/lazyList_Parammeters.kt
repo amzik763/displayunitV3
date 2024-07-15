@@ -50,7 +50,6 @@ fun ParametersLazyList(
     dataListSetting: MutableList<Setting_Param>
 ) {
 
-
     val wd = mParameters.mWidthinPx
     //myUI variables
     var textFont = 15.sp
@@ -118,6 +117,8 @@ fun ParametersLazyList(
                             .fillMaxWidth(paramnamewidth),
                         color = Color.Black
                     )
+
+
 
                     Spacer(modifier = Modifier.width(gap))
 

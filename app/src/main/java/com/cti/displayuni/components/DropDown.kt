@@ -23,6 +23,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -39,29 +41,28 @@ import com.cti.displayuni.ui.theme.dimens
 import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.utility.CircularProgressBar
+import com.cti.displayuni.utility.ProgressTimer
 import com.cti.displayuni.utility.mFont.nk
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.showLogs
 
 @Composable
-fun DropDown(paramId: String, index: Int,notificationIDState:String) {
+fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressState: SnapshotStateMap<String, Boolean>*/
+             progressTimer: ProgressTimer
+) {
     Log.d("abc", myComponents.mainViewModel.checkSheetList.size.toString())
 
     var expanded by remember { mutableStateOf(false) }
     var selectedItem by remember { mutableStateOf("status") }
     val items = listOf("OK", "NG")
-    val showProgressBar =  remember {
-        mutableStateOf(false)
-
-    }
+    val showProgressBar =  remember { mutableStateOf(false) }
 
 
     LaunchedEffect(selectedItem) {
         selectedItem = myComponents.mainViewModel.checkSheetList[index]
     }
-    Row  (modifier = Modifier.fillMaxWidth(),
-
+    Row  (modifier = Modifier.fillMaxWidth(MaterialTheme.dimens.dropdownRow),
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically) {
 
@@ -97,9 +98,12 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String) {
                             selectedItem = item
                             if (selectedItem == "NG") {
 
-//                                myComponents.mUiViewModel.showProgressBar.value = true
+//                                progressState[paramId] = true
 
-                                showProgressBar.value = true
+                                progressTimer.startTimer(paramId) {
+                                    // Timer finished callback
+                                    showLogs("Timer finished for paramId:", paramId)
+                                }
 
                                 myComponents.mainViewModel.checkSheetList.set(index, item)
                                 myComponents.mainViewModel.checkSheetList.forEach { println(it) }
@@ -128,6 +132,9 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String) {
 
 
                             } else if (selectedItem == "OK") {
+//                                progressState[paramId] = false
+
+                                progressTimer.stopTimer(paramId)
                                 myComponents.mainViewModel.checkSheetList.set(index, item)
                                 myComponents.mainViewModel.checkSheetList.forEach { println(it) }
                                 expanded = false
@@ -152,7 +159,7 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String) {
 
 
 
-        IconButton(modifier = Modifier.background(color = orange)
+        IconButton(modifier = Modifier
             .padding(start = MaterialTheme.dimens.startPadding), onClick = {
                 myComponents.mainViewModel.getCheckSheetStatusBack(myComponents.mainViewModel.myChecksheetNotificationMap[paramId]){ result ->
                     result.onSuccess {
@@ -182,12 +189,16 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String) {
 
         }
 
-        // Conditionally show the CircularProgressBar
-        if (showProgressBar.value
+/*        // Conditionally show the CircularProgressBar
+        if (progressState[paramId] == true
 //            myComponents.mUiViewModel.showProgressBar.value
             ) {
-            CircularProgressBar(percentage = 1f, duration = 10)
-        }
+            CircularProgressBar(percentage = 1f, duration = 10,
+                    onTimeEnd = {
+                        progressState[paramId] = false
+                    }
+            )
+        }*/
 
     }
 }

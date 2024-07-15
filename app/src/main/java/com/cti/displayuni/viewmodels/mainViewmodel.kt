@@ -70,6 +70,7 @@ class MainViewModel(context: Context) : ViewModel() {
     val isCompleted1 = mutableStateListOf<Boolean>(false, false, false, false, false)
     val isCompleted2 = mutableStateListOf<Boolean>(false, false, false, false, false)
     val isCompleted3 = mutableStateListOf<Boolean>(false, false, false, false, false)
+    val readingSize = mutableStateOf(0)
 
     var dataListSetting = mutableListOf<Setting_Param>()
     var dataListActual = mutableListOf<Actual_Param>()

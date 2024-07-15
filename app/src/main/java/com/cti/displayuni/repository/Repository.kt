@@ -1,10 +1,8 @@
 package com.cti.displayuni.repository
 
 import android.util.Log
-import androidx.compose.runtime.Composable
-import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.R
-import com.cti.displayuni.networks.OtherAPIs
+import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.response.FpaData_res
 import com.cti.displayuni.response.reading_Response
 import com.cti.displayuni.utility.Actual_Param
@@ -136,7 +134,10 @@ class Repository() {
                 }
 
                 val chartParameters = mutableListOf<chart_parameter>()
-                taskResponse.body()?.process_params_info?.forEach {
+                chartParameters.clear()
+
+                taskResponse.body()?.process_params_info?.forEachIndexed {index,it->
+                    showLogs("NEW READING IT:",it.readings_is_available.toString())
                     if (it.readings_is_available) {
                         val parameterName = it.parameter_name
                         val parameterNo = it.parameter_no
@@ -146,8 +147,8 @@ class Repository() {
                             MutableList(5) { " " } // Initialize values list with default values
                         val chartParam =
                             chart_parameter(parameterName, parameterNo, min, max, values)
-                        chartParameters.clear()
                         chartParameters.add(chartParam)
+                        showLogs("NEW READING API CHART:", index.toString())
                         showLogs(
                             "DATA LIST ADDING",
                             it.readings_is_available.toString() + " " + it.parameter_name
@@ -155,6 +156,8 @@ class Repository() {
                     }
                 }
                 mainViewModel.dataListChart.value = chartParameters
+                showLogs("NEW READING IT:",chartParameters.size.toString())
+
                 showLogs("DATA LIST VALUES", mainViewModel.dataListChart.value.toString())
 
 
@@ -222,13 +225,144 @@ class Repository() {
                 showLogs("FPA3", mainViewModel.fpa3.toString())
                 showLogs("FPA4", mainViewModel.fpa4.toString())
 
-          /*      showLogs("RDATA", taskResponse.body()?.station_reading_data?.reading_1.toString())
-                showLogs("RDATA", taskResponse.body()?.station_reading_data?.reading_2.toString())
-                showLogs("RDATA", taskResponse.body()?.station_reading_data?.reading_3.toString())
-                showLogs("RDATA", taskResponse.body()?.station_reading_data?.reading_4.toString())
-                showLogs("RDATA", taskResponse.body()?.station_reading_data?.reading_5.toString())*/
+                showLogs("NEW READING API", taskResponse.body()?.station_reading_data?.get(0)?.reading_1.toString())
+                showLogs("NEW READING API", taskResponse.body()?.station_reading_data?.get(0)?.reading_2.toString())
+                showLogs("NEW READING API", taskResponse.body()?.station_reading_data?.get(0)?.reading_3.toString())
+                showLogs("NEW READING API", taskResponse.body()?.station_reading_data?.get(0)?.reading_4.toString())
+                showLogs("NEW READING API", taskResponse.body()?.station_reading_data?.get(0)?.reading_5.toString())
 
-/*
+                mainViewModel.readingSize.value = taskResponse.body()?.station_reading_data?.size?:0
+
+                showLogs("NEW READING API DATA", taskResponse.body()?.station_reading_data.toString())
+
+
+                taskResponse.body()?.station_reading_data?.forEachIndexed { index , item ->
+
+//                    showLogs("NEW READING API INSIDE: ", item.reading_1)
+//                    showLogs("NEW READING API INSIDE: ", item.reading_2)
+//                    showLogs("NEW READING API INSIDE: ", item.reading_3)
+//                    showLogs("NEW READING API INSIDE: ", item.reading_4)
+//                    showLogs("NEW READING API INSIDE: ", item.reading_5)
+
+
+
+                    val reading1Value = item.reading_1 ?: "Default Value"
+
+                    if (item.reading_1 == null || item.reading_1 == "null"){
+                        showLogs("NEW READING API", "reading 1 is null")
+
+                    }
+                    else {
+
+
+
+                        if(index == 0)
+                            mainViewModel.isCompleted1[0] = true
+                        else if(index == 1)
+                            mainViewModel.isCompleted2[0] = true
+                        else if(index == 2)
+                            mainViewModel.isCompleted3[0] = true
+
+
+
+
+                    }
+
+                    if (item.reading_2 == null || item.reading_1 == "null"){
+                        showLogs("NEW READING API", "reading 2 is null")
+
+                    }
+                    else {
+
+
+                        if(index == 0)
+                            mainViewModel.isCompleted1[1] = true
+                        else if(index == 1)
+                            mainViewModel.isCompleted2[1] = true
+                        else if(index == 2)
+                            mainViewModel.isCompleted3[1] = true
+
+                      }
+
+                    if (item.reading_3 == null || item.reading_1 == "null"){
+                        showLogs("NEW READING API", "reading 3 is null")
+
+                    }
+                    else {
+
+                      if (index == 0)
+                          mainViewModel.isCompleted1[2] = true
+
+                      else if (index == 1)
+                          mainViewModel.isCompleted2[2] = true
+                      else if (index == 2)
+                          mainViewModel.isCompleted3[2] = true
+
+                       }
+
+                    if (item.reading_4 == null|| item.reading_1 == "null"){
+                        showLogs("NEW READING API", "reading 4 is null")
+
+                    }
+                    else {
+
+                        if (index == 0)
+                            mainViewModel.isCompleted1[3] = true
+
+                        else if (index == 1)
+                            mainViewModel.isCompleted2[3] = true
+                        else if (index == 2)
+                            mainViewModel.isCompleted3[3] = true
+
+                     }
+
+
+                    if (item.reading_5 == null|| item.reading_1 == "null"){
+                        showLogs("NEW READING API", "reading 5 is null")
+
+                    }
+                    else {
+
+                        if (index == 0)
+                            mainViewModel.isCompleted1[4] = true
+
+                        else if (index == 1)
+                            mainViewModel.isCompleted2[4] = true
+                        else if (index == 2)
+                            mainViewModel.isCompleted3[4] = true
+
+                         }
+
+                }
+
+                if(mainViewModel.isCompleted1[2] == true && mainViewModel.isCompleted2[2] == true && mainViewModel.isCompleted3[2] == true )
+                    mainViewModel.readingStatusList[2].readingStatusE = readingStatusEnum.completed
+
+                if(mainViewModel.isCompleted1[1] == true && mainViewModel.isCompleted2[1] == true && mainViewModel.isCompleted3[1] == true )
+                    mainViewModel.readingStatusList[1].readingStatusE = readingStatusEnum.completed
+
+
+                if(mainViewModel.isCompleted1[3] == true && mainViewModel.isCompleted2[3] == true && mainViewModel.isCompleted3[3] == true )
+                    mainViewModel.readingStatusList[3].readingStatusE = readingStatusEnum.completed
+
+                if(mainViewModel.isCompleted1[0] == true && mainViewModel.isCompleted2[0] == true && mainViewModel.isCompleted3[0] == true )
+                    mainViewModel.readingStatusList[0].readingStatusE = readingStatusEnum.completed
+
+
+                if(mainViewModel.isCompleted1[4] == true && mainViewModel.isCompleted2[4] == true && mainViewModel.isCompleted3[4] == true )
+                    mainViewModel.readingStatusList[4].readingStatusE = readingStatusEnum.completed
+
+                showLogs("NEW READING STATUS: ", mainViewModel.readingStatusList[0].readingStatusE.name.toString())
+                showLogs("NEW READING STATUS: ", mainViewModel.readingStatusList[1].readingStatusE.name.toString())
+                showLogs("NEW READING STATUS: ", mainViewModel.readingStatusList[2].readingStatusE.name.toString())
+                showLogs("NEW READING STATUS: ", mainViewModel.readingStatusList[3].readingStatusE.name.toString())
+                showLogs("NEW READING STATUS: ", mainViewModel.readingStatusList[4].readingStatusE.name.toString())
+                /*if(taskResponse.body()?.station_reading_data?.get(0)?.reading_1.toString() == "null"){
+
+                }else{
+                    mainViewModel.isCompleted1[0] = true
+                }
+
                 if (taskResponse.body()?.station_reading_data?.reading_1.toString() == "null") {
                     showLogs("RDATA2", "1 is null")
 
@@ -276,7 +410,9 @@ class Repository() {
                     mainViewModel.isCompleted1[4] = true
                     mainViewModel.isCompleted2[4] = true
                     mainViewModel.isCompleted3[4] = true
-                }*/
+                }
+*/
+
 
                 if (mainViewModel.fpa4.value.isNullOrEmpty()) {
                     mainViewModel.FPACounter = 4
@@ -869,11 +1005,35 @@ class Repository() {
                 }
                 //can be improved to check all three param or two params if present, to do later
 
-                if (mainViewModel.isCompleted1[index]) {
-                    mainViewModel.readingStatusList[index].readingStatusE =
-                        readingStatusEnum.completed
+                if(mainViewModel.readingSize.value == 1){
+                    if (mainViewModel.isCompleted1[index]) {
+                        mainViewModel.readingStatusList[index].readingStatusE =
+                            readingStatusEnum.completed
+                        showLogs("NEW READING API", "true 1")
+
+                    }
+                    showLogs("NEW READING API", "1")
 
                 }
+                else if ( mainViewModel.readingSize.value == 2){
+                    if (mainViewModel.isCompleted1[index] && mainViewModel.isCompleted2[index]){
+                        mainViewModel.readingStatusList[index].readingStatusE = readingStatusEnum.completed
+                        showLogs("NEW READING API", "true 2")
+
+                    }
+                    showLogs("NEW READING API", "2")
+
+                }
+                else if (mainViewModel.readingSize.value == 3){
+                    if(mainViewModel.isCompleted1[index] && mainViewModel.isCompleted2[index] && mainViewModel.isCompleted3[index]){
+                        mainViewModel.readingStatusList[index].readingStatusE = readingStatusEnum.completed
+                        showLogs("NEW READING API", "true 3")
+
+                    }
+                    showLogs("NEW READING API", "3")
+
+                }
+
 
                 showLogs("READING API", "value added")
                 mainViewModel.isCompleted1.forEach {

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,12 +32,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cti.displayuni.R
+import com.cti.displayuni.components.CustomRoundedButton
 import com.cti.displayuni.ui.theme.darkBlue
+import com.cti.displayuni.ui.theme.dimens
 import com.cti.displayuni.ui.theme.pureWhite
 import com.cti.displayuni.utility.CONFIGURE
+import com.cti.displayuni.utility.LOGIN
 import com.cti.displayuni.utility.mFont
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
+import com.cti.displayuni.utility.myComponents.mainViewModel
+import com.cti.displayuni.utility.myComponents.navController
 
 @Composable
 fun ProfileText(name:String,value:String){
@@ -68,13 +74,13 @@ fun ProfileText(name:String,value:String){
         Row {
             Text(text = name,
                 style = TextStyle(
-                    fontSize = textFont1,
+                    fontSize = MaterialTheme.typography.bodySmall.fontSize,
                     fontFamily = mFont.nk
                 )
             )
             Text(text = value,
                 style = TextStyle(
-                    fontSize = textFont1,
+                    fontSize = MaterialTheme.typography.bodySmall.fontSize,
                     fontWeight = FontWeight.Bold,
                     fontFamily = mFont.nkbold
                 )
@@ -140,7 +146,7 @@ fun Profile(){
         .fillMaxWidth()){
     Text(text = "Profile Information",
         style = TextStyle(
-            fontSize = textFont,
+            fontSize = MaterialTheme.typography.headlineMedium.fontSize,
             fontWeight = FontWeight.Bold,
             fontFamily = mFont.nkbold
         )
@@ -160,7 +166,7 @@ fun Profile(){
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(text = "Password:  ",
                 style = TextStyle(
-                    fontSize = textFont2,
+                    fontSize = MaterialTheme.typography.bodySmall.fontSize,
                     fontFamily = mFont.nk
                 )
             )
@@ -173,7 +179,7 @@ fun Profile(){
 
             Text(text = if (passwordVisible) password else "*".repeat(password.length),
                 style = TextStyle(
-                    fontSize = textFont2,
+                    fontSize = MaterialTheme.typography.bodySmall.fontSize,
                     fontWeight = FontWeight.Bold,
                     fontFamily = mFont.nkbold
                 ),
@@ -189,35 +195,12 @@ fun Profile(){
             )
         }
 
-
-        Surface(
-            modifier = Modifier
-                .padding(top = paddingStart)
-                .size(width = width, height = height)
-                .align(Alignment.CenterHorizontally)
-                .clickable {
-                    myComponents.navController.navigate(CONFIGURE)
-
-                },
-            color = darkBlue,
-            shape = RoundedCornerShape(corner = CornerSize(24.dp)),
-            border = BorderStroke(width = 1.dp, color = darkBlue)
-        ) {
-            Text(
-                text = AnnotatedString("Configure"),
-                style = TextStyle(
-                    color = pureWhite,
-                    fontSize = textFont1,
-                    fontFamily = mFont.poppinsregular,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(btnPadding)
-                    .align(Alignment.CenterHorizontally),
-
-            )
+        Column(modifier = Modifier.fillMaxWidth()
+            .padding(top = MaterialTheme.dimens.topPadding),
+            horizontalAlignment = Alignment.CenterHorizontally){
+            CustomRoundedButton(onClick = {
+                navController.navigate(CONFIGURE)
+            }, text = "Configure")
         }
 
     }

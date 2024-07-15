@@ -197,6 +197,7 @@ fun CustomPopupContent(
 
         if(!mState.value) {
             showLogs("mSTATE: ",mState.value.toString())
+            showLogs("NEW READING SIZE: ",myComponents.mainViewModel.dataListChart.value?.size.toString())
             if(myComponents.mainViewModel.dataListChart.value?.size == 1) {
                 ReadingRow1st(dataListChart)
             }

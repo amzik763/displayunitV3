@@ -24,6 +24,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -53,6 +54,7 @@ import com.cti.displayuni.R
 import com.cti.displayuni.components.ActualLazyList
 import com.cti.displayuni.components.ParametersLazyList
 import com.cti.displayuni.ui.theme.darkBlue
+import com.cti.displayuni.ui.theme.dimens
 import com.cti.displayuni.ui.theme.extraLightGrey
 import com.cti.displayuni.ui.theme.green
 import com.cti.displayuni.ui.theme.lightGrey
@@ -264,16 +266,16 @@ fun ReadingUI(){
 
         Spacer(modifier = Modifier.width(4.dp))
 
-        ReadingCircles(myComponents.mainViewModel.isCompleted1.get(0))
-        ReadingCircles(myComponents.mainViewModel.isCompleted1.get(1))
-        ReadingCircles(myComponents.mainViewModel.isCompleted1.get(2))
-        ReadingCircles(myComponents.mainViewModel.isCompleted1.get(3))
-        ReadingCircles(myComponents.mainViewModel.isCompleted1.get(4))
+        ReadingCircles(myComponents.mainViewModel.isCompleted1.get(0),myComponents.mainViewModel.isCompleted2.get(0),myComponents.mainViewModel.isCompleted3.get(0))
+        ReadingCircles(myComponents.mainViewModel.isCompleted1.get(1),myComponents.mainViewModel.isCompleted2.get(1),myComponents.mainViewModel.isCompleted3.get(1))
+        ReadingCircles(myComponents.mainViewModel.isCompleted1.get(2),myComponents.mainViewModel.isCompleted2.get(2),myComponents.mainViewModel.isCompleted3.get(2))
+        ReadingCircles(myComponents.mainViewModel.isCompleted1.get(3),myComponents.mainViewModel.isCompleted2.get(3),myComponents.mainViewModel.isCompleted3.get(3))
+        ReadingCircles(myComponents.mainViewModel.isCompleted1.get(4),myComponents.mainViewModel.isCompleted2.get(4),myComponents.mainViewModel.isCompleted3.get(4))
     }
 }
 
 @Composable
-fun ReadingCircles(r: Boolean) {
+fun ReadingCircles(r: Boolean,r2:Boolean,r3:Boolean) {
     val wd = mParameters.mWidthinPx
 
     var width = 12.dp
@@ -296,19 +298,44 @@ fun ReadingCircles(r: Boolean) {
 
     Image(painter = painterResource(id = R.drawable.circle),
         contentDescription ="Circle1",
-        modifier = Modifier.size(size)
+        modifier = Modifier.size(MaterialTheme.dimens.logoSize)
         .clickable {
             myComponents.mUiViewModel.showCustomPopup.value = true
         },
-        colorFilter = if(!r){
+        colorFilter =  if(myComponents.mainViewModel.dataListChart.value?.size == 3){
+            if(!r||!r2||!r3){
 
-            ColorFilter.tint(lightGrey)
+                ColorFilter.tint(lightGrey)
 
-        }
-        else{
+            }
+            else{
 
-            ColorFilter.tint(green)
+                ColorFilter.tint(green)
 
+            }
+        }else if(myComponents.mainViewModel.dataListChart.value?.size == 2){
+            if(!r||!r2){
+
+                ColorFilter.tint(lightGrey)
+
+            }
+            else{
+
+                ColorFilter.tint(green)
+
+            }
+        }else{
+
+            if(!r){
+
+                ColorFilter.tint(lightGrey)
+
+            }
+            else{
+
+                ColorFilter.tint(green)
+
+            }
         }
     )
     Spacer(modifier = Modifier.width(width))

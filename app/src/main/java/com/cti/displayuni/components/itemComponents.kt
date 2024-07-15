@@ -1,56 +1,49 @@
 package com.cti.displayuni.components
 
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.cti.displayuni.R
 import com.cti.displayuni.response.CheckSheetData
 import com.cti.displayuni.ui.theme.dimens
 import com.cti.displayuni.ui.theme.lightGrey
-import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
+import com.cti.displayuni.utility.CircularProgressBar
+import com.cti.displayuni.utility.ProgressTimer
 import com.cti.displayuni.utility.mFont.nk
 import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
-import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
-fun ItemComponents(index:Int,item: CheckSheetData) {
+fun ItemComponents(index:Int,item: CheckSheetData,
+//                   progressState: SnapshotStateMap<String, Boolean>
+                   progressTimer: ProgressTimer) {
+
+   val progressState by progressTimer.getProgress(item.csp_id).collectAsState()
 
    val conf = LocalConfiguration.current
    val dnsty = conf.densityDpi
@@ -84,8 +77,6 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
    }
 
    Column {
-//      val notificationIdState = remember { item.notificationId }
-//      val notificationIdState by myComponents.mainViewModel.myChecksheetNotificationMap.collectAsState()
       val notificationIdState: SnapshotStateMap<String, String> = myComponents.mainViewModel.myChecksheetNotificationMap
       Row(
          modifier = Modifier
@@ -133,7 +124,6 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
             fontFamily = nk,
             fontSize = MaterialTheme.typography.bodySmall.fontSize,
          )
-
          Text(
             modifier = Modifier
                .fillMaxWidth(MaterialTheme.dimens.fillMaxWidth5)
@@ -144,17 +134,35 @@ fun ItemComponents(index:Int,item: CheckSheetData) {
             fontSize = MaterialTheme.typography.bodySmall.fontSize,
          )
 
-         DropDown(item.csp_id, index,notificationIdState[item.csp_id].toString())
+//         DropDown(item.csp_id, index,notificationIdState[item.csp_id].toString(), progressState)
+
+         DropDown(item.csp_id, index, notificationIdState[item.csp_id].toString(), progressTimer)
+
+         Spacer(modifier = Modifier.width(MaterialTheme.dimens.topPadding))
+
+         if (progressState > 0) {
+            CircularProgressBar(
+               percentage = progressState,
+               duration = (progressState * 10_000).toInt() / 1000,
+               onTimeEnd = {}
+            )
+         }
 
       }
       Divider(
          modifier = Modifier.padding(top = 4.dp, bottom = 4.dp)
       )
+
    }
 
 }
 @Composable
-fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
+fun ItemListColumn(
+//   mChecksheetData: List<CheckSheetData>,
+//   progressState: SnapshotStateMap<String, Boolean>
+
+   mChecksheetData: List<CheckSheetData>, progressTimer: ProgressTimer
+) {
 
    val conf = LocalConfiguration.current
    val dnsty = conf.densityDpi
@@ -256,7 +264,9 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
       Spacer(modifier = Modifier.height(24.dp))
          LazyColumn {
             itemsIndexed(mChecksheetData){ index,item ->
-               ItemComponents(index = index,item = item)
+//               ItemComponents(index = index,item = item, progressState = progressState)
+
+               ItemComponents(index = index, item = item, progressTimer = progressTimer)
             }
       }
    }
@@ -265,6 +275,11 @@ fun ItemListColumn(mChecksheetData: List<CheckSheetData>) {
 @Composable
 fun ItemListScreen() {
    val mChecksheetData by myComponents.mainViewModel.mChecksheetData.observeAsState()
-   mChecksheetData?.let { ItemListColumn(it) }
+//   val progressState = remember { mutableStateMapOf<String, Boolean>() } // Track progress state
+//   mChecksheetData?.let { ItemListColumn(it, progressState) }
+
+
+   val progressTimer = remember { ProgressTimer(10000L) } // 10 seconds duration
+   mChecksheetData?.let { ItemListColumn(it, progressTimer) }
 }
 

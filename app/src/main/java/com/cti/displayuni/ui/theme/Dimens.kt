@@ -35,6 +35,7 @@ data class Dimens(
     val fillMaxWidth5 : Float = 0.25f,
     val fillMaxWidth6 : Float = 0.25f,
     val dropdownMaxW : Float = 0.412f,
+    val dropdownRow : Float = 0.412f,
     val statusMaxW : Float = 0.58f,
     val endPadding: Dp  = 30.dp
 
@@ -65,7 +66,8 @@ val SmallDimens = Dimens(
     fillMaxWidth6 = 0.25f,
     dropdownMaxW  = 0.412f,
     statusMaxW  = 0.58f,
-    endPadding = 30.dp
+    endPadding = 30.dp,
+    dropdownRow = 0.512f
 
 )
 
@@ -89,12 +91,13 @@ val MediumDimens = Dimens(
     fillMaxWidth = 0.04f,
     fillMaxWidth2 = 0.31f,
     fillMaxWidth3 = 0.3f,
-    fillMaxWidth4 = 0.25f,
-    fillMaxWidth5 = 0.29f,
+    fillMaxWidth4 = 0.24f,
+    fillMaxWidth5 = 0.26f,
     fillMaxWidth6 = 0.4f,
     dropdownMaxW  = 0.32f,
     statusMaxW  = 0.36f,
-    endPadding = 30.dp
+    endPadding = 30.dp,
+    dropdownRow= 0.7f
 
 )
 

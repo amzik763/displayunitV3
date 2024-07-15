@@ -9,6 +9,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -30,16 +32,17 @@ import kotlinx.coroutines.delay
 fun CircularProgressBar(
     percentage: Float,
     duration: Int,
-    fontSize: TextUnit = 16.sp,
     radius: Dp = 30.dp,
     color: Color = Color.Blue,
-    strokeWidth: Dp = 3.dp,
+    strokeWidth: Dp = 2.dp,
     animDuration: Int = 10000,
-    animDelay: Int = 0
-) {
-    var remainingTime by remember { mutableStateOf(duration) }
+    animDelay: Int = 0,
+    onTimeEnd: () -> Unit
 
-    var progress by remember { mutableStateOf(0f) }
+) {
+    var remainingTime by remember { mutableIntStateOf(duration) }
+
+    var progress by remember { mutableFloatStateOf(0f) }
 
     LaunchedEffect(key1 = true) {
         val stepDuration = animDuration / duration
@@ -48,6 +51,7 @@ fun CircularProgressBar(
             remainingTime = i
             progress = (duration - i) / duration.toFloat()
         }
+        onTimeEnd()
     }
     Box(
         contentAlignment = Alignment.Center,
@@ -63,7 +67,6 @@ fun CircularProgressBar(
                 style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round)
             )
         }
-
         Text(
             text = "${remainingTime}s",
             color = Color.Black,
