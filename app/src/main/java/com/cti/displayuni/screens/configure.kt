@@ -1,79 +1,36 @@
 package com.cti.displayuni.screens
 
 import android.util.Log
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.cti.displayuni.R
-import com.cti.displayuni.components.CustomRoundedButton
-import com.cti.displayuni.components.EnterHereTextField
-import com.cti.displayuni.ui.theme.darkBlue
-import com.cti.displayuni.ui.theme.dimens
-import com.cti.displayuni.ui.theme.lightBlack
-import com.cti.displayuni.ui.theme.orange
-import com.cti.displayuni.ui.theme.paleWhite
-import com.cti.displayuni.ui.theme.poppinsFontFamily
-import com.cti.displayuni.ui.theme.pureBlack
-import com.cti.displayuni.ui.theme.pureWhite
-import com.cti.displayuni.utility.LOGIN
-import com.cti.displayuni.utility.mFont.nk
-import com.cti.displayuni.utility.mFont.nkbold
-import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
-import com.cti.displayuni.utility.myComponents
-import com.cti.displayuni.utility.myComponents.mainViewModel
-import com.cti.displayuni.utility.myComponents.navController
+import com.cti.displayuni.utility.showLogs
+import io.socket.client.IO
+import io.socket.client.Socket
+import io.socket.emitter.Emitter
+import java.net.URISyntaxException
 
 @Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
 @Composable
-fun Configure(){
+fun Configure() {
     val wd = mParameters.mWidthinPx
 
     val conf = LocalConfiguration.current
     val widthDP = conf.screenWidthDp.dp
 
-    var widthdp = widthDP/3f
+    var widthdp = widthDP / 3f
 
     Log.d("dwinsize: ", wd.toString())
 
@@ -84,13 +41,13 @@ fun Configure(){
 
     if (wd <= 2048 && mParameters.dnsty == 320) {
 
-        widthdp = widthDP/3.7f
+        widthdp = widthDP / 3.7f
 
         Log.d("lwinsize: ", wd.toString())
 
     } else if (wd <= 2048 && mParameters.dnsty == 160) {
 
-        widthdp = widthDP/3f
+        widthdp = widthDP / 3f
 
         Log.d("Desktop: ", wd.toString())
     }
@@ -112,7 +69,7 @@ fun Configure(){
     var G0F0L0S0Value by remember { mutableStateOf(" F L S") }
 
 
-        Row {
+    /*  Row {
             Box(modifier = Modifier.width(widthdp)){
                 Image(painter = painterResource(id = R.drawable.bg_background),
                     contentDescription = "Blue Background",
@@ -257,6 +214,164 @@ fun Configure(){
 
                 }
             }
+        }*/
+    /*    lateinit var webSocket: WebSocket
+    val message = remember { mutableStateOf("No message received yet") }
+    val url = "ws://13.233.194.200:5000"
+    val eventName = "update_csp_notification_status"
+    val messageToSend = "check_station_csp_status: G01 F02 L02 S01"
+
+    LaunchedEffect(Unit) {
+        val client = OkHttpClient.Builder()
+            .pingInterval(15, TimeUnit.SECONDS)
+            .build()
+
+        val request = Request.Builder()
+            .url(url)
+            .build()
+        showLogs("WEBSOCKET","building")
+
+        val listener = object : WebSocketListener() {
+            override fun onOpen(webSocket: WebSocket, response: Response) {
+                val keyValuePairMessage = "{\"check_station_csp_status\":\"G01 F02 L02 S01\"}"
+                webSocket.send(keyValuePairMessage)
+                showLogs("WEBSOCKET","open")
+
+            }
+
+            override fun onMessage(webSocket: WebSocket, text: String) {
+                // Assuming the message is in JSON format and has the eventName
+                if (text.contains(eventName)) {
+                    message.value = text
+                }
+                showLogs("RECEVED WEBSOCKET",text)
+            }
+
+            override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
+                // Handle binary messages if needed
+            }
+
+            override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
+                webSocket.close(1000, null)
+            }
+
+            override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+                message.value = "Error: ${t.message}"
+            }
+        }
+
+        webSocket = client.newWebSocket(request, listener)
+        client.dispatcher.executorService.shutdown()
+    }
+
+    WebSocketMessageScreen(message.value)*/
+
+    Row() {
+
+    Button(modifier = Modifier.width(200.dp).height(250.dp), onClick = {
+        showLogs(
+            "SOCKET INFO:",
+            SocketManager.isConnected().toString()
+        )
+    }) {
+
+    }
+
+
+
+        Button(modifier = Modifier.width(200.dp).height(250.dp), onClick = {
+            SocketManager.connect()
+        }) {
+
+        }
+
+
+
+}
+}
+
+
+/*
+@Composable
+fun WebSocketMessageScreen(message: String) {
+    Surface(modifier = Modifier.fillMaxSize()) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(text = "Received Message:")
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(text = message)
+        }
+    }
+}
+
+*/
+
+
+
+object SocketManager {
+    private lateinit var socket: Socket
+
+    fun initSocket() {
+        try {
+            val opts = IO.Options()
+            opts.forceNew = true
+            opts.transports = arrayOf("websocket")
+            socket = IO.socket("http://192.168.1.3:5000",opts) // Use your WebSocket URL
+        } catch (e: URISyntaxException) {
+            Log.e("SocketManager", "Socket URI Syntax Exception", e)
+        }catch (e:Exception){
+            showLogs("Socket error:", e.printStackTrace().toString())
+        }
+
+
+    }
+
+    fun connect() {
+        socket.connect()
+        showLogs("SOCKET: ","its connecting")
+
+        socket.on(Socket.EVENT_CONNECT) {
+            showLogs("SOCKET:", "Connected to server")
+        }.on(Socket.EVENT_CONNECT_ERROR) { args ->
+            showLogs("SOCKET:", "Connection error: ${args[0]}")
+            try {
+            showLogs("SOCKET:", "Connection error: ${args[1]}")
+
+            }catch (e:Exception){
+
+            }
+        }.on(Socket.EVENT_DISCONNECT) {
+            showLogs("SOCKET:", "Disconnected from server")
         }
     }
 
+    fun disconnect() {
+        socket.disconnect()
+        showLogs("SOCKET: ","its discconnected")
+
+    }
+
+    fun on(event: String, listener: Emitter.Listener) {
+        socket.on(event, listener)
+        showLogs("SOCKET: ","its event ")
+        showLogs("SOCKET: ","${event} ")
+
+
+    }
+
+    fun emit(event: String, data: String) {
+        socket.emit(event, data)
+        showLogs("SOCKET: ","its emitting")
+        showLogs("SOCKET: ","${event}  ${data}")
+
+    }
+
+
+
+    fun isConnected(): Boolean {
+        return socket.connected()
+    }
+}

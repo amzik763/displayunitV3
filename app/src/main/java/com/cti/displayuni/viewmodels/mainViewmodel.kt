@@ -7,14 +7,13 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.text.toUpperCase
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cti.displayuni.R
 import com.cti.displayuni.response.*
+import com.cti.displayuni.screens.SocketManager
 import com.cti.displayuni.utility.Actual_Param
 import com.cti.displayuni.utility.KEY_TEXT_VALUE
 import com.cti.displayuni.utility.KEY_TOKEN
@@ -27,12 +26,15 @@ import com.cti.displayuni.utility.myComponents.repository
 import com.cti.displayuni.utility.readingStatusEnum
 import com.cti.displayuni.utility.readingsStatusItems
 import com.cti.displayuni.utility.showLogs
+import io.socket.emitter.Emitter
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import org.json.JSONObject
 import java.util.Calendar
 
 //
@@ -41,6 +43,52 @@ class MainViewModel(context: Context) : ViewModel() {
 //    @HiltViewModel
 //    class MainViewModel @Inject constructot(private val context: Context):Viewmodel{
 //    }
+    private lateinit var onUpdateCspNotificationStatus: Emitter.Listener
+
+    init {
+        SocketManager.initSocket()
+        SocketManager.connect()
+
+        // Listen for socket events
+//        SocketManager.on("update_work_for_operator", onUpdateWorkForOperator)
+//        SocketManager.on("filter_floor_csp_notification", onFilterFloorCspNotification)
+
+        showLogs("WEBSOCKET:"," initialized")
+
+
+        onUpdateCspNotificationStatus = Emitter.Listener { args ->
+            viewModelScope.launch(Dispatchers.Main) {
+                try {
+                    val data = args[0] as JSONObject
+                    showLogs("WEBSOCKET:", "listening")
+                    showLogs("WEBSOCKET:", "${data}")
+                } catch (e: Exception) {
+                    showLogs("WEBSOCKET:", "Error parsing JSON: ${e.message}")
+                }
+            }
+        }
+
+        val stationData = "G01 F02 L01 S01"
+
+        checkStationCspStatus(stationData)
+
+        SocketManager.on("update_csp_notification_status", onUpdateCspNotificationStatus)
+//        checkStationCspStatus()
+
+
+    }
+    fun checkStationCspStatus(data: String) {
+//        SocketManager.emit("check_station_csp_status", data)
+        SocketManager.emit("check_station_csp_status", data)
+        showLogs("WEBSOCKET:"," check emit")
+
+    }
+
+
+    override fun onCleared() {
+        super.onCleared()
+        SocketManager.disconnect()
+    }
 
     var mContext = context
 

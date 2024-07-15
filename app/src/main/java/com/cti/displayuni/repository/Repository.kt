@@ -414,21 +414,27 @@ class Repository() {
 */
 
 
+
+
+
                 if (mainViewModel.fpa4.value.isNullOrEmpty()) {
                     mainViewModel.FPACounter = 4
                     showLogs("FPA44", mainViewModel.fpa4.toString())
 
                 }
+
                 if (mainViewModel.fpa3.value.isNullOrEmpty()) {
                     mainViewModel.FPACounter = 3
                     showLogs("FPA33", mainViewModel.fpa3.toString())
 
                 }
+
                 if (mainViewModel.fpa2.value.isNullOrEmpty()) {
                     mainViewModel.FPACounter = 2
                     showLogs("FPA22", mainViewModel.fpa2.toString())
 
                 }
+
                 if (mainViewModel.fpa1.value.isNullOrEmpty()) {
                     mainViewModel.FPACounter = 1
                     showLogs("FPA11", mainViewModel.fpa1.toString())
