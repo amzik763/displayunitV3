@@ -1,21 +1,56 @@
 package com.cti.displayuni.screens
 
 import android.util.Log
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.cti.displayuni.R
+import com.cti.displayuni.components.CustomRoundedButton
+import com.cti.displayuni.components.EnterHereTextField
+import com.cti.displayuni.ui.theme.dimens
+import com.cti.displayuni.ui.theme.lightBlack
+import com.cti.displayuni.ui.theme.orange
+import com.cti.displayuni.ui.theme.paleWhite
+import com.cti.displayuni.ui.theme.pureBlack
+import com.cti.displayuni.ui.theme.pureWhite
+import com.cti.displayuni.utility.LOGIN
+import com.cti.displayuni.utility.mFont.nk
+import com.cti.displayuni.utility.mFont.nkbold
+import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
+import com.cti.displayuni.utility.myComponents.mainViewModel
+import com.cti.displayuni.utility.myComponents.navController
 import com.cti.displayuni.utility.showLogs
 import io.socket.client.IO
 import io.socket.client.Socket
@@ -69,7 +104,7 @@ fun Configure() {
     var G0F0L0S0Value by remember { mutableStateOf(" F L S") }
 
 
-    /*  Row {
+      Row {
             Box(modifier = Modifier.width(widthdp)){
                 Image(painter = painterResource(id = R.drawable.bg_background),
                     contentDescription = "Blue Background",
@@ -214,7 +249,7 @@ fun Configure() {
 
                 }
             }
-        }*/
+        }
     /*    lateinit var webSocket: WebSocket
     val message = remember { mutableStateOf("No message received yet") }
     val url = "ws://13.233.194.200:5000"
@@ -284,9 +319,6 @@ fun Configure() {
         }) {
 
         }
-
-
-
 }
 }
 
@@ -319,14 +351,12 @@ object SocketManager {
             val opts = IO.Options()
             opts.forceNew = true
             opts.transports = arrayOf("websocket")
-            socket = IO.socket("http://192.168.1.3:5000",opts) // Use your WebSocket URL
+            socket = IO.socket("http://13.233.194.200:5000",opts) // Use your WebSocket URL
         } catch (e: URISyntaxException) {
             Log.e("SocketManager", "Socket URI Syntax Exception", e)
         }catch (e:Exception){
             showLogs("Socket error:", e.printStackTrace().toString())
         }
-
-
     }
 
     fun connect() {

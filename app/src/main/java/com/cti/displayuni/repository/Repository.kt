@@ -144,7 +144,7 @@ class Repository() {
                         val min = it.min
                         val max = it.max
                         val values =
-                            MutableList(5) { " " } // Initialize values list with default values
+                            MutableList(5) { "" } // Initialize values list with default values
                         val chartParam =
                             chart_parameter(parameterName, parameterNo, min, max, values)
                         chartParameters.add(chartParam)
