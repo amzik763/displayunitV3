@@ -617,15 +617,12 @@ class MainViewModel(context: Context) : ViewModel() {
     suspend fun submitPartInfo(i: Int) {
 
         //If FPA DONE FOR LAST STATION
-
-
         val addData = mainViewModel.addData(
             mainViewModel.fail.intValue.toString(),
             mainViewModel.pass.intValue.toString(),
             station_id = mainViewModel.getStationValue(),
             i = i
         )
-
 
         if (addData) {
             //set pass fail and checking part values
@@ -642,25 +639,25 @@ class MainViewModel(context: Context) : ViewModel() {
     private fun checkReadingTimeAndShowPopup() {
         viewModelScope.launch {
             if (readingStatusList[0].readingStatusE.equals(readingStatusEnum.available)) {
-                showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
+                showLogs("readingstatusenum 0", readingStatusList[0].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.notAvailable
                 mUiViewModel.showCustomPopup.value = true
 
 
             } else if (readingStatusList[1].readingStatusE.equals(readingStatusEnum.available)) {
-                showLogs("readingstatusenum2", readingStatusList[1].readingStatusE.name)
+                showLogs("readingstatusenum 1", readingStatusList[1].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
                 mUiViewModel.showCustomPopup.value = true
             } else if (readingStatusList[2].readingStatusE.equals(readingStatusEnum.available)) {
-                showLogs("readingstatusenum2", readingStatusList[2].readingStatusE.name)
+                showLogs("readingstatusenum 2", readingStatusList[2].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
                 mUiViewModel.showCustomPopup.value = true
             } else if (readingStatusList[3].readingStatusE.equals(readingStatusEnum.available)) {
-                showLogs("readingstatusenum2", readingStatusList[3].readingStatusE.name)
+                showLogs("readingstatusenum 3", readingStatusList[3].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
                 mUiViewModel.showCustomPopup.value = true
             } else if (readingStatusList[4].readingStatusE.equals(readingStatusEnum.available)) {
-                showLogs("readingstatusenum2", readingStatusList[4].readingStatusE.name)
+                showLogs("readingstatusenum 4", readingStatusList[4].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
                 mUiViewModel.showCustomPopup.value = true
             }
@@ -713,23 +710,23 @@ class MainViewModel(context: Context) : ViewModel() {
                         }
 
         showLogs(
-            "READING STATUS ALL",
+            "READING STATUS ALL 0",
             readingStatusList[0].readingStatusE.name + " " + readingStatusList[0].readingTime
         )
         showLogs(
-            "READING STATUS ALL",
+            "READING STATUS ALL 1",
             readingStatusList[1].readingStatusE.name + " " + readingStatusList[1].readingTime
         )
         showLogs(
-            "READING STATUS ALL",
+            "READING STATUS ALL 2",
             readingStatusList[2].readingStatusE.name + " " + readingStatusList[2].readingTime
         )
         showLogs(
-            "READING STATUS ALL",
+            "READING STATUS ALL 3",
             readingStatusList[3].readingStatusE.name + " " + readingStatusList[3].readingTime
         )
         showLogs(
-            "READING STATUS ALL",
+            "READING STATUS ALL 4",
             readingStatusList[4].readingStatusE.name + " " + readingStatusList[4].readingTime
         )
 

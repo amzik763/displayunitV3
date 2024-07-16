@@ -156,7 +156,7 @@ class Repository() {
                     }
                 }
                 mainViewModel.dataListChart.value = chartParameters
-                showLogs("NEW READING IT:",chartParameters.size.toString())
+                showLogs("NEW READING SIZE:",chartParameters.size.toString())
 
                 showLogs("DATA LIST VALUES", mainViewModel.dataListChart.value.toString())
 
@@ -332,26 +332,79 @@ class Repository() {
                             mainViewModel.isCompleted3[4] = true
 
                          }
-
                 }
 
-                if(mainViewModel.isCompleted1[2] == true && mainViewModel.isCompleted2[2] == true && mainViewModel.isCompleted3[2] == true )
-                    mainViewModel.readingStatusList[2].readingStatusE = readingStatusEnum.completed
+                if(mainViewModel.readingSize.value == 3) {
+                    if (mainViewModel.isCompleted1[2] == true && mainViewModel.isCompleted2[2] == true && mainViewModel.isCompleted3[2] == true)
+                        mainViewModel.readingStatusList[2].readingStatusE =
+                            readingStatusEnum.completed
 
-                if(mainViewModel.isCompleted1[1] == true && mainViewModel.isCompleted2[1] == true && mainViewModel.isCompleted3[1] == true )
-                    mainViewModel.readingStatusList[1].readingStatusE = readingStatusEnum.completed
-
-
-                if(mainViewModel.isCompleted1[3] == true && mainViewModel.isCompleted2[3] == true && mainViewModel.isCompleted3[3] == true )
-                    mainViewModel.readingStatusList[3].readingStatusE = readingStatusEnum.completed
-
-                if(mainViewModel.isCompleted1[0] == true && mainViewModel.isCompleted2[0] == true && mainViewModel.isCompleted3[0] == true )
-                    mainViewModel.readingStatusList[0].readingStatusE = readingStatusEnum.completed
+                    if (mainViewModel.isCompleted1[1] == true && mainViewModel.isCompleted2[1] == true && mainViewModel.isCompleted3[1] == true)
+                        mainViewModel.readingStatusList[1].readingStatusE =
+                            readingStatusEnum.completed
 
 
-                if(mainViewModel.isCompleted1[4] == true && mainViewModel.isCompleted2[4] == true && mainViewModel.isCompleted3[4] == true )
-                    mainViewModel.readingStatusList[4].readingStatusE = readingStatusEnum.completed
+                    if (mainViewModel.isCompleted1[3] == true && mainViewModel.isCompleted2[3] == true && mainViewModel.isCompleted3[3] == true)
+                        mainViewModel.readingStatusList[3].readingStatusE =
+                            readingStatusEnum.completed
 
+                    if (mainViewModel.isCompleted1[0] == true && mainViewModel.isCompleted2[0] == true && mainViewModel.isCompleted3[0] == true)
+                        mainViewModel.readingStatusList[0].readingStatusE =
+                            readingStatusEnum.completed
+
+
+                    if (mainViewModel.isCompleted1[4] == true && mainViewModel.isCompleted2[4] == true && mainViewModel.isCompleted3[4] == true)
+                        mainViewModel.readingStatusList[4].readingStatusE =
+                            readingStatusEnum.completed
+                }
+
+                if(mainViewModel.readingSize.value == 2) {
+                    if (mainViewModel.isCompleted1[2] == true && mainViewModel.isCompleted2[2] == true)
+                        mainViewModel.readingStatusList[2].readingStatusE =
+                            readingStatusEnum.completed
+
+                    if (mainViewModel.isCompleted1[1] == true && mainViewModel.isCompleted2[1] == true)
+                        mainViewModel.readingStatusList[1].readingStatusE =
+                            readingStatusEnum.completed
+
+
+                    if (mainViewModel.isCompleted1[3] == true && mainViewModel.isCompleted2[3] == true)
+                        mainViewModel.readingStatusList[3].readingStatusE =
+                            readingStatusEnum.completed
+
+                    if (mainViewModel.isCompleted1[0] == true && mainViewModel.isCompleted2[0] == true)
+                        mainViewModel.readingStatusList[0].readingStatusE =
+                            readingStatusEnum.completed
+
+
+                    if (mainViewModel.isCompleted1[4] == true && mainViewModel.isCompleted2[4] == true)
+                        mainViewModel.readingStatusList[4].readingStatusE =
+                            readingStatusEnum.completed
+                }
+
+                if(mainViewModel.readingSize.value == 1) {
+                    if (mainViewModel.isCompleted1[2] == true)
+                        mainViewModel.readingStatusList[2].readingStatusE =
+                            readingStatusEnum.completed
+
+                    if (mainViewModel.isCompleted1[1] == true)
+                        mainViewModel.readingStatusList[1].readingStatusE =
+                            readingStatusEnum.completed
+
+
+                    if (mainViewModel.isCompleted1[3] == true)
+                        mainViewModel.readingStatusList[3].readingStatusE =
+                            readingStatusEnum.completed
+
+                    if (mainViewModel.isCompleted1[0] == true)
+                        mainViewModel.readingStatusList[0].readingStatusE =
+                            readingStatusEnum.completed
+
+
+                    if (mainViewModel.isCompleted1[4] == true)
+                        mainViewModel.readingStatusList[4].readingStatusE =
+                            readingStatusEnum.completed
+                }
                 showLogs("NEW READING STATUS: ", mainViewModel.readingStatusList[0].readingStatusE.name.toString())
                 showLogs("NEW READING STATUS: ", mainViewModel.readingStatusList[1].readingStatusE.name.toString())
                 showLogs("NEW READING STATUS: ", mainViewModel.readingStatusList[2].readingStatusE.name.toString())
@@ -412,10 +465,6 @@ class Repository() {
                     mainViewModel.isCompleted3[4] = true
                 }
 */
-
-
-
-
 
                 if (mainViewModel.fpa4.value.isNullOrEmpty()) {
                     mainViewModel.FPACounter = 4
@@ -484,34 +533,18 @@ class Repository() {
 //      val item:readingsStatusItems = readingsStatusItems(eachTime, eachPart, readingStatusEnum.notAvailable)
 //      mainViewModel.readingStatusList.add(item)
         mainViewModel.readingStatusList.clear()
-        mainViewModel.readingStatusList.add(
-            readingsStatusItems(
-                eachTime,
-                eachPart,
-                readingStatusEnum.notAvailable
+
+
+        for(i in 1 .. 4){
+            mainViewModel.readingStatusList.add(
+                readingsStatusItems(
+                    eachTime * i,
+                    eachPart?.times(i),
+                    readingStatusEnum.notAvailable
+                )
             )
-        )
-        mainViewModel.readingStatusList.add(
-            readingsStatusItems(
-                eachTime * 2,
-                eachPart?.times(2),
-                readingStatusEnum.notAvailable
-            )
-        )
-        mainViewModel.readingStatusList.add(
-            readingsStatusItems(
-                eachTime * 3,
-                eachPart?.times(3),
-                readingStatusEnum.notAvailable
-            )
-        )
-        mainViewModel.readingStatusList.add(
-            readingsStatusItems(
-                eachTime * 4,
-                eachPart?.times(4),
-                readingStatusEnum.notAvailable
-            )
-        )
+        }
+
         mainViewModel.readingStatusList.add(
             readingsStatusItems(
                 eachTime * 5 - 5,
@@ -630,20 +663,17 @@ class Repository() {
             mUiViewModel.hideMessageDialog()
             mUiViewModel.setDialogDetails("Try again!", "", "hold on...", R.drawable.ic_notest)
             mUiViewModel.showMessageDialog()
-
             Result.failure(Exception("Notification not sent"))
         }
     }
 
     suspend fun addData(failed: String, passed: String, station_id: String, i: Int): Boolean {
-
         showLogs(
             "CHECK CHECK: ",
             "${mainViewModel.shouldCheckTemporaryFPA}   ${mainViewModel.dontAddData}"
         )
 
         if (mainViewModel.shouldCheckTemporaryFPA) {
-
             showLogs("NEWFPA: ","INSIDE addDATA : temporary FPA CHECK")
             checkFPA(
                 mainViewModel.precedency_no.value,
