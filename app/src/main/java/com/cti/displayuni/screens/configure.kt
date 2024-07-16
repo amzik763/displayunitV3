@@ -351,7 +351,7 @@ object SocketManager {
             val opts = IO.Options()
             opts.forceNew = true
             opts.transports = arrayOf("websocket")
-            socket = IO.socket("http://13.233.194.200:5000",opts) // Use your WebSocket URL
+            socket = IO.socket("http://3.108.65.158:5000",opts) // Use your WebSocket URL
         } catch (e: URISyntaxException) {
             Log.e("SocketManager", "Socket URI Syntax Exception", e)
         }catch (e:Exception){
