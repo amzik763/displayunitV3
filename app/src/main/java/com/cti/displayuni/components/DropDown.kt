@@ -46,6 +46,7 @@ import com.cti.displayuni.utility.mFont.nk
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.showLogs
+import kotlinx.coroutines.delay
 
 @Composable
 fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressState: SnapshotStateMap<String, Boolean>*/
@@ -58,25 +59,54 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressS
     val items = listOf("OK", "NG")
 
     val progressState by progressTimer.getProgress(paramId).collectAsState()
+    val timerCompleted = progressState == 0f
+    val timerStarted = progressTimer.hasTimerStarted(paramId)
 
+    var timerStartedAt by remember { mutableStateOf<Long?>(null) }
+    val currentTime = System.currentTimeMillis()
 
     LaunchedEffect(selectedItem) {
         selectedItem = myComponents.mainViewModel.checkSheetList[index]
     }
-    Row  (modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically) {
 
-        Column(
-            verticalArrangement = Arrangement.Center,
-        ) {
+    // Effect to disable OK 10 seconds after timer starts
+    LaunchedEffect(timerStartedAt) {
+        timerStartedAt?.let { startTime ->
+            val elapsed = System.currentTimeMillis() - startTime
+            if (elapsed < 10_000) {
+                delay(10_000 - elapsed)
+            }
+            // Mark the timer as completed after 10 seconds
+            if (selectedItem == "NG") {
+                progressTimer.stopTimer(paramId)
+                // Notify after the timer completes
+                myComponents.mainViewModel.notify(
+                    myComponents.mainViewModel.getStationValue(),
+                    paramId,
+                    myComponents.mainViewModel.getStationValue().split(" ").take(2).joinToString(" ")
+                ) { result ->
+                    result.onSuccess { notificationId ->
+                        println("Notification ID: $notificationId")
+                        myComponents.mainViewModel.myChecksheetNotificationMap[paramId] = notificationId
+                    }.onFailure { exception ->
+                        println("Notification failed: ${exception.message}")
+                    }
+                }
+            }
+        }
+    }
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(verticalArrangement = Arrangement.Center) {
             OutlinedButton(
                 onClick = { expanded = true },
-                modifier = Modifier
-                    .fillMaxWidth(MaterialTheme.dimens.dropdownMaxW)
+                modifier = Modifier.fillMaxWidth(MaterialTheme.dimens.dropdownMaxW)
             ) {
                 Text(selectedItem)
-                //Display the selected item
                 Icon(Icons.Default.ArrowDropDown, contentDescription = null)
             }
             DropdownMenu(
@@ -84,76 +114,36 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressS
                 onDismissRequest = { expanded = false },
             ) {
                 items.forEach { item ->
+                    val isOkDisabled = item == "OK" && timerStartedAt != null && currentTime - timerStartedAt!! >= 10_000
                     DropdownMenuItem(
-                        {
+                        onClick = {
+                            if (!isOkDisabled) {
+                                selectedItem = item
+                                if (selectedItem == "NG") {
+                                    timerStartedAt = System.currentTimeMillis()
+                                    progressTimer.startTimer(paramId) {
+                                        showLogs("Timer finished for paramId:", paramId)
+                                    }
+                                    myComponents.mainViewModel.checkSheetList[index] = item
+                                } else if (selectedItem == "OK") {
+                                    timerStartedAt = null
+                                    progressTimer.stopTimer(paramId)
+                                    myComponents.mainViewModel.checkSheetList[index] = item
+                                }
+                                expanded = false
+                            }
+                        },
+                        text = {
                             Text(
                                 text = item,
                                 style = TextStyle(
                                     fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                                    color = pureBlack,
+                                    color = if (isOkDisabled) Color.Gray else pureBlack,
                                     textAlign = TextAlign.Center
                                 )
                             )
                         },
-                        onClick = {
-                            selectedItem = item
-                            if (selectedItem == "NG") {
-
-//                               progressState[paramId] = true
-                               /* progressTimer.startTimer(paramId) {
-                                       showLogs("Timer finished for paramId:", paramId)
-                                }
-
-                                myComponents.mainViewModel.checkSheetList.set(index, item)
-                                myComponents.mainViewModel.checkSheetList.forEach { println(it) }
-                                myComponents.mainViewModel.notify(myComponents.mainViewModel.getStationValue(), paramId,
-//                        myComponents.mainViewModel.floorNum
-                                    myComponents.mainViewModel.getStationValue().split(" ").take(2)
-                                        .joinToString(" ")
-                                ) { result ->
-                                    result.onSuccess { notificationId ->
-                                        // Handle success, for example:
-                                        println("Notification ID ID: $notificationId")
-                                        myComponents.mainViewModel.myChecksheetNotificationMap[paramId] =
-                                            notificationId
-                                        println("Notification ID ID: ${myComponents.mainViewModel.mChecksheetData.value}")
-
-                                    }.onFailure { exception ->
-                                        // Handle failure, for example:
-                                        println("Notification failed: ${exception.message}")
-                                        // Update UI or state here
-                                    }
-                                }*/
-
-                                progressTimer.startTimer(paramId) {
-                                    showLogs("Timer finished for paramId:", paramId)
-                                    myComponents.mainViewModel.notify(
-                                        myComponents.mainViewModel.getStationValue(),
-                                        paramId,
-                                        myComponents.mainViewModel.getStationValue().split(" ").take(2).joinToString(" ")
-                                    ) { result ->
-                                        result.onSuccess { notificationId ->
-                                            println("Notification ID ID: $notificationId")
-
-                                            myComponents.mainViewModel.myChecksheetNotificationMap[paramId] = notificationId
-                                        }.onFailure { exception ->
-                                            println("Notification failed: ${exception.message}")
-                                        }
-                                    }
-                                }
-
-                                myComponents.mainViewModel.checkSheetList.set(index, item)
-                                expanded = false
-
-                            } else if (selectedItem == "OK") {
-//                                progressState[paramId] = false
-
-                                progressTimer.stopTimer(paramId)
-                                myComponents.mainViewModel.checkSheetList.set(index, item)
-                                myComponents.mainViewModel.checkSheetList.forEach { println(it) }
-                                expanded = false
-                            }
-                        }
+                        enabled = !isOkDisabled
                     )
                 }
             }
@@ -213,18 +203,5 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressS
                 }
             )
         }
-
-
-/*        // Conditionally show the CircularProgressBar
-        if (progressState[paramId] == true
-//            myComponents.mUiViewModel.showProgressBar.value
-            ) {
-            CircularProgressBar(percentage = 1f, duration = 10,
-                    onTimeEnd = {
-                        progressState[paramId] = false
-                    }
-            )
-        }*/
-
     }
 }

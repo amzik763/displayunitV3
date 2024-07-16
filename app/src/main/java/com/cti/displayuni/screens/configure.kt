@@ -301,6 +301,7 @@ fun Configure() {
 
     WebSocketMessageScreen(message.value)*/
 
+
     Row() {
 
     Button(modifier = Modifier.width(200.dp).height(250.dp), onClick = {
@@ -340,7 +341,6 @@ fun WebSocketMessageScreen(message: String) {
 }
 
 */
-
 
 
 object SocketManager {
@@ -398,9 +398,6 @@ object SocketManager {
         showLogs("SOCKET: ","${event}  ${data}")
 
     }
-
-
-
     fun isConnected(): Boolean {
         return socket.connected()
     }

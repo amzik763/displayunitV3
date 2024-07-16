@@ -465,6 +465,8 @@ class Repository() {
                 )
                 mUiViewModel.showMessageDialog()
             } else {
+
+                showLogs("UNEXPECTED RESPONSE", "Code: ${taskResponse.code()}, Message: ${taskResponse.message()}")
                 mUiViewModel.hideMessageDialog()
                 mUiViewModel.setDialogDetails("Try again!", "", "hold on...", R.drawable.ic_notest)
                 mUiViewModel.showMessageDialog()
