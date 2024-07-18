@@ -351,7 +351,7 @@ object SocketManager {
             val opts = IO.Options()
             opts.forceNew = true
             opts.transports = arrayOf("websocket")
-            socket = IO.socket("http://3.108.65.158:5000",opts) // Use your WebSocket URL
+            socket = IO.socket("http://43.204.144.157:5000",opts) // Use your WebSocket URL
         } catch (e: URISyntaxException) {
             Log.e("SocketManager", "Socket URI Syntax Exception", e)
         }catch (e:Exception){
@@ -381,7 +381,6 @@ object SocketManager {
     fun disconnect() {
         socket.disconnect()
         showLogs("SOCKET: ","its discconnected")
-
     }
 
     fun on(event: String, listener: Emitter.Listener) {

@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cti.displayuni.response.CheckSheetData
+import com.cti.displayuni.response.getValueForKey
 import com.cti.displayuni.ui.theme.dimens
 import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
@@ -160,10 +161,25 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressS
             fontSize = MaterialTheme.typography.bodySmall.fontSize,
         )
 
-        IconButton(modifier = Modifier
-            .padding(start = MaterialTheme.dimens.startPadding), onClick = {
-                myComponents.mainViewModel.getCheckSheetStatusBack(myComponents.mainViewModel.myChecksheetNotificationMap[paramId]){ result ->
-                    result.onSuccess {
+        var temp = myComponents.mainViewModel.dataStatus.value?.let {
+            getValueForKey(
+                it, myComponents.mainViewModel.myChecksheetNotificationMap[paramId].toString()
+            )
+
+
+
+        }
+
+        if (temp == true) {
+            myComponents.mainViewModel.checkSheetList[index] = "SUP_OK"
+            selectedItem = "SUP_OK"
+            showLogs("STOPPING","timer")
+            progressTimer.stopTimer(paramId)
+        }
+                    IconButton(modifier = Modifier
+                .padding(start = MaterialTheme.dimens.startPadding), onClick = {
+                    myComponents.mainViewModel.getCheckSheetStatusBack(myComponents.mainViewModel.myChecksheetNotificationMap[paramId]){ result ->
+                        result.onSuccess {
                             if(it == "true"){
                                 showLogs("NO NOTE: ","true")
                                 myComponents.mainViewModel.checkSheetList[index] = "SUP_OK"
@@ -175,19 +191,20 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressS
 
                                 selectedItem = "NOT_OK"
                             }
-                    }.onFailure {
-                        //show dialouge error
-                        showLogs("NONOTE: ","failed")
-                        selectedItem = "failed"
+                        }.onFailure {
+                            //show dialouge error
+                            showLogs("NONOTE: ","failed")
+                            selectedItem = "failed"
+                        }
                     }
-                }
-        },
+            },
             ) {
-            Icon(imageVector = Icons.Default.Refresh,
-                modifier = Modifier.size(MaterialTheme.dimens.logoSize),
-                contentDescription = "Refresh"
-            )
+                Icon(imageVector = Icons.Default.Refresh,
+                    modifier = Modifier.size(MaterialTheme.dimens.logoSize),
+                    contentDescription = "Refresh"
+                )
 
+            }
         }
 
         // Display CircularProgressBar if progressState is greater than 0
@@ -204,4 +221,4 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressS
             )
         }
     }
-}
+

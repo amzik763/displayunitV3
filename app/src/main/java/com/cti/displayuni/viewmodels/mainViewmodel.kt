@@ -2,6 +2,7 @@ package com.cti.displayuni.viewmodels
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -44,6 +45,8 @@ class MainViewModel(context: Context) : ViewModel() {
 //    class MainViewModel @Inject constructot(private val context: Context):Viewmodel{
 //    }
     private lateinit var onUpdateCspNotificationStatus: Emitter.Listener
+    private val _dataStatus = mutableStateOf<StationCspDataStatus?>(null)
+    val dataStatus: State<StationCspDataStatus?> = _dataStatus
 
     init {
         SocketManager.initSocket()
@@ -62,13 +65,17 @@ class MainViewModel(context: Context) : ViewModel() {
                     val data = args[0] as JSONObject
                     showLogs("WEBSOCKET:", "listening")
                     showLogs("WEBSOCKET:", "${data}")
+                    val dataStatus = parseStationCspDataStatus(data)
+                    _dataStatus.value = dataStatus
+                    showLogs("SOCKET KEY",getValueForKey(dataStatus,"216").toString())
+//                    val dataStatus = parseStationCspDataStatus(data)
                 } catch (e: Exception) {
                     showLogs("WEBSOCKET:", "Error parsing JSON: ${e.message}")
                 }
             }
         }
 
-        val stationData = "G01 F02 L01 S01"
+        val stationData = "G01 F02 L04 S04"
 
         checkStationCspStatus(stationData)
 
