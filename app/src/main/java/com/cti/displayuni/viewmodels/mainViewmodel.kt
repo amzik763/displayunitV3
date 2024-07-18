@@ -48,8 +48,7 @@ class MainViewModel(context: Context) : ViewModel() {
     init {
         SocketManager.initSocket()
         SocketManager.connect()
-
-        // Listen for socket events
+// Listen for socket events
 //        SocketManager.on("update_work_for_operator", onUpdateWorkForOperator)
 //        SocketManager.on("filter_floor_csp_notification", onFilterFloorCspNotification)
 
@@ -437,7 +436,10 @@ class MainViewModel(context: Context) : ViewModel() {
                                 "${it.param_name} value should be between ${it.min} and ${it.max}",
                                 R.drawable.ic_notest
                             )
-                            mUiViewModel.showMessageDialog()
+//                            mUiViewModel.showMessageDialog()
+
+                            mUiViewModel.showFpaEligibleDialog()
+
                             return false
                         }
                     }else{
