@@ -121,7 +121,6 @@ interface OtherAPIs {
         @Field("process_no") process_no: String
     ): Response<myReasons>
 
-
     @FormUrlEncoded
     @POST("/operator/add_fpa_data")
     suspend fun fpaData(

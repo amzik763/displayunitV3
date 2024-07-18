@@ -77,7 +77,6 @@ fun Login(){
     var name by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-
     val conf = LocalConfiguration.current
     val widthDP = conf.screenWidthDp.dp
     val dnsty = conf.densityDpi
