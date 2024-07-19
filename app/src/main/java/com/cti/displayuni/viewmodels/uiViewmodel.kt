@@ -141,13 +141,6 @@ class UiViewModel(context: Context) : ViewModel(){
 
     var isTaskNotApprovedShown by mutableStateOf(false)
         private set
-    fun showTaskNotApprovedDialog() {
-        isTaskNotApprovedShown = true
-    }
-
-    fun hideTaskNotApprovedDialog() {
-        isTaskNotApprovedShown = false
-    }
 
     fun showThanksDialog() {
         isThanksDialogShown = true

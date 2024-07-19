@@ -74,13 +74,12 @@ class MainViewModel(context: Context) : ViewModel() {
             }
         }
 
-        val stationData = "G01 F02 L04 S04"
+        val stationData = "G01 F02 L01 S01"
 
         checkStationCspStatus(stationData)
 
         SocketManager.on("update_csp_notification_status", onUpdateCspNotificationStatus)
 //        checkStationCspStatus()
-
 
     }
     fun checkStationCspStatus(data: String) {
@@ -460,7 +459,10 @@ class MainViewModel(context: Context) : ViewModel() {
                                 "",
                                 "${it.param_name} value should be either ${it.min} or ${it.max}",
                                 R.drawable.ic_notest)
-                            mUiViewModel.showMessageDialog()
+//                            mUiViewModel.showMessageDialog()
+
+                            mUiViewModel.showFpaEligibleDialog()
+
                             return false
                         }
                     }
@@ -480,7 +482,10 @@ class MainViewModel(context: Context) : ViewModel() {
                                 "Value should be between ${minValue} and ${maxValue}",
                                 R.drawable.ic_notest
                             )
-                            mUiViewModel.showMessageDialog()
+//                            mUiViewModel.showMessageDialog()
+
+                            mUiViewModel.showFpaEligibleDialog()
+
 
                             showLogs("Reading", "Reading in range")
                             return false
@@ -513,7 +518,10 @@ class MainViewModel(context: Context) : ViewModel() {
                                 "${it.param_name} value should be between ${it.min} and ${it.max}",
                                 R.drawable.ic_notest
                             )
-                            mUiViewModel.showMessageDialog()
+//                            mUiViewModel.showMessageDialog()
+
+                            mUiViewModel.showFpaEligibleDialog()
+
                             return false
                         }
                     }else{
@@ -527,7 +535,9 @@ class MainViewModel(context: Context) : ViewModel() {
                                 "",
                                 "${it.param_name} value should be either ${it.min} or ${it.max}",
                                 R.drawable.ic_notest)
-                            mUiViewModel.showMessageDialog()
+//                            mUiViewModel.showMessageDialog()
+                            mUiViewModel.showFpaEligibleDialog()
+
                             return false
                         }
                     }
@@ -547,7 +557,10 @@ class MainViewModel(context: Context) : ViewModel() {
                                 "Value should be between ${minValue} and ${maxValue}",
                                 R.drawable.ic_notest
                             )
-                            mUiViewModel.showMessageDialog()
+//                            mUiViewModel.showMessageDialog()
+
+                            mUiViewModel.showFpaEligibleDialog()
+
 
                             showLogs("Reading", "Reading in range")
                             return false
@@ -610,9 +623,6 @@ class MainViewModel(context: Context) : ViewModel() {
             } catch (_: Exception) {
             }
         }*/
-
-
-
 
         return true
     }

@@ -237,7 +237,7 @@ fun FPAEligibilityDialog(
 
                         Spacer(modifier = Modifier.width(30.dp))
                         CustomRoundedButton(onClick = {
-                            myComponents.mUiViewModel.hideMessageDialog()
+                            myComponents.mUiViewModel.hideFpaEligibleDialog()
                         }, text = "OK")
                     }
                 }

@@ -92,7 +92,7 @@ fun ActualLazyList(
 
     val enterValues = rememberSaveable { mutableStateOf(mutableMapOf<Int, String>()) }
 
-    LazyColumn(modifier = Modifier.fillMaxHeight()) {
+    LazyColumn(modifier = Modifier.fillMaxWidth()) {
         itemsIndexed(dataListActual) { index,item ->
 
             Column {

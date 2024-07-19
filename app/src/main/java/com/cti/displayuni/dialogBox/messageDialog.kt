@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.cti.displayuni.components.CustomRoundedButton
 import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.lightOrange
@@ -222,30 +223,9 @@ fun MessageDialog(
                     Column(modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.End){
 
-                        Surface(
-                            modifier = Modifier
-                                .padding(top = floorTopPadding)
-                                .size(width = width, height = height)
-                                .clickable { myComponents.mUiViewModel.hideMessageDialog() },
-                            color = darkBlue,
-                            shape = RoundedCornerShape(corner = CornerSize(24.dp)),
-                            border = BorderStroke(width = 1.dp, color = darkBlue)
-                        ) {
-                            Text(
-                                text = AnnotatedString("OK"),
-                                style = TextStyle(
-                                    color = pureWhite,
-                                    fontSize = textFont1,
-                                    fontFamily = poppinsregular,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.Center
-                                ),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(btnpadding)
-                                    .align(Alignment.CenterHorizontally)
-                            )
-                        }
+                        CustomRoundedButton(onClick = {
+                            myComponents.mUiViewModel.hideMessageDialog()
+                        }, text = "OK")
                     }
                 }
             }

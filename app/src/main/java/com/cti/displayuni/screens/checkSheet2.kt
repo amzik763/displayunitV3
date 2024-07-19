@@ -71,23 +71,9 @@ fun Checksheet2() {
 //    Log.d("mdpi density: ", dnsty.toString())
 
     val wd = mParameters.mWidthinPx
-    //myUI variables
-    var textFont1 = 18.sp
-    var textFont2 = 18.sp
-    var width = 180.dp
-    var topPadding = 64.dp
-    var padding = 24.dp
-    var endPadding = 48.dp
-    var bottomPadding = 48.dp
-    var height = 40.dp
-    var imgSize = 50.dp
     var toppadding2 = 16.dp
-    var startpadding2 = 52.dp
-    var endpadding2 = 52.dp
-    var textFont3 = 20.sp
     var interfaceW = 180.dp
     var interfaceH = 50.dp
-    var btnpadding = 9.dp
     var sWidth = 16.dp
 
     showLogs("dwinsize: ", wd.toString())
@@ -97,46 +83,19 @@ fun Checksheet2() {
 
     if (wd <= 2048 && mParameters.dnsty == 320) {
 
-        topPadding = 20.dp
-        endPadding = 6.dp
-        bottomPadding = 12.dp
-        padding = 16.dp
-        textFont1 = 15.sp
-        textFont2 = 11.sp
-        textFont3 = 12.sp
-        topPadding = 20.dp
-        width = 120.dp
-        height = 30.dp
-        imgSize = 26.dp
         toppadding2 = 10.dp
-        startpadding2 = 40.dp
-        endpadding2 = 30.dp
         interfaceW = 140.dp
         interfaceH = 45.dp
-        btnpadding = 6.dp
         sWidth = 12.dp
 
         showLogs("lwinsize: ", wd.toString())
 
     } else if (wd <= 2048 && mParameters.dnsty == 160) {
 
-        topPadding = 24.dp
-        endPadding = 48.dp
-        bottomPadding = 24.dp
-        padding = 24.dp
-        textFont1 = 30.sp
-        textFont2 = 20.sp
-        textFont3 = 22.sp
         toppadding2 = 14.dp
-        startpadding2 = 64.dp
-        endpadding2 = 52.dp
-        width = 240.dp
-        height = 52.dp
-        imgSize = 50.dp
         toppadding2 = 16.dp
         interfaceW = 180.dp
         interfaceH = 50.dp
-        btnpadding = 9.dp
         sWidth = 16.dp
 
         showLogs("Desktop: ", wd.toString())

@@ -95,7 +95,7 @@ fun ParametersLazyList(
     // Map to store enterValue for each item
     val enterValues = rememberSaveable { mutableStateOf(mutableMapOf<Int, String>()) }
 
-    LazyColumn(modifier = Modifier.fillMaxHeight()) {
+    LazyColumn(modifier = Modifier.fillMaxWidth()) {
         itemsIndexed(dataListSetting) {index, item ->
             Column {
                 Row(

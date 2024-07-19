@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.cti.displayuni.R
+import com.cti.displayuni.components.CustomRoundedButton
 import com.cti.displayuni.components.IDTextField
 import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.lightBlack
@@ -242,34 +243,12 @@ fun FailedFPADialog(
                     Column(modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.End){
 
-                        Surface(
-                            modifier = Modifier
-                                .padding(top = floorTopPadding)
-                                .size(width = width, height = height)
-                                .clickable {
-                                    myComponents.mainViewModel.FailedFPA()
+                        CustomRoundedButton(onClick = {
+                            myComponents.mainViewModel.FailedFPA()
 
-                                    showLogs("FPA FAILED:", "ADDED")
-                                },
-                            color = darkBlue,
-                            shape = RoundedCornerShape(corner = CornerSize(24.dp)),
-                            border = BorderStroke(width = 1.dp, color = darkBlue)
-                        ) {
-                            Text(
-                                text = AnnotatedString("SUBMIT"),
-                                style = TextStyle(
-                                    color = pureWhite,
-                                    fontSize = textFont1,
-                                    fontFamily = poppinsregular,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.Center
-                                ),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(btnpadding)
-                                    .align(Alignment.CenterHorizontally)
-                            )
-                        }
+                            showLogs("FPA FAILED:", "ADDED")
+                        }, text = "FPA Failed")
+
                     }
                 }
             }
