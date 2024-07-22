@@ -47,22 +47,16 @@ fun ItemComponents(index:Int,item: CheckSheetData,
 
    val conf = LocalConfiguration.current
    val dnsty = conf.densityDpi
-
    Log.d("mdpi density: ", dnsty.toString())
-
-
    val wd = mParameters.mWidthinPx
 
    var startPadding1 = 8.dp
    var startPadding2 = 10.dp
-
    Log.d("dwinsize: ", wd.toString())
 
    mParameters.dnsty = dnsty
    Log.d("mparam density: ", mParameters.dnsty.toString())
-
    if (wd <= 2048 && mParameters.dnsty == 320) {
-
       startPadding1 = 4.dp
       startPadding2 = 12.dp
 
@@ -93,7 +87,6 @@ fun ItemComponents(index:Int,item: CheckSheetData,
             fontFamily = nk,
             fontSize = MaterialTheme.typography.bodySmall.fontSize,
          )
-
 
          Text(
             modifier = Modifier

@@ -64,33 +64,25 @@ fun Configure() {
 
     val conf = LocalConfiguration.current
     val widthDP = conf.screenWidthDp.dp
-
     var widthdp = widthDP / 3f
-
     Log.d("dwinsize: ", wd.toString())
 
     val dnsty = conf.densityDpi
-
     mParameters.dnsty = dnsty
     Log.d("mparam density: ", mParameters.dnsty.toString())
 
     if (wd <= 2048 && mParameters.dnsty == 320) {
-
         widthdp = widthDP / 3.7f
-
         Log.d("lwinsize: ", wd.toString())
 
     } else if (wd <= 2048 && mParameters.dnsty == 160) {
-
         widthdp = widthDP / 3f
-
         Log.d("Desktop: ", wd.toString())
     }
 
     val heightDP = LocalConfiguration.current.screenHeightDp.dp
     val focusManager = LocalFocusManager.current
     val densityDpi = LocalConfiguration.current.densityDpi
-
 
     Log.d("SCREEN WIDTH", "Configure:$widthDP")
     Log.d("SCREEN HEIGHT", "Configure:$heightDP")
@@ -351,7 +343,7 @@ object SocketManager {
             val opts = IO.Options()
             opts.forceNew = true
             opts.transports = arrayOf("websocket")
-            socket = IO.socket("http://43.204.144.157:5000",opts) // Use your WebSocket URL
+            socket = IO.socket("http://192.168.1.15:5000",opts) // Use your WebSocket URL
         } catch (e: URISyntaxException) {
             Log.e("SocketManager", "Socket URI Syntax Exception", e)
         }catch (e:Exception){
@@ -395,8 +387,8 @@ object SocketManager {
         socket.emit(event, data)
         showLogs("SOCKET: ","its emitting")
         showLogs("SOCKET: ","${event}  ${data}")
-
     }
+
     fun isConnected(): Boolean {
         return socket.connected()
     }

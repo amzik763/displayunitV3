@@ -29,12 +29,14 @@ class ProgressTimer(private val duration: Long) {
     }
 
     fun getProgress(paramId: String): StateFlow<Float> {
+        showLogs("PROGRESS TIMER: ", paramId + "PROGRESS" + progressStates[paramId])
         return progressStates[paramId] ?: MutableStateFlow(0f)
     }
 
     fun stopTimer(paramId: String) {
         timers[paramId]?.cancel()
         progressStates[paramId]?.value = 0f
+        showLogs("STOPPING TIMER: ", paramId + "STOPPED")
     }
 
     fun hasTimerStarted(paramId: String): Boolean {

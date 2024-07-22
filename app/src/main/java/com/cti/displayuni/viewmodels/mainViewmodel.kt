@@ -48,15 +48,13 @@ class MainViewModel(context: Context) : ViewModel() {
     private val _dataStatus = mutableStateOf<StationCspDataStatus?>(null)
     val dataStatus: State<StationCspDataStatus?> = _dataStatus
 
-    init {
+    /*init {
         SocketManager.initSocket()
         SocketManager.connect()
-// Listen for socket events
-//        SocketManager.on("update_work_for_operator", onUpdateWorkForOperator)
-//        SocketManager.on("filter_floor_csp_notification", onFilterFloorCspNotification)
-
+        // Listen for socket events
+        //  SocketManager.on("update_work_for_operator", onUpdateWorkForOperator)
+        //  SocketManager.on("filter_floor_csp_notification", onFilterFloorCspNotification)
         showLogs("WEBSOCKET:"," initialized")
-
 
         onUpdateCspNotificationStatus = Emitter.Listener { args ->
             viewModelScope.launch(Dispatchers.Main) {
@@ -74,21 +72,17 @@ class MainViewModel(context: Context) : ViewModel() {
             }
         }
 
-        val stationData = "G01 F02 L01 S01"
-
+        val stationData = "G01 F02 L04 S04"
         checkStationCspStatus(stationData)
-
         SocketManager.on("update_csp_notification_status", onUpdateCspNotificationStatus)
 //        checkStationCspStatus()
+    }*/
 
-    }
     fun checkStationCspStatus(data: String) {
 //        SocketManager.emit("check_station_csp_status", data)
         SocketManager.emit("check_station_csp_status", data)
         showLogs("WEBSOCKET:"," check emit")
-
     }
-
 
     override fun onCleared() {
         super.onCleared()
@@ -96,7 +90,6 @@ class MainViewModel(context: Context) : ViewModel() {
     }
 
     var mContext = context
-
     var isSupLoginSuccessful = false
 
     var name by mutableStateOf("")
@@ -148,12 +141,10 @@ class MainViewModel(context: Context) : ViewModel() {
 
     var showZoomableImage by mutableStateOf(true)
     var tempParamID by mutableStateOf("")
-
     val checkSheetList = mutableListOf<String>()
 
     //VARIABLE FOR NEW CHECKSHEETDATA
     val mChecksheetData = MutableLiveData<List<CheckSheetData>>()
-
     //    lateinit var mChecksheetNotification: MutableLiveData<MutableMap<String, String>>
     val myChecksheetNotificationMap = mutableStateMapOf<String, String>()
     val apiCheckSheetStatusBack = mutableStateOf(checkSheetStatusBack("none"))
