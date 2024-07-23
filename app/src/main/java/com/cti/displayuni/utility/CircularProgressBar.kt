@@ -79,6 +79,7 @@ fun CircularProgressBar(
 @Composable
 fun CircularProgressBar(
     percentage: Float,
+    value:String,
     duration: Int,
     radius: Dp = 30.dp,
     color: Color = Color.Blue,
@@ -99,11 +100,15 @@ fun CircularProgressBar(
             )
         }
         Text(
-            text = "${(duration * percentage).toInt()}s",
+//            text = "${(duration * percentage).toInt()}s",
+            text = "${value}s",
             color = Color.Black,
             fontSize = MaterialTheme.typography.bodySmall.fontSize,
             fontWeight = MaterialTheme.typography.bodySmall.fontWeight
         )
+        showLogs("PROGRESS VALUE TEXT:","${(duration * percentage).toInt()}s")
+        showLogs("PROGRESS VALUE TEXT INSIDE:","${percentage}s")
+
     }
 
     LaunchedEffect(percentage) {

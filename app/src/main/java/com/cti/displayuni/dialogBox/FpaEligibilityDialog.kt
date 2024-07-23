@@ -13,22 +13,17 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,30 +37,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.cti.displayuni.R
 import com.cti.displayuni.components.CustomRoundedButton
-import com.cti.displayuni.components.IDTextField
 import com.cti.displayuni.ui.theme.darkBlue
-import com.cti.displayuni.ui.theme.dimens
 import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.lightOrange
-import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
-import com.cti.displayuni.ui.theme.red
+import com.cti.displayuni.utility.DialogModel
+import com.cti.displayuni.utility.animateDPInfinite
 import com.cti.displayuni.utility.mFont.nk
 import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mFont.nkmedium
 import com.cti.displayuni.utility.mFont.poppinsregular
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
-import com.cti.displayuni.utility.showLogs
+import com.cti.displayuni.utility.myComponents.mainViewModel
 
 //@Preview(name = "Tablet", device = "spec:width=1920px,height=1080px,dpi=160,isRound=false,orientation=landscape", showBackground = true, showSystemUi = true)
 @Composable
-fun FailedFPADialog(
+fun FPAEligibilityDialog(
+    dialogModel: DialogModel,
     onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
 ){
-
     val conf = LocalConfiguration.current
     val dnsty = conf.densityDpi
 
@@ -143,9 +136,9 @@ fun FailedFPADialog(
         Log.d("Desktop: ", wd.toString())
     }
 
+
     Dialog(
         onDismissRequest = {
-            onDismiss()
         },
         properties = DialogProperties(
             usePlatformDefaultWidth = false
@@ -168,9 +161,13 @@ fun FailedFPADialog(
                     verticalAlignment = Alignment.CenterVertically
 
                 ) {
-                    Image(painter = painterResource(id = R.drawable.thanks),
-                        contentDescription = "thanks",
-                        modifier = Modifier.size(imgSize)
+                    val animatedOffset = animateDPInfinite(finalOffset = 20.dp, duration = 1000)
+
+                    Image(painter = painterResource(id = myComponents.mUiViewModel.dialogModel.imageResource),
+                        contentDescription = "message",
+                        modifier = Modifier
+                            .size(imgSize)
+                            .padding(animatedOffset)
                     )
                 }
 
@@ -193,15 +190,15 @@ fun FailedFPADialog(
                             top = topPadding,
                             start = startPadding,
                             end = endPadding,
-                            bottom = MaterialTheme.dimens.padding
+                            bottom = bottomPadding
                         )
                         .fillMaxSize(),
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column {
-                        Text(text = "FPA FAILED",
+                        Text(text = dialogModel.dialogHeaderText,
                             style = TextStyle(
-                                fontSize = MaterialTheme.typography.headlineLarge.fontSize,
+                                fontSize = mainHeaderFont,
                                 color = lightBlack,
                                 fontWeight = FontWeight.Bold,
                                 textAlign = TextAlign.Center,
@@ -209,51 +206,39 @@ fun FailedFPADialog(
                             )
                         )
 
-                        Text(modifier = Modifier.padding(top = fpaTopPadding),
-                            text = "FPA SHOULD BE PASS TO PROCEED",
+                        Text(modifier = Modifier.padding(
+                            top = fpaTopPadding),
+                            text = dialogModel.dialogSubHeaderText,
                             style = TextStyle(
-                                fontSize = MaterialTheme.typography.headlineMedium.fontSize,
+                                fontSize = semiHeaderFont,
                                 color = lightBlack,
                                 textAlign = TextAlign.Center,
                                 fontFamily = nkmedium
                             )
                         )
                         Text(modifier = Modifier.padding(top = floorTopPadding),
-                            text = "Ask Floor-In-Charge for necessary help",
+                            text = dialogModel.dialogText,
                             style = TextStyle(
-                                fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                                fontSize = textFont1,
                                 color = lightBlack,
                                 textAlign = TextAlign.Center,
                                 fontFamily = nk
                             )
                         )
-
-                        Spacer(modifier = Modifier.height(MaterialTheme.dimens.topPadding))
-
-                        var itemId by remember { mutableStateOf("") }
-                        IDTextField(
-                            text = itemId,
-                            label = "Item ID",
-                            onTextChange = { itemId = it
-                                myComponents.mainViewModel.itemId = it},
-                            color = pureBlack,
-                            maxLength = 15,
-                            shape = RoundedCornerShape(8.dp)
-                        )
-
                     }
 
-                    Column(modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.End){
+
+                    Row(modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End){
 
                         CustomRoundedButton(onClick = {
-                            myComponents.mainViewModel.FailedFPA()
+                            myComponents.mUiViewModel.showFailedDialog()
+                        }, text = "FPA Failed")
 
-                            showLogs("FPA FAILED:", "ADDED")
-                        },
-                            backgroundColor = red,
-                            text = "Fail")
-
+                        Spacer(modifier = Modifier.width(30.dp))
+                        CustomRoundedButton(onClick = {
+                            myComponents.mUiViewModel.hideFpaEligibleDialog()
+                        }, text = "OK")
                     }
                 }
             }

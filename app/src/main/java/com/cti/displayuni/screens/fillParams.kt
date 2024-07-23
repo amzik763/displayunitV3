@@ -52,6 +52,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.cti.displayuni.R
 import com.cti.displayuni.components.ActualLazyList
+import com.cti.displayuni.components.CustomRoundedButton
 import com.cti.displayuni.components.ParametersLazyList
 import com.cti.displayuni.ui.theme.darkBlue
 import com.cti.displayuni.ui.theme.dimens
@@ -105,7 +106,7 @@ fun ActualParams() {
             text = "Actual Parameters",
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
-                fontSize = fontLarge
+                fontSize = MaterialTheme.typography.headlineSmall.fontSize
             )
         )
 
@@ -141,7 +142,7 @@ fun SettingParams() {
             text = "Process Setting Parameters",
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
-                fontSize = fontLarge
+                fontSize = MaterialTheme.typography.headlineSmall.fontSize
             )
         )
 
@@ -152,33 +153,13 @@ fun SettingParams() {
 
 @Composable
 fun FPACircles(fpa: String?) {
-    val wd = mParameters.mWidthinPx
-
-    var width = 12.dp
-    var size = 30.dp
-    showLogs("dwinsize: ", wd.toString())
-    showLogs("mparam density: ", mParameters.dnsty.toString())
-
-    if (wd <= 2048 && mParameters.dnsty == 320) {
-
-        width = 6.dp
-        size = 16.dp
-        showLogs("lwinsize: ", wd.toString())
-
-    } else if (wd <= 2048 && mParameters.dnsty == 160) {
-
-        size = 30.dp
-        width = 12.dp
-        showLogs("Desktop: ", wd.toString())
-    }
-
     Image(painter = painterResource(id = R.drawable.circle),
         contentDescription ="Circle1",
         modifier = Modifier
-            .size(size)
-        .clickable {
-            myComponents.mUiViewModel.showFpaDetails.value = true
-        },
+            .size(MaterialTheme.dimens.logoSize)
+            .clickable {
+                myComponents.mUiViewModel.showFpaDetails.value = true
+            },
 
         colorFilter = if (fpa.isNullOrEmpty()) {
             showLogs("FPAFPAFPA: ","null")
@@ -189,37 +170,17 @@ fun FPACircles(fpa: String?) {
             ColorFilter.tint(green)
         }
     )
-    Spacer(modifier = Modifier.width(width))
+    Spacer(modifier = Modifier.width(MaterialTheme.dimens.padding))
 }
 
 @Composable
 fun FPADetails(){
-
-    val wd = mParameters.mWidthinPx
-    //myUI variables
-
-    var textFont2 = 24.sp
-    showLogs("dwinsize: ", wd.toString())
-    showLogs("mparam density: ", mParameters.dnsty.toString())
-
-    if (wd <= 2048 && mParameters.dnsty == 320) {
-
-        textFont2 = 14.sp
-        showLogs("lwinsize: ", wd.toString())
-
-    } else if (wd <= 2048 && mParameters.dnsty == 160) {
-
-        textFont2 = 24.sp
-        showLogs("Desktop: ", wd.toString())
-    }
-
-
     Row{
         Text(
             text = "FPA Details",
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
-                fontSize = textFont2,
+                fontSize = MaterialTheme.typography.headlineSmall.fontSize,
                 textAlign = TextAlign.Center
             )
         )
@@ -235,31 +196,12 @@ fun FPADetails(){
 
 @Composable
 fun ReadingUI(){
-
-    val wd = mParameters.mWidthinPx
-    //myUI variables
-
-    var textFont2 = 24.sp
-    showLogs("dwinsize: ", wd.toString())
-    showLogs("mparam density: ", mParameters.dnsty.toString())
-
-    if (wd <= 2048 && mParameters.dnsty == 320) {
-
-        textFont2 = 14.sp
-        showLogs("lwinsize: ", wd.toString())
-
-    } else if (wd <= 2048 && mParameters.dnsty == 160) {
-
-        textFont2 = 24.sp
-        showLogs("Desktop: ", wd.toString())
-    }
-
     Row{
         Text(
             text = "Readings",
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
-                fontSize = textFont2,
+                fontSize = MaterialTheme.typography.headlineSmall.fontSize,
                 textAlign = TextAlign.Center
             )
         )
@@ -298,10 +240,11 @@ fun ReadingCircles(r: Boolean,r2:Boolean,r3:Boolean) {
 
     Image(painter = painterResource(id = R.drawable.circle),
         contentDescription ="Circle1",
-        modifier = Modifier.size(MaterialTheme.dimens.logoSize)
-        .clickable {
-            myComponents.mUiViewModel.showCustomPopup.value = true
-        },
+        modifier = Modifier
+            .size(MaterialTheme.dimens.logoSize)
+            .clickable {
+                myComponents.mUiViewModel.showCustomPopup.value = true
+            },
         colorFilter =  if(myComponents.mainViewModel.dataListChart.value?.size == 3){
             if(!r||!r2||!r3){
 
@@ -349,7 +292,8 @@ fun CheckingParts(checking:String, total:String, pass:String, fail:String){
             text = checking,
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
-                fontSize = fontMedium
+                fontSize = MaterialTheme.typography.bodySmall.fontSize
+
             )
         )
         Spacer(modifier = Modifier.width(24.dp))
@@ -357,8 +301,10 @@ fun CheckingParts(checking:String, total:String, pass:String, fail:String){
             text = total,
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
-                fontSize = fontMedium,
-                color = darkBlue
+                color = darkBlue,
+                fontSize = MaterialTheme.typography.bodySmall.fontSize
+
+
             )
         )
         Spacer(modifier = Modifier.width(24.dp))
@@ -366,7 +312,7 @@ fun CheckingParts(checking:String, total:String, pass:String, fail:String){
             text = pass,
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
-                fontSize = fontMedium,
+                fontSize = MaterialTheme.typography.bodySmall.fontSize,
                 color = green
             )
         )
@@ -375,7 +321,7 @@ fun CheckingParts(checking:String, total:String, pass:String, fail:String){
             text = fail,
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
-                fontSize = fontMedium,
+                fontSize = MaterialTheme.typography.bodySmall.fontSize,
                 color = red
             )
         )
@@ -421,36 +367,17 @@ fun OrangeText(
     value:String = "",
     style: TextStyle = TextStyle.Default
 ){
-
-    val wd = mParameters.mWidthinPx
-    //myUI variables
-
-    var textFont2 = 18.sp
-    showLogs("dwinsize: ", wd.toString())
-    showLogs("mparam density: ", mParameters.dnsty.toString())
-
-    if (wd <= 2048 && mParameters.dnsty == 320) {
-
-        textFont2 = 11.sp
-        showLogs("lwinsize: ", wd.toString())
-
-    } else if (wd <= 2048 && mParameters.dnsty == 160) {
-
-        textFont2 = 20.sp
-        showLogs("Desktop: ", wd.toString())
-    }
-
     Column(verticalArrangement = Arrangement.SpaceAround) {
         Row {
             Text( text = name,
                 style = style.copy(
-                    fontSize = textFont2
+                    fontSize = MaterialTheme.typography.bodySmall.fontSize
                 )
             )
             Text( text = value,
                 style = style.copy(
                     fontWeight = FontWeight.Bold,
-                    fontSize = textFont2
+                    fontSize = MaterialTheme.typography.bodySmall.fontSize
                 )
             )
         }
@@ -510,6 +437,7 @@ fun Header(){
     Column(modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight()
+//        .padding(MaterialTheme.dimens.topPadding)
 //        .scale(0.75f)
     ) {
 
@@ -533,55 +461,18 @@ fun Header(){
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-//                Column(
-//                    modifier = Modifier
-//                        .padding(padding1)
-////                        .fillMaxHeight()
-//                ) {
-                    OrangeText(name = "Process Name: ", value = myComponents.mainViewModel.mProcessName)
-                    /*Box(
-                        modifier = Modifier
-                            .padding(top = topPadding)
-                            .width(65.dp)
-                            .height(4.dp)
-                            .background(color = lightOrange)
-                    )*/
-//                }
 
-                Spacer(modifier = Modifier.width(sWidth))
-                /*Column(
-                    modifier = Modifier
-                        .padding(padding1)
-//                        .fillMaxHeight()
-                ) {*/
-                    OrangeText(name = "Part Name: ", value = myComponents.mainViewModel.mPartName)
-                   /* Box(
-                        modifier = Modifier
-                            .padding(top = topPadding)
-                            .width(65.dp)
-                            .height(4.dp)
-                            .background(color = lightOrange)
-                    )*/
-//                }
+                OrangeText(name = "Process Name: ", value = myComponents.mainViewModel.mProcessName)
 
                 Spacer(modifier = Modifier.width(sWidth))
 
-               /* Column (
-                    modifier = Modifier
-                        .padding(padding1)
-//                        .fillMaxHeight()
-                ){*/
+                OrangeText(name = "Part Name: ", value = myComponents.mainViewModel.mPartName)
 
-                    OrangeText(name = "Device Id: ", value = myComponents.mainViewModel.deviceId)
 
-                   /* Box(
-                        modifier = Modifier
-                            .padding(top = topPadding)
-                            .width(65.dp)
-                            .height(4.dp)
-                            .background(color = lightOrange)
-                    )*/
-//                }
+                Spacer(modifier = Modifier.width(sWidth))
+
+
+                OrangeText(name = "Device Id: ", value = myComponents.mainViewModel.deviceId)
 
                 Spacer(modifier = Modifier.width(sWidth2))
 
@@ -610,10 +501,10 @@ fun Header(){
                     border = BorderStroke(3.dp, darkBlue),
                     colors = ButtonDefaults.buttonColors(contentColor = pureWhite, containerColor =  darkBlue),
                     contentPadding = PaddingValues(0.dp),
-                    ) {
+                ) {
                     Text(
                         text = fpa,
-                        fontSize = fontMedium,
+                        fontSize = MaterialTheme.typography.labelMedium.fontSize,
                         modifier = Modifier.padding(horizontal = hPadding)
                     )
                 }
@@ -732,7 +623,7 @@ fun Header(){
 
                                 if(myComponents.mainViewModel.isFPATime){
 //                                    myComponents.mainViewModel.submitPartInfoWithParams(1)
-                                      myComponents.mainViewModel.checkFPA(myComponents.mainViewModel.precedency_no.value, myComponents.mainViewModel.mPartName ,myComponents.mainViewModel.temp_task_id.value)
+                                    myComponents.mainViewModel.checkFPA(myComponents.mainViewModel.precedency_no.value, myComponents.mainViewModel.mPartName ,myComponents.mainViewModel.temp_task_id.value)
                                 }else{
                                     myComponents.mainViewModel.submitPartInfo(1)
                                 }
@@ -743,6 +634,8 @@ fun Header(){
                         }
 
                     },
+                    modifier = Modifier
+                        .size(width = MaterialTheme.dimens.buttonWidth, height = MaterialTheme.dimens.buttonHeight),
                     contentPadding = PaddingValues(0.dp),
                     shape = RoundedCornerShape(29.dp),
                     border = BorderStroke(3.dp, green),
@@ -754,7 +647,7 @@ fun Header(){
                     ) {
                     Text(
                         text = "PASS",
-                        fontSize = fontMedium,
+                        fontSize = MaterialTheme.typography.bodySmall.fontSize,
                         modifier = Modifier
 //                            .padding(horizontal = 30.dp)
 
@@ -762,86 +655,6 @@ fun Header(){
                 }
                 Spacer(modifier = Modifier.width(sWidth))
 
-                Button(
-                    onClick = {
-                        showLogs("PASS", myComponents.mainViewModel.pass.intValue.toString())
-                        showLogs("FAIL", myComponents.mainViewModel.fail.intValue.toString())
-                        showLogs("STATION VALUE", myComponents.mainViewModel.getStationValue())
-
-                        val passFail = myComponents.mainViewModel.pass.intValue + myComponents.mainViewModel.fail.intValue
-
-                        val actualParamsFilled = myComponents.mainViewModel.areActualParamsFilled(myComponents.mainViewModel.dataListActual)
-                        showLogs("Actual Param", actualParamsFilled.toString())
-
-                        val settingParamsFilled = myComponents.mainViewModel.areSettingParamsFilled(myComponents.mainViewModel.dataListSetting)
-                        showLogs("Setting Param", settingParamsFilled.toString())
-
-                        if(passFail < 2){
-                            myComponents.mainViewModel.isFPATime = true
-                            showLogs("FPA FAILED: ","FPA SHOULD BE PASS TO PROCEED")
-                            //show DIALOG BOX
-//                            myComponents.mUiViewModel.setDialogDetails("FPA FAILED", "FPA SHOULD BE PASS TO PROCEED", "Ask Floor-In-Charge for necessary help", R.drawable.ic_notest )
-//                            myComponents.mUiViewModel.showMessageDialog()
-
-                            myComponents.mUiViewModel.showFailedDialog()
-
-                        }else if(myComponents.mainViewModel.isCurrentTimeExceedsMidTime(myComponents.mainViewModel.startShiftTime,myComponents.mainViewModel.endShiftTime)){
-                            showLogs("FAILED: ","time exceed")
-
-                            if(myComponents.mainViewModel.FPACounter ==5){
-                                showLogs("FAILED: ","counter 5")
-
-                                myComponents.mainViewModel.isFPATime = false
-                                //show loading dialog
-                                if(myComponents.mainViewModel.isReasonRetrieved) {
-                                    showLogs("FAILED: ","reason retrieved")
-
-                                    myComponents.mUiViewModel.showRejectReasonDialog()
-                                }
-                                else{
-                                    showLogs("FAILED: ","getting reason")
-                                    myComponents.mainViewModel.getReasonData()
-
-                                }
-                            }
-                            else if(myComponents.mainViewModel.fpa3.value.isNullOrEmpty() || myComponents.mainViewModel.fpa4.value.isNullOrEmpty())
-                            {   myComponents.mainViewModel.isFPATime = true
-
-                                myComponents.mainViewModel.isFPATime = true
-                                showLogs("FPA FAILED: ","FPA SHOULD BE PASS TO PROCEED")
-                                //show DIALOG BOX WITH BUTTON
-//                                myComponents.mUiViewModel.setDialogDetails("FPA FAILED", "FPA SHOULD BE PASS TO PROCEED", "Ask Floor-In-Charge for necessary help", R.drawable.ic_notest )
-//                                myComponents.mUiViewModel.showMessageDialog()
-
-                                myComponents.mUiViewModel.showFailedDialog()
-
-                            }
-                        }
-                        else {
-                            myComponents.mainViewModel.isFPATime = false
-                            //show loading dialog
-                            if(myComponents.mainViewModel.isReasonRetrieved)
-
-                                myComponents.mUiViewModel.showRejectReasonDialog()
-                            else
-                                myComponents.mainViewModel.getReasonData()
-                        }
-                    },
-                    shape = RoundedCornerShape(29.dp),
-                    border = BorderStroke(3.dp, red),
-                    contentPadding = PaddingValues(0.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        contentColor = pureWhite,
-                        containerColor = red
-                    ),
-                ) {
-                    Text(
-                        text = "FAIL",
-                        fontSize = fontMedium,
-//                        modifier = Modifier.padding(horizontal = 30.dp)
-                    )
-                }
-                Spacer(modifier = Modifier.width(sWidth))
             }
         }
         if (myComponents.mainViewModel.showZoomableImage) {
@@ -872,6 +685,11 @@ fun Header(){
                 }
             }
         }
+
+        Column(modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.End){
+            FailButton()
+        }
     }
 }
 
@@ -895,9 +713,13 @@ fun ZoomableImage(){
         currentIndex = (currentIndex + 1) % myComponents.mainViewModel.imageUrl.size
     }
 
-    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = Modifier.fillMaxWidth()
+        .fillMaxHeight(0.94f)
+        .padding(start = MaterialTheme.dimens.startPadding),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally) {
 
-        Row (modifier = Modifier.fillMaxHeight(),
+        Row (modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically){
 
             Image(painter = painterResource(id = R.drawable.arrow_left),
@@ -913,7 +735,9 @@ fun ZoomableImage(){
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth(0.8f)
-                    .fillMaxHeight()
+
+                    .fillMaxHeight(0.94f)
+
                     .pointerInput(Unit) {
                         detectTransformGestures { _, pan, zoom, _ ->
                             // Update the scale based on zoom gestures.
@@ -956,38 +780,6 @@ fun FillParam(){
 
     val showFullImage = myComponents.mUiViewModel.showFullImage.observeAsState()
 
-    if (mParameters.dnsty == 320) {
-
-        fontSmall = 10.sp
-        fontMedium = 12.sp
-        fontLarge = 17.sp
-        paddingSmall = 2.dp
-        paddingMedium = 4.dp
-        paddingLarge = 8.dp
-        heightSmall = 34.dp
-        heightMedium = 50.dp
-        heightLarge = 70.dp
-        heightinFSmall = 0.06f
-        heightinFMedium = 0.073f
-        heightinFLarge = 80.dp
-        showLogs("DENSITY","320")
-
-    } else if (mParameters.dnsty == 160) {
-
-        fontSmall = 12.sp
-        fontMedium = 18.sp
-        fontLarge = 22.sp
-        paddingSmall = 4.dp
-        paddingMedium = 8.dp
-        paddingLarge = 12.dp
-        heightSmall = 40.dp
-        heightMedium = 60.dp
-        heightLarge = 80.dp
-        heightinFSmall = 0.06f
-        heightinFMedium = 0.073f
-        heightinFLarge = 80.dp
-        showLogs("DENSITY","160")
-    }
     Header()
     showLogs("Early READINGS UI",myComponents.mUiViewModel.showCustomPopup.value.toString())
 
@@ -1083,7 +875,7 @@ fun TopHeader(){
                 Text(
                     text = "Name: ",
                     style = TextStyle(
-                        fontSize = textFont2,
+                        fontSize = MaterialTheme.typography.bodySmall.fontSize,
                         color = pureBlack,
                         fontFamily = mFont.poppinsregular
                     )
@@ -1091,7 +883,7 @@ fun TopHeader(){
                 Text(
                     text = myComponents.mainViewModel.name,
                     style = TextStyle(
-                        fontSize = textFont2,
+                        fontSize = MaterialTheme.typography.bodySmall.fontSize,
                         color = pureBlack,
                         fontWeight = FontWeight.Bold,
                         fontFamily = mFont.poppinsbold
@@ -1104,7 +896,7 @@ fun TopHeader(){
                 Text(
                     text = "Skill: ",
                     style = TextStyle(
-                        fontSize = textFont2,
+                        fontSize = MaterialTheme.typography.bodySmall.fontSize,
                         color = pureBlack,
                         fontFamily = mFont.poppinsregular
                     )
@@ -1112,7 +904,7 @@ fun TopHeader(){
                 Text(
                     text = myComponents.mainViewModel.skill,
                     style = TextStyle(
-                        fontSize = textFont2,
+                        fontSize = MaterialTheme.typography.bodySmall.fontSize,
                         color = pureBlack,
                         fontWeight = FontWeight.Bold,
                         fontFamily = mFont.poppinsbold
@@ -1127,7 +919,7 @@ fun TopHeader(){
                 Text(
                     text = "Device Id: ",
                     style = TextStyle(
-                        fontSize = textFont2,
+                        fontSize = MaterialTheme.typography.bodySmall.fontSize,
                         color = pureBlack,
                         fontFamily = mFont.poppinsregular
                     )
@@ -1135,7 +927,7 @@ fun TopHeader(){
                 Text(
                     text = myComponents.mainViewModel.deviceId,
                     style = TextStyle(
-                        fontSize = textFont2,
+                        fontSize = MaterialTheme.typography.bodySmall.fontSize,
                         color = pureBlack,
                         fontWeight = FontWeight.Bold,
                         fontFamily = mFont.poppinsbold
@@ -1146,7 +938,7 @@ fun TopHeader(){
                 Text(
                     text = "Employee Id: ",
                     style = TextStyle(
-                        fontSize = textFont2,
+                        fontSize = MaterialTheme.typography.bodySmall.fontSize,
                         color = pureBlack,
                         fontFamily = mFont.poppinsregular
                     )
@@ -1154,7 +946,7 @@ fun TopHeader(){
                 Text(
                     text = myComponents.mainViewModel.employeeId,
                     style = TextStyle(
-                        fontSize = textFont2,
+                        fontSize = MaterialTheme.typography.bodySmall.fontSize,
                         color = pureBlack,
                         fontWeight = FontWeight.Bold,
                         fontFamily = mFont.poppinsbold
@@ -1171,3 +963,78 @@ fun PreviewUi(){
     FillParam()
 }
 
+@Composable
+fun FailButton(){
+    Button(
+        onClick = {
+            showLogs("PASS", myComponents.mainViewModel.pass.intValue.toString())
+            showLogs("FAIL", myComponents.mainViewModel.fail.intValue.toString())
+            showLogs("STATION VALUE", myComponents.mainViewModel.getStationValue())
+
+            val passFail = myComponents.mainViewModel.pass.intValue + myComponents.mainViewModel.fail.intValue
+
+            val actualParamsFilled = myComponents.mainViewModel.areActualParamsFilled(myComponents.mainViewModel.dataListActual)
+            showLogs("Actual Param", actualParamsFilled.toString())
+
+            val settingParamsFilled = myComponents.mainViewModel.areSettingParamsFilled(myComponents.mainViewModel.dataListSetting)
+            showLogs("Setting Param", settingParamsFilled.toString())
+
+            if(passFail < 2){
+                myComponents.mainViewModel.isFPATime = true
+                showLogs("FPA FAILED: ","FPA SHOULD BE PASS TO PROCEED")
+                myComponents.mUiViewModel.showFailedDialog()
+
+            }else if(myComponents.mainViewModel.isCurrentTimeExceedsMidTime(myComponents.mainViewModel.startShiftTime,myComponents.mainViewModel.endShiftTime)){
+                showLogs("FAILED: ","time exceed")
+
+                if(myComponents.mainViewModel.FPACounter ==5){
+                    showLogs("FAILED: ","counter 5")
+
+                    myComponents.mainViewModel.isFPATime = false
+                    //show loading dialog
+                    if(myComponents.mainViewModel.isReasonRetrieved) {
+                        showLogs("FAILED: ","reason retrieved")
+
+                        myComponents.mUiViewModel.showRejectReasonDialog()
+                    }
+                    else{
+                        showLogs("FAILED: ","getting reason")
+                        myComponents.mainViewModel.getReasonData()
+
+                    }
+                }
+                else if(myComponents.mainViewModel.fpa3.value.isNullOrEmpty() || myComponents.mainViewModel.fpa4.value.isNullOrEmpty())
+                {   myComponents.mainViewModel.isFPATime = true
+
+                    myComponents.mainViewModel.isFPATime = true
+                    showLogs("FPA FAILED: ","FPA SHOULD BE PASS TO PROCEED")
+                 myComponents.mUiViewModel.showFailedDialog()
+                }
+            }
+            else {
+                myComponents.mainViewModel.isFPATime = false
+                //show loading dialog
+                if(myComponents.mainViewModel.isReasonRetrieved)
+
+                    myComponents.mUiViewModel.showRejectReasonDialog()
+                else
+                    myComponents.mainViewModel.getReasonData()
+            }
+        },
+        modifier = Modifier
+            .size(width = MaterialTheme.dimens.buttonWidth, height = MaterialTheme.dimens.buttonHeight),
+        shape = RoundedCornerShape(29.dp),
+        border = BorderStroke(3.dp, red),
+        contentPadding = PaddingValues(0.dp),
+        colors = ButtonDefaults.buttonColors(
+            contentColor = pureWhite,
+            containerColor = red
+        ),
+    ) {
+        Text(
+            text = "FAIL",
+            fontSize = MaterialTheme.typography.labelMedium.fontSize,
+
+            )
+    }
+}

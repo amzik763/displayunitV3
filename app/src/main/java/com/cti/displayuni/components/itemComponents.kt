@@ -94,7 +94,6 @@ fun ItemComponents(index:Int,item: CheckSheetData,
             fontSize = MaterialTheme.typography.bodySmall.fontSize,
          )
 
-
          Text(
             modifier = Modifier
                .fillMaxWidth(MaterialTheme.dimens.fillMaxWidth2)

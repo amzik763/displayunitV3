@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.cti.displayuni.dialogBox.FPAEligibilityDialog
 import com.cti.displayuni.dialogBox.FailedFPADialog
 import com.cti.displayuni.networks.RetrofitBuilder
 import com.cti.displayuni.dialogBox.MessageDialog
@@ -98,8 +99,20 @@ class MainActivity : ComponentActivity() {
                 mThanksDialog()
                 mFailedDialog()
                 OverrideDialog()
+                EligibilityDialog(mUiViewModel = mUiViewModel)
             }
 
+        }
+    }
+
+    @Composable
+    fun EligibilityDialog(mUiViewModel: UiViewModel){
+        if(mUiViewModel.isFpaEligibileDialogShown){
+            FPAEligibilityDialog(dialogModel = mUiViewModel.dialogModel, onDismiss = {
+                mUiViewModel.hideFpaEligibleDialog()
+            }) {
+
+            }
         }
     }
 

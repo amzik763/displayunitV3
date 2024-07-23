@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cti.displayuni.response.CheckSheetData
+import com.cti.displayuni.response.getValueForKey
 import com.cti.displayuni.ui.theme.dimens
 import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
@@ -47,6 +48,8 @@ import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.showLogs
 import kotlinx.coroutines.delay
+import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 @Composable
 fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressState: SnapshotStateMap<String, Boolean>*/
@@ -59,6 +62,7 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressS
     val items = listOf("OK", "NG")
 
     val progressState by progressTimer.getProgress(paramId).collectAsState()
+    val value by progressTimer.getCountdownProgress(paramId).collectAsState()
     val timerCompleted = progressState == 0f
     val timerStarted = progressTimer.hasTimerStarted(paramId)
 
@@ -160,6 +164,19 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressS
             fontSize = MaterialTheme.typography.bodySmall.fontSize,
         )
 
+        val temp = myComponents.mainViewModel.dataStatus.value?.let {
+            getValueForKey(
+                it, myComponents.mainViewModel.myChecksheetNotificationMap[paramId].toString()
+            )
+        }
+
+        if (temp == true) {
+            myComponents.mainViewModel.checkSheetList[index] = "SUP_OK"
+            selectedItem = "SUP_OK"
+            showLogs("STOPPING","timer")
+            progressTimer.stopTimer(paramId)
+        }
+
         IconButton(modifier = Modifier
             .padding(start = MaterialTheme.dimens.startPadding), onClick = {
                 myComponents.mainViewModel.getCheckSheetStatusBack(myComponents.mainViewModel.myChecksheetNotificationMap[paramId]){ result ->
@@ -197,7 +214,8 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressS
         if (progressState > 0) {
             CircularProgressBar(
                 percentage = progressState,
-                duration = (progressState * 10_000).toInt() / 1000,
+                value = value.toString(),
+                duration = (progressState.roundToInt() * 10_000).toInt() / 1000,
                 onTimeEnd = {
                     // Handle completion actions here if needed
                 }

@@ -265,7 +265,7 @@ fun GetTask() {
               Spacer(modifier = Modifier.height(spacerHeight))
 
               CustomRoundedButton(onClick = {
-
+                    mainViewModel.initializeSocket()
                   mainViewModel.getTask(mainViewModel.getStationValue())
 
               }, text = "Get Task")

@@ -2,6 +2,7 @@ package com.cti.displayuni.viewmodels
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -37,24 +38,23 @@ import kotlinx.coroutines.coroutineScope
 import org.json.JSONObject
 import java.util.Calendar
 
-//
 class MainViewModel(context: Context) : ViewModel() {
 
-//    @HiltViewModel
-//    class MainViewModel @Inject constructot(private val context: Context):Viewmodel{
-//    }
     private lateinit var onUpdateCspNotificationStatus: Emitter.Listener
 
-    init {
+    private val _dataStatus = mutableStateOf<StationCspDataStatus?>(null)
+    val dataStatus: State<StationCspDataStatus?> = _dataStatus
+
+    private val sharedPreferences: SharedPreferences
+        get() = mContext.getSharedPreferences(PREFERNCES_NAME, Context.MODE_PRIVATE)
+
+    fun initializeSocket(){
         SocketManager.initSocket()
         SocketManager.connect()
-
         // Listen for socket events
-//        SocketManager.on("update_work_for_operator", onUpdateWorkForOperator)
-//        SocketManager.on("filter_floor_csp_notification", onFilterFloorCspNotification)
-
+        //  SocketManager.on("update_work_for_operator", onUpdateWorkForOperator)
+        //  SocketManager.on("filter_floor_csp_notification", onFilterFloorCspNotification)
         showLogs("WEBSOCKET:"," initialized")
-
 
         onUpdateCspNotificationStatus = Emitter.Listener { args ->
             viewModelScope.launch(Dispatchers.Main) {
@@ -62,28 +62,27 @@ class MainViewModel(context: Context) : ViewModel() {
                     val data = args[0] as JSONObject
                     showLogs("WEBSOCKET:", "listening")
                     showLogs("WEBSOCKET:", "${data}")
+                    val dataStatus = parseStationCspDataStatus(data)
+                    _dataStatus.value = dataStatus
+                    showLogs("SOCKET KEY",getValueForKey(dataStatus,"216").toString())
+//                    val dataStatus = parseStationCspDataStatus(data)
                 } catch (e: Exception) {
                     showLogs("WEBSOCKET:", "Error parsing JSON: ${e.message}")
                 }
             }
         }
 
-        val stationData = "G01 F02 L01 S01"
-
+        val stationData = getStationValue()
         checkStationCspStatus(stationData)
-
         SocketManager.on("update_csp_notification_status", onUpdateCspNotificationStatus)
 //        checkStationCspStatus()
-
-
     }
+
     fun checkStationCspStatus(data: String) {
 //        SocketManager.emit("check_station_csp_status", data)
         SocketManager.emit("check_station_csp_status", data)
         showLogs("WEBSOCKET:"," check emit")
-
     }
-
 
     override fun onCleared() {
         super.onCleared()
@@ -185,8 +184,6 @@ class MainViewModel(context: Context) : ViewModel() {
     var otherfpa3 = mutableStateOf<String?>(null)
     var otherfpa4 = mutableStateOf<String?>(null)
 
-    private val sharedPreferences: SharedPreferences
-        get() = mContext.getSharedPreferences(PREFERNCES_NAME, Context.MODE_PRIVATE)
 
     fun saveStationValue(textValue: String) {
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
@@ -437,7 +434,8 @@ class MainViewModel(context: Context) : ViewModel() {
                                 "${it.param_name} value should be between ${it.min} and ${it.max}",
                                 R.drawable.ic_notest
                             )
-                            mUiViewModel.showMessageDialog()
+//                            mUiViewModel.showMessageDialog()
+                            mUiViewModel.showFpaEligibleDialog()
                             return false
                         }
                     }else{
@@ -451,7 +449,9 @@ class MainViewModel(context: Context) : ViewModel() {
                                 "",
                                 "${it.param_name} value should be either ${it.min} or ${it.max}",
                                 R.drawable.ic_notest)
-                            mUiViewModel.showMessageDialog()
+//                            mUiViewModel.showMessageDialog()
+                            mUiViewModel.showFpaEligibleDialog()
+
                             return false
                         }
                     }
@@ -471,7 +471,8 @@ class MainViewModel(context: Context) : ViewModel() {
                                 "Value should be between ${minValue} and ${maxValue}",
                                 R.drawable.ic_notest
                             )
-                            mUiViewModel.showMessageDialog()
+//                            mUiViewModel.showMessageDialog()
+                            mUiViewModel.showFpaEligibleDialog()
 
                             showLogs("Reading", "Reading in range")
                             return false
@@ -504,7 +505,9 @@ class MainViewModel(context: Context) : ViewModel() {
                                 "${it.param_name} value should be between ${it.min} and ${it.max}",
                                 R.drawable.ic_notest
                             )
-                            mUiViewModel.showMessageDialog()
+//                            mUiViewModel.showMessageDialog()
+                            mUiViewModel.showFpaEligibleDialog()
+
                             return false
                         }
                     }else{
@@ -518,7 +521,9 @@ class MainViewModel(context: Context) : ViewModel() {
                                 "",
                                 "${it.param_name} value should be either ${it.min} or ${it.max}",
                                 R.drawable.ic_notest)
-                            mUiViewModel.showMessageDialog()
+//                            mUiViewModel.showMessageDialog()
+                            mUiViewModel.showFpaEligibleDialog()
+
                             return false
                         }
                     }
@@ -538,7 +543,8 @@ class MainViewModel(context: Context) : ViewModel() {
                                 "Value should be between ${minValue} and ${maxValue}",
                                 R.drawable.ic_notest
                             )
-                            mUiViewModel.showMessageDialog()
+//                            mUiViewModel.showMessageDialog()
+                            mUiViewModel.showFpaEligibleDialog()
 
                             showLogs("Reading", "Reading in range")
                             return false

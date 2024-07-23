@@ -66,7 +66,18 @@ class UiViewModel(context: Context) : ViewModel(){
     var isFailedDialogShown by mutableStateOf(false)
         private set
 
+    var isFpaEligibileDialogShown by mutableStateOf(false)
+        private set
+
     var isHindi = mutableStateOf(false)
+
+    fun showFpaEligibleDialog(){
+        isFpaEligibileDialogShown = true
+    }
+
+    fun hideFpaEligibleDialog(){
+        isFpaEligibileDialogShown = false
+    }
 
     fun showNetworkDialog(){
         isNetworkDialogShown = true
