@@ -99,9 +99,20 @@ class MainActivity : ComponentActivity() {
                 mThanksDialog()
                 mFailedDialog()
                 OverrideDialog()
-                EligibilityDialog(mUiViewModel)
+                EligibilityDialog(mUiViewModel = mUiViewModel)
             }
 
+        }
+    }
+
+    @Composable
+    fun EligibilityDialog(mUiViewModel: UiViewModel){
+        if(mUiViewModel.isFpaEligibileDialogShown){
+            FPAEligibilityDialog(dialogModel = mUiViewModel.dialogModel, onDismiss = {
+                mUiViewModel.hideFpaEligibleDialog()
+            }) {
+
+            }
         }
     }
 
@@ -168,20 +179,6 @@ fun NetworkDialog(mUiViewModel: UiViewModel, applicationContext: Context) {
             )
         }
     }
-
-@Composable
-fun EligibilityDialog(mUiViewModel: UiViewModel) {
-    if (mUiViewModel.isFpaEligibleDialogShown) {
-        FPAEligibilityDialog(onDismiss = {
-        },
-            onConfirm = {
-
-            },
-            dialogModel = mUiViewModel.dialogModel,
-
-            )
-    }
-}
 
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable

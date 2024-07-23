@@ -38,17 +38,17 @@ import kotlinx.coroutines.coroutineScope
 import org.json.JSONObject
 import java.util.Calendar
 
-//
 class MainViewModel(context: Context) : ViewModel() {
 
-//    @HiltViewModel
-//    class MainViewModel @Inject constructot(private val context: Context):Viewmodel{
-//    }
     private lateinit var onUpdateCspNotificationStatus: Emitter.Listener
+
     private val _dataStatus = mutableStateOf<StationCspDataStatus?>(null)
     val dataStatus: State<StationCspDataStatus?> = _dataStatus
 
-    /*init {
+    private val sharedPreferences: SharedPreferences
+        get() = mContext.getSharedPreferences(PREFERNCES_NAME, Context.MODE_PRIVATE)
+
+    fun initializeSocket(){
         SocketManager.initSocket()
         SocketManager.connect()
         // Listen for socket events
@@ -72,11 +72,11 @@ class MainViewModel(context: Context) : ViewModel() {
             }
         }
 
-        val stationData = "G01 F02 L04 S04"
+        val stationData = getStationValue()
         checkStationCspStatus(stationData)
         SocketManager.on("update_csp_notification_status", onUpdateCspNotificationStatus)
 //        checkStationCspStatus()
-    }*/
+    }
 
     fun checkStationCspStatus(data: String) {
 //        SocketManager.emit("check_station_csp_status", data)
@@ -90,6 +90,7 @@ class MainViewModel(context: Context) : ViewModel() {
     }
 
     var mContext = context
+
     var isSupLoginSuccessful = false
 
     var name by mutableStateOf("")
@@ -141,10 +142,12 @@ class MainViewModel(context: Context) : ViewModel() {
 
     var showZoomableImage by mutableStateOf(true)
     var tempParamID by mutableStateOf("")
+
     val checkSheetList = mutableListOf<String>()
 
     //VARIABLE FOR NEW CHECKSHEETDATA
     val mChecksheetData = MutableLiveData<List<CheckSheetData>>()
+
     //    lateinit var mChecksheetNotification: MutableLiveData<MutableMap<String, String>>
     val myChecksheetNotificationMap = mutableStateMapOf<String, String>()
     val apiCheckSheetStatusBack = mutableStateOf(checkSheetStatusBack("none"))
@@ -181,8 +184,6 @@ class MainViewModel(context: Context) : ViewModel() {
     var otherfpa3 = mutableStateOf<String?>(null)
     var otherfpa4 = mutableStateOf<String?>(null)
 
-    private val sharedPreferences: SharedPreferences
-        get() = mContext.getSharedPreferences(PREFERNCES_NAME, Context.MODE_PRIVATE)
 
     fun saveStationValue(textValue: String) {
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
@@ -434,9 +435,7 @@ class MainViewModel(context: Context) : ViewModel() {
                                 R.drawable.ic_notest
                             )
 //                            mUiViewModel.showMessageDialog()
-
                             mUiViewModel.showFpaEligibleDialog()
-
                             return false
                         }
                     }else{
@@ -451,7 +450,6 @@ class MainViewModel(context: Context) : ViewModel() {
                                 "${it.param_name} value should be either ${it.min} or ${it.max}",
                                 R.drawable.ic_notest)
 //                            mUiViewModel.showMessageDialog()
-
                             mUiViewModel.showFpaEligibleDialog()
 
                             return false
@@ -474,9 +472,7 @@ class MainViewModel(context: Context) : ViewModel() {
                                 R.drawable.ic_notest
                             )
 //                            mUiViewModel.showMessageDialog()
-
                             mUiViewModel.showFpaEligibleDialog()
-
 
                             showLogs("Reading", "Reading in range")
                             return false
@@ -510,7 +506,6 @@ class MainViewModel(context: Context) : ViewModel() {
                                 R.drawable.ic_notest
                             )
 //                            mUiViewModel.showMessageDialog()
-
                             mUiViewModel.showFpaEligibleDialog()
 
                             return false
@@ -549,9 +544,7 @@ class MainViewModel(context: Context) : ViewModel() {
                                 R.drawable.ic_notest
                             )
 //                            mUiViewModel.showMessageDialog()
-
                             mUiViewModel.showFpaEligibleDialog()
-
 
                             showLogs("Reading", "Reading in range")
                             return false
@@ -615,6 +608,9 @@ class MainViewModel(context: Context) : ViewModel() {
             }
         }*/
 
+
+
+
         return true
     }
 
@@ -627,12 +623,15 @@ class MainViewModel(context: Context) : ViewModel() {
     suspend fun submitPartInfo(i: Int) {
 
         //If FPA DONE FOR LAST STATION
+
+
         val addData = mainViewModel.addData(
             mainViewModel.fail.intValue.toString(),
             mainViewModel.pass.intValue.toString(),
             station_id = mainViewModel.getStationValue(),
             i = i
         )
+
 
         if (addData) {
             //set pass fail and checking part values
@@ -649,25 +648,25 @@ class MainViewModel(context: Context) : ViewModel() {
     private fun checkReadingTimeAndShowPopup() {
         viewModelScope.launch {
             if (readingStatusList[0].readingStatusE.equals(readingStatusEnum.available)) {
-                showLogs("readingstatusenum 0", readingStatusList[0].readingStatusE.name)
+                showLogs("readingstatusenum2", readingStatusList[0].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.notAvailable
                 mUiViewModel.showCustomPopup.value = true
 
 
             } else if (readingStatusList[1].readingStatusE.equals(readingStatusEnum.available)) {
-                showLogs("readingstatusenum 1", readingStatusList[1].readingStatusE.name)
+                showLogs("readingstatusenum2", readingStatusList[1].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
                 mUiViewModel.showCustomPopup.value = true
             } else if (readingStatusList[2].readingStatusE.equals(readingStatusEnum.available)) {
-                showLogs("readingstatusenum 2", readingStatusList[2].readingStatusE.name)
+                showLogs("readingstatusenum2", readingStatusList[2].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
                 mUiViewModel.showCustomPopup.value = true
             } else if (readingStatusList[3].readingStatusE.equals(readingStatusEnum.available)) {
-                showLogs("readingstatusenum 3", readingStatusList[3].readingStatusE.name)
+                showLogs("readingstatusenum2", readingStatusList[3].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
                 mUiViewModel.showCustomPopup.value = true
             } else if (readingStatusList[4].readingStatusE.equals(readingStatusEnum.available)) {
-                showLogs("readingstatusenum 4", readingStatusList[4].readingStatusE.name)
+                showLogs("readingstatusenum2", readingStatusList[4].readingStatusE.name)
 //            readingStatusList[0].readingStatusE = readingStatusEnum.available
                 mUiViewModel.showCustomPopup.value = true
             }
@@ -720,23 +719,23 @@ class MainViewModel(context: Context) : ViewModel() {
                         }
 
         showLogs(
-            "READING STATUS ALL 0",
+            "READING STATUS ALL",
             readingStatusList[0].readingStatusE.name + " " + readingStatusList[0].readingTime
         )
         showLogs(
-            "READING STATUS ALL 1",
+            "READING STATUS ALL",
             readingStatusList[1].readingStatusE.name + " " + readingStatusList[1].readingTime
         )
         showLogs(
-            "READING STATUS ALL 2",
+            "READING STATUS ALL",
             readingStatusList[2].readingStatusE.name + " " + readingStatusList[2].readingTime
         )
         showLogs(
-            "READING STATUS ALL 3",
+            "READING STATUS ALL",
             readingStatusList[3].readingStatusE.name + " " + readingStatusList[3].readingTime
         )
         showLogs(
-            "READING STATUS ALL 4",
+            "READING STATUS ALL",
             readingStatusList[4].readingStatusE.name + " " + readingStatusList[4].readingTime
         )
 

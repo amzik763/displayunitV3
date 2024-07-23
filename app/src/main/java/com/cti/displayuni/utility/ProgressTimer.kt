@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlin.collections.set
 
-class ProgressTimer(private val duration: Long) {
+/*class ProgressTimer(private val duration: Long) {
     private val timers = mutableMapOf<String, Job>()
     private val progressStates = mutableMapOf<String, MutableStateFlow<Float>>()
 
@@ -42,5 +42,58 @@ class ProgressTimer(private val duration: Long) {
     fun hasTimerStarted(paramId: String): Boolean {
         return timers[paramId]?.isActive == true
     }
+}*/
+
+class ProgressTimer(private val duration: Long) {
+    private val timers = mutableMapOf<String, Job>()
+    private val progressStates = mutableMapOf<String, MutableStateFlow<Float>>()
+    private val countdownStates = mutableMapOf<String, MutableStateFlow<Int>>()
+
+    fun startTimer(paramId: String, onFinish: () -> Unit) {
+        if (timers[paramId]?.isActive == true) return
+
+        val progressState = MutableStateFlow(1f)
+        val countdownState = MutableStateFlow((duration / 1000).toInt())
+        progressStates[paramId] = progressState
+        countdownStates[paramId] = countdownState
+
+        val timerJob = CoroutineScope(Dispatchers.Main).launch {
+            val totalSeconds = (duration / 1000).toInt()
+            for (second in totalSeconds downTo 0) {
+                if (!isActive) break
+
+                progressState.value = second.toFloat() / totalSeconds
+                countdownState.value = second
+
+                showLogs("PROGRESS VALUE:", progressState.value.toString())
+                showLogs("COUNTDOWN VALUE:", countdownState.value.toString())
+
+                delay(1000L)
+            }
+            progressState.value = 0f
+            countdownState.value = 0
+            onFinish()
+        }
+        timers[paramId] = timerJob
+    }
+
+    fun getProgress(paramId: String): StateFlow<Float> {
+        return progressStates[paramId] ?: MutableStateFlow(0f)
+    }
+
+    fun stopTimer(paramId: String) {
+        timers[paramId]?.cancel()
+        progressStates[paramId]?.value = 0f
+        countdownStates[paramId]?.value = 0
+    }
+
+    fun hasTimerStarted(paramId: String): Boolean {
+        return timers[paramId]?.isActive == true
+    }
+
+    fun getCountdownProgress(paramId: String): StateFlow<Int> {
+        return countdownStates[paramId] ?: MutableStateFlow(0)
+    }
 }
+
 

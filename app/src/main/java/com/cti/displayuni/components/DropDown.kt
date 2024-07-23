@@ -3,12 +3,10 @@ package com.cti.displayuni.components
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -41,7 +39,6 @@ import androidx.compose.ui.unit.sp
 import com.cti.displayuni.response.CheckSheetData
 import com.cti.displayuni.response.getValueForKey
 import com.cti.displayuni.ui.theme.dimens
-import com.cti.displayuni.ui.theme.green
 import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.utility.CircularProgressBar
@@ -51,6 +48,8 @@ import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.showLogs
 import kotlinx.coroutines.delay
+import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 @Composable
 fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressState: SnapshotStateMap<String, Boolean>*/
@@ -63,6 +62,7 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressS
     val items = listOf("OK", "NG")
 
     val progressState by progressTimer.getProgress(paramId).collectAsState()
+    val value by progressTimer.getCountdownProgress(paramId).collectAsState()
     val timerCompleted = progressState == 0f
     val timerStarted = progressTimer.hasTimerStarted(paramId)
 
@@ -164,7 +164,7 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressS
             fontSize = MaterialTheme.typography.bodySmall.fontSize,
         )
 
-        /*var temp = myComponents.mainViewModel.dataStatus.value?.let {
+        val temp = myComponents.mainViewModel.dataStatus.value?.let {
             getValueForKey(
                 it, myComponents.mainViewModel.myChecksheetNotificationMap[paramId].toString()
             )
@@ -175,10 +175,12 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressS
             selectedItem = "SUP_OK"
             showLogs("STOPPING","timer")
             progressTimer.stopTimer(paramId)
-        }*/
-                    IconButton(modifier = Modifier.background(orange), onClick = {
-                    myComponents.mainViewModel.getCheckSheetStatusBack(myComponents.mainViewModel.myChecksheetNotificationMap[paramId]){ result ->
-                        result.onSuccess {
+        }
+
+        IconButton(modifier = Modifier
+            .padding(start = MaterialTheme.dimens.startPadding), onClick = {
+                myComponents.mainViewModel.getCheckSheetStatusBack(myComponents.mainViewModel.myChecksheetNotificationMap[paramId]){ result ->
+                    result.onSuccess {
                             if(it == "true"){
                                 showLogs("NO NOTE: ","true")
                                 myComponents.mainViewModel.checkSheetList[index] = "SUP_OK"
@@ -190,41 +192,34 @@ fun DropDown(paramId: String, index: Int,notificationIDState:String, /*progressS
 
                                 selectedItem = "NOT_OK"
                             }
-                        }.onFailure {
-                            //show dialouge error
-                            showLogs("NONOTE: ","failed")
-                            selectedItem = "failed"
-                        }
+                    }.onFailure {
+                        //show dialouge error
+                        showLogs("NONOTE: ","failed")
+                        selectedItem = "failed"
                     }
-            },
+                }
+        },
             ) {
-                Icon(imageVector = Icons.Default.Refresh,
-                    modifier = Modifier.size(MaterialTheme.dimens.logoSize),
-                    contentDescription = "Refresh"
-                )
+            Icon(imageVector = Icons.Default.Refresh,
+                modifier = Modifier.size(MaterialTheme.dimens.logoSize),
+                contentDescription = "Refresh"
+            )
 
-            }
         }
 
         // Display CircularProgressBar if progressState is greater than 0
 
-//        Spacer(modifier = Modifier.width(MaterialTheme.dimens.topPadding))
-
-    showLogs("PROGRESS STATE:",progressState.toString())
+        Spacer(modifier = Modifier.width(MaterialTheme.dimens.topPadding))
 
         if (progressState > 0) {
-            showLogs("INSIDE PROGRESS STATE:",progressState.toString())
-
-/*
-            Box(modifier = Modifier.width(100.dp).height(100.dp).background(green), )
-*/
             CircularProgressBar(
                 percentage = progressState,
-                duration = (progressState * 10_000).toInt() / 1000,
+                value = value.toString(),
+                duration = (progressState.roundToInt() * 10_000).toInt() / 1000,
                 onTimeEnd = {
                     // Handle completion actions here if needed
                 }
             )
         }
     }
-
+}

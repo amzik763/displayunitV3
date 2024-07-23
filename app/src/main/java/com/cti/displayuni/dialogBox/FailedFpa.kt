@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,10 +46,12 @@ import com.cti.displayuni.R
 import com.cti.displayuni.components.CustomRoundedButton
 import com.cti.displayuni.components.IDTextField
 import com.cti.displayuni.ui.theme.darkBlue
+import com.cti.displayuni.ui.theme.dimens
 import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.lightOrange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.ui.theme.pureWhite
+import com.cti.displayuni.ui.theme.red
 import com.cti.displayuni.utility.mFont.nk
 import com.cti.displayuni.utility.mFont.nkbold
 import com.cti.displayuni.utility.mFont.nkmedium
@@ -142,7 +145,7 @@ fun FailedFPADialog(
 
     Dialog(
         onDismissRequest = {
-                           onDismiss()
+            onDismiss()
         },
         properties = DialogProperties(
             usePlatformDefaultWidth = false
@@ -190,7 +193,7 @@ fun FailedFPADialog(
                             top = topPadding,
                             start = startPadding,
                             end = endPadding,
-                            bottom = bottomPadding
+                            bottom = MaterialTheme.dimens.padding
                         )
                         .fillMaxSize(),
                     verticalArrangement = Arrangement.SpaceBetween
@@ -198,7 +201,7 @@ fun FailedFPADialog(
                     Column {
                         Text(text = "FPA FAILED",
                             style = TextStyle(
-                                fontSize = mainHeaderFont,
+                                fontSize = MaterialTheme.typography.headlineLarge.fontSize,
                                 color = lightBlack,
                                 fontWeight = FontWeight.Bold,
                                 textAlign = TextAlign.Center,
@@ -209,7 +212,7 @@ fun FailedFPADialog(
                         Text(modifier = Modifier.padding(top = fpaTopPadding),
                             text = "FPA SHOULD BE PASS TO PROCEED",
                             style = TextStyle(
-                                fontSize = semiHeaderFont,
+                                fontSize = MaterialTheme.typography.headlineMedium.fontSize,
                                 color = lightBlack,
                                 textAlign = TextAlign.Center,
                                 fontFamily = nkmedium
@@ -218,14 +221,14 @@ fun FailedFPADialog(
                         Text(modifier = Modifier.padding(top = floorTopPadding),
                             text = "Ask Floor-In-Charge for necessary help",
                             style = TextStyle(
-                                fontSize = textFont1,
+                                fontSize = MaterialTheme.typography.bodySmall.fontSize,
                                 color = lightBlack,
                                 textAlign = TextAlign.Center,
                                 fontFamily = nk
                             )
                         )
 
-                        Spacer(modifier = Modifier.height(fpaTopPadding))
+                        Spacer(modifier = Modifier.height(MaterialTheme.dimens.topPadding))
 
                         var itemId by remember { mutableStateOf("") }
                         IDTextField(
@@ -247,7 +250,9 @@ fun FailedFPADialog(
                             myComponents.mainViewModel.FailedFPA()
 
                             showLogs("FPA FAILED:", "ADDED")
-                        }, text = "FPA Failed")
+                        },
+                            backgroundColor = red,
+                            text = "Fail")
 
                     }
                 }

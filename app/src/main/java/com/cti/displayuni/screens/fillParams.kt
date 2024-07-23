@@ -462,19 +462,19 @@ fun Header(){
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
 
-                    OrangeText(name = "Process Name: ", value = myComponents.mainViewModel.mProcessName)
+                OrangeText(name = "Process Name: ", value = myComponents.mainViewModel.mProcessName)
 
-                    Spacer(modifier = Modifier.width(sWidth))
+                Spacer(modifier = Modifier.width(sWidth))
 
-                    OrangeText(name = "Part Name: ", value = myComponents.mainViewModel.mPartName)
-
-
-                    Spacer(modifier = Modifier.width(sWidth))
+                OrangeText(name = "Part Name: ", value = myComponents.mainViewModel.mPartName)
 
 
-                    OrangeText(name = "Device Id: ", value = myComponents.mainViewModel.deviceId)
+                Spacer(modifier = Modifier.width(sWidth))
 
-                    Spacer(modifier = Modifier.width(sWidth2))
+
+                OrangeText(name = "Device Id: ", value = myComponents.mainViewModel.deviceId)
+
+                Spacer(modifier = Modifier.width(sWidth2))
 
                 OrangeText(name = "${myComponents.mainViewModel.startShiftTime} to ${myComponents.mainViewModel.endShiftTime}",
                     style = TextStyle(
@@ -501,7 +501,7 @@ fun Header(){
                     border = BorderStroke(3.dp, darkBlue),
                     colors = ButtonDefaults.buttonColors(contentColor = pureWhite, containerColor =  darkBlue),
                     contentPadding = PaddingValues(0.dp),
-                    ) {
+                ) {
                     Text(
                         text = fpa,
                         fontSize = MaterialTheme.typography.labelMedium.fontSize,
@@ -623,7 +623,7 @@ fun Header(){
 
                                 if(myComponents.mainViewModel.isFPATime){
 //                                    myComponents.mainViewModel.submitPartInfoWithParams(1)
-                                      myComponents.mainViewModel.checkFPA(myComponents.mainViewModel.precedency_no.value, myComponents.mainViewModel.mPartName ,myComponents.mainViewModel.temp_task_id.value)
+                                    myComponents.mainViewModel.checkFPA(myComponents.mainViewModel.precedency_no.value, myComponents.mainViewModel.mPartName ,myComponents.mainViewModel.temp_task_id.value)
                                 }else{
                                     myComponents.mainViewModel.submitPartInfo(1)
                                 }
@@ -654,87 +654,6 @@ fun Header(){
                     )
                 }
                 Spacer(modifier = Modifier.width(sWidth))
-
-/*                Button(
-                    onClick = {
-                        showLogs("PASS", myComponents.mainViewModel.pass.intValue.toString())
-                        showLogs("FAIL", myComponents.mainViewModel.fail.intValue.toString())
-                        showLogs("STATION VALUE", myComponents.mainViewModel.getStationValue())
-
-                        val passFail = myComponents.mainViewModel.pass.intValue + myComponents.mainViewModel.fail.intValue
-
-                        val actualParamsFilled = myComponents.mainViewModel.areActualParamsFilled(myComponents.mainViewModel.dataListActual)
-                        showLogs("Actual Param", actualParamsFilled.toString())
-
-                        val settingParamsFilled = myComponents.mainViewModel.areSettingParamsFilled(myComponents.mainViewModel.dataListSetting)
-                        showLogs("Setting Param", settingParamsFilled.toString())
-
-                        if(passFail < 2){
-                            myComponents.mainViewModel.isFPATime = true
-                            showLogs("FPA FAILED: ","FPA SHOULD BE PASS TO PROCEED")
-                            //show DIALOG BOX
-//                            myComponents.mUiViewModel.setDialogDetails("FPA FAILED", "FPA SHOULD BE PASS TO PROCEED", "Ask Floor-In-Charge for necessary help", R.drawable.ic_notest )
-//                            myComponents.mUiViewModel.showMessageDialog()
-
-                            myComponents.mUiViewModel.showFailedDialog()
-
-                        }else if(myComponents.mainViewModel.isCurrentTimeExceedsMidTime(myComponents.mainViewModel.startShiftTime,myComponents.mainViewModel.endShiftTime)){
-                            showLogs("FAILED: ","time exceed")
-
-                            if(myComponents.mainViewModel.FPACounter ==5){
-                                showLogs("FAILED: ","counter 5")
-
-                                myComponents.mainViewModel.isFPATime = false
-                                //show loading dialog
-                                if(myComponents.mainViewModel.isReasonRetrieved) {
-                                    showLogs("FAILED: ","reason retrieved")
-
-                                    myComponents.mUiViewModel.showRejectReasonDialog()
-                                }
-                                else{
-                                    showLogs("FAILED: ","getting reason")
-                                    myComponents.mainViewModel.getReasonData()
-
-                                }
-                            }
-                            else if(myComponents.mainViewModel.fpa3.value.isNullOrEmpty() || myComponents.mainViewModel.fpa4.value.isNullOrEmpty())
-                            {   myComponents.mainViewModel.isFPATime = true
-
-                                myComponents.mainViewModel.isFPATime = true
-                                showLogs("FPA FAILED: ","FPA SHOULD BE PASS TO PROCEED")
-                                //show DIALOG BOX WITH BUTTON
-//                                myComponents.mUiViewModel.setDialogDetails("FPA FAILED", "FPA SHOULD BE PASS TO PROCEED", "Ask Floor-In-Charge for necessary help", R.drawable.ic_notest )
-//                                myComponents.mUiViewModel.showMessageDialog()
-
-                                myComponents.mUiViewModel.showFailedDialog()
-
-                            }
-                        }
-                        else {
-                            myComponents.mainViewModel.isFPATime = false
-                            //show loading dialog
-                            if(myComponents.mainViewModel.isReasonRetrieved)
-
-                                myComponents.mUiViewModel.showRejectReasonDialog()
-                            else
-                                myComponents.mainViewModel.getReasonData()
-                        }
-                    },
-                    shape = RoundedCornerShape(29.dp),
-                    border = BorderStroke(3.dp, red),
-                    contentPadding = PaddingValues(0.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        contentColor = pureWhite,
-                        containerColor = red
-                    ),
-                ) {
-                    Text(
-                        text = "FAIL",
-                        fontSize = fontMedium,
-//                        modifier = Modifier.padding(horizontal = 30.dp)
-                    )
-                }
-                Spacer(modifier = Modifier.width(sWidth))*/
 
             }
         }
@@ -1063,10 +982,6 @@ fun FailButton(){
             if(passFail < 2){
                 myComponents.mainViewModel.isFPATime = true
                 showLogs("FPA FAILED: ","FPA SHOULD BE PASS TO PROCEED")
-                //show DIALOG BOX
-//                            myComponents.mUiViewModel.setDialogDetails("FPA FAILED", "FPA SHOULD BE PASS TO PROCEED", "Ask Floor-In-Charge for necessary help", R.drawable.ic_notest )
-//                            myComponents.mUiViewModel.showMessageDialog()
-
                 myComponents.mUiViewModel.showFailedDialog()
 
             }else if(myComponents.mainViewModel.isCurrentTimeExceedsMidTime(myComponents.mainViewModel.startShiftTime,myComponents.mainViewModel.endShiftTime)){
@@ -1093,12 +1008,7 @@ fun FailButton(){
 
                     myComponents.mainViewModel.isFPATime = true
                     showLogs("FPA FAILED: ","FPA SHOULD BE PASS TO PROCEED")
-                    //show DIALOG BOX WITH BUTTON
-//                                myComponents.mUiViewModel.setDialogDetails("FPA FAILED", "FPA SHOULD BE PASS TO PROCEED", "Ask Floor-In-Charge for necessary help", R.drawable.ic_notest )
-//                                myComponents.mUiViewModel.showMessageDialog()
-
-                    myComponents.mUiViewModel.showFailedDialog()
-
+                 myComponents.mUiViewModel.showFailedDialog()
                 }
             }
             else {
@@ -1125,7 +1035,6 @@ fun FailButton(){
             text = "FAIL",
             fontSize = MaterialTheme.typography.labelMedium.fontSize,
 
-        )
+            )
     }
 }
-

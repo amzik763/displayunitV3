@@ -66,18 +66,17 @@ class UiViewModel(context: Context) : ViewModel(){
     var isFailedDialogShown by mutableStateOf(false)
         private set
 
-    var isFpaEligibleDialogShown by mutableStateOf(false)
+    var isFpaEligibileDialogShown by mutableStateOf(false)
         private set
 
     var isHindi = mutableStateOf(false)
 
-
     fun showFpaEligibleDialog(){
-        isFpaEligibleDialogShown = true
+        isFpaEligibileDialogShown = true
     }
 
-    fun hideFpaEligibleDialog (){
-        isFpaEligibleDialogShown = false
+    fun hideFpaEligibleDialog(){
+        isFpaEligibileDialogShown = false
     }
 
     fun showNetworkDialog(){
@@ -141,6 +140,13 @@ class UiViewModel(context: Context) : ViewModel(){
 
     var isTaskNotApprovedShown by mutableStateOf(false)
         private set
+    fun showTaskNotApprovedDialog() {
+        isTaskNotApprovedShown = true
+    }
+
+    fun hideTaskNotApprovedDialog() {
+        isTaskNotApprovedShown = false
+    }
 
     fun showThanksDialog() {
         isThanksDialogShown = true
