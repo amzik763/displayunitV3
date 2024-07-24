@@ -93,7 +93,6 @@ class UiViewModel(context: Context) : ViewModel(){
         isOverrideDialogShown = false
     }
 
-
     fun showRejectReasonDialog() {
         isRejectReasonDialogShown = true
     }
@@ -195,5 +194,4 @@ class UiViewModel(context: Context) : ViewModel(){
         super.onCleared()
         job?.cancel()
     }
-
 }

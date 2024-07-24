@@ -40,8 +40,8 @@ import com.cti.displayuni.utility.myComponents
 
 @Composable
 fun ItemComponents(index:Int,item: CheckSheetData,
-//                   progressState: SnapshotStateMap<String, Boolean>
-                   progressTimer: ProgressTimer) {
+                   progressTimer: ProgressTimer)
+{
 
    val progressState by progressTimer.getProgress(item.csp_id).collectAsState()
 
@@ -127,19 +127,8 @@ fun ItemComponents(index:Int,item: CheckSheetData,
             fontSize = MaterialTheme.typography.bodySmall.fontSize,
          )
 
-//         DropDown(item.csp_id, index,notificationIdState[item.csp_id].toString(), progressState)
-
          DropDown(item.csp_id, index, notificationIdState[item.csp_id].toString(), progressTimer)
 
-//         Spacer(modifier = Modifier.width(MaterialTheme.dimens.topPadding))
-//
-//         if (progressState > 0) {
-//            CircularProgressBar(
-//               percentage = progressState,
-//               duration = (progressState * 10_000).toInt() / 1000,
-//               onTimeEnd = {}
-//            )
-//         }
 
       }
       Divider(
@@ -151,9 +140,6 @@ fun ItemComponents(index:Int,item: CheckSheetData,
 }
 @Composable
 fun ItemListColumn(
-//   mChecksheetData: List<CheckSheetData>,
-//   progressState: SnapshotStateMap<String, Boolean>
-
    mChecksheetData: List<CheckSheetData>, progressTimer: ProgressTimer
 ) {
 
@@ -268,9 +254,6 @@ fun ItemListColumn(
 @Composable
 fun ItemListScreen() {
    val mChecksheetData by myComponents.mainViewModel.mChecksheetData.observeAsState()
-//   val progressState = remember { mutableStateMapOf<String, Boolean>() } // Track progress state
-//   mChecksheetData?.let { ItemListColumn(it, progressState) }
-
 
    val progressTimer = remember { ProgressTimer(10000L) } // 10 seconds duration
    mChecksheetData?.let { ItemListColumn(it, progressTimer) }

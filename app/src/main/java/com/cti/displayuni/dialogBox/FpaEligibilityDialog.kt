@@ -233,6 +233,7 @@ fun FPAEligibilityDialog(
 
                         CustomRoundedButton(onClick = {
                             myComponents.mUiViewModel.showFailedDialog()
+                            myComponents.mUiViewModel.hideFpaEligibleDialog()
                         }, text = "FPA Failed")
 
                         Spacer(modifier = Modifier.width(30.dp))

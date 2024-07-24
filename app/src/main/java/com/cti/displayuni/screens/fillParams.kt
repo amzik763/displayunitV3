@@ -70,18 +70,10 @@ import com.cti.displayuni.utility.showLogs
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-var fontSmall = 11.sp
-var fontMedium = 12.sp
+
 var fontLarge = 22.sp
-var paddingSmall = 4.dp
 var paddingMedium = 8.dp
-var paddingLarge = 12.dp
-var heightSmall = 40.dp
-var heightMedium = 60.dp
-var heightLarge = 80.dp
-var heightinFSmall = 0.06f
-var heightinFMedium = 0.073f
-var heightinFLarge = 80.dp
+
 
 @Composable
 fun ActualParams() {
@@ -437,9 +429,11 @@ fun Header(){
     Column(modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight()
+        .padding(MaterialTheme.dimens.padding)
 //        .padding(MaterialTheme.dimens.topPadding)
 //        .scale(0.75f)
     ) {
+
 
         TopHeader()
 
