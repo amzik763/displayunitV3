@@ -225,12 +225,6 @@ class Repository() {
                 showLogs("FPA3", mainViewModel.fpa3.toString())
                 showLogs("FPA4", mainViewModel.fpa4.toString())
 
-                showLogs("NEW READING API", taskResponse.body()?.station_reading_data?.get(0)?.reading_1.toString())
-                showLogs("NEW READING API", taskResponse.body()?.station_reading_data?.get(0)?.reading_2.toString())
-                showLogs("NEW READING API", taskResponse.body()?.station_reading_data?.get(0)?.reading_3.toString())
-                showLogs("NEW READING API", taskResponse.body()?.station_reading_data?.get(0)?.reading_4.toString())
-                showLogs("NEW READING API", taskResponse.body()?.station_reading_data?.get(0)?.reading_5.toString())
-
                 mainViewModel.readingSize.value = taskResponse.body()?.station_reading_data?.size?:0
 
                 showLogs("NEW READING API DATA", taskResponse.body()?.station_reading_data.toString())
@@ -1668,7 +1662,20 @@ class Repository() {
             }
         }
 
+    suspend fun readingChart (parameter_no: String) {
+        try {
+            val chartResponse = otherAPIs.readingChart(parameter_no, mainViewModel.shift.toString(), mainViewModel.getStationValue())
 
+            if (chartResponse.isSuccessful){
+                showLogs("Chart Response", "Chart Response Successful")
+            }
+            else{
+                showLogs("Chart Response", "Chart Response UnSuccessful")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 }
 
 

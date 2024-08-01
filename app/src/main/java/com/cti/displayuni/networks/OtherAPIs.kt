@@ -193,6 +193,5 @@ interface OtherAPIs {
         @Field("parameter_no") parameter_no: String,
         @Field("shift") shift: String,
         @Field("station_id") station_id: String
-    )
-
+    ) : Response<String>
 }

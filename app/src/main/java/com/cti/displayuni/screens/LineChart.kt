@@ -55,27 +55,20 @@ fun LineChart(
     onCloseClicked: () -> Unit
 ){
     val wd = mParameters.mWidthinPx
-    //myUI variables
 
     var toppadding = 40.dp
     var bottompadding = 16.dp
 
     showLogs("dwinsize: ", wd.toString())
-
     showLogs("mparam density: ", mParameters.dnsty.toString())
 
     if (wd <= 2048 && mParameters.dnsty == 320) {
-
-
         bottompadding = 8.dp
-
         showLogs("lwinsize: ", wd.toString())
 
     } else if (wd <= 2048 && mParameters.dnsty == 160) {
-
         toppadding = 40.dp
         bottompadding = 16.dp
-
         showLogs("Desktop: ", wd.toString())
     }
 
