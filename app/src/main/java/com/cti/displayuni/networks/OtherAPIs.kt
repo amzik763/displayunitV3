@@ -21,8 +21,8 @@ interface OtherAPIs {
     @FormUrlEncoded
     @POST("/operator/get_task")
     suspend fun getTask(
-        @Field("station_id") station_id: String
-//      @Field("shift") shift : String
+        @Field("station_id") station_id: String,
+      @Field("employee_id") employee_id : String
     ): Response<allDataV2>
 
     @FormUrlEncoded
@@ -46,7 +46,8 @@ interface OtherAPIs {
         @Field("oprtr_employee_id") oprtr_employee_id: String,
         @Field("flrInchr_employee_id") flrInchr_employee_id: String,
         @Field("status_datas") status_datas: String,
-        @Field("station_id") station_id: String
+        @Field("station_id") station_id: String,
+        @Field("shift") shift: String
     ): Response<checksheet_Status>
     
     @FormUrlEncoded
@@ -184,5 +185,14 @@ interface OtherAPIs {
         @Field("fpa_shift") fpa_shift: String,
         @Field("shift") shift: String,
     ): Response<fpa_failed>
+
+
+    @FormUrlEncoded
+    @POST("/operator/get_readings_for_chart")
+    suspend fun readingChart(
+        @Field("parameter_no") parameter_no: String,
+        @Field("shift") shift: String,
+        @Field("station_id") station_id: String
+    )
 
 }

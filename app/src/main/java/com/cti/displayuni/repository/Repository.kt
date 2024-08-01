@@ -68,13 +68,13 @@ class Repository() {
         }
     }
 
-    suspend fun getTask(station_id: String) {
+    suspend fun getTask(station_id: String,employee_id: String) {
         try {
             mainViewModel.floorNum =
                 mainViewModel.getStationValue().split(" ").take(2).joinToString(" ")
 
             Log.d("abcbc: ", station_id)
-            taskResponse = otherAPIs.getTask(station_id)
+            taskResponse = otherAPIs.getTask(station_id, employee_id)
 
             if (taskResponse.code() == 200) {
                 mainViewModel.mChecksheetData.value =
@@ -597,7 +597,7 @@ class Repository() {
     }
 
     suspend fun checkSheetStatus(
-        employeeId: String, ficID: String, stationValue: String, fillChecksheet: String
+        employeeId: String, ficID: String, stationValue: String, fillChecksheet: String,shift: String
     ) {
         mUiViewModel.setDialogDetails(
             "Submitting...",
@@ -613,7 +613,7 @@ class Repository() {
             showLogs("CHECKSHEET DATAA:", stationValue)
 
             checkSheetResponse =
-                otherAPIs.checkSheetData(employeeId, ficID, fillChecksheet, stationValue)
+                otherAPIs.checkSheetData(employeeId, ficID, fillChecksheet, stationValue, shift)
 
             if (checkSheetResponse.code() == 200) {
                 mUiViewModel.hideMessageDialog()
@@ -1620,7 +1620,7 @@ class Repository() {
         }
     }
 
-        suspend fun FailedFpa() {
+    suspend fun FailedFpa() {
             try {
 
                 mUiViewModel.setDialogDetails("SUBMITTING....", "", "", R.drawable.thanks)
@@ -1667,6 +1667,7 @@ class Repository() {
 
             }
         }
+
 
 }
 

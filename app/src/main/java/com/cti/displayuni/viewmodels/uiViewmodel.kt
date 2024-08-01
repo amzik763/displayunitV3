@@ -28,10 +28,9 @@ class UiViewModel(context: Context) : ViewModel(){
 
 
     var showCustomPopup = MutableLiveData<Boolean>()
-
     var showFpaDetails = MutableLiveData<Boolean>()
-
     var showFullImage = MutableLiveData<Boolean>()
+    val showLineChart = MutableLiveData<Boolean>()
 
     private val _progressState = MutableStateFlow(mapOf<String, Float>())
     val progressState: StateFlow<Map<String, Float>> = _progressState.asStateFlow()

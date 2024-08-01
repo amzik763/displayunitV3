@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -23,6 +24,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -543,7 +545,20 @@ fun Header(){
                 ReadingUI()
             }
 
-            //Pass fail buttons
+            // Line Chart Icon
+            Icon( modifier = Modifier
+                .size(42.dp)
+                .border(2.dp, color = Color.Gray)
+                .padding(6.dp)
+                .clickable {
+                    myComponents.mUiViewModel.showLineChart.value = true
+                },
+                painter = painterResource(id = R.drawable.linechart),
+                contentDescription = "Line Chart Icon" ,
+                tint = Color.Unspecified,
+            )
+
+            //Pass buttons
             Row {
                 Button(
                     onClick = {
@@ -629,7 +644,7 @@ fun Header(){
 
                     },
                     modifier = Modifier
-                        .size(width = MaterialTheme.dimens.buttonWidth, height = MaterialTheme.dimens.buttonHeight),
+                        .size(width = MaterialTheme.dimens.PFbuttonWidth, height = MaterialTheme.dimens.buttonHeight),
                     contentPadding = PaddingValues(0.dp),
                     shape = RoundedCornerShape(29.dp),
                     border = BorderStroke(3.dp, green),
@@ -640,10 +655,9 @@ fun Header(){
 
                     ) {
                     Text(
-                        text = "PASS",
+                        text = "SUBMIT",
                         fontSize = MaterialTheme.typography.bodySmall.fontSize,
                         modifier = Modifier
-//                            .padding(horizontal = 30.dp)
 
                     )
                 }
@@ -707,7 +721,8 @@ fun ZoomableImage(){
         currentIndex = (currentIndex + 1) % myComponents.mainViewModel.imageUrl.size
     }
 
-    Column(modifier = Modifier.fillMaxWidth()
+    Column(modifier = Modifier
+        .fillMaxWidth()
         .fillMaxHeight(0.94f)
         .padding(start = MaterialTheme.dimens.startPadding),
         verticalArrangement = Arrangement.Center,
@@ -774,6 +789,8 @@ fun FillParam(){
 
     val showFullImage = myComponents.mUiViewModel.showFullImage.observeAsState()
 
+    val showLineChart = myComponents.mUiViewModel.showLineChart.observeAsState()
+
     Header()
     showLogs("Early READINGS UI",myComponents.mUiViewModel.showCustomPopup.value.toString())
 
@@ -804,6 +821,12 @@ fun FillParam(){
         DisplayModeImage {
             myComponents.mUiViewModel.showFullImage.value = false
         }
+    }
+
+    if (showLineChart.value == true){
+        LineChart(
+            onCloseClicked =  {myComponents.mUiViewModel.showLineChart.value = false}
+        )
     }
 }
 
@@ -1016,7 +1039,7 @@ fun FailButton(){
             }
         },
         modifier = Modifier
-            .size(width = MaterialTheme.dimens.buttonWidth, height = MaterialTheme.dimens.buttonHeight),
+            .size(width = MaterialTheme.dimens.PFbuttonWidth, height = MaterialTheme.dimens.buttonHeight),
         shape = RoundedCornerShape(29.dp),
         border = BorderStroke(3.dp, red),
         contentPadding = PaddingValues(0.dp),
@@ -1028,7 +1051,6 @@ fun FailButton(){
         Text(
             text = "FAIL",
             fontSize = MaterialTheme.typography.labelMedium.fontSize,
-
-            )
+        )
     }
 }

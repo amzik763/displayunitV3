@@ -290,7 +290,7 @@ class MainViewModel(context: Context) : ViewModel() {
 
     fun getTask(station_id: String) {
         viewModelScope.launch {
-            repository.getTask(station_id)
+            repository.getTask(station_id, employeeId)
         }
     }
 
@@ -316,7 +316,8 @@ class MainViewModel(context: Context) : ViewModel() {
                 employeeId,
                 ficID,
                 getStationValue(),
-                repository.fillChecksheet()
+                repository.fillChecksheet(),
+                shift.value
             )
         }
     }
@@ -333,8 +334,8 @@ class MainViewModel(context: Context) : ViewModel() {
         val checkSheetList = mainViewModel.checkSheetList
         for (item in checkSheetList) {
 
-
-            if (item == "status") {
+//uncomment in production
+         /*   if (item == "status") {
                 mUiViewModel.setDialogDetails(
                     "EMPTY STATUS",
                     "Please fill all the value..",
@@ -343,7 +344,7 @@ class MainViewModel(context: Context) : ViewModel() {
                 )
                 mUiViewModel.showMessageDialog()
                 return
-            }
+            }*/
 
 //            if (item == "SUP_OK") {
 //                showLogs("DIALOG","SHOW DIALOG")
