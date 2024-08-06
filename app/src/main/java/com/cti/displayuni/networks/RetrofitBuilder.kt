@@ -16,7 +16,7 @@ object RetrofitBuilder {
     // private const val BASE_URL = "http://10.0.3.101:5000"0...0.
 //    private const val BASE_URL = "http://3.111.0.59:5000"
 
-    private const val BASE_URL = "http://192.168.1.56:5000"
+    private const val BASE_URL = "http://192.168.1.16:5000"
 
 //      private const val BASE_URL = "http://3.108.65.158:5000"
 

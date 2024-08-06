@@ -816,4 +816,10 @@ class MainViewModel(context: Context) : ViewModel() {
         }
     }
 
+    fun readingChart(parameter_no: String) {
+        viewModelScope.launch {
+            repository.readingChart(parameter_no)
+        }
+    }
+
 }

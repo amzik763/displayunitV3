@@ -11,6 +11,7 @@ import com.cti.displayuni.utility.FILL_PARAMETERS
 import com.cti.displayuni.utility.GETTASK
 import com.cti.displayuni.utility.Setting_Param
 import com.cti.displayuni.utility.chart_parameter
+import com.cti.displayuni.utility.extractChartData
 import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.myComponents.authAPI
 import com.cti.displayuni.utility.myComponents.mUiViewModel
@@ -1668,6 +1669,7 @@ class Repository() {
 
             if (chartResponse.isSuccessful){
                 showLogs("Chart Response", "Chart Response Successful")
+                extractChartData(chartResponse.body().toString())
             }
             else{
                 showLogs("Chart Response", "Chart Response UnSuccessful")

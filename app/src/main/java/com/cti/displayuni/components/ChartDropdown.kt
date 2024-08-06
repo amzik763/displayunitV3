@@ -26,12 +26,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.cti.displayuni.ui.theme.dimens
+import com.cti.displayuni.utility.chart_parameter
+import com.cti.displayuni.utility.myComponents
+import com.cti.displayuni.utility.showLogs
 
 @Composable
 fun ChartDropDown(){
     var expanded by remember { mutableStateOf(false) }
     var selectedItem by remember { mutableStateOf("Select") }
     val items = listOf("item1" , "item2", "AIR PRESSURE - 0 - 2 kgf/M2")
+    val dropDownData = mutableListOf<String>()
+    val paramNo = mutableListOf<String>()
+    myComponents.mainViewModel.dataListChart.value?.forEach {
+        val temp = "${it.parameter_name} + ${it.min} - ${it.max}"
+        dropDownData.add(temp)
+        paramNo.add(it.parameter_no)
+    }
 
     Column(
         modifier = Modifier
@@ -58,6 +68,7 @@ fun ChartDropDown(){
                 )
 
                 Spacer(modifier = Modifier.width(30.dp))
+
                 Icon(
                     imageVector =  if (expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
                     contentDescription = null
@@ -67,10 +78,13 @@ fun ChartDropDown(){
             DropdownMenu(expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
-
-                items.forEach{label ->
+                dropDownData.forEach{label ->
                     DropdownMenuItem(text = { Text(text = label) }, onClick = {
                         selectedItem = label
+                        myComponents.mainViewModel.readingChart(paramNo.toString())
+
+                        showLogs("CHART API", "SHOW CHART")
+                        
                         expanded = false }
                     )
                 }
