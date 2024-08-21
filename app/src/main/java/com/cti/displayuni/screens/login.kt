@@ -20,12 +20,18 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,6 +47,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -228,6 +235,74 @@ fun Login(){
     }
 }
 
+
+/*@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Password(){
+
+    var password by remember { mutableStateOf("") }
+
+    Box(
+        contentAlignment = Alignment.CenterStart,
+    ) {
+        OutlinedTextField(
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = lightOrange,
+                unfocusedBorderColor = lightGrey,
+                containerColor = pureWhite,
+                focusedLabelColor = lightBlack
+            ),
+            value = password,
+            onValueChange = {
+                val newText = it.take(maxLength)
+                onTextChange(newText)
+            },
+            visualTransformation = PasswordVisualTransformation(),
+            shape= RoundedCornerShape(8.dp),
+            maxLines = 1,
+
+            label = {
+                Text(text = label,
+                    style = TextStyle(
+                        fontSize = MaterialTheme.typography.bodySmall.fontSize
+                    ),
+                    modifier = Modifier.padding(0.dp))
+            },
+            keyboardOptions = keyboardOptions,
+            modifier = Modifier
+                .width(widthDP/ MaterialTheme.dimens.textFieldWidth),
+            textStyle = LocalTextStyle.current.copy(
+                fontWeight = FontWeight.SemiBold,
+                color = color,
+                fontSize = MaterialTheme.typography.bodySmall.fontSize
+            ),
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(id = iconResId),
+                    contentDescription = "Password Icon",
+                    modifier = Modifier
+                        .size(MaterialTheme.dimens.iconSize)
+                        .fillMaxWidth()
+                )
+            },
+            trailingIcon = {
+                Icon(
+                    painter = lockIcon,
+                    contentDescription = "Password Icon",
+                    modifier = Modifier
+                        .size(MaterialTheme.dimens.iconSize)
+                        .fillMaxWidth()
+                        .clickable {
+                            passwordVisible = !passwordVisible // Toggle visibility
+                        }
+                )   },
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus()
+                onImeAction()}
+            )
+        )
+    }
+}*/
+
 //@Preview
 @Composable
 fun ToggleButton() {
@@ -243,13 +318,12 @@ fun ToggleButton() {
     if (wd <= 2048 && mParameters.dnsty == 320) {
         textFont = 14.sp
         sWidth = 16.dp
-        endpadding = 12.dp
+        endpadding += 12.dp
         showLogs("lwinsize: ", wd.toString())
 
     } else if (wd <= 2048 && mParameters.dnsty == 160) {
         textFont = 25.sp
         sWidth = 26.dp
-        endpadding = 36.dp
         showLogs("Desktop: ", wd.toString())
     }
 
@@ -271,6 +345,9 @@ fun ToggleButton() {
                 checkedTrackColor = lightGrey,
                 uncheckedTrackColor = lightGrey
             )
+
         )
     }
 }
+
+
