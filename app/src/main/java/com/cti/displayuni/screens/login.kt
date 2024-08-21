@@ -39,8 +39,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -48,6 +50,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -207,6 +210,8 @@ fun Login(){
                     shape = RoundedCornerShape(8.dp)
                 )
                 Spacer(modifier = Modifier.height(10.dp))
+
+
                 PasswordInputTextField(
                     text = password,
                     label = "Password",
@@ -219,7 +224,8 @@ fun Login(){
                 )
 
                 Column(
-                    modifier = Modifier.fillMaxWidth(0.3f)
+                    modifier = Modifier
+                        .fillMaxWidth(0.3f)
                         .padding(top = MaterialTheme.dimens.topPadding),
                     horizontalAlignment = Alignment.End
                 ){
@@ -234,74 +240,6 @@ fun Login(){
         }
     }
 }
-
-
-/*@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun Password(){
-
-    var password by remember { mutableStateOf("") }
-
-    Box(
-        contentAlignment = Alignment.CenterStart,
-    ) {
-        OutlinedTextField(
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = lightOrange,
-                unfocusedBorderColor = lightGrey,
-                containerColor = pureWhite,
-                focusedLabelColor = lightBlack
-            ),
-            value = password,
-            onValueChange = {
-                val newText = it.take(maxLength)
-                onTextChange(newText)
-            },
-            visualTransformation = PasswordVisualTransformation(),
-            shape= RoundedCornerShape(8.dp),
-            maxLines = 1,
-
-            label = {
-                Text(text = label,
-                    style = TextStyle(
-                        fontSize = MaterialTheme.typography.bodySmall.fontSize
-                    ),
-                    modifier = Modifier.padding(0.dp))
-            },
-            keyboardOptions = keyboardOptions,
-            modifier = Modifier
-                .width(widthDP/ MaterialTheme.dimens.textFieldWidth),
-            textStyle = LocalTextStyle.current.copy(
-                fontWeight = FontWeight.SemiBold,
-                color = color,
-                fontSize = MaterialTheme.typography.bodySmall.fontSize
-            ),
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = iconResId),
-                    contentDescription = "Password Icon",
-                    modifier = Modifier
-                        .size(MaterialTheme.dimens.iconSize)
-                        .fillMaxWidth()
-                )
-            },
-            trailingIcon = {
-                Icon(
-                    painter = lockIcon,
-                    contentDescription = "Password Icon",
-                    modifier = Modifier
-                        .size(MaterialTheme.dimens.iconSize)
-                        .fillMaxWidth()
-                        .clickable {
-                            passwordVisible = !passwordVisible // Toggle visibility
-                        }
-                )   },
-            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus()
-                onImeAction()}
-            )
-        )
-    }
-}*/
 
 //@Preview
 @Composable
