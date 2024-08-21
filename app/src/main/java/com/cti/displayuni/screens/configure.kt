@@ -250,61 +250,9 @@ fun Configure() {
                 }
             }
         }
-    /*    lateinit var webSocket: WebSocket
-    val message = remember { mutableStateOf("No message received yet") }
-    val url = "ws://13.233.194.200:5000"
-    val eventName = "update_csp_notification_status"
-    val messageToSend = "check_station_csp_status: G01 F02 L02 S01"
-
-    LaunchedEffect(Unit) {
-        val client = OkHttpClient.Builder()
-            .pingInterval(15, TimeUnit.SECONDS)
-            .build()
-
-        val request = Request.Builder()
-            .url(url)
-            .build()
-        showLogs("WEBSOCKET","building")
-
-        val listener = object : WebSocketListener() {
-            override fun onOpen(webSocket: WebSocket, response: Response) {
-                val keyValuePairMessage = "{\"check_station_csp_status\":\"G01 F02 L02 S01\"}"
-                webSocket.send(keyValuePairMessage)
-                showLogs("WEBSOCKET","open")
-
-            }
-
-            override fun onMessage(webSocket: WebSocket, text: String) {
-                // Assuming the message is in JSON format and has the eventName
-                if (text.contains(eventName)) {
-                    message.value = text
-                }
-                showLogs("RECEVED WEBSOCKET",text)
-            }
-
-            override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
-                // Handle binary messages if needed
-            }
-
-            override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-                webSocket.close(1000, null)
-            }
-
-            override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-                message.value = "Error: ${t.message}"
-            }
-        }
-
-        webSocket = client.newWebSocket(request, listener)
-        client.dispatcher.executorService.shutdown()
-    }
-
-    WebSocketMessageScreen(message.value)*/
-
-
     Row() {
 
-    Button(modifier = Modifier.width(200.dp).height(250.dp), onClick = {
+   /* Button(modifier = Modifier.width(200.dp).height(250.dp), onClick = {
         showLogs(
             "SOCKET INFO:",
             SocketManager.isConnected().toString()
@@ -319,7 +267,7 @@ fun Configure() {
             SocketManager.connect()
         }) {
 
-        }
+        }*/
 }
 }
 
@@ -342,7 +290,6 @@ fun WebSocketMessageScreen(message: String) {
 
 */
 
-
 object SocketManager {
     private lateinit var socket: Socket
 
@@ -362,14 +309,12 @@ object SocketManager {
     fun connect() {
         socket.connect()
         showLogs("SOCKET: ","its connecting")
-
         socket.on(Socket.EVENT_CONNECT) {
             showLogs("SOCKET:", "Connected to server")
         }.on(Socket.EVENT_CONNECT_ERROR) { args ->
             showLogs("SOCKET:", "Connection error: ${args[0]}")
             try {
             showLogs("SOCKET:", "Connection error: ${args[1]}")
-
             }catch (e:Exception){
 
             }
@@ -388,8 +333,6 @@ object SocketManager {
         socket.on(event, listener)
         showLogs("SOCKET: ","its event ")
         showLogs("SOCKET: ","${event} ")
-
-
     }
 
     fun emit(event: String, data: String) {

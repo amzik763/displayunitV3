@@ -122,8 +122,7 @@ dependencies {
 
     //okhttp for socket
     dependencies {
-        implementation(
-            "com.squareup.okhttp3:okhttp:4.11.0")
+        implementation("com.squareup.okhttp3:okhttp:4.11.0")
         implementation("io.socket:socket.io-client:2.1.1")
     }
 

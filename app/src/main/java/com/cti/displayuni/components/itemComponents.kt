@@ -254,7 +254,6 @@ fun ItemListColumn(
 @Composable
 fun ItemListScreen() {
    val mChecksheetData by myComponents.mainViewModel.mChecksheetData.observeAsState()
-
    val progressTimer = remember { ProgressTimer(10000L) } // 10 seconds duration
    mChecksheetData?.let { ItemListColumn(it, progressTimer) }
 }

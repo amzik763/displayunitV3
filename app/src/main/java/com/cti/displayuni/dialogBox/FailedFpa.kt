@@ -253,7 +253,6 @@ fun FailedFPADialog(
                         },
                             backgroundColor = red,
                             text = "Fail")
-
                     }
                 }
             }

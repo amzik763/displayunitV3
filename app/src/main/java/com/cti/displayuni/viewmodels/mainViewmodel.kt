@@ -123,7 +123,6 @@ class MainViewModel(context: Context) : ViewModel() {
     var dataListActual = mutableListOf<Actual_Param>()
 
     var imageUrl = mutableListOf<String>()
-
     val dataListChart = MutableLiveData<MutableList<chart_parameter>>()
 
     //  var dataListChart = mutableListOf<chart_parameter>()
@@ -219,7 +218,6 @@ class MainViewModel(context: Context) : ViewModel() {
     fun getToken(): String {
         return sharedPreferences.getString(KEY_TOKEN, "") ?: ""
     }
-
 
     fun loginUser(username: String, password: String) {
         if (username.isBlank()) {

@@ -45,6 +45,8 @@ import com.cti.displayuni.components.CustomRoundedButton
 import com.cti.displayuni.ui.theme.dimens
 import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.lightGrey
+import com.cti.displayuni.utility.calculateAverageData
+import com.cti.displayuni.utility.extractChartData
 import com.cti.displayuni.utility.mParameters
 import com.cti.displayuni.utility.showLogs
 
@@ -135,7 +137,42 @@ fun LineChart(
 
 @Composable
 fun LineChartDemo() {
-    val dateData = mapOf(
+
+    val myString = """
+        {
+            "result": {
+                "2024-08-06": {
+                    "G01 F02 L01 S01": {
+                        "A": ["1.998", "1.956", "1.856", "1.755", "2.00"]
+                    }
+                },
+                "2024-08-08": {
+                    "G01 F02 L01 S01": {
+                        "A": ["2", "2", "2", "2", "2"]
+                    }
+                },
+                "2024-08-10": {
+                    "G01 F02 L01 S01": {
+                        "A": ["2", "1.987", "0.685", "1.999", "1.333"]
+                    }
+                },
+                "2024-08-16": {
+                    "G01 F02 L01 S01": {
+                        "A": ["1", "0.3", "1.369", "2", "0.799"]
+                    }
+                },
+                "2024-08-21": {
+                    "G01 F02 L01 S01": {
+                        "A": ["0.123", "0.523", "1.111", "1.999", "0.999"]
+                    }
+                }
+            }
+        }
+    """.trimIndent()
+
+    val dateData = calculateAverageData(extractChartData(myString))
+    println("GOT DATA" + dateData)
+    /*val dateData = mapOf(
         "28-10-24" to 12f,
         "29-10-24" to 6f,
         "30-10-24" to 1f,
@@ -167,10 +204,12 @@ fun LineChartDemo() {
         "25-11-24" to 16f,
 
     )
-
+*/
     val pointsData = dateData.entries.mapIndexed { index, entry ->
         index.toFloat() to entry.value
     }
+
+    println("POINTS DATA" + pointsData)
 
     val labels = dateData.keys.toList()
     Column(
@@ -191,6 +230,7 @@ fun LineChartDemo() {
     }
 }
 
+
 @Composable
 fun LineChart(points: List<Pair<Float, Float>>, labels: List<String>, modifier: Modifier = Modifier) {
     var scale by remember { mutableFloatStateOf(1f) }
@@ -199,7 +239,10 @@ fun LineChart(points: List<Pair<Float, Float>>, labels: List<String>, modifier: 
     val pointLabelPadding = 2.dp // Padding for point labels
     val roundedRectangleRadius = 2.dp // Radius for rounded rectangle
     val maxValue = points.maxOf { it.second }
-    val minValue = points.minOf { it.second }
+    val rawMinValue = points.minOf { it.second }
+
+    // Set minValue based on the data range
+    val minValue = if (rawMinValue < 1f && rawMinValue >= 0f) 0f else rawMinValue
 
     val state = rememberTransformableState { zoomChange, _, _ ->
         scale *= zoomChange
@@ -207,7 +250,7 @@ fun LineChart(points: List<Pair<Float, Float>>, labels: List<String>, modifier: 
 
     Canvas(
         modifier = modifier
-            .padding(start = 24.dp)
+            .padding(start = 24.dp, end = 50.dp) // Increased right padding to ensure visibility of the last label
             .pointerInput(Unit) {
                 detectTransformGestures { _, _, zoom, _ ->
                     scale *= zoom
@@ -256,37 +299,34 @@ fun LineChart(points: List<Pair<Float, Float>>, labels: List<String>, modifier: 
         }
 
         // Draw Line and Point Values
-        for (i in 0 until points.size - 1) {
+        for (i in points.indices) {
             val x1 = padding.toPx() + i * xAxisSpacing
             val y1 = size.height - padding.toPx() - (points[i].second - minValue) / yRange * yAxisHeight
-            val x2 = padding.toPx() + (i + 1) * xAxisSpacing
-            val y2 = size.height - padding.toPx() - (points[i + 1].second - minValue) / yRange * yAxisHeight
 
-            drawLine(
-                color = Color.Blue,
-                start = Offset(x1, y1),
-                end = Offset(x2, y2),
-                strokeWidth = 3f
-            )
-
+            // Draw Circle for Current Point
             drawCircle(
                 color = Color.Red,
                 center = Offset(x1, y1),
                 radius = 6f
             )
 
-            if (i == points.size - 2) {
-                drawCircle(
-                    color = Color.Red,
-                    center = Offset(x2, y2),
-                    radius = 6f
+            // Draw Line to Next Point if not the Last Point
+            if (i < points.size - 1) {
+                val x2 = padding.toPx() + (i + 1) * xAxisSpacing
+                val y2 = size.height - padding.toPx() - (points[i + 1].second - minValue) / yRange * yAxisHeight
+                drawLine(
+                    color = Color.Blue,
+                    start = Offset(x1, y1),
+                    end = Offset(x2, y2),
+                    strokeWidth = 3f
                 )
             }
 
-            // Draw Value Labels Above Points Inside Rounded Rectangle
+            // Draw Value Labels Above Points
+            println("VALUE: ${points[i].second}")
             drawPointLabel(
                 drawContext = drawContext,
-                value = points[i].second.toInt().toString(),
+                value = String.format("%.4f", points[i].second),
                 x = x1,
                 y = y1 - 20f, // Position above the point
                 padding = pointLabelPadding
@@ -319,8 +359,6 @@ fun LineChart(points: List<Pair<Float, Float>>, labels: List<String>, modifier: 
     }
 }
 
-
-
 fun DrawScope.drawPointLabel(
     drawContext: DrawContext,
     value: String,
@@ -328,6 +366,8 @@ fun DrawScope.drawPointLabel(
     y: Float,
     padding: Dp
 ) {
+
+    println("VALUE: "+ value)
     val textPaint = android.graphics.Paint().apply {
         color = android.graphics.Color.BLACK
         textSize = 16f
