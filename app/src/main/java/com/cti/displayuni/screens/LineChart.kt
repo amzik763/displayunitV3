@@ -230,6 +230,7 @@ fun LineChartDemo() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
+
         LineChart(
             points = pointsData,
             labels = labels,
@@ -246,11 +247,17 @@ fun LineChartDemo() {
 
 @Composable
 fun LineChart(points: List<Pair<Float, Float>>, labels: List<String>, modifier: Modifier = Modifier) {
+
+    if (points.isEmpty() ){
+        return
+    }
+
     var scale by remember { mutableFloatStateOf(1f) }
     val padding = 0.dp
     val topPadding = 32.dp // Increased top padding for X-axis labels
     val pointLabelPadding = 2.dp // Padding for point labels
     val roundedRectangleRadius = 2.dp // Radius for rounded rectangle
+
     val maxValue = points.maxOf { it.second }
     val rawMinValue = points.minOf { it.second }
 
@@ -370,6 +377,8 @@ fun LineChart(points: List<Pair<Float, Float>>, labels: List<String>, modifier: 
             drawContext.canvas.restore()
         }
     }
+
+
 }
 
 fun DrawScope.drawPointLabel(

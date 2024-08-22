@@ -29,7 +29,7 @@ fun extractChartData(jsonString: String): Map<String, Map<String, List<String>>>
             // Iterate over each group key in the date object
             for (groupKey in dateObject.keySet()) {
                 val groupObject = dateObject.getAsJsonObject(groupKey)
-                val cValues = groupObject.getAsJsonArray("A")
+                val cValues = groupObject.getAsJsonArray(myComponents.mainViewModel.shift.value.toString())
 
                 // Convert the JsonArray to a List<String>
                 val cList =

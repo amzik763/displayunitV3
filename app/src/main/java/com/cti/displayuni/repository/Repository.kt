@@ -1668,6 +1668,7 @@ class Repository() {
 
             showLogs("RUNNING CHART API: ",parameter_no + "  " + mainViewModel.shift.value.toString() + "  " + mainViewModel.getStationValue())
             val chartResponse = otherAPIs.readingChart(parameter_no, mainViewModel.shift.value.toString(), mainViewModel.getStationValue())
+//            val chartResponse = otherAPIs.readingChart(parameter_no, mainViewModel.shift.value.toString(), mainViewModel.getStationValue())
 
             if (chartResponse.isSuccessful){
                 showLogs("Chart Response", "Chart Response Successful")
