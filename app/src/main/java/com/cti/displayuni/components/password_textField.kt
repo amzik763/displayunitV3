@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -43,7 +44,6 @@ import com.cti.displayuni.ui.theme.pureWhite
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PasswordInputTextField(
-    modifier: Modifier = Modifier,
     text: String,
     label: String,
     maxLine: Int = 1,
@@ -58,7 +58,6 @@ fun PasswordInputTextField(
 ) {
     val focusManager = LocalFocusManager.current
     val widthDP = LocalConfiguration.current.screenWidthDp.dp
-
 
     var passwordVisible by remember { mutableStateOf(false) }
 
@@ -92,8 +91,9 @@ fun PasswordInputTextField(
                         style = TextStyle(
                             fontSize = MaterialTheme.typography.bodySmall.fontSize
                         ),
-                        modifier = Modifier.padding(0.dp))
-                    },
+                        modifier = Modifier.padding(0.dp)
+                    )
+            },
             keyboardOptions = keyboardOptions,
             modifier = Modifier
                 .width(widthDP/ MaterialTheme.dimens.textFieldWidth),

@@ -152,6 +152,38 @@ class MainViewModel(context: Context) : ViewModel() {
     val apiCheckSheetStatusBack = mutableStateOf(checkSheetStatusBack("none"))
     var ficID = "none"
 
+    var chartData = mutableStateOf("""
+        {
+            "result": {
+                "2024-08-06": {
+                    "G01 F02 L01 S01": {
+                        "A": ["0", "0", "0", "0", "0"]
+                    }
+                },
+                "2024-08-08": {
+                    "G01 F02 L01 S01": {
+                        "A": ["0", "0", "0", "0", "0"]
+                    }
+                },
+                "2024-08-10": {
+                    "G01 F02 L01 S01": {
+                        "A": ["0", "0", "0", "0", "0"]
+                    }
+                },
+                "2024-08-16": {
+                    "G01 F02 L01 S01": {
+                        "A": ["0", "0", "0", "0", "0"]
+                    }
+                },
+                "2024-08-21": {
+                    "G01 F02 L01 S01": {
+                        "A": ["0", "0", "0", "0", "0"]
+                    }
+                }
+            }
+        }
+    """.trimIndent())
+
     var FPACounter = 5;
     var isFPATime = false
     var shouldCheckTemporaryFPA = false

@@ -48,6 +48,7 @@ import com.cti.displayuni.ui.theme.lightGrey
 import com.cti.displayuni.utility.calculateAverageData
 import com.cti.displayuni.utility.extractChartData
 import com.cti.displayuni.utility.mParameters
+import com.cti.displayuni.utility.myComponents
 import com.cti.displayuni.utility.showLogs
 
 
@@ -73,6 +74,7 @@ fun LineChart(
         bottompadding = 16.dp
         showLogs("Desktop: ", wd.toString())
     }
+
 
     Column (modifier = Modifier
         .fillMaxSize()
@@ -170,7 +172,15 @@ fun LineChartDemo() {
         }
     """.trimIndent()
 
-    val dateData = calculateAverageData(extractChartData(myString))
+//    val dateData = calculateAverageData(extractChartData(myString))
+
+    showLogs("CCHHAARRTT 1", myComponents.mainViewModel.chartData.value)
+
+    val dateData = calculateAverageData(extractChartData(myComponents.mainViewModel.chartData.value))
+
+    showLogs("CCHHAARRTT 2", dateData.toString())
+
+
     println("GOT DATA" + dateData)
     /*val dateData = mapOf(
         "28-10-24" to 12f,
@@ -219,6 +229,7 @@ fun LineChartDemo() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         LineChart(
             points = pointsData,
             labels = labels,
@@ -226,6 +237,8 @@ fun LineChartDemo() {
                 .fillMaxWidth()
                 .height(400.dp)
         )
+
+
         Spacer(modifier = Modifier.height(16.dp))
     }
 }

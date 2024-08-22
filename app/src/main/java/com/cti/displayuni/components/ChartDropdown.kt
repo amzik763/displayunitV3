@@ -36,11 +36,15 @@ fun ChartDropDown(){
     var selectedItem by remember { mutableStateOf("Select") }
     val items = listOf("item1" , "item2", "AIR PRESSURE - 0 - 2 kgf/M2")
     val dropDownData = mutableListOf<String>()
-    val paramNo = mutableListOf<String>()
+//    val paramNo = mutableListOf<String>()
+    val paramNo = remember {
+        mutableStateOf("")
+    }
     myComponents.mainViewModel.dataListChart.value?.forEach {
         val temp = "${it.parameter_name} + ${it.min} - ${it.max}"
         dropDownData.add(temp)
-        paramNo.add(it.parameter_no)
+//        paramNo.add(it.parameter_no)
+        paramNo.value = it.parameter_no
     }
 
     Column(
@@ -81,7 +85,7 @@ fun ChartDropDown(){
                 dropDownData.forEach{label ->
                     DropdownMenuItem(text = { Text(text = label) }, onClick = {
                         selectedItem = label
-                        myComponents.mainViewModel.readingChart(paramNo.toString())
+                        myComponents.mainViewModel.readingChart(paramNo.value.toString())
 
                         showLogs("CHART API", "SHOW CHART")
                         

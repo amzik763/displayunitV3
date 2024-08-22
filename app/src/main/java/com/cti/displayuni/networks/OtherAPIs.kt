@@ -11,6 +11,7 @@ import com.cti.displayuni.response.fpa_failed
 import com.cti.displayuni.response.myReasons
 import com.cti.displayuni.response.reading_Response
 import com.cti.displayuni.response.sup_response
+import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -193,5 +194,5 @@ interface OtherAPIs {
         @Field("parameter_no") parameter_no: String,
         @Field("shift") shift: String,
         @Field("station_id") station_id: String
-    ) : Response<String>
+    ) : Response<JSONObject>
 }

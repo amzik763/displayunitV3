@@ -1665,11 +1665,27 @@ class Repository() {
 
     suspend fun readingChart (parameter_no: String) {
         try {
-            val chartResponse = otherAPIs.readingChart(parameter_no, mainViewModel.shift.toString(), mainViewModel.getStationValue())
+
+            showLogs("RUNNING CHART API: ",parameter_no + "  " + mainViewModel.shift.value.toString() + "  " + mainViewModel.getStationValue())
+            val chartResponse = otherAPIs.readingChart(parameter_no, mainViewModel.shift.value.toString(), mainViewModel.getStationValue())
 
             if (chartResponse.isSuccessful){
                 showLogs("Chart Response", "Chart Response Successful")
-                extractChartData(chartResponse.body().toString())
+                showLogs("Chart Response whole", chartResponse.toString())
+
+                val responseBody = chartResponse.body().toString()
+                showLogs("Chart Response Body", responseBody)
+
+                if (responseBody.isNotEmpty()) {
+//                    extractChartData(responseBody)
+                    mainViewModel.chartData.value = responseBody
+
+                    showLogs("CHART DATA", mainViewModel.chartData.value)
+
+                } else {
+                    showLogs("CHART DATA", "Response body is empty")
+                }
+
             }
             else{
                 showLogs("Chart Response", "Chart Response UnSuccessful")
