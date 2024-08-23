@@ -23,6 +23,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -50,6 +51,7 @@ import com.cti.displayuni.components.AddMark
 import com.cti.displayuni.components.IDTextField
 import com.cti.displayuni.components.ReasonDropdown
 import com.cti.displayuni.ui.theme.darkBlue
+import com.cti.displayuni.ui.theme.dimens
 import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.lightGrey
 import com.cti.displayuni.ui.theme.lightOrange
@@ -215,10 +217,10 @@ fun RejectReasonDialog(
                 Column(
                     modifier = Modifier
                         .padding(
-                            top = topPadding,
-                            start = startPadding,
-                            end = endPadding,
-                            bottom = bottomPadding
+                            top = MaterialTheme.dimens.topPadding,
+                            start = MaterialTheme.dimens.startPadding,
+                            end = MaterialTheme.dimens.endPadding,
+                            bottom = MaterialTheme.dimens.bottomPadding
                         )
                         .fillMaxSize(),
                     verticalArrangement = Arrangement.SpaceBetween
@@ -226,7 +228,7 @@ fun RejectReasonDialog(
                     Column {
                         Text(text = "REJECT REASON",
                             style = TextStyle(
-                                fontSize = mainHeaderFont,
+                                fontSize = MaterialTheme.typography.headlineLarge.fontSize,
                                 color = lightBlack,
                                 fontWeight = FontWeight.Bold,
                                 textAlign = TextAlign.Center,
@@ -238,7 +240,7 @@ fun RejectReasonDialog(
                         Row ( modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween){
 
-                            Text(modifier = Modifier.padding(top = padding),
+                            Text(modifier = Modifier.padding(top = MaterialTheme.dimens.topPadding),
                                 text = "Please Select The Reason",
                                 style = TextStyle(
                                     fontSize = semiHeaderFont,
@@ -263,14 +265,14 @@ fun RejectReasonDialog(
                     }
 
                     Box(modifier = Modifier
-                        .padding(start = startP)
+                        .padding(start = MaterialTheme.dimens.startPadding)
                         .border(width = 3.dp, color = lightGrey, shape = RoundedCornerShape(8.dp))){
                         Row(modifier = Modifier
-                            .padding(padding)){
+                            .padding(MaterialTheme.dimens.padding)){
                             ReasonDropdown()
 
                             Column(modifier = Modifier
-                                .padding(start = startPadding2)
+                                .padding(start = MaterialTheme.dimens.startPadding)
                                 .width(2.dp)) {
                                 Divider(
                                     Modifier
@@ -299,7 +301,7 @@ fun RejectReasonDialog(
                         horizontalAlignment = Alignment.End){
                         Surface(
                             modifier = Modifier
-                                .padding(top = topPadding2)
+                                .padding(top = MaterialTheme.dimens.topPadding)
                                 .size(width = width, height = height)
                                 .clickable {
 
@@ -341,14 +343,14 @@ fun RejectReasonDialog(
                                 text = AnnotatedString("Submit"),
                                 style = TextStyle(
                                     color = pureWhite,
-                                    fontSize = textFont2,
+                                    fontSize = MaterialTheme.typography.bodySmall.fontSize,
                                     fontFamily = poppinsregular,
                                     fontWeight = FontWeight.Bold,
                                     textAlign = TextAlign.Center
                                 ),
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(btnpadding)
+                                    .padding(MaterialTheme.dimens.btnPadding)
                                     .align(Alignment.CenterHorizontally),
 
                             )
