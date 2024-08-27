@@ -40,6 +40,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.cti.displayuni.ui.theme.dimens
 import com.cti.displayuni.ui.theme.lightBlack
 import com.cti.displayuni.ui.theme.lightGrey
 import com.cti.displayuni.ui.theme.orange
@@ -155,7 +156,7 @@ fun CustomOutlinedTextField(
     //myUI variables
 
     var start = 14.dp
-    var height = 40.dp
+    var height = 54.dp
     var width = 150.dp
     var fontSize = 14.sp
 
@@ -164,7 +165,7 @@ fun CustomOutlinedTextField(
     if (wd <= 2048 && mParameters.dnsty == 320) {
 
         width = 120.dp
-        height = 40.dp
+        height = 54.dp
         start = 8.dp
         fontSize = 11.sp
 
@@ -179,7 +180,7 @@ fun CustomOutlinedTextField(
     Box(
         modifier = Modifier
             .padding(paddingValues)
-            .size(width = width, height = height)
+            .size(width = MaterialTheme.dimens.smallTextField, height = MaterialTheme.dimens.dropdownHeight)
             .border(
                 width = if (text.isEmpty()) 1.dp else 2.dp,
                 color = if (text.isEmpty()) Color.Gray else orange,

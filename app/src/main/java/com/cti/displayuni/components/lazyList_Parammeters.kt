@@ -1,7 +1,10 @@
 package com.cti.displayuni.components
 
 import android.util.Log
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,8 +19,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Divider
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,11 +40,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.cti.displayuni.ui.theme.dimens
+import com.cti.displayuni.ui.theme.orange
 import com.cti.displayuni.ui.theme.pureBlack
 import com.cti.displayuni.utility.Setting_Param
 import com.cti.displayuni.utility.mFont
@@ -118,31 +130,61 @@ fun ParametersLazyList(
                         color = Color.Black
                     )
 
-
-
                     Spacer(modifier = Modifier.width(gap))
 
                     Row (verticalAlignment = Alignment.CenterVertically){
                         // Assigning the remembered enterValue to the item's param_value
                         var enterValue by rememberSaveable { mutableStateOf(enterValues.value[index] ?: "") }
 
-                        Row(modifier = Modifier.width(enterValueWidth)){
-                            CustomOutlinedTextField(
-                                text = enterValue,
-                                label =  if(item.min == item.max) {item.min + ""} else {item.min + " - " + item.max},
-                                onTextChange = { newValue ->
-                                    enterValue = newValue
-                                    enterValues.value = enterValues.value.toMutableMap().apply {
-                                        this[index] = newValue
-                                    }
-                                    item.param_value = newValue
-                                },
-                                color = pureBlack,
+                        if (item.min == "OK" || item.min == "NG" || item.min == "A" || item.min == "B") {
+                            // Render DropDownOK when the label is OK, NG, A, B
 
-                                maxLength = 15,
-                                shape = RoundedCornerShape(8.dp),
+                            Row(modifier = Modifier.width(enterValueWidth)) {
 
-                            )
+                                // Ensure min and max are non-null by providing a fallback value, e.g., empty string
+                                val range = Pair(item.min ?: "", item.max ?: "")
+
+                                enterValue.ifEmpty {
+                                    if (item.min == item.max) item.min else "${item.min} - ${item.max}"
+                                }?.let {
+                                    DropDownParameters(
+                                        initialSelection = it,
+                                        itemsRange = range,
+                                        onItemSelected = { selected ->
+                                            enterValue = selected
+                                            enterValues.value = enterValues.value.toMutableMap().apply {
+                                                this[index] = selected
+                                            }
+
+                                            item.param_value = selected
+                                            showLogs("SELECTED ITEM", selected)
+                                        }
+                                    )
+                                }
+                            }
+                        }
+
+
+                        else{
+
+                            Row(modifier = Modifier.width(enterValueWidth)){
+                                CustomOutlinedTextField(
+                                    text = enterValue,
+                                    label =  if(item.min == item.max) {item.min + ""} else {item.min + " - " + item.max},
+                                    onTextChange = { newValue ->
+                                        enterValue = newValue
+                                        enterValues.value = enterValues.value.toMutableMap().apply {
+                                            this[index] = newValue
+                                        }
+                                        item.param_value = newValue
+                                    },
+                                    color = pureBlack,
+
+                                    maxLength = 15,
+                                    shape = RoundedCornerShape(8.dp),
+
+                                    )
+                            }
                         }
                         Text(
                             text = item.param_unit.toString(),
@@ -203,3 +245,67 @@ fun ParametersLazyList(
     }
 }
 
+
+@Composable
+fun DropDownParameters(
+    initialSelection: String, // This will show the min-max range initially
+    itemsRange: Pair<String, String>,
+    onItemSelected: (String) -> Unit,
+) {
+    var expanded by remember { mutableStateOf(false) }
+    var selectedItem by rememberSaveable { mutableStateOf(initialSelection) }
+
+    var isItemSelected by rememberSaveable { mutableStateOf(false) }
+
+    // Dynamically determine the items list based on the range
+    val items = listOf(itemsRange.first, itemsRange.second)
+
+
+    Column(
+        modifier = Modifier.padding(0.dp),
+        horizontalAlignment = Alignment.Start
+    ) {
+        Box(
+            modifier = Modifier
+                .padding(MaterialTheme.dimens.smallPadding)
+                .border(width = if (isItemSelected) 2.dp else 1.dp,
+                    color = if (isItemSelected) orange else Color.Gray,
+                    shape = RoundedCornerShape(8.dp)
+                )
+                .width(MaterialTheme.dimens.smallTextField)
+//                .wrapContentSize(Alignment.TopStart)
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(MaterialTheme.dimens.headerPadding)
+                    .clickable { expanded = true },
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = selectedItem,
+                    fontSize = 14.sp,
+                    color = if (isItemSelected) pureBlack else Color.Gray,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Icon(
+                    imageVector = if (expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                    contentDescription = null
+                )
+            }
+
+            DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                items.forEach { item ->
+                    DropdownMenuItem(text = { Text(text = item) }, onClick = {
+                        selectedItem = item
+                        isItemSelected = true // Set to true after an item is selected
+                        onItemSelected(item)
+                        expanded = false
+                    })
+                }
+            }
+        }
+    }
+}

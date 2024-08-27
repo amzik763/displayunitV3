@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,6 +29,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
@@ -104,9 +107,9 @@ fun GetTask() {
               )
 
             Column(modifier = Modifier
-              .fillMaxHeight()
-              .fillMaxSize()
-              .padding(MaterialTheme.dimens.padding),
+                .fillMaxHeight()
+                .fillMaxSize()
+                .padding(MaterialTheme.dimens.padding),
               verticalArrangement = Arrangement.SpaceBetween)
             {
 
@@ -157,29 +160,6 @@ fun GetTask() {
                           fontFamily = poppinsbold
                       )
                   )
-              }
-
-              Row {
-                  Text(
-                      text = "Skill: ",
-                      style = TextStyle(
-                          fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                          color = pureBlack,
-                          fontFamily = poppinsregular
-                      )
-                  )
-                  Text(
-                      text = mainViewModel.skill,
-                      style = TextStyle(
-                          fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                          color = pureBlack,
-                          fontWeight = FontWeight.Bold,
-                          fontFamily = poppinsbold
-                      )
-                  )
-
-                  Spacer(modifier = Modifier.width(sWidth))
-                  Skills()
               }
 
               Row {
@@ -243,32 +223,83 @@ fun GetTask() {
 
           }
       }
-          Column(modifier = Modifier.fillMaxSize(),
-              verticalArrangement = Arrangement.Center,
+          Column(modifier = Modifier
+              .padding(
+                  top = MaterialTheme.dimens.mediumPadding,
+                  bottom = MaterialTheme.dimens.largePadding
+              )
+              .fillMaxHeight()
+              .fillMaxWidth(),
+              verticalArrangement = Arrangement.SpaceBetween,
               horizontalAlignment = Alignment.CenterHorizontally
           ) {
-              Text(text = "Welcome To",
-                  style = TextStyle(fontSize = MaterialTheme.typography.headlineLarge.fontSize,
-                      fontWeight = FontWeight.Bold,
-                      color = pureBlack,
-                      fontFamily = nkbold)
-              )
-              Row {
-                  Text(text = "INTERFACE",
+                    Text(text = "WELCOME",
                       style = TextStyle(fontSize = MaterialTheme.typography.headlineLarge.fontSize,
                           fontWeight = FontWeight.Bold,
                           color = orange,
                           fontFamily = poppinsbold)
                   )
 
+
+              Column (modifier = Modifier.fillMaxWidth(),
+              verticalArrangement = Arrangement.Center,
+              horizontalAlignment = Alignment.CenterHorizontally
+              )
+              {
+                  Box(
+                      modifier = Modifier
+                          .size(width = 320.dp, height = 430.dp)
+                          .background(color = Color.Transparent, shape = RoundedCornerShape(16.dp))
+                  ) {
+                      Image(
+                          painter = painterResource(id = R.drawable.romuu),
+                          contentDescription = "Roman",
+                          contentScale = ContentScale.Crop,
+                          modifier = Modifier.matchParentSize()
+                              .clip(RoundedCornerShape(16.dp))
+                      )
+                  }
+//                  Box (modifier = Modifier.border(shape = RoundedCornerShape(8.dp), color = Color.Transparent, width = 0.dp)){
+//                      Image(
+//                          painter = painterResource(id = R.drawable.romuu),
+//                          contentDescription = "Roman"
+//
+//                      )
+//                  }
+
+                  Spacer(modifier = Modifier.height(MaterialTheme.dimens.topPadding))
+                  Text(text = "ROMAN REIGNS",
+                      style = TextStyle(fontSize = MaterialTheme.typography.headlineMedium.fontSize,
+                          fontWeight = FontWeight.Bold,
+                          color = pureBlack,
+                          fontFamily = nkbold
+                      )
+                  )
+
+                  Spacer(modifier = Modifier.height(MaterialTheme.dimens.padding))
+
+                  Skills()
+
               }
-              Spacer(modifier = Modifier.height(spacerHeight))
 
-              CustomRoundedButton(onClick = {
-                    mainViewModel.initializeSocket()
-                  mainViewModel.getTask(mainViewModel.getStationValue())
+              Column(modifier = Modifier.fillMaxWidth(),
+                  verticalArrangement = Arrangement.Center,
+                  horizontalAlignment = Alignment.CenterHorizontally
+              ) {
+                  
+                  Text(text = "Click Here To Get Your Assigned Task",
+                          fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                      fontFamily = nk
+                  )
+                  Spacer(modifier = Modifier.height(MaterialTheme.dimens.mediumPadding))
 
-              }, text = "Get Task")
+                  CustomRoundedButton(onClick = {
+                      mainViewModel.initializeSocket()
+                      mainViewModel.getTask(mainViewModel.getStationValue())
+
+                  }, text = "Get Task")
+              }
+
           }
       }
     }

@@ -41,6 +41,7 @@ data class Dimens(
     val statusMaxW : Float = 0.58f,
     val endPadding: Dp  = 30.dp,
     val chartWidth : Float = 0.3f,
+    val dropdownHeight: Dp = 40.dp,
 
 )
 
@@ -73,7 +74,8 @@ val SmallDimens = Dimens(
     statusMaxW  = 0.58f,
     endPadding = 30.dp,
     dropdownRow = 0.512f,
-    chartWidth = 0.33f
+    chartWidth = 0.33f,
+    dropdownHeight = 40.dp
 
 )
 
@@ -87,7 +89,7 @@ val MediumDimens = Dimens(
     largePadding = 46.dp,
     largeTextField = 200.dp,
     mediumTextField = 150.dp,
-    smallTextField = 100.dp,
+    smallTextField = 120.dp,
     iconSize = 20.dp,
     textFieldWidth = 5f,
     btnWidth = 180.dp,
@@ -106,7 +108,9 @@ val MediumDimens = Dimens(
     endPadding = 30.dp,
     dropdownRow= 0.7f,
     PFbuttonWidth = 120.dp,
-    chartWidth = 0.12f
+    chartWidth = 0.12f,
+    dropdownHeight = 51.dp
+
 
 )
 
