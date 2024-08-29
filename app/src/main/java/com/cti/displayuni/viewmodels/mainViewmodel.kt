@@ -101,6 +101,7 @@ class MainViewModel(context: Context) : ViewModel() {
     var dob by mutableStateOf("")
     var skill by mutableStateOf("")
     var mobileNum by mutableStateOf("")
+    var profilePic by mutableStateOf("")
 
     var startShiftTime by mutableStateOf("")
     var endShiftTime by mutableStateOf("")

@@ -10,5 +10,6 @@ data class login_response(
     val mobile: String,
     val password: String,
     val skill: String,
-    val token: String
+    val token: String,
+    val profile_pic: String
 )

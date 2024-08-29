@@ -646,7 +646,7 @@ fun Header(){
                     modifier = Modifier
                         .size(width = MaterialTheme.dimens.PFbuttonWidth, height = MaterialTheme.dimens.buttonHeight),
                     contentPadding = PaddingValues(0.dp),
-                    shape = RoundedCornerShape(29.dp),
+                    shape  = RoundedCornerShape(29.dp),
                     border = BorderStroke(3.dp, green),
                     colors = ButtonDefaults.buttonColors(
                         contentColor = pureWhite,

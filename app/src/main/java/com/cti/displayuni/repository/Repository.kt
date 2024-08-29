@@ -39,6 +39,8 @@ class Repository() {
             loginResponse = authAPI.login(username, password)
             if (loginResponse.isSuccessful) {
                 showLogs("AUTH: ", "Login Successful")
+                showLogs("AUTH: ", loginResponse.body()?.profile_pic.toString())
+                myComponents.mainViewModel.profilePic = loginResponse.body()?.profile_pic.toString()
                 myComponents.navController.popBackStack()
                 myComponents.navController.navigate(GETTASK)
                 mainViewModel.saveToken(loginResponse.body()?.token.toString())

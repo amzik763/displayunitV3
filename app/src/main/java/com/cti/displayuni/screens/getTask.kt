@@ -1,6 +1,8 @@
 package com.cti.displayuni.screens
 
+import android.graphics.BitmapFactory
 import android.os.Build
+import android.util.Base64
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
@@ -27,10 +29,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
@@ -41,6 +45,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 import com.cti.displayuni.R
 import com.cti.displayuni.components.CustomRoundedButton
 import com.cti.displayuni.ui.theme.darkBlue
@@ -63,6 +68,14 @@ import com.cti.displayuni.utility.myComponents.mainViewModel
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun GetTask() {
+
+
+    // Decode the Base64 string into a byte array
+    val imageBytes = remember { Base64.decode(myComponents.mainViewModel.profilePic, Base64.DEFAULT) }
+
+    // Convert the byte array into a Bitmap
+    val bitmap = remember { BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size) }
+
     val conf = LocalConfiguration.current
     val widthDP = conf.screenWidthDp.dp
 
@@ -246,7 +259,7 @@ fun GetTask() {
               horizontalAlignment = Alignment.CenterHorizontally
               )
               {
-                  Box(
+                  /*Box(
                       modifier = Modifier
                           .size(width = 320.dp, height = 430.dp)
                           .background(color = Color.Transparent, shape = RoundedCornerShape(16.dp))
@@ -258,17 +271,21 @@ fun GetTask() {
                           modifier = Modifier.matchParentSize()
                               .clip(RoundedCornerShape(16.dp))
                       )
+                  }*/
+                  
+//                  Base64Image(base64String = myComponents.mainViewModel.profilePic, modifier = Modifier.size(width = 320.dp, height = 430.dp).border(shape = RoundedCornerShape(8.dp), color = Color.Transparent, width = 0.dp))
+
+
+                  Box (modifier = Modifier.border(shape = RoundedCornerShape(16.dp), color = Color.Transparent, width = 0.dp)){
+                      Image(modifier = Modifier.size(width = 200.dp, height = 250.dp),
+                          bitmap = bitmap.asImageBitmap(),
+                          contentDescription = "Roman"
+
+                      )
                   }
-//                  Box (modifier = Modifier.border(shape = RoundedCornerShape(8.dp), color = Color.Transparent, width = 0.dp)){
-//                      Image(
-//                          painter = painterResource(id = R.drawable.romuu),
-//                          contentDescription = "Roman"
-//
-//                      )
-//                  }
 
                   Spacer(modifier = Modifier.height(MaterialTheme.dimens.topPadding))
-                  Text(text = "ROMAN REIGNS",
+                  Text(text = myComponents.mainViewModel.name,
                       style = TextStyle(fontSize = MaterialTheme.typography.headlineMedium.fontSize,
                           fontWeight = FontWeight.Bold,
                           color = pureBlack,
@@ -304,3 +321,24 @@ fun GetTask() {
       }
     }
 }
+/*
+
+@Composable
+fun Base64Image(
+    base64String: String,
+    modifier: Modifier = Modifier,
+    contentScale: ContentScale = ContentScale.Crop
+) {
+    Box(modifier = modifier) {
+
+
+
+        // Use Coil to load the Bitmap into an Image composable
+        Image(
+//            bitmap = bitmap.asImageBitmap(),
+//        painter = rememberAsyncImagePainter(bitmap.asImageBitmap()),
+            contentDescription = null,
+            contentScale = contentScale
+        )
+    }
+}*/
